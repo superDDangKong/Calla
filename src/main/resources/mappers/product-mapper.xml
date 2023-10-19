@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.ProductMapper">
+<!-- namespace : dao 클래스의 sqlSession과 연결하기 위한 키로 사용 -->
+
+	<!-- 
+	* mapper 태그
+	<insert>, <select>, <update>, <delete>
+	dao - sqlSession의 함수(insert, selectOne, selectList, update, delete)
+	와 매핑되어 쿼리를 수행
+	
+	* mapper 태그의 id 속성
+	dao 클래스의 sqlSession 특정 함수와 연결하기 위해 사용
+	
+	* mapper 쿼리 특징
+	${key 이름} : mybatis-config.xml의 property - name과 매칭. DB 테이블의 컬럼
+	#{key 이름} : dao 클래스의 sqlSession에서 전송받은 데이터 변수명(입력받은 데이터)
+	 -->
+	
+	<insert id="insert">
+		insert into ${product}
+		(${productName}, ${productPrice}, ${productCategori}, ${productImagePath}, ${productContent})
+		values (#{productName}, #{productPrice}, #{productCategori}, #{productImagePath}, #{productContent})
+	</insert>
+	<select id="select_all" resultType="ProductVO">
+		select * from ${product}
+		order by ${productId} desc
+	</select>
+	<select id="select_by_product_id" resultType="ProductVO">
+		select * from ${product} where ${productId} = #{productId}
+	</select>
+	<update id="update">
+		update ${product}
+		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productImagePath} = #{productImagePath}, ${productContent} = #{productContent}
+		where ${productId} = #{productId} 
+	</update>
+	<delete id="delete">
+		delete from ${product}
+		where ${productId} = #{productId}
+	</delete>
+	
+	<select id="paging" resultType="productVO">
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}
+		from(
+			select rownum rn, a.* from(
+				select * from ${product} order by ${productId} desc
+			)a
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="total_count" resultType="Integer">
+		select count(*) total_cnt from ${product}
+	</select>
+	
+	<select id="select_by_product_name" resultType="ProductVO">
+		select * from ${product}
+		where ${productName} like #{productName} 
+	</select>
+	
+	<select id="select_by_name" resultType="ProductVO">
+		select * from ${product}
+		where ${productName} like #{keyword} or
+			${productContent} like #{keyword}
+			order by ${productId} desc
+	</select>
+	
+</mapper>
