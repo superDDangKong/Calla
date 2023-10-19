@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.FreeBoardCommentMapper">
+
+
+	<insert id="insert">
+		insert into ${f_board_comment}
+		(${fBoardId}, ${memberNickname}, ${fBoardCommentContent})
+		values (#{fBoardId}, #{memberNickname}, #{fBoardCommentContent})
+	</insert>
+	
+	<select id="select_all_by_board_id" resultType="FBoardCommentVO">
+		select * from ${f_board_comment}
+		where ${fBoardId} = #{fBoardId}
+		order by ${fBoardCommentId}
+	</select>
+
+	<update id="update">
+		update ${f_board_comment}
+		set ${fBoardCommentContent} = #{fBoardCommentContent}
+		where ${fBoardCommentId} = #{fBoardCommentId}
+	</update> 	
+	
+	<delete id="delete">
+		delete from ${f_board_comment}
+		where ${fBoardCommentId} = #{fBoardCommentId}
+	</delete>
+
+	 
+</mapper>
