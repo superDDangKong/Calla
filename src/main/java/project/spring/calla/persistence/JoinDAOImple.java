@@ -32,7 +32,9 @@ public class JoinDAOImple implements JoinDAO{
 	@Override
 	public int checkNickname(String memberNickname) { // 닉네임 중복체크
 		logger.info("select_by_nickname() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
+		int result = sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
+		logger.info(result+"중복");
+		return result;
 	}
 
 	@Override

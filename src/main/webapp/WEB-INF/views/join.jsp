@@ -44,12 +44,12 @@
 		<div>아이디
 		<input type="text" id="member_id" name="member_id" placeholder="아이디 입력"><br>
 		<span class="final_id_ck1">사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</span>
-		<span class="final_id_ck2">아이디: 8자 이상의 영문, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span><!-- 아이디 유효성 확인 -->
+		<span class="final_id_ck2">아이디: 8자 이상의 영문, 숫자와 특수기호만 사용 가능합니다.</span><!-- 아이디 유효성 확인 -->
 		</div><br>
 		
 		<div>비밀번호
 		<input type="password" id="member_pw" name="member_pw"><br>
-		<span class="final_pw_ck1">비밀번호: 12자 이상의 영문, 숫자, 특수문자를 사용해 주세요.</span><!-- 비밀번호 유효성 확인 -->
+		<span class="final_pw_ck1">비밀번호: 8자 이상의 영문, 숫자, 특수문자를 사용해 주세요.</span><!-- 비밀번호 유효성 확인 -->
 		</div><br>
 		
 		<div>비밀번호 재확인
@@ -62,12 +62,11 @@
 		</div><br>
 		
 		<div>닉네임
-		<input type="text" name="member_nickname" placeholder="calla"><br>
+		<input type="text" id="member_nickname" name="member_nickname" placeholder="calla"><br>
 		<span class="final_nick_ck1">중복된 닉네임입니다.</span>
 		</div><br>
 		
-		
-			<div>이메일
+		<div>이메일
 				<input type="text" name="member_email1" id="email_id" placeholder="calla">@
 				<input type="text" name="member_email2" id="email_domain" class="box" placeholder="naver.com">
 				<select class="box" id="domain-list" name="emailSelection" onchange="select_change(this.value);">
@@ -79,11 +78,10 @@
   					<option value="kakao.com">kakao.com</option>
 				</select>
 				<span class="final_email_ck"></span><!-- 이메일 형식대로 입력하라는 문장출력 -->
-			</div><br>
-		
+		</div><br>
 		
 		<div>핸드폰
-        <input type="tel" name="member_phone" placeholder="010-1234-5678"><br>
+        <input type="tel" id="member_phone" name="member_phone" placeholder="010-1234-5678"><br>
         </div><br>
         
         <div>관심사
@@ -133,10 +131,16 @@
     		// 중복확인 ajax
     		$.ajax({ // JoinRestController의 checkId 송수신
         		 type : 'POST',
-        		 url : '/calla/member', // 뭐라 할까나 ~ 
+        		 url : '/calla/member/checkId', // 뭐라 할까나 ~ 
         		 data : {memberId : memberId},
         		 success : function(result){
         			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+        			 if (result == 1) {
+        				 console.log("사용불가능한아이디")
+        			 } else {
+        				 console.log("사용가능한아이디")
+        				 idckCheck = true;
+        			 }
         		 } // end success
         	 }) // end ajax
         	 
@@ -154,7 +158,7 @@
     		var memberPw = $('#member_pw').val(); // 클라이언트가 입력한 비밀번호 변수에 저장
     		console.log("입력한 비밀번호 : " + memberPw); // 입력한 비밀번호 콘솔에 띄우기
     		// 비밀번호 정규식
-    		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{12,}$/;
+    		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     		if (pwEffectiveness.test(memberPw)){
     			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
     		} else {
@@ -182,15 +186,43 @@
 
 			if (nameEffectiveness.test(memberName)){
 				console.log("이름 입력 성공");
-				console.log(nameCheck);
 				nameCheck = true;
+				console.log(nameCheck);
 			} else {
 				console.log("이름 입력 실패");
 				console.log(nameCheck);
 				nameCheck = false;
 			}
 		}) // end 이름 입력확인
-      
+      	
+		$('#member_nickname').blur(function(){
+			var memberNickname = $('#member_nickname').val();
+			// 닉네임 정규식
+			var nicknameEffectiveness = /[\p{Script=Hangul}\p{Script=Latin}]{1,}/gu;
+			
+			if(nicknameEffectiveness.test(memberNickname)){
+				
+				// ajax를 이용한 닉네임 중복체크
+				$.ajax({ // JoinRestController의 checkNick 송수신
+        		 type : 'POST',
+        		 url : '/calla/member/checkNick', 
+        		 data : {memberNickname : memberNickname},
+        		 success : function(result){
+        			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+        			 if (result == 1) {
+        				 console.log("사용불가능한닉네임")
+        			 } else {
+        				 console.log("사용가능한닉네임")
+        			 }
+        		 } // end success
+        	 }) // end ajax
+			} else {
+				console.log("입력한 닉네임 : " + memberNickname);
+			}
+		}) // end 닉네임 중복확인
+		
+		
+		
       
       var select_change = function(value){
     	  console.log("값 변경 테스트 : " + value);
@@ -209,7 +241,17 @@
        
     	}); // end function 
       
-     
+     $('#member_phone').blur(function(){
+    	 var memberPhone = $('#member_phone').val();
+    	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
+		 
+    	 // 연락처 입력 유무 검사
+    	 if (phoneEffectiveness.test(memberPhone)){
+    		 console.log(memberPhone);
+    		 phoneCheck = true;
+    	 }
+    	 console.log(memberPhone)
+     }) // end 입력한 핸드폰 번호
      
       
 

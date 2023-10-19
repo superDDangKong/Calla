@@ -16,12 +16,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <!-- 아이디 중복체크 -->
 	 <select id="select_by_id" resultType="Integer"> <!-- 셀렉트는 무조건 resulttype이 있어야함 -->
-	 	 select count(*) check_cnt from ${member} where ${memberId} = #{memberId}
+	 	select count(*) check_cnt from ${member} where ${memberId} = #{memberId}
 	 </select>
 	 
 	 <!-- 닉네임 중복체크 -->
-	 <select id="select_by_nickname" resultType="memberVO">
-	 	select count(*) from ${member} where ${memberNickname} = #{memberNickname}
+	 <select id="select_by_nickname" resultType="Integer">
+	 	select count(*) check_cnt from ${member} where ${memberNickname} = #{memberNickname}
 	 </select>
 	 
 	 
