@@ -79,6 +79,12 @@ public class ProductDAOImple implements ProductDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_by_name", "%" + keyword + "%");
 	}
 
+	@Override
+	public int updateProductCommentCnt(int amount, int productId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }

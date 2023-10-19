@@ -24,6 +24,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productImagePath" value="product_image_path"/>
 		<property name="productContent" value="product_content"/>
 		<property name="productCommentCount" value="product_comment_count"/>
+	
+		<property name="product_comment" value="product_comment"/>
+		<property name="productCommentId" value="product_comment_Id"/>
+		<property name="productId" value="product_id"/>
+		<property name="memberNickname" value="member_nickname"/>
+		<property name="productCommentContent" value="product_comment_content"/>
+		<property name="productCommentCreatedDate" value="product_comment_created_date"/>
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
