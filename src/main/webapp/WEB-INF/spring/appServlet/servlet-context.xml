@@ -28,6 +28,11 @@
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:\\upload">
+	<!-- 문자열 리소스를 bean으로 추가 -->
+	<!-- String uploadPath = new String("경로"); -->
+	
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\\Study\\FileUploadTest">
 		</beans:constructor-arg>
 	</beans:bean>
 	
@@ -36,6 +41,7 @@
 		<!-- 파일 업로드 최대 용량 설정 : 1024 * 1024 * 10B = 10MB -->
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>
 	</beans:bean>
+	
 	
 	
 	<context:component-scan base-package="project.spring.calla" />
