@@ -135,7 +135,7 @@
         		 data : {memberId : memberId},
         		 success : function(result){
         			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
-        			 if (result == 1) { // result 1은 중복된 아이디가 존재, 0은 없다는 뜻
+        			 if (result == 1) {
         				 console.log("사용불가능한아이디")
         				 idckCheck = false; // 아이디 중복검사 통과 변수
         			 } else {
@@ -162,10 +162,8 @@
     		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     		if (pwEffectiveness.test(memberPw)){
     			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
-    			pwckCheck = true;
     		} else {
     			console.log("비밀번호 유효성 검사 실패");
-    			pwckCheck = false;
     		}
     	}); // end 비밀번호 function(비밀번호 유효성 검사)
 		
@@ -176,10 +174,8 @@
       		
       		if (memberPw === memberPwCk) {
       			console.log("비밀번호 재확인 성공");
-      			pwckcorCheck = true; // 비밀번호 재확인 성공 변수 
       		} else {
       			console.log("비밀번호 재확인 실패");
-      			pwckcorCheck = false; // 비밀번호 재확인 실패 변수
       		}
       	}); // end 재확인 function(비밀번호 재확인)
       	
@@ -216,10 +212,8 @@
         			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
         			 if (result == 1) {
         				 console.log("사용불가능한닉네임")
-        				 nickNameCheck = false;
         			 } else {
         				 console.log("사용가능한닉네임")
-        				 nickNameCheck = true;
         			 }
         		 } // end success
         	 }) // end ajax
@@ -256,8 +250,6 @@
     	 if (phoneEffectiveness.test(memberPhone)){
     		 console.log(memberPhone);
     		 phoneCheck = true;
-    	 } else {
-    		 phoneCheck = false; 
     	 }
     	 console.log(memberPhone)
      }) // end 입력한 핸드폰 번호
