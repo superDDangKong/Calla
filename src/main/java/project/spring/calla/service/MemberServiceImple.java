@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.memberVO;
-import project.spring.calla.persistence.JoinDAO;
+import project.spring.calla.persistence.MemberDAO;
 
 @Service
-public class JoinServiceImple implements JoinService {
+public class MemberServiceImple implements MemberService {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(JoinServiceImple.class);
+			LoggerFactory.getLogger(MemberServiceImple.class);
 	
 	@Autowired
-	private JoinDAO dao;
+	private MemberDAO dao;
 
 	@Override
 	public int create(memberVO vo) { // 사용자 계정 생성

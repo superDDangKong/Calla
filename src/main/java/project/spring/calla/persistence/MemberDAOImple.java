@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import project.spring.calla.domain.memberVO;
 
 @Repository
-public class JoinDAOImple implements JoinDAO{
+public class MemberDAOImple implements MemberDAO{
 
 	
 	private static final Logger logger=
-			LoggerFactory.getLogger(JoinDAOImple.class);
+			LoggerFactory.getLogger(MemberDAOImple.class);
 	
 	private static final String NAMESPACE = 
 			"project.spring.calla.Membermapper"; // 나중에 매퍼 부분만 수정

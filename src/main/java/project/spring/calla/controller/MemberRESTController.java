@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.spring.calla.service.JoinService;
+import project.spring.calla.service.MemberService;
 
 @RestController
 @RequestMapping(value="/member")
-public class JoinRESTController {
+public class MemberRESTController {
 	private static final Logger logger =
-			LoggerFactory.getLogger(JoinRESTController.class);
+			LoggerFactory.getLogger(MemberRESTController.class);
 	
 	@Autowired
-	private JoinService joinService;
+	private MemberService joinService;
 	
 	@PostMapping("/checkId") // @RequestParam("member_Id")을 String id에 넣는 key-value방식인듯
 	public int checkId(@RequestParam("memberId") String id) {
@@ -50,11 +50,6 @@ public class JoinRESTController {
 			logger.info(nick);
 		return joinService.checkNick(nick);
 	}
-		
-	
-	
-	
-	
 	}
 	
 	

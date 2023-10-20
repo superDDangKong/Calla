@@ -137,9 +137,10 @@
         			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
         			 if (result == 1) {
         				 console.log("사용불가능한아이디")
+        				 idckCheck = false; // 아이디 중복검사 통과 변수
         			 } else {
         				 console.log("사용가능한아이디")
-        				 idckCheck = true;
+        				 idckCheck = true; // 아이디 중복검사 통과 변수
         			 }
         		 } // end success
         	 }) // end ajax

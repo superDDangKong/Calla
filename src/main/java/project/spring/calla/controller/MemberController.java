@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value="" ,method= RequestMethod.GET)
-public class JoinController {
+@RequestMapping(value="/member")
+public class MemberController {
 	private static final Logger logger =
-			LoggerFactory.getLogger(JoinController.class);
+			LoggerFactory.getLogger(MemberController.class);
 	
 	@GetMapping("/join")
-	public String showJoinPage() {
-		logger.info("join()»£√‚");
-		return "join";
+	public void showJoinPage() {
 		
 	}
 	
