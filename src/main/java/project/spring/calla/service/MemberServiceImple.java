@@ -20,7 +20,7 @@ public class MemberServiceImple implements MemberService {
 	@Override
 	public int create(MemberVO vo) { // »ç¿ëÀÚ °èÁ¤ »ý¼º
 		logger.info("create() È£Ãâ : vo = " + vo.toString());
-		int resultInsert = dao.insert(vo); // °èÁ¤ ÀÔ·Â? »ý¼º?
+		int resultInsert = MemberDAO.insert(vo); // °èÁ¤ ÀÔ·Â? »ý¼º?
 		logger.info(resultInsert + "Çà °èÁ¤»ý¼º");
 		return 1;
 		
@@ -29,14 +29,14 @@ public class MemberServiceImple implements MemberService {
 	@Override
 	public int checkId(String memberId) { // ¾ÆÀÌµð Áßº¹È®ÀÎ
 		int result = 0;
-        result = dao.checkId(memberId);
+        result = MemberDAO.checkId(memberId);
 		return result;
 	}
 	
 	@Override
 	public int checkNick(String memberNickname) { // ´Ð³×ÀÓ Áßº¹È®ÀÎ
 		int result = 0;
-        result = dao.checkNickname(memberNickname);
+        result = MemberDAO.checkNickname(memberNickname);
 		return result;
 	}
 	  
