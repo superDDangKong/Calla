@@ -26,10 +26,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\upload">
-	<!-- 문자열 리소스를 bean으로 추가 -->
-	<!-- String uploadPath = new String("경로"); -->
+<!-- 	<beans:bean id="uploadpath" class="java.lang.String">
+		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
+	문자열 리소스를 bean으로 추가
+	String uploadPath = new String("경로");
+	</beans:bean> -->
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:\\Study\\FileUploadTest">
