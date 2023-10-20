@@ -40,15 +40,17 @@
 	</form>
 	</c:if>
 	
-	
+	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
 		${memberNickname}
 		<input type="hidden" id="memberNickname" value=${memberNickname }>
-		<input type="text" id="fBoardCommentContent">
+		<input type="text" id="fBoardCommentContent" required>
 		<button id="btnCommentAdd">작성</button> 
 	</div>
-	
-	
+	</c:if>
+	<c:if test="${memberNickname == null}">
+		<br> 댓글을 작성하려면 로그인해 주세요.
+	</c:if>
 	<hr>
 	
 	<div style="text-align: center;">
@@ -130,7 +132,7 @@
 								+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
 								+ this.memberNickname
 								+ '&nbsp;&nbsp;' // 공백
-								+ '<input type="text" class="fBoardCommentContent" value="' + this.fBoardCommentContent + '">'	 
+								+ '<input type="text" class="fBoardCommentContent" value="' + this.fBoardCommentContent + '" required>'	 
 								+ '&nbsp;&nbsp;' // 공백
 								+ fBoardCommentCreatedDate
 								+ '&nbsp;&nbsp;' // 공백
@@ -204,6 +206,10 @@
 			}); // end comments.on()
 			
 			$('#comments').on('click', '.comment_item .btnReply', function(){
+				if($('#memberNickname').val() == null) {
+					alert('답글을 작성하려면 로그인 해 주세요')
+					return;
+				}
 				console.log(this);
 				var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
 				getAllReplies(fBoardCommentId);
@@ -246,7 +252,7 @@
 								+ '<input type="hidden" class="fBoardReplyId" value="' + this.fBoardReplyId + '">'
 								+ this.memberNickname
 								+ '&nbsp;&nbsp;' // 공백
-								+ '<input type="text" class="fBoardReplyContent" value="' + this.fBoardReplyContent + '">'	 
+								+ '<input type="text" class="fBoardReplyContent" value="' + this.fBoardReplyContent + '" required>'	 
 								+ '&nbsp;&nbsp;' // 공백
 								+ fBoardReplyCreatedDate
 								+ '&nbsp;&nbsp;' // 공백
@@ -259,7 +265,7 @@
 						list +=  '<div style="text-align: center;">'
 							+ memberNickname
 							+ '&nbsp;&nbsp;'
-							+ '<input type="text" class="fBoardReplyContent">'
+							+ '<input type="text" class="fBoardReplyContent" required>'
 							+ '&nbsp;&nbsp;'
 							+ '<button class="btnReplyAdd">작성</button>' 
 							+ '</div>'

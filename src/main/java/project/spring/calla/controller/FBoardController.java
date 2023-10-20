@@ -152,4 +152,10 @@ public class FBoardController {
 			return "redirect:/fBoard/list";
 		}
 	} // end deletePOST()
+	
+	@GetMapping("/search")
+	public void search(Model model, Integer page, Integer numsPerPage) {
+		
+	
+	}
 } // end BoardController

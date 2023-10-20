@@ -1,6 +1,7 @@
 package project.spring.calla.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,5 +45,6 @@ public class MemberDAOImple implements MemberDAO{
 		logger.info("update() »£√‚ vo : " + vo);
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
+
 	
 }

@@ -78,10 +78,14 @@ public class MemberController {
 	} // end myPageGET()
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, String memberId) {
-		logger.info("updateGET() 호출 : memberId = " + memberId);
+	public void updateGET(Model model, HttpServletRequest request) {
+		logger.info("updateGET() 호출");
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		if(memberId != null) {
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
+		}
 	} // end updateGET()
 	
 	@PostMapping("/update")
@@ -98,5 +102,17 @@ public class MemberController {
 	@GetMapping("/fBoard")
 	public String fBoardGET() {
 		return "redirect:/fBoard/list";
-	}
+	} // end fBoardGET()
+	
+	@GetMapping("/likes")
+	public void likesGET(Model model, HttpServletRequest request) {
+		logger.info("likesGET() 호출");
+		
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		if(memberId != null) {
+		MemberVO vo = memberService.read(memberId);
+		model.addAttribute("vo", vo);
+		}
+	} // end likesGET()
 }

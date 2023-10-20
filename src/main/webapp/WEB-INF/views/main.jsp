@@ -25,9 +25,13 @@
 		if ($('#memberNickname').val() != "") {
 			list = "<button><a href='myPage?memberId=" + memberId + "'>마이페이지</a></button>"
 				+ "<button><a href='logout'>로그아웃</a></button>"
+				+ "<br><br>"
 				+ "<button><a href='product'>공용상품</a></button>"
+				+ '&nbsp;&nbsp;'
 				+ "<button><a href='uProduct'>중고상품</a></button>"
+				+ '&nbsp;&nbsp;'
 				+ "<button><a href='qBoard'>문의게시판</a></button>"
+				+ '&nbsp;&nbsp;'
 				+ "<button><a href='fBoard'>자유게시판</a></button>"
 				
 		} else {

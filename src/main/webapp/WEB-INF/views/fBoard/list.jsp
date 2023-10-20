@@ -26,11 +26,17 @@ li {
 </head>
 <body>
 
-${vo.fBoardCommentCount }
-${vo.fBoardViews } 
-
 	<h1>게시판 메인</h1>
 	<a href="register"><input type="button" value="글 작성"></a>
+	<form action="search" method="GET">
+	<select id="conditionOptions">
+        <option value="searchAll">전체</option>
+        <option value="searchMemberNickname">작성자</option>
+        <option value="searchBoardTitle">제목&내용</option>
+    </select>
+    <input type="text" name="conditionKeyword">
+    <input type="submit" value="검색">
+    </form>
 	<hr>
 	<table>
 		<thead>
