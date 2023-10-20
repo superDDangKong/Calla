@@ -1,9 +1,9 @@
 package project.spring.calla.service;
 
-import project.spring.calla.domain.memberVO;
+import project.spring.calla.domain.MemberVO;
 
 public interface MemberService {
-	int create(memberVO vo);
+	int create(MemberVO vo);
 	int checkId(String memberId);
 	int checkNick(String memberNickname);
 	

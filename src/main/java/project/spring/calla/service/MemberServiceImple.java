@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import project.spring.calla.domain.memberVO;
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.persistence.MemberDAO;
 
 @Service
@@ -17,7 +17,7 @@ public class MemberServiceImple implements MemberService {
 	private MemberDAO dao;
 
 	@Override
-	public int create(memberVO vo) { // 사용자 계정 생성
+	public int create(MemberVO vo) { // 사용자 계정 생성
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = dao.insert(vo); // 계정 입력? 생성?
 		logger.info(resultInsert + "행 계정생성");

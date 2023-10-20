@@ -2,7 +2,7 @@ package project.spring.calla.domain;
 
 import java.util.Date;
 
-public class memberVO {
+public class MemberVO {
 	
 	private String memberId;
 	private String memberPw;
@@ -15,9 +15,9 @@ public class memberVO {
 	private String memberNickname;
 	private int memberLevel;
 	
-	public memberVO() {}
+	public MemberVO() {}
 
-	public memberVO(String memberId, String memberPw, String memberName, String memberEmail, String memberPhone,
+	public MemberVO(String memberId, String memberPw, String memberName, String memberEmail, String memberPhone,
 			Date memberJoinDate, String memeberInterest, String memberAdress, String memberNickname, int memberLevel) {
 		super();
 		this.memberId = memberId;

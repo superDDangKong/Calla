@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.memberVO;
+import project.spring.calla.domain.MemberVO;
 
 @Repository
 public class MemberDAOImple implements MemberDAO{
@@ -38,7 +38,7 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public int insert(memberVO vo) { // 회원정보 등록
+	public int insert(MemberVO vo) { // 회원정보 등록
 		logger.info("insert() 호출 : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
