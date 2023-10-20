@@ -8,6 +8,6 @@ public interface UBoardDAO {
 	
 	int insert(UBoardVO vo);
 	
-	public void imageinsert(UImageVO vo);
+	int imageinsert(UImageVO vo);
 
 }

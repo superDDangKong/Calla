@@ -18,18 +18,34 @@ public class UBoardDAOImple implements UBoardDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+	private UBoardDAO dao;
 
 	@Override
 	public int insert(UBoardVO vo) {
 		logger.info("insert() 호출");
+		
+		vo.getImageList().forEach(attach -> {
+			
+			if(vo.getImageList() == null || vo.getImageList().size() <= 0) {
+				return;
+			}
+
+			attach.setuProductId(vo.getuProductId());
+			dao.imageinsert(attach);
+
+		});
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인
 		// <insert> 태그에 vo 데이터를 전송
+		
+		
+		
 	}
 
 	@Override
-	public void imageinsert(UImageVO vo) {
-		// TODO Auto-generated method stub
+	public int imageinsert(UImageVO vo) {
+		logger.info("insert() 호출");
+		return sqlSession.insert(NAMESPACE + ".imageinsert", vo);
 		
 	}
 

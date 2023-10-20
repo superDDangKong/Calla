@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import oracle.jdbc.driver.OracleDriver;
 import project.spring.calla.domain.UBoardVO;
@@ -34,10 +35,11 @@ public class UBoardDAOTest {
 	@Autowired
 	private UBoardDAO dao;
 
+	@Transactional
 	@Test
 	public void testDAO() {
-//		testInsert();
-		testImageInsert();
+		testInsert();
+//		testImageInsert();
 //		testSelectAll();
 //		testSelectByBoardId();
 //		testUpdate();
@@ -48,25 +50,29 @@ public class UBoardDAOTest {
 	}
 
 	private void testImageInsert() {
-		UImageVO vo = new UImageVO();
+		UImageVO vo = new UImageVO("test", "test", "test2", 1);
+		int result = dao.imageinsert(vo);
 
-		vo.setuProductId(137);
-		vo.setFileName("test");
-		vo.setUploadPath("test");
-		vo.setUuid("test2");
-
-		dao.imageinsert(vo);
+		if (result == 1) {
+			logger.info("insert 성공");
+		} else {
+			logger.info("insert 실패");
+		}
 
 	}
 
 	private void testInsert() {
 		UBoardVO vo = new UBoardVO(1, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요");
+
+		
 		int result = dao.insert(vo);
 		if (result == 1) {
 			logger.info("insert 성공");
 		} else {
 			logger.info("insert 실패");
 		}
+		
+		
 	}
 
 }

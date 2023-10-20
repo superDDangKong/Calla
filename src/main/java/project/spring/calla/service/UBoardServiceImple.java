@@ -31,10 +31,11 @@ public class UBoardServiceImple implements UBoardService {
 	}
 
 	@Override
-	public Object imageinsert(UImageVO vo) {
-		logger.info("imageinsert() 호출 : vo = " + vo.toString());
+	public int imagecreate(UImageVO vo) {
+		logger.info("imagecreate() 호출 : vo = " + vo.toString());
 		return dao.imageinsert(vo);
-		
 	}
+
+
 
 }

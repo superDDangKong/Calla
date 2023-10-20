@@ -9,6 +9,6 @@ import project.spring.calla.domain.UImageVO;
 public interface UBoardService {
 	int create(UBoardVO vo);
 	
-	public void imageinsert(UImageVO vo);
+	int imagecreate(UImageVO vo);
 	
 }
