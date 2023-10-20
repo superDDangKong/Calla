@@ -37,7 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.coobird.thumbnailator.Thumbnails;
 import project.spring.calla.util.FileUploadUtil;
 import org.springframework.http.MediaType;
-import project.spring.calla.domain.UBoardVO;
+import project.spring.calla.domain.UproductVO;
 import project.spring.calla.domain.UImageVO;
 import project.spring.calla.service.UBoardService;
 
@@ -63,7 +63,7 @@ public class UregisterController {
 	} // end uregisterGET()
 
 	@PostMapping("/uregister")
-	public String registerPOST(UBoardVO vo, RedirectAttributes reAttr) {
+	public String registerPOST(UproductVO vo, RedirectAttributes reAttr) {
 		// RedirectAttributes
 		// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
 		logger.info("uregisterPOST() 호출");

@@ -39,8 +39,8 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	@Resource(name = "uploadPath")
-	private String uploadPath;
+	@Resource(name = "uploadpath")
+	private String uploadpath;
 	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
@@ -79,7 +79,7 @@ public class ProductController {
 		
 		try {
 			// 파일 저장
-			String savedFileName = FileUploadUtil.saveUploadedFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 			// 이미지 경로 저장
 			vo.setProductImagePath(savedFileName);
 			int result = productService.create(vo);
@@ -124,7 +124,7 @@ public class ProductController {
 		logger.info("파일 크기 : " + file.getSize());
 		try {	
 			if(file != null && !file.isEmpty()) {
-				String savedFileName = FileUploadUtil.saveUploadedFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 				vo.setProductImagePath(savedFileName);
 			}
 			
@@ -161,7 +161,7 @@ public class ProductController {
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
 		
-		String filePath = uploadPath + fileName;
+		String filePath = uploadpath + fileName;
 		
 		try {
 			in = new FileInputStream(filePath);

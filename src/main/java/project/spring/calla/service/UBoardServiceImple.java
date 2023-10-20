@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import project.spring.calla.domain.UBoardVO;
+import project.spring.calla.domain.UproductVO;
 import project.spring.calla.domain.UImageVO;
 import project.spring.calla.persistence.UBoardDAO;
 
@@ -25,15 +25,11 @@ public class UBoardServiceImple implements UBoardService {
 	private UBoardDAO dao;
 
 	@Override
-	public int create(UBoardVO vo) {
+	public int create(UproductVO vo) {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		return dao.insert(vo);
-	}
-
-	@Override
-	public int imagecreate(UImageVO vo) {
-		logger.info("imagecreate() 호출 : vo = " + vo.toString());
-		return dao.imageinsert(vo);
+	
+		
 	}
 
 
