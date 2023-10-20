@@ -12,7 +12,11 @@
 <div class="wrapper">
 	<div class="wrap">
 		<div class="top_gnb_area">
+<<<<<<< Updated upstream
 			<h1>gnb area</h1>
+=======
+			<a href="uregister"><input type="button" value="내 물건 등록"></a>
+>>>>>>> Stashed changes
 		</div>
 		<div class="top_area">
 			<div class="logo_area">
