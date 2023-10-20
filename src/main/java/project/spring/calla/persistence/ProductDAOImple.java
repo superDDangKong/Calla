@@ -82,12 +82,12 @@ public class ProductDAOImple implements ProductDAO {
 	}
 
 	@Override
-	public int updateProductCommentCnt(int amount, int productId) {
-		logger.info("updateProdcutCommentCnt() : productId = " + productId);
+	public int updateProductCommentCount(int amount, int productId) {
+		logger.info("updateProdcutCommentCount() : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
-		return sqlSession.update(NAMESPACE + ".update_product_comment_cnt", args);
+		return sqlSession.update(NAMESPACE + ".update_product_comment_count", args);
 	}
 
 	

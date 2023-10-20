@@ -15,7 +15,7 @@ public interface ProductDAO {
 	int getTotalCount();
 	List<ProductVO> select(String productName);
 	List<ProductVO> selectByName(String keyword);
-	int updateProductCommentCnt(int amount, int productId);
+	int updateProductCommentCount(int amount, int productId);
 	
 	
 }

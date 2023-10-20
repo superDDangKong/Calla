@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by ${productId} desc
 	</select>
 	
-	<update id="update_product_comment_cnt">
+	<update id="update_product_comment_count">
     	update ${product}
     	set ${productCommentCount} = ${productCommentCount} + #{amount}
     	where ${productId} = #{productId}

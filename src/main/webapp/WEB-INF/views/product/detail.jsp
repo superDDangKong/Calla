@@ -153,14 +153,14 @@
 				var productId = $('productId').val();
 				var productCommentId = $(this).prevAll('#productCommentId').val();
 				console.log("선택된 댓글 번호 : " + productCommentId);
-				
+			
 				$.ajax({
 					type : 'DELETE',
 					url : 'productComments/' + productCommentId,
 					headers : {
 						'Content-Type' : 'application/json'
 					},
-					data : productCommentId,
+					data : productId,
 					success : function(result){
 						console.log(result);
 						if(result == 1){
