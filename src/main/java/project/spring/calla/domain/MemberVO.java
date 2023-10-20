@@ -3,22 +3,21 @@ package project.spring.calla.domain;
 import java.util.Date;
 
 public class MemberVO {
-	
 	private String memberId;
 	private String memberPw;
 	private String memberName;
 	private String memberEmail;
 	private String memberPhone;
 	private Date memberJoinDate;
-	private String memeberInterest;
-	private String memberAdress;
+	private String memberInterest;
+	private String memberAddress;
 	private String memberNickname;
 	private int memberLevel;
 	
 	public MemberVO() {}
 
 	public MemberVO(String memberId, String memberPw, String memberName, String memberEmail, String memberPhone,
-			Date memberJoinDate, String memeberInterest, String memberAdress, String memberNickname, int memberLevel) {
+			Date memberJoinDate, String memberInterest, String memberAddress, String memberNickname, int memberLevel) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -26,8 +25,8 @@ public class MemberVO {
 		this.memberEmail = memberEmail;
 		this.memberPhone = memberPhone;
 		this.memberJoinDate = memberJoinDate;
-		this.memeberInterest = memeberInterest;
-		this.memberAdress = memberAdress;
+		this.memberInterest = memberInterest;
+		this.memberAddress = memberAddress;
 		this.memberNickname = memberNickname;
 		this.memberLevel = memberLevel;
 	}
@@ -80,20 +79,20 @@ public class MemberVO {
 		this.memberJoinDate = memberJoinDate;
 	}
 
-	public String getMemeberInterest() {
-		return memeberInterest;
+	public String getMemberInterest() {
+		return memberInterest;
 	}
 
-	public void setMemeberInterest(String memeberInterest) {
-		this.memeberInterest = memeberInterest;
+	public void setMemberInterest(String memberInterest) {
+		this.memberInterest = memberInterest;
 	}
 
-	public String getMemberAdress() {
-		return memberAdress;
+	public String getMemberAddress() {
+		return memberAddress;
 	}
 
-	public void setMemberAdress(String memberAdress) {
-		this.memberAdress = memberAdress;
+	public void setMemberAddress(String memberAddress) {
+		this.memberAddress = memberAddress;
 	}
 
 	public String getMemberNickname() {
@@ -114,13 +113,12 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "memberVO [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+		return "MemberVO [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberEmail=" + memberEmail + ", memberPhone=" + memberPhone + ", memberJoinDate=" + memberJoinDate
-				+ ", memeberInterest=" + memeberInterest + ", memberAdress=" + memberAdress + ", memberNickname="
+				+ ", memberInterest=" + memberInterest + ", memberAddress=" + memberAddress + ", memberNickname="
 				+ memberNickname + ", memberLevel=" + memberLevel + "]";
 	}
-
 	
-
-
+	
+	
 }

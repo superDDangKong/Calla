@@ -5,29 +5,57 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<!-- DB 테이블과 컬럼들을 mapper에 매핑하기 위한 변수 선언 -->
+	<!--
+	* property
+	- name : mapper.xml에서 사용될 이름
+	- value : DB 테이블 및 컬럼 이름
+	-->
 	
-	 
-	 <properties>
-	 	<property name="member" value="member"/>
-	 	<property name="memberId" value="member_id"/>
-	 	<property name="memberPw" value="member_pw"/>
-	 	<property name="memberName" value="member_name"/>
-	 	<property name="memberEmail" value="member_email"/>
-	 	<property name="memberPhone" value="member_phone"/>
-	 	<property name="memberJoinDate" value="member_join_date"/>
-	 	<property name="memberInterest" value="member_interest"/>
-	 	<property name="memberAddress" value="member_address"/>
-	 	<property name="memberNickname" value="member_nickname"/>
-	 	<property name="memberLevel" value="member_level"/>
-	 </properties>
-	 <!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
-	 <settings>
-	 	<setting name="mapUnderscoreToCamelCase" value="true"/>
-	 </settings>
-	 <!-- typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
-	 <typeAliases>
-	 	<package name="project.spring.calla.domain"/>
-	 </typeAliases>
-	 
+	<properties>
+		<property name="f_board" value="f_board"/>
+		<property name="fBoardId" value="f_board_id"/>
+		<property name="memberNickname" value="member_nickname"/>
+		<property name="fBoardTitle" value="f_board_title"/>
+		<property name="fBoardContent" value="f_board_content"/>
+		<property name="fBoardCreatedDate" value="f_board_created_date"/>
+		<property name="fBoardViews" value="f_board_views"/>
+		<property name="fBoardCommentCount" value="f_board_comment_count"/>
+		
+		<property name ="f_board_comment" value="f_board_comment"/>
+		<property name ="fBoardCommentId" value="f_board_comment_id"/>
+		<property name ="fBoardId" value="f_board_id"/>
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="fBoardCommentContent" value="f_board_comment_content"/>
+		<property name ="fBoardCommentCreatedDate" value="f_board_comment_created_date"/>
+		
+		<property name ="f_board_reply" value="f_board_reply"/>
+		<property name ="fBoardReplyId" value="f_board_reply_id"/>
+		<property name ="fBoardCommentId" value="f_board_comment_id"/>
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="fBoardReplyContent" value="f_board_reply_content"/>
+		<property name ="fBoardReplyCreatedDate" value="f_board_reply_created_date"/>
+		
+		<property name ="member" value="member"/>
+		<property name ="memberId" value="member_id"/>
+		<property name ="memberPw" value="member_pw"/>
+		<property name ="memberName" value="member_name"/>
+		<property name ="memberEmail" value="member_email"/>
+		<property name ="memberPhone" value="member_phone"/>
+		<property name ="memberJoinDate" value="member_join_date"/>
+		<property name ="memberInterest" value="member_interest"/>
+		<property name ="memberAddress" value="member_address"/>
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="memberLevel" value="member_level"/>
+	</properties>
+	
+	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	</settings>
+	
+	<!--  typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
+	<typeAliases>
+		<package name="project.spring.calla.domain"/>
+	</typeAliases>
 </configuration>
-

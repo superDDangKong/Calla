@@ -4,36 +4,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import project.spring.calla.domain.FBoardReplyVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.persistence.MemberDAO;
 
+
 @Service
 public class MemberServiceImple implements MemberService {
-	private static final Logger logger = 
-			LoggerFactory.getLogger(MemberServiceImple.class);
-	
-	@Autowired
-	private MemberDAO dao;
+		private static final Logger logger = LoggerFactory.getLogger(MemberServiceImple.class);
 
+    
+	@Autowired
+	private MemberDAO MemberDAO;
+  
 	@Override
-	public int create(MemberVO vo) { // »ç¿ëÀÚ °èÁ¤ »ı¼º
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
-		int resultInsert = dao.insert(vo); // °èÁ¤ ÀÔ·Â? »ı¼º?
-		logger.info(resultInsert + "Çà °èÁ¤»ı¼º");
+	public int create(MemberVO vo) { // Â»Ã§Â¿Ã«Ã€Ãš Â°Ã¨ÃÂ¤ Â»Ã½Â¼Âº
+		logger.info("create() ÃˆÂ£ÃƒÃ¢ : vo = " + vo.toString());
+		int resultInsert = dao.insert(vo); // Â°Ã¨ÃÂ¤ Ã€Ã”Â·Ã‚? Â»Ã½Â¼Âº?
+		logger.info(resultInsert + "Ã‡Ã  Â°Ã¨ÃÂ¤Â»Ã½Â¼Âº");
 		return 1;
 		
 	}
 	
 	@Override
-	public int checkId(String memberId) { // ¾ÆÀÌµğ Áßº¹È®ÀÎ
+	public int checkId(String memberId) { // Â¾Ã†Ã€ÃŒÂµÃ° ÃÃŸÂºÂ¹ÃˆÂ®Ã€Ã
 		int result = 0;
         result = dao.checkId(memberId);
 		return result;
 	}
 	
 	@Override
-	public int checkNick(String memberNickname) { // ´Ğ³×ÀÓ Áßº¹È®ÀÎ
+	public int checkNick(String memberNickname) { // Â´ÃÂ³Ã—Ã€Ã“ ÃÃŸÂºÂ¹ÃˆÂ®Ã€Ã
 		int result = 0;
         result = dao.checkNickname(memberNickname);
 		return result;
@@ -41,4 +42,21 @@ public class MemberServiceImple implements MemberService {
 	  
 	 
 	   
+
+
+
+
+	@Override
+	public MemberVO read(String memberId) {
+		logger.info("read(memberId) ÃˆÂ£ÃƒÃ¢ memberId : " + memberId);
+		return MemberDAO.select(memberId);
+	}
+
+	@Override
+	public int update(MemberVO vo) {
+		logger.info("update() ÃˆÂ£ÃƒÃ¢ vo : " + vo.toString());
+		return MemberDAO.update(vo);
+	}
+
+	
 }

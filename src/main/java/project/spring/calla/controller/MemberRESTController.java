@@ -22,24 +22,24 @@ public class MemberRESTController {
 	@Autowired
 	private MemberService joinService;
 	
-	@PostMapping("/checkId") // @RequestParam("member_Id")À» String id¿¡ ³Ö´Â key-value¹æ½ÄÀÎµí
+	@PostMapping("/checkId") // @RequestParam("member_Id")ì„ String idì— ë„£ëŠ” key-valueë°©ì‹ì¸ë“¯
 	public int checkId(@RequestParam("memberId") String id) {
-		logger.info("checkId() È£Ãâ");
-		logger.info(id); // ÄÁÆ®·Ñ·¯·Î ³Ñ¾î¿À¸é¼­ = ºÙÀ½
+		logger.info("checkId() í˜¸ì¶œ");
+		logger.info(id); // ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ë„˜ì–´ì˜¤ë©´ì„œ = ë¶™ìŒ
 			try {
 				id = URLDecoder.decode(id, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			logger.info(id); // JSP¿¡¼­ ÀÔ·ÂÇÑ ¾ÆÀÌµğ¿¡ " = " ºÙ¾î¼­ ÄÜ¼Ö¿¡³ª¿È ±×·¡¼­ Áßº¹Ã¼Å©°¡ Á¦´ë·Î ¾ÈµÊ
+			logger.info(id); // JSPì—ì„œ ì…ë ¥í•œ ì•„ì´ë””ì— " = " ë¶™ì–´ì„œ ì½˜ì†”ì—ë‚˜ì˜´ ê·¸ë˜ì„œ ì¤‘ë³µì²´í¬ê°€ ì œëŒ€ë¡œ ì•ˆë¨
 
 		return joinService.checkId(id);
 	} // end checkId
 	
 	@PostMapping("/checkNick")
 	public int checkNick(@RequestParam("memberNickname") String nick) {
-		logger.info("checkNick() È£Ãâ");
+		logger.info("checkNick() í˜¸ì¶œ");
 		logger.info(nick);
 			try {
 				nick = URLDecoder.decode(nick,"UTF-8");
