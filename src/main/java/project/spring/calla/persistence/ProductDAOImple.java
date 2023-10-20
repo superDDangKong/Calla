@@ -1,6 +1,8 @@
 package project.spring.calla.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -81,8 +83,11 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int updateProductCommentCnt(int amount, int productId) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("updateProdcutCommentCnt() : productId = " + productId);
+		Map<String, Integer> args = new HashMap();
+		args.put("amount", amount);
+		args.put("productId", productId);
+		return sqlSession.update(NAMESPACE + ".update_product_comment_cnt", args);
 	}
 
 	
