@@ -4,30 +4,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<!-- DB 테이블과 컬럼들을 mapper에 매핑하기 위한 변수 선언 -->
-<<<<<<< Updated upstream
-	<!--
-	* property
-	- name : mapper.xml에서 사용될 이름
-	- value : DB 테이블 및 컬럼 이름 
-	 -->
-	 
-	
-	 
-	 <!--  underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
-	 <settings>
-	 	<setting name="mapUnderscoreToCamelCase" value="true"></setting>
-	 </settings>
-	 
-	 <!--  typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
-	 <typeAliases>
-	 	<package name="project.spring.calla" />
-	 </typeAliases>
-	 
-	 
-	 
-=======
-	<!-- * property - name : mapper.xml에서 사용될 이름 - value : DB 테이블 및 컬럼 이름 -->
+
 	<properties>
 		<property name="u_product" value="u_product" />
 		<property name="uProductId" value="u_product_id" />
@@ -58,8 +35,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</typeAliases>
 
 
-
->>>>>>> Stashed changes
 </configuration>
 
 
