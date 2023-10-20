@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.UboardMapper">
+
+	<insert id="insert">
+
+		<selectKey resultType="int" keyProperty="uProductId"
+			order="BEFORE">
+
+			SELECT U_PRODUCT_SEQ.currval from dual
+
+		</selectKey>
+
+		insert into ${u_product}
+		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress},
+		${uProductContent})
+		values (#{uProductName}, #{uProductPrice},
+		#{uProductCategori}, #{memberAddress}, #{uProductContent})
+	</insert>
+
+	<insert id="imageinsert">
+
+		insert into ${u_image}
+		(${uProductId}, ${fileName}, ${uploadPath}, ${uuid})
+		values (#{uProductId}, #{fileName}, #{uploadPath}, #{uuid})
+
+	</insert>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <!DOCTYPE configuration
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -47,15 +48,37 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name ="memberAddress" value="member_address"/>
 		<property name ="memberNickname" value="member_nickname"/>
 		<property name ="memberLevel" value="member_level"/>
+
+		<property name="u_product" value="u_product" />
+		<property name="uProductId" value="u_product_id" />
+		<property name="uProductName" value="u_product_name" />
+		<property name="uProductPrice" value="u_product_price" />
+		<property name="uProductViews" value="u_product_views" />
+		<property name="uProductLikes" value="u_product_likes" />
+		<property name="uProductCreatedDate" value="u_product_created_date" />
+		<property name="uProductCategori" value="u_product_categori" />
+		<property name="memberAddress" value="member_address" />
+		<property name="uProductContent" value="u_product_content" />
+
+		<property name="u_image" value="u_image" />
+		<property name="uploadPath" value="uploadpath" />
+		<property name="uuid" value="uuid" />
+		<property name="fileName" value="filename" />
 	</properties>
 	
+
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
 	</settings>
+
 	
 	<!--  typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
 	<typeAliases>
 		<package name="project.spring.calla.domain"/>
 	</typeAliases>
 </configuration>
+
+
+
+
