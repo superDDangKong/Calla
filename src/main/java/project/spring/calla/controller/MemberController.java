@@ -1,8 +1,15 @@
 package project.spring.calla.controller;
 
+	
+	
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +26,9 @@ import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
 @Controller // @Component
-//* Ç¥Çö °èÃş(Presentation Layer)
-//- view(ÆäÀÌÁö)¿Í service¸¦ ¿¬°áÇÏ´Â ¿ªÇÒ
-//- request¿¡ ´ëÇÑ response¸¦ Àü´ŞÇÏ´Â ¿ªÇÒ
+//* í‘œí˜„ ê³„ì¸µ(Presentation Layer)
+//- view(í˜ì´ì§€)ì™€ serviceë¥¼ ì—°ê²°í•˜ëŠ” ì—­í• 
+//- requestì— ëŒ€í•œ responseë¥¼ ì „ë‹¬í•˜ëŠ” ì—­í• 
 @RequestMapping(value="/member") // url : /ex02/board
 public class MemberController {
 	
@@ -34,14 +41,20 @@ public class MemberController {
 	@Autowired
 	private MemberDAO memberDAO; 
 	
+  	
+	@GetMapping("/join")
+	public void showJoinPage() {
+		
+	}
+  
 	@GetMapping("/login")
 	public void loginGET() {}
 	
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
-		// - ¸®´ÙÀÌ·ºÆ® ½Ã µ¥ÀÌÅÍ¸¦ Àü´ŞÇÏ±â À§ÇÑ ÀÎÅÍÆäÀÌ½º
-		logger.info("loginPOST() È£Ãâ");
+		// - ë¦¬ë‹¤ì´ë ‰íŠ¸ ì‹œ ë°ì´í„°ë¥¼ ì „ë‹¬í•˜ê¸° ìœ„í•œ ì¸í„°í˜ì´ìŠ¤
+		logger.info("loginPOST() í˜¸ì¶œ");
 		String result = memberDAO.login(memberId, memberPw);
 		
 		if(result != null) {
@@ -56,7 +69,7 @@ public class MemberController {
 			
 			return "/main";
 			
-			// redirect´Â request Á¤º¸°¡ ¾ø¾îÁü...
+			// redirectëŠ” request ì •ë³´ê°€ ì—†ì–´ì§...
 		} else {
 			return "/member/login";
 		}
@@ -64,7 +77,7 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-		logger.info("logout() È£Ãâ");
+		logger.info("logout() í˜¸ì¶œ");
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "/main";
@@ -72,14 +85,14 @@ public class MemberController {
 	
 	@GetMapping("/myPage")
 	public void myPageGET(Model model, String memberId) {
-		logger.info("myPageGET() È£Ãâ memberId = " + memberId);
+		logger.info("myPageGET() í˜¸ì¶œ memberId = " + memberId);
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
-		logger.info("updateGET() È£Ãâ");
+		logger.info("updateGET() í˜¸ì¶œ");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
@@ -90,7 +103,7 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo) {
-		logger.info("updatePOST() È£Ãâ : vo = " + vo.toString());
+		logger.info("updatePOST() í˜¸ì¶œ : vo = " + vo.toString());
 		int result = memberService.update(vo);
 		String memberId = vo.getMemberId();
 		if(result == 1) {
@@ -106,7 +119,7 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likesGET() È£Ãâ");
+		logger.info("likesGET() í˜¸ì¶œ");
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
