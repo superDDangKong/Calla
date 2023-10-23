@@ -72,7 +72,7 @@ public class FBoardDAOImple implements FBoardDAO {
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
 	}
-
+	
 	@Override
 	public int getTotalCounts() {
 		logger.info("getTotalCounts()");
@@ -80,17 +80,40 @@ public class FBoardDAOImple implements FBoardDAO {
 	}
 
 	@Override
-	public List<FBoardVO> select(String memberNickname) {
-		logger.info("select() 호출 : memberNickname = " + memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_by_memberid", "%" + memberNickname + "%");
+	public List<FBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword) {
+		logger.info("selectByMemberNickname() 호출 : keyword = " + keyword);
+		Map<String, Object> args = new HashMap();
+//		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_by_membernickname", args);
 	}
 
 	@Override
-	public List<FBoardVO> selectByTitleOrContent(String keyword) {
-		logger.info("selectByTitleOrContent() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", "%" + keyword + "%");
+	public int getTotalCountsByMemberNickname(String keyword) {
+		logger.info("getTotalCountsByMemberNickname()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_membernickname", "%" + keyword + "%");
 	}
 
+	@Override
+	public List<FBoardVO> selectByTitleOrContent(PageCriteria criteria, String keyword) {
+		logger.info("selectByTitleOrContent() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", args);
+	}
+
+	@Override
+	public int getTotalCountsByTitleContent(String keyword) {
+		logger.info("getTotalTitleContent()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
+	}
+	
 	@Override
 	public int updateCommentCount(int amount, int fBoardId) {
 		logger.info("updateCommentCount() : fBoardId = " + fBoardId);
@@ -108,4 +131,7 @@ public class FBoardDAOImple implements FBoardDAO {
 		args.put("fBoardId", fBoardId);
 		return sqlSession.update(NAMESPACE + ".update_views", args);
 	}
+
+
+
 }

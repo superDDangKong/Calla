@@ -8,6 +8,8 @@
 </head>
 <body>
 <input type="hidden" id="memberId" value=${memberId }>
+<h2>마이페이지</h2>
+<a href="main">홈</a>
 <a href="update">회원정보 수정</a>
 <a href="order">거래내역</a>
 <a href="likes">좋아요 목록</a>

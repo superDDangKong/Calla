@@ -39,6 +39,45 @@ public class FBoardServiceImple implements FBoardService{
 
 		return dao.select(criteria);
 	}
+	
+	@Override
+	public int getTotalCounts() {
+		logger.info("getTotalCounts() 호출");
+		return dao.getTotalCounts();
+	}
+	
+
+	@Override
+	public List<FBoardVO> readByMemberNickname(PageCriteria criteria, String keyword) {
+		logger.info("readByMemberNickname() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + keyword);
+		
+		return dao.selectByMemberNickname(criteria, keyword);
+	}
+
+	@Override
+	public int getTotalCountsByMemberNickname(String keyword) {
+		logger.info("getTotalCountsByMemberNickname() 호출");
+		return dao.getTotalCountsByMemberNickname(keyword);
+	}
+
+	@Override
+	public List<FBoardVO> readByTitleOrContent(PageCriteria criteria, String keyword) {
+		logger.info("readByTitleOrContent() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("keyword = " + keyword);
+		
+		return dao.selectByTitleOrContent(criteria, keyword);
+	}
+	
+	@Override
+	public int getTotalCountsByTitleContent(String keyword) {
+		logger.info("getTotalCountsByTitleContent() 호출");
+		return dao.getTotalCountsByTitleContent(keyword);
+	}
 
 	@Override
 	public FBoardVO read(int fBoardId) {
@@ -59,16 +98,16 @@ public class FBoardServiceImple implements FBoardService{
 		return dao.delete(fBoardId);
 	}
 
-	@Override
-	public int getTotalCounts() {
-		logger.info("getTotalCounts() 호출");
-		return dao.getTotalCounts();
-	}
+
 
 	@Override
 	public int updateViews(int views, int fBoardId) {
 		logger.info("updateViews() 호출");
 		return dao.updateViews(views, fBoardId);
 	}
+
+
+
+
 
 }

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
+import project.spring.calla.service.FBoardCommentService;
 import project.spring.calla.service.FBoardService;
 
 @Controller // @Component
@@ -33,13 +34,17 @@ public class FBoardController {
 	@Autowired
 	private FBoardService fBoardService; 
 	
+	@Autowired
+	private FBoardCommentService fBoardCommentService;
+	
 	@GetMapping("/list")
-	public void list(Model model, Integer page, Integer numsPerPage) {
+	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
 		
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
+		List<FBoardVO> list = null;
 		// Paging 처리
+		
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -48,13 +53,32 @@ public class FBoardController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		
-		List<FBoardVO> list = fBoardService.read(criteria);
-		model.addAttribute("list", list);
-		
 		PageMaker pageMaker = new PageMaker();
+		if (option != null) {
+			if (option.equals("searchMemberNickname")) {
+				logger.info("ifif");
+				list = fBoardService.readByMemberNickname(criteria, keyword);
+				pageMaker.setTotalCount(fBoardService.getTotalCountsByMemberNickname(keyword));
+			} else if (option.equals("searchTitleOrContent")) {
+				logger.info("if elseif");
+				list = fBoardService.readByTitleOrContent(criteria, keyword);
+				pageMaker.setTotalCount(fBoardService.getTotalCountsByTitleContent(keyword));
+			} else {
+				logger.info("if else");
+				list = fBoardService.read(criteria);
+				pageMaker.setTotalCount(fBoardService.getTotalCounts());
+			}
+		} else {
+			logger.info("else");
+			list = fBoardService.read(criteria);
+			pageMaker.setTotalCount(fBoardService.getTotalCounts());
+		}
+		logger.info("totalCount = " + pageMaker.getTotalCount());
+		model.addAttribute("list", list);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(fBoardService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 	} // end list()
@@ -116,8 +140,17 @@ public class FBoardController {
 		 
 		logger.info("detail() 호출 : fBoardId = " + fBoardId);
 		FBoardVO vo = fBoardService.read(fBoardId);
+		
+		PageMaker pageMaker = new PageMaker();
+		PageCriteria criteria = new PageCriteria();
+		
+		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));
+		
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "/fBoard/detail";
 	} // end detail()

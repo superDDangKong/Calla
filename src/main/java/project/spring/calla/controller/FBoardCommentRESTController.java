@@ -1,6 +1,8 @@
 package project.spring.calla.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.FBoardCommentVO;
+import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.FBoardCommentService;
 
 @RestController
@@ -49,13 +53,38 @@ public class FBoardCommentRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/all/{FBoardId}") // GET : 댓글 선택(all)
-	public ResponseEntity<List<FBoardCommentVO>> readComments(@PathVariable("FBoardId") int fBoardId) {
+	@GetMapping("/all/{FBoardId}/{commentPage}/{commentNumsPerPage}") // GET : 댓글 선택(all)
+	public ResponseEntity<Map<String, Object>> readComments(
+			@PathVariable("FBoardId") int fBoardId, @PathVariable("commentPage") Integer commentPage, 
+			@PathVariable("commentNumsPerPage") Integer commentNumsPerPage) {
 		// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
 		logger.info("readComments() 호출 : fBoardId = " + fBoardId);
+		logger.info("readComments() 호출 : commentPage = " + commentPage);
+		logger.info("readComments() 호출 : commentNumsPerPage = " + commentNumsPerPage);
+		List<FBoardCommentVO> list = null;
+		PageCriteria criteria = new PageCriteria();
+		
+		if(commentPage != null) {
+			criteria.setPage(commentPage);
+		}
+		
+		if(commentNumsPerPage != null) {
+			criteria.setNumsPerPage(commentNumsPerPage);
+		}
+		
+		PageMaker pageMaker = new PageMaker();
+		list = fBoardCommentService.read(criteria, fBoardId);
+		
+		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("list", list);
+		responseMap.put("pageMaker", pageMaker);
 
-		List<FBoardCommentVO> list = fBoardCommentService.read(fBoardId);
-		return new ResponseEntity<List<FBoardCommentVO>>(list, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
+		
 	}
 
 	@PutMapping("/{FBoardCommentId}") // PUT : 댓글 수정

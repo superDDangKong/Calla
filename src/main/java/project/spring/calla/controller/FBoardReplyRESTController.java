@@ -64,18 +64,18 @@ public ResponseEntity<List<FBoardReplyVO>> readReplies(@PathVariable("FBoardComm
 @PutMapping("/{FBoardReplyId}") // PUT : 댓글 수정
 public ResponseEntity<Integer> updateReply(@PathVariable("FBoardReplyId") int fBoardReplyId,
 		@RequestBody String fBoardReplyContent) {
+	logger.info("updateReply() 호출 : fBoardReplyId = " + fBoardReplyId);
 	int result = fBoardReplyService.update(fBoardReplyId, fBoardReplyContent);
 	return new ResponseEntity<Integer>(result, HttpStatus.OK);
 }
 
 @DeleteMapping("/{FBoardReplyId}")
-public ResponseEntity<Integer> deleteReply(@PathVariable("FBoardReplyId") int fBoardReplyId,
-		@RequestBody int fBoardCommentId) {
+public ResponseEntity<Integer> deleteReply(@PathVariable("FBoardReplyId") int fBoardReplyId) {
 	logger.info("FBoardReplyId = " + fBoardReplyId);
 
 	int result = 0;
 	try {
-		result = fBoardReplyService.delete(fBoardReplyId, fBoardCommentId);
+		result = fBoardReplyService.delete(fBoardReplyId);
 	} catch (Exception e) {
 		e.printStackTrace();
 	}

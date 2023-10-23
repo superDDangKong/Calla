@@ -42,8 +42,8 @@ public class FBoardReplyServiceImple implements FBoardReplyService {
 	}
 
 	@Override
-	public int delete(int fBoardReplyId, int fBoardCommentId) throws Exception {
-		logger.info("delete() 호출 : fBoardCommentId = " + fBoardCommentId);
+	public int delete(int fBoardReplyId) throws Exception {
+		logger.info("delete() 호출 : fBoardReplyId = " + fBoardReplyId);
 		int resultDelete = fBoardReplyDAO.delete(fBoardReplyId);
 		logger.info(resultDelete + " 행 삭제 성공");
 		return 1;

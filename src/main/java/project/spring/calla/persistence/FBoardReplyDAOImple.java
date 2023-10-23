@@ -41,7 +41,7 @@ public class FBoardReplyDAOImple implements FBoardReplyDAO {
 		logger.info("update() »£√‚");
 		logger.info("replyId = " + fBoardReplyId + ", replyContent = " + fBoardReplyContent);
 		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("fBoardReplytId", fBoardReplyId);
+		args.put("fBoardReplyId", fBoardReplyId);
 		args.put("fBoardReplyContent", fBoardReplyContent);
 		return sqlSession.update(NAMESPACE + ".update", args);
 	}

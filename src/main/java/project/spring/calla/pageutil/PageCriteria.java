@@ -1,15 +1,15 @@
 package project.spring.calla.pageutil;
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½
-// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
-// -> paging Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ startï¿½ï¿½ end ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// ºê¶ó¿ìÀú¿¡¼­ º¸¿©Áú ÆäÀÌÁö ¹øÈ£¿Í
+// ÇÑ ÆäÀÌÁö¿¡¼­ º¸¿©Áú °Ô½Ã±ÛÀÇ °³¼ö¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
+// -> paging Ã³¸®¿¡ ÇÊ¿äÇÑ start¿Í end ¹øÈ£¸¦ ¾Ë ¼ö ÀÖÀ½
 public class PageCriteria {
-	private int page; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
-	private int numsPerPage; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private int page; // ÇöÀç ÆäÀÌÁö ¹øÈ£
+	private int numsPerPage; // ÇÑ ÆäÀÌÁöÀÇ °Ô½Ã±Û °³¼ö
 	
 	public PageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 3;
+		this.numsPerPage = 10;
 	}
 	
 	public PageCriteria(int page, int numsPerPage) {
@@ -34,12 +34,12 @@ public class PageCriteria {
 		this.numsPerPage = numsPerPage;
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£(rn)
+	// ÇöÀç º¸¿©Áö´Â ÆäÀÌÁöÀÇ ½ÃÀÛ ±Û ÀÏ·Ã¹øÈ£(rn)
 	public int getStart() {
 		return (this.page - 1) * this.numsPerPage + 1;
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£(rn)
+	// ÇöÀç º¸¿©Áö´Â ÆäÀÌÁöÀÇ ¸¶Áö¸· ±Û ÀÏ·Ã¹øÈ£(rn)
 	public int getEnd() {
 		return this.page * this.numsPerPage;
 	}

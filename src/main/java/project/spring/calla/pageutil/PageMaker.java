@@ -1,14 +1,22 @@
 package project.spring.calla.pageutil;
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¿ï¿½ï¿½Æ¼ Å¬ï¿½ï¿½ï¿½ï¿½
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import project.spring.calla.controller.FBoardController;
+
+// ÆäÀÌÁö ¹øÈ£µéÀÇ ¸µÅ©¸¦ ¸¸µé±â À§ÇÑ À¯Æ¿¸®Æ¼ Å¬·¡½º
 public class PageMaker {
+	private static final Logger logger = 
+			LoggerFactory.getLogger(PageMaker.class);
+	
 	private PageCriteria criteria;
-	private int totalCount; // ï¿½ï¿½Ã¼ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
-	private int numsOfPageLinks; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	private int startPageNo; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å© ï¿½ï¿½È£
-	private int endPageNo; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å© ï¿½ï¿½È£
-	private boolean hasPrev; // È­ï¿½é¿¡ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½
-	private boolean hasNext; // È­ï¿½é¿¡ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ Å« ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½
+	private int totalCount; // ÀüÃ¼ °Ô½Ã±Û °³¼ö
+	private int numsOfPageLinks; // ÆäÀÌÁö ¹øÈ£ ¸µÅ©ÀÇ °³¼ö
+	private int startPageNo; // ½ÃÀÛ ÆäÀÌÁö ¸µÅ© ¹øÈ£
+	private int endPageNo; // ³¡ ÆäÀÌÁö ¸µÅ© ¹øÈ£
+	private boolean hasPrev; // È­¸é¿¡ º¸ÀÌ´Â ½ÃÀÛ ÆäÀÌÁö ¹øÈ£º¸´Ù ÀÛÀº ¼ýÀÚÀÇ ÆäÀÌÁö°¡ ÀÖ´Â Áö
+	private boolean hasNext; // È­¸é¿¡ º¸ÀÌ´Â ³¡ ÆäÀÌÁö ¹øÈ£º¸´Ù Å« ¼ýÀÚÀÇ ÆäÀÌÁö°¡ ÀÖ´Â Áö
 	
 	public PageMaker() {
 		this.numsOfPageLinks = 3;
@@ -50,17 +58,19 @@ public class PageMaker {
 		return hasNext;
 	}
 	
-	// startPageNo, endPageNo, hasPrev, hasNext ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// startPageNo, endPageNo, hasPrev, hasNext °ªÀ» °è»ê ¹× ¼¼ÆÃ
 	public void setPageData() {
+		
+		logger.info("setPageData È£Ãâ");
+
 		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage());
 		int temp = (int) Math.ceil((double) criteria.getPage() / numsOfPageLinks) * numsOfPageLinks;
-		
 		if (temp > totalLinkNo) {
 			endPageNo = totalLinkNo;
 		} else {
 			endPageNo = temp;
 		}
-		
+		logger.info("endPageNo = " + endPageNo);
 		startPageNo = ((endPageNo - 1) / numsOfPageLinks) * numsOfPageLinks + 1;
 		
 		if (startPageNo == 1) {
@@ -74,8 +84,8 @@ public class PageMaker {
 		} else {
 			hasNext = true;
 		}
-		// Math.ceil (ï¿½Ã¸ï¿½)
-		// Math.floor (ï¿½ï¿½ï¿½ï¿½)
+		// Math.ceil (¿Ã¸²)
+		// Math.floor (¹ö¸²)
 		
 	}
 	

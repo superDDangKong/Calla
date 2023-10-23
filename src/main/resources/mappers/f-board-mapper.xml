@@ -64,17 +64,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	select count(*) total_cnt from ${f_board}
 	 </select>
 	 
-	 <select id="select_by_memberid" resultType="FBoardVO">
-	 	select * from ${f_board}
-	 	where ${memberNickname} like #{memberNickname}
+	 <select id="select_by_membernickname" resultType="FBoardVO">
+	 	select ${fBoardId}, ${fBoardTitle}, ${fBoardContent}, ${memberNickname}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${f_board} where ${memberNickname} like #{keyword}  
+	 			order by ${fBoardId} desc
+	 		)a
+	 	) where rn between #{start} and #{end}
+	 </select>
+	 
+	 <select id="total_count_by_membernickname" resultType="Integer">
+	  	select count(*) total_cnt from ${f_board} where ${memberNickname} like #{keyword}
 	 </select>
 	 
 	 <select id="select_by_title_content" resultType="FBoardVO">
-	 	select * from ${f_board}
-	 	where ${fBoardTitle} like #{keyword} or
-	 		${fBoardContent} like #{keyword}
-	 		order by ${fBoardNickname} desc
+	 	select ${fBoardId}, ${fBoardTitle}, ${fBoardContent}, ${memberNickname}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${f_board} 
+	 			where ${fBoardTitle} like #{keyword} or 
+	 			${fBoardContent} like #{keyword}
+	 			order by ${fBoardId} desc
+	 		)a
+	 	) where rn between #{start} and #{end}
+
 	 </select> 
+	 
+	 <select id="total_count_by_title_content" resultType="Integer">
+	  	select count(*) total_cnt from ${f_board} 
+	  	where ${fBoardTitle} like #{keyword} or	${fBoardContent} like #{keyword}
+	 </select>
 	 
 	 <update id="update_comment_count">
 	 	update ${f_board}

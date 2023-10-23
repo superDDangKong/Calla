@@ -27,4 +27,5 @@ public class FBoardCommentController {
 	public void comment() {
 		
 	}
+	
 } // end BoardController

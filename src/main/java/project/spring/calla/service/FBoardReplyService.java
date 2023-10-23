@@ -9,5 +9,5 @@ public interface FBoardReplyService {
 	int create(FBoardReplyVO vo) throws Exception;
 	List<FBoardReplyVO> read(int fBoardCommentId);
 	int update(int fBoardReplyId, String fBoardReplyContent);
-	int delete(int fBoardReplyId, int fBoardCommentId) throws Exception;
+	int delete(int fBoardReplyId) throws Exception;
 }

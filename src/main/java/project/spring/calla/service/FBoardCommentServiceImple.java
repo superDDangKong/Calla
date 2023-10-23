@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.FBoardCommentVO;
+import project.spring.calla.domain.FBoardVO;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 
@@ -57,6 +59,22 @@ public class FBoardCommentServiceImple implements FBoardCommentService {
 		int result = fBoardDAO.updateCommentCount(-1, fBoardId);
 		logger.info(result + "행 수정 성공");
 		return 1;
+	}
+
+	@Override
+	public List<FBoardCommentVO> read(PageCriteria criteria, int fBoardId) {
+		logger.info("read() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("fBoardId = " + fBoardId);
+
+		return fBoardCommentDAO.select(criteria, fBoardId);
+	}
+
+	@Override
+	public int getTotalCounts(int fBoardId) {
+		logger.info("getTotalCounts() 호출");
+		return fBoardCommentDAO.getTotalCounts(fBoardId);
 	}
 
 }

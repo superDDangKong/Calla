@@ -1,9 +1,9 @@
 package project.spring.calla.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,20 +11,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,11 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import net.coobird.thumbnailator.Thumbnails;
-import project.spring.calla.util.FileUploadUtil;
-import org.springframework.http.MediaType;
-import project.spring.calla.domain.UproductVO;
 import project.spring.calla.domain.UImageVO;
+import project.spring.calla.domain.UproductVO;
 import project.spring.calla.service.UBoardService;
 
 @Controller
@@ -46,13 +38,6 @@ public class UregisterController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UregisterController.class);
 
-	// 메인 페이지 이동
-	@RequestMapping(value = "main", method = RequestMethod.GET)
-	public void mainPageGET() {
-
-		logger.info("메인 페이지 진입");
-
-	}
 
 	@Autowired
 	private UBoardService uboardService;

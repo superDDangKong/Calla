@@ -54,5 +54,20 @@ public class FBoardCommentDAOImple implements FBoardCommentDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", fBoardCommentId);
 	}
 
+	@Override
+	public List<FBoardCommentVO> select(PageCriteria criteria, int fBoardId) {
+		Map<String, Object> args = new HashMap();
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("fBoardId", fBoardId);
+		return sqlSession.selectList(NAMESPACE + ".paging", args);
+	}
+
+	@Override
+	public int getTotalCounts(int fBoardId) {
+		logger.info("getTotalCounts()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count", fBoardId);
+	}
+
 	
 }

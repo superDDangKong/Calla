@@ -27,16 +27,18 @@ li {
 <body>
 
 	<h1>게시판 메인</h1>
+	<input type="hidden" id="selectedOption" value=${option }>
 	<a href="register"><input type="button" value="글 작성"></a>
-	<form action="search" method="GET">
-	<select id="conditionOptions">
-        <option value="searchAll">전체</option>
-        <option value="searchMemberNickname">작성자</option>
-        <option value="searchBoardTitle">제목&내용</option>
-    </select>
-    <input type="text" name="conditionKeyword">
-    <input type="submit" value="검색">
-    </form>
+	
+	<form action="list" method="GET">
+		<select id="option" name="option">
+			<option value="searchMemberNickname" selected>작성자</option>
+			<option value="searchTitleOrContent">제목&내용</option>
+		</select> 
+		<input type="text" name="keyword" value="${keyword }"> 
+		<input type="submit" value="검색">
+	</form>
+	
 	<hr>
 	<table>
 		<thead>
@@ -72,7 +74,7 @@ li {
 		
 		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" 
 			var="num">
-			<li><a href="list?page=${num }">${num }</a></li>
+			<li><a href="list?page=${num }&option=${option}&keyword=${keyword}">${num }</a></li>
 		</c:forEach>
 		
 		<c:if test="${pageMaker.hasNext }">
@@ -80,15 +82,21 @@ li {
 		</c:if>
 	</ul>
 	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if($("#selectedOption").val() != ""){
+				$("#option").val($("#selectedOption").val());
+			}
+		}) // end document.ready()
+	</script>
+	
 	<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 	<input type="hidden" id="insertAlert" value="${insert_result }">
-	
 	<script type="text/javascript">
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 글 작성 성공!');
 		}
-	
 	</script>
 </body>
 </html>

@@ -33,7 +33,7 @@ import project.spring.calla.service.MemberService;
 public class MemberController {
 	
 	private static final Logger logger = 
-			LoggerFactory.getLogger(FBoardController.class);
+			LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
 	private MemberService memberService; 
@@ -46,7 +46,11 @@ public class MemberController {
 	public void showJoinPage() {
 		
 	}
-  
+	@GetMapping("/main")
+	public String mainGET() {
+		return "redirect:/";
+	}
+	
 	@GetMapping("/login")
 	public void loginGET() {}
 	
@@ -67,7 +71,7 @@ public class MemberController {
 			session.setAttribute("memberNickname", memberNickname);
 			session.setMaxInactiveInterval(600);
 			
-			return "/main";
+			return "redirect:/";
 			
 			// redirect는 request 정보가 없어짐...
 		} else {
@@ -80,7 +84,7 @@ public class MemberController {
 		logger.info("logout() 호출");
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "/main";
+		return "redirect:/";
 	} // end logoutGET()
 	
 	@GetMapping("/myPage")

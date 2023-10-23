@@ -3,6 +3,8 @@ package project.spring.calla.service;
 import java.util.List;
 
 import project.spring.calla.domain.FBoardCommentVO;
+import project.spring.calla.domain.FBoardVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 // CRUD(Create, Read, Update, Delete)
 public interface FBoardCommentService {
@@ -10,6 +12,7 @@ public interface FBoardCommentService {
 	List<FBoardCommentVO> read(int fBoardId);
 	int update(int fBoardCommentId, String fBoardCommentContent);
 	int delete(int fBoardCommentId, int fBoardId) throws Exception;
-	
+	List<FBoardCommentVO> read(PageCriteria criteria, int fBoardId);
+	int getTotalCounts(int fBoardId);
 	
 }
