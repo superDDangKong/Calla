@@ -40,35 +40,35 @@
 <body>
 
 <div style="text-align:center">
-	<form name="join" action="join" method="post">
+	 <form name="join" action="join" id="join"method="post"> 
 		<div>아이디
-		<input type="text" id="member_id" name="member_id" placeholder="아이디 입력"><br>
+		<input type="text" id="member_id" name="memberId" placeholder="아이디 입력" required><br>
 		<span class="final_id_ck1">사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</span>
 		<span class="final_id_ck2">아이디: 8자 이상의 영문, 숫자와 특수기호만 사용 가능합니다.</span><!-- 아이디 유효성 확인 -->
 		</div><br>
 		
 		<div>비밀번호
-		<input type="password" id="member_pw" name="member_pw"><br>
+		<input type="password" id="member_pw" name="memberPw" required><br>
 		<span class="final_pw_ck1">비밀번호: 8자 이상의 영문, 숫자, 특수문자를 사용해 주세요.</span><!-- 비밀번호 유효성 확인 -->
 		</div><br>
 		
 		<div>비밀번호 재확인
-		<input type="password" id="member_pw_ck" name="member_pw_check"><br>
+		<input type="password" id="member_pw_ck" name="member_pw_check" required><br>
 		<span class="final_pw_ck2">비밀번호가 틀렸습니다.</span><!-- 입력한 비밀번호와 똑같은지 체크 -->
 		</div><br>
 		
 		<div>이름
-		<input type="text" id="member_name" name="member_name" placeholder="홍길동"><br>
+		<input type="text" id="member_name" name="memberName" placeholder="홍길동" required><br>
 		</div><br>
 		
 		<div>닉네임
-		<input type="text" id="member_nickname" name="member_nickname" placeholder="calla"><br>
+		<input type="text" id="member_nickname" name="memberNickname" placeholder="calla" required><br>
 		<span class="final_nick_ck1">중복된 닉네임입니다.</span>
 		</div><br>
 		
 		<div>이메일
-				<input type="text" name="member_email1" id="email_id" placeholder="calla">@
-				<input type="text" name="member_email2" id="email_domain" class="box" placeholder="naver.com">
+				<input type="text" name="member_email1" id="email_id" placeholder="calla" required>@
+				<input type="text" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
 				<select class="box" id="domain-list" name="emailSelection" onchange="select_change(this.value);">
 					<option value="type">-직접입력-</option>
 					<option value="naver.com">naver.com</option>
@@ -78,34 +78,96 @@
   					<option value="kakao.com">kakao.com</option>
 				</select>
 				<span class="final_email_ck"></span><!-- 이메일 형식대로 입력하라는 문장출력 -->
+				<input type="hidden" name="memberEmail" id="memberEmail">
 		</div><br>
 		
 		<div>핸드폰
-        <input type="tel" id="member_phone" name="member_phone" placeholder="010-1234-5678"><br>
+        <input type="tel" id="member_phone" name="memberPhone" placeholder="010-1234-5678" required><br>
         </div><br>
         
         <div>관심사
-      	만화<input type="checkbox" class="check" value="만화">
-      	굿즈<input type="checkbox" class="check" value="굿즈">
-      	애니<input type="checkbox" class="check" value="애니"><br>
+      	만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
+      	굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
+      	애니<input type="checkbox" name="check" class="check" id="check3" value="캐릭터"><br>
+      	<input type="hidden" name="memberInterest" id="memberInterest">
       	<span class="final_interest_ck">관심사를 선택해주세요.</span><!-- 관심사를 선택해주세요 -->
       	</div><br>
       	
+      	
       	<br>
       	<div>주소</div> <!-- 주소api -->
-      	<input type="text" id="sample6_postcode" placeholder="우편번호">
+      	<input type="text" id="postcode" placeholder="우편번호" required>
 		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="sample6_address" placeholder="주소">
-		<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br>
-		<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+		<input type="text" id="address" placeholder="주소" required>
+		<input type="text" id="detailAddress" placeholder="상세주소" required><br>
+		<input type="text" id="extraAddress" placeholder="참고항목" required>
 		<br>
-		<input type="submit" name="join_button" id="join_button" value="가입완료">
+		<!-- <input type="submit" name="join_button" id="join_button" value="가입완료"> -->
+		<button type="submit" id="join">가입완료</button>
 		<span class="final_add_ck">주소를 확인해주세요.</span><!-- 주소를 확인해주세요 -->
+		<input type="hidden" name="memberAddress" id="memberAddress">
+      	
       
-      
-      </form>
+   	</form>
 </div>
       <script>
+      $(document).ready(function() {
+    	    $("#join").submit(function(event) {
+    	        // 폼 제출 이벤트 발생 시 실행되는 코드
+
+    	        // 유효성 검사
+    	        var name = $("#name").val();
+    	        var email = $("#email").val();
+
+    	        if (name === "" || email === "" || !isValidEmail(email)) {
+    	            event.preventDefault(); // 제출 이벤트 중단
+    	            $("#error").text("폼을 올바르게 작성하세요.");
+    	        }
+    	    }); // end submit function		
+    	    
+      });
+      
+      		$("#join").click(function(){
+      			var emailId = $('#email_id').val();
+      			var emailDomain = $('#email_domain').val();
+      			var memberEmail = emailId + '@' + emailDomain;
+      			document.getElementById("memberEmail").value = memberEmail;
+      			
+      		}) // end
+      		
+      		$(document).ready(function() {
+      			
+    	    var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
+    	    
+    	     $(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
+    	    	 var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
+    	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
+    	    		//selectedValues 체크된 요소들을 저장할 배열
+    	            return $(this).val();
+    	        }).get(); // get();  selectedValues jquery객체를 javascript 객체로 바꾸어줌
+				
+    	    	interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
+    	        // join 배열을 하나의 문자열로 합쳐주는 메서드
+    	        document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
+    	        var i = $('#memberInterest').val(); // 변수 값을 저장
+    	        console.log(i); // 값이 제대로 나오는지 확인 
+    	    	});
+    		});
+     
+
+      
+
+      
+      
+      $('#email_domain').blur(function(){
+    	  var inputemail = $('#email_id');
+          
+      })
+      
+      
+      
+      
+
       
       /* 유효성 검사 통과유무 변수 */
       var idckcorCheck = false;			// 아이디 유효성 검사
@@ -134,7 +196,7 @@
         		 url : '/calla/member/checkId', // 뭐라 할까나 ~ 
         		 data : {memberId : memberId},
         		 success : function(result){
-        			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+        			 console.log("성공시 result = " + result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
         			 if (result == 1) {
         				 console.log("사용불가능한아이디")
         				 idckCheck = false; // 아이디 중복검사 통과 변수
@@ -254,16 +316,6 @@
     	 console.log(memberPhone)
      }) // end 입력한 핸드폰 번호
      
-      
-
-       
-       
-      
-    
-	
-	
-
-    
 
 	
 	</script>
@@ -319,19 +371,35 @@
                         		extraAddr = ' (' + extraAddr + ')';
                     		}
                     		// 조합된 참고항목을 해당 필드에 넣는다.
-                    		document.getElementById("sample6_extraAddress").value = extraAddr;
+                    		document.getElementById("extraAddress").value = extraAddr;
                 
                 		} else {
-                    		document.getElementById("sample6_extraAddress").value = '';
+                    		document.getElementById("extraAddress").value = '';
                 		}
-
+	
                 		// 우편번호와 주소 정보를 해당 필드에 넣는다.
-                		document.getElementById('sample6_postcode').value = data.zonecode;
-                		document.getElementById("sample6_address").value = addr;
+                		document.getElementById('postcode').value = data.zonecode;
+                		document.getElementById("address").value = addr;
                 		// 커서를 상세주소 필드로 이동한다.
-                		document.getElementById("sample6_detailAddress").focus();
+                		document.getElementById("detailAddress").focus();
+                		$('#detailAddress').blur(function(){
+                		var add1 = $('#postcode').val(); // 우편번호
+	   					var add2 = $('#address').val(); // 주소
+	    				var add3 = $('#detailAddress').val(); // 상세주소
+	    				var add4 = $('#extraAddress').val(); // 참고항목
+	    				var address = add1 + add2 + add3 + add4;
+						// add1,2,3,4를 memberAddress에 넣는다
+						document.getElementById("memberAddress").value = address;
+						console.log(address);
+                			
+                		});
+					      
             		}
         		}).open();
     		}
+    		
+    	
+
+    		
 </script>
 </html>

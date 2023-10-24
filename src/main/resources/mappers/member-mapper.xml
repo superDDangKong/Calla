@@ -8,9 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert">
 		insert into ${member}
 		(${memberId}, ${memberPw}, ${memberName}, ${memberEmail}, ${memberPhone},
-		${memberInterest}, ${memberAdress}, ${memberNickname})
-		values (#{memberId}, #{memberPw}, #{memberName}, #{memberEamil},
-		#{memberPhone}, #{memberInterest}, #{memberAdress}, #{memberNickname})<!-- 
+		${memberInterest}, ${memberAddress}, ${memberNickname})
+		values (#{memberId}, #{memberPw}, #{memberName}, #{memberEmail},
+		#{memberPhone}, #{memberInterest}, #{memberAddress}, #{memberNickname})<!-- 
 			물음표 -->
 	</insert>
 	<!-- property의 name과 vo의 변수 이름이 같아야함 -->

@@ -40,6 +40,30 @@
 		<input type="submit" value="상품 삭제">
 	</form>
 	
+	<form action="">
+		<div id="cart">
+			<div title="상품이름">상품이름 : 
+				<input name="goods" value="${vo.productName }" readonly="readonly">
+			</div>
+			<div title="상품옵션">상품옵션 : 
+				<select class="box" id="option-list" name="optionSelection" onchange="select_change(this.value);">
+					<option value="type">옵션 선택</option>
+					<option value="S">S</option>
+  					<option value="M">M</option>
+  					<option value="XL">XL</option>
+  					<option value="2XL">2XL</option>
+  					<option value="3XL">3XL</option>
+				</select>
+			</div>
+			<div title="상품수량">상품수량 : 
+				<input type="number" id="quantity" name="수량" min="1">
+			</div>
+			<div title="상품가격">상품가격 : 
+				<input type="text" id="price" name="값">
+			</div>
+		</div>
+	</form>
+	
 	<hr>
 	<div>
 		<input type="text" id="memberNickname" >
@@ -48,6 +72,24 @@
 	</div>
 	<hr>
 	<div id="productComments"></div>
+	
+	<script type="text/javascript">
+		 var select_change = function(value){
+   	  		console.log("값 변경 테스트 : " + value);
+   	  		$("#option-list").val(value);
+   	  		
+   	  	$(function(){
+      	  $('select[name=optionSelection]').change(function() {
+  				if($(this).val()=="1"){
+  					$('#price').val("");
+  				} else {
+  					$('#price').val($(this).val());
+  					$("#price").attr("readonly", true);
+  				}
+  			});
+         
+      	}); // end function 
+	</script>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){

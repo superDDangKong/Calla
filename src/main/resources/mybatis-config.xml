@@ -82,7 +82,22 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberNickname" value="member_nickname"/>
 		<property name="productCommentContent" value="product_comment_content"/>
 		<property name="productCommentCreatedDate" value="product_comment_created_date"/>
-
+		
+		<property name="q_board" value="q_board"/>
+		<property name="qBoardId" value="q_board_id"/>
+		<property name="memberNickname" value="member_nickname"/>
+		<property name="qBoardTitle" value="q_board_title"/>
+		<property name="qBoardContent" value="q_board_content"/>
+		<property name="qBoardCreatedDate" value="q_board_created_date"/>
+		<property name="qBoardViews" value="q_board_views"/>
+		<property name="qBoardCommentCount" value="q_board_comment_count"/>
+		
+		<property name="q_board_comment" value="q_board_comment"/>
+		<property name="qBoardCommentId" value="q_board_comment_id"/>
+		<property name="qBoardId" value="q_board_id"/>
+		<property name="memberNickname" value="member_nickname"/>
+		<property name="qBoardCommentContent" value="q_board_comment_content"/>
+		<property name="qBoardCommentCreatedDate" value="q_board_comment_Created_date"/>		
 	</properties>
 	
 
