@@ -7,6 +7,7 @@
 <title>${vo.fBoardTitle }</title>
 </head>
 <body>
+	<%@ include file="../header.jspf" %> 	
 	<h2>글 수정 페이지</h2>
 	<form action="update" method="POST">
 		<input type="hidden" name="page" value="${page }">

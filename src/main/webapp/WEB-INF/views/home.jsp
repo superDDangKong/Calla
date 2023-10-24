@@ -1,14 +1,36 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Home</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<meta charset="UTF-8">
+<title>Calla</title>
 </head>
-<body>
-<h1>
-	Hello world!  
-</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<body>
+<%@ include file="header.jspf" %> 	
+	
+	<input type="hidden" id="memberNickname" value=${memberNickname }>
+	<input type="hidden" id="memberId" value=${memberId }>
+
+	</div>
+	<div id="navigator">
+		<form action="product/list" method="get">
+			<input type="submit" value="공용상품">
+		</form>
+		<form action="uProduct/list" method="get">
+			<input type="submit" value="중고상품">
+		</form>
+		<form action="qBoard/list" method="get">
+			<input type="submit" value="문의게시판">
+		</form> 
+		<form action="fBoard/list" method="get">
+			<input type="submit" value="자유게시판">
+		</form>
+		
+	</div>
+
 </body>
 </html>

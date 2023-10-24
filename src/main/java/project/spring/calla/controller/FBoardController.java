@@ -186,9 +186,4 @@ public class FBoardController {
 		}
 	} // end deletePOST()
 	
-	@GetMapping("/search")
-	public void search(Model model, Integer page, Integer numsPerPage) {
-		
-	
-	}
 } // end BoardController

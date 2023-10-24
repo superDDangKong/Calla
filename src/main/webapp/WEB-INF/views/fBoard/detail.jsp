@@ -19,6 +19,7 @@ li {
 <title>${vo.fBoardTitle }</title>
 </head>
 <body>
+	<%@ include file="../header.jspf" %> 	
 	<h2>글 보기</h2>
 	<div>
 		<p>글 번호 : ${vo.fBoardId }</p>

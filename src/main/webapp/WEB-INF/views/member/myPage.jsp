@@ -7,12 +7,25 @@
 <title>마이페이지</title>
 </head>
 <body>
+<%@ include file="../header.jspf" %> 	
 <input type="hidden" id="memberId" value=${memberId }>
 <h2>마이페이지</h2>
-<a href="main">홈</a>
-<a href="update">회원정보 수정</a>
-<a href="order">거래내역</a>
-<a href="likes">좋아요 목록</a>
+
+	<form action="/calla/" method="get">
+		<input type="submit" value="홈">
+	</form>
+	
+	<form action="update" method="get">
+		<input type="submit" value="회원정보">
+	</form>
+	
+	<form action="order" method="get">
+		<input type="submit" value="거래내역">
+	</form>
+	
+	<form action="likes" method="get">
+		<input type="submit" value="좋아요 목록">
+	</form>
 
 </body>
 </html>

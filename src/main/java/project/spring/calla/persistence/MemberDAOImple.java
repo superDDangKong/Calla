@@ -14,7 +14,7 @@ public class MemberDAOImple implements MemberDAO{
 
 
 	private static final Logger logger =
-			LoggerFactory.getLogger(FBoardDAOImple.class);
+			LoggerFactory.getLogger(MemberDAOImple.class);
 	
 	private static final String NAMESPACE = 
 			"project.spring.calla.MemberMapper";
@@ -23,7 +23,7 @@ public class MemberDAOImple implements MemberDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int checkId(String memberId) { // ¾ÆÀÌµð Áßº¹Ã¼Å©
+	public int checkId(String memberId) { 
 		logger.info("select_by_id() È£Ãâ");
 		int result  = sqlSession.selectOne(NAMESPACE + ".select_by_id", memberId);
 		logger.info(result+"Áßº¹");

@@ -25,10 +25,15 @@ li {
 <title>자유게시판</title>
 </head>
 <body>
-
-	<h1>게시판 메인</h1>
+	<%@ include file="../header.jspf" %> 	
+	<h1>자유 게시판</h1>
+	<button id="home"><a href="/calla/">홈</a></button>
 	<input type="hidden" id="selectedOption" value=${option }>
-	<a href="register"><input type="button" value="글 작성"></a>
+	<input type="hidden" id="sessionNickname" value=${memberNickname }>
+	
+	<div id="register">
+		<a href="register"><input type="button" value="글 작성"></a>
+	</div>
 	
 	<form action="list" method="GET">
 		<select id="option" name="option">
@@ -86,6 +91,14 @@ li {
 		$(document).ready(function(){
 			if($("#selectedOption").val() != ""){
 				$("#option").val($("#selectedOption").val());
+			}
+			
+			if($('#sessionNickname').val() == "") {
+				var list = 
+					"게시글 작성은 로그인이 필요한 기능입니다."
+					+ "&nbsp&nbsp"
+					+ "<a href='/calla/member/login?targetURL=/fBoard/register'>로그인 하러 가기</a>"
+				$("#register").html(list);
 			}
 		}) // end document.ready()
 	</script>

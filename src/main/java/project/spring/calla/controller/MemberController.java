@@ -2,6 +2,9 @@ package project.spring.calla.controller;
 
 	
 	
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -43,24 +46,21 @@ public class MemberController {
 	
   	
 	@GetMapping("/join")
-	public void showJoinPage() {
-		
-	}
-	@GetMapping("/main")
-	public String mainGET() {
-		return "redirect:/";
-	}
+	public void showJoinPage() {}
 	
 	@GetMapping("/login")
-	public void loginGET() {}
+	public void loginGET(String targetURL) {
+	}
+	
+	@GetMapping("/expired")
+	public void expiredGET() {}
 	
 	@PostMapping("/login")
-	public String loginPOST(String memberId, String memberPw, RedirectAttributes reAttr, HttpServletRequest request) {
+	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
 		// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
 		logger.info("loginPOST() 호출");
 		String result = memberDAO.login(memberId, memberPw);
-		
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
 			String memberNickname = vo.getMemberNickname();
@@ -69,15 +69,29 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
-			session.setMaxInactiveInterval(600);
+			session.setMaxInactiveInterval(30);
 			
-			return "redirect:/";
+			if(targetURL != null) {
+				return "redirect:" + targetURL; 
+			} else {
+				return "redirect:/";
+			}
 			
 			// redirect는 request 정보가 없어짐...
 		} else {
-			return "/member/login";
+			logger.info("로그인 실패");
+			if(targetURL != null) {
+				try {
+					targetURL = URLEncoder.encode(targetURL, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				return "redirect:/member/login?targetURL=" + targetURL;
+			} else {
+				return "redirect:/member/login";
+			}
 		}
-	} // end registerPOST()
+	} // end loginPOST()
 	
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
@@ -116,6 +130,7 @@ public class MemberController {
 			return "redirect:/member/update";
 		}
 	} // end updatePOST()
+	
 	@GetMapping("/fBoard")
 	public String fBoardGET() {
 		return "redirect:/fBoard/list";

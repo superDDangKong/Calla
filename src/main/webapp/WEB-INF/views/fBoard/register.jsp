@@ -7,6 +7,7 @@
 <title>글 작성 페이지</title>
 </head>
 <body>
+	<%@ include file="../header.jspf" %> 	
 	<h2>글 작성 페이지</h2>
 	<form action="register" method="POST">
 		<div>
