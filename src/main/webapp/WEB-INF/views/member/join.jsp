@@ -98,7 +98,7 @@
         	<div>관심사<br>
       		만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
       		굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
-      		애니<input type="checkbox" name="check" class="check" id="check3" value="캐릭터"><br>
+      		캐릭터<input type="checkbox" name="check" class="check" id="check3" value="캐릭터"><br>
       		<input type="hidden" name="memberInterest" id="memberInterest">
       		<span class="final_interest_ck">관심사를 선택해주세요.</span><!-- 관심사를 선택해주세요 -->
       		</div><br>
@@ -251,7 +251,7 @@
     	    
       }); // end document ready(맨처음)
       
-       	    $("#join").submit(function(event) {
+       	    $("#join").click(function(event) {
       			var emailId = $('#email_id').val();
       			var emailDomain = $('#email_domain').val();
       			var memberEmail = emailId + '@' + emailDomain;
@@ -293,7 +293,7 @@
       var mailCheck = false;            // 이메일
       var phoneCheck = false;			// 핸드폰
       var addressCheck = false         	// 주소
- 	  if(idckCheck == true && pwckCheck == true && pwckcorCheck == true && nameCheck == true && ){}
+ 	  
       var select_change = function(value){
     	  console.log("값 변경 테스트 : " + value);
     	  $("#email_domain").val(value);
@@ -395,7 +395,7 @@
         		}).open();
     		}
     		
-    		if()
+    		
 
     		
 </script>
