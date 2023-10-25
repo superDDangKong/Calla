@@ -18,29 +18,39 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UproductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductService;
+import project.spring.calla.service.UproductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
 
 @Controller
 
-@RequestMapping(value="/product") // url : /calla/product
-public class ProductController {
+@RequestMapping(value="/uProduct") // url : /calla/product
+public class UProductController {
 	private static final Logger logger =
-			LoggerFactory.getLogger(ProductController.class);
+			LoggerFactory.getLogger(UProductController.class);
 	
 	@Autowired
-	private ProductService productService;
+	private UproductService uproductService;
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
+	
+	@RequestMapping(value="main", method = RequestMethod.GET)
+	public void MainGET() throws Exception{
+		
+		logger.info("메인 출력");
+		
+	}
 	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
@@ -55,12 +65,12 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		
-		List<ProductVO> list = productService.read(criteria);
+		List<UproductVO> list = uproductService.read(criteria);
 		model.addAttribute("list",list);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setTotalCount(uproductService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 	} // end list()
@@ -71,7 +81,7 @@ public class ProductController {
 	} // end registerGET()
 	
 	@PostMapping("/register")
-	public String registerPost(ProductVO vo,  @RequestParam("productImage") MultipartFile file, RedirectAttributes reAttr) {
+	public String registerPost(UproductVO vo,  @RequestParam("productImage") MultipartFile file, RedirectAttributes reAttr) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());		
 		logger.info("파일 이름 : " + file.getOriginalFilename());
@@ -81,18 +91,20 @@ public class ProductController {
 			// 파일 저장
 			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 			// 이미지 경로 저장
-			vo.setProductImagePath(savedFileName);
-			int result = productService.create(vo);
+			vo.setuProductImagePath(savedFileName);
+			int result = uproductService.create(vo);
+			logger.info("result = " + result);
 			logger.info(result + "행 삽입");
+			
 			
 			if(result == 1) {
 				reAttr.addFlashAttribute("insert_result", "success");
-				return "redirect:/product/list";
+				return "redirect:/uProduct/list";
 			} else {
-				return "redirect:/product/register";
+				return "redirect:/uProduct/register";
 			}
 		} catch (Exception e) {
-			return "redirect:/product/register";
+			return "redirect:/uProduct/register";
 		}
 		
 		
@@ -100,57 +112,57 @@ public class ProductController {
 	}  // end registerPOST()
 	
 	@GetMapping("/detail")
-	public void detail(Model model, Integer productId, Integer page) {
-		logger.info("detail() 호출 : productId = " + productId);
-		ProductVO vo = productService.read(productId);
+	public void detail(Model model, Integer uProductId, Integer page) {
+		logger.info("detail() 호출 : productId = " + uProductId);
+		UproductVO vo = uproductService.read(uProductId);
 		logger.info("호출 : prdocutVO = " + vo);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 	} // end detail()
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, Integer productId, Integer page) {
-		logger.info("updateGET() 호출 : productId = " + productId);
-		ProductVO vo = productService.read(productId);
+	public void updateGET(Model model, Integer uProductId, Integer page) {
+		logger.info("updateGET() 호출 : productId = " + uProductId);
+		UproductVO vo = uproductService.read(uProductId);
 		logger.info("updateGET() 호출 : vo = " + vo.toString());
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);		
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(ProductVO vo, Integer page, @RequestParam("productImage") MultipartFile file) {
+	public String updatePOST(UproductVO vo, Integer page, @RequestParam("productImage") MultipartFile file) {
 		logger.info("updatePOST() 호출 : vo = " + vo.toString());			
 		logger.info("파일 이름 : " + file.getOriginalFilename());
 		logger.info("파일 크기 : " + file.getSize());
 		try {	
 			if(file != null && !file.isEmpty()) {
 				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-				vo.setProductImagePath(savedFileName);
+				vo.setuProductImagePath(savedFileName);
 			}
 			
-			int result = productService.update(vo);
+			int result = uproductService.update(vo);
 			
 			if(result == 1) {
-				return "redirect:/product/list?page=" + page;
+				return "redirect:/uProduct/list?page=" + page;
 			} else {
-				return "redirect:product/update?productId=" + vo.getProductId();
+				return "redirect:/uProduct/update?uProductId=" + vo.getuProductId();
 			}	
 		} catch (Exception e) {
-			return "redirect:product/update?productId=" + vo.getProductId();
+			return "redirect:/uProduct/update?uProductId=" + vo.getuProductId();
 		}
 		
 		
 	} // end updatePOST()
 	
 	@PostMapping("/delete")
-	public String delete(Integer productId) {
-		logger.info("delete() 호출 : productId = " + productId);
-		int result = productService.delete(productId);
+	public String delete(Integer uProductId) {
+		logger.info("delete() 호출 : uProductId = " + uProductId);
+		int result = uproductService.delete(uProductId);
 		
 		if(result == 1) {
-			return "redirect:/product/list";
+			return "redirect:/uProduct/list";
 		} else {
-			return "redirect:/product/list";
+			return "redirect:/uProduct/list";
 		}
 	} // end delete()
 	

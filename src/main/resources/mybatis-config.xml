@@ -58,11 +58,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductCategori" value="u_product_categori" />
 		<property name="memberAddress" value="member_address" />
 		<property name="uProductContent" value="u_product_content" />
-
-		<property name="u_image" value="u_image" />
-		<property name="uploadPath" value="uploadpath" />
-		<property name="uuid" value="uuid" />
-		<property name="fileName" value="filename" />
+		<property name="uProductImagePath" value="u_product_image_path" />
+		<property name="uProductCommentCount" value="u_product_comment_count"/>
+		
+		<property name="u_product_comment" value="u_product_comment" />
+		<property name="uProductCommentId" value="u_product_comment_id" />
+		<property name="uProductId" value="u_product_id" />
+		<property name="memberNickname" value="member_nickname" />
+		<property name="uProductCommentContent" value="u_product_comment_content" />
+		<property name="uProductCommentCreatedDate" value="u_product_comment_created_date" />
+		<property name="uProductSecretComment" value="u_product_secret_comment"/>
 
 		<property name="product" value="product"/>
 		<property name="productId" value="product_id"/>
