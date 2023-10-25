@@ -79,11 +79,11 @@ public class MemberController {
 			session.setAttribute("memberNickname", memberNickname);
 			session.setMaxInactiveInterval(30);
 			
-			if(targetURL != null) {
-				return "redirect:" + targetURL; 
-			} else {
-				return "redirect:/";
-			}
+//			if(targetURL != null) {
+//				return "redirect:" + targetURL; 
+//			} else {
+//				return "redirect:/";
+//			}
 			
 			// redirect request 
 			return "redirect:/uProduct/list";
