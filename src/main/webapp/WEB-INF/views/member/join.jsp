@@ -5,8 +5,17 @@
 <html>
 <head>
 <style type="text/css">
-.final_id_ck1 {
-	display : none;
+.member__form {
+	width: 20%;
+    padding: 16px 0 12px;
+    border: 25;
+    background: none transparent;
+    font-family: dotum,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    text-indent: 10px;
 }
 
 .final_id_ck2 { 
@@ -41,34 +50,35 @@
 
 <div style="text-align:center">
 	 <form name="join" action="join" id="join"method="post"> 
-		<div>아이디
-		<input type="text" id="member_id" name="memberId" placeholder="아이디 입력" required><br>
-		<span class="final_id_ck1">사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</span>
-		<span class="final_id_ck2">아이디: 8자 이상의 영문, 숫자와 특수기호만 사용 가능합니다.</span><!-- 아이디 유효성 확인 -->
-		</div><br>
+	 	<div>
+			<div>
+				<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디" required><br>
+				<span class="final_id_ck1">사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</span>
+				<span class="final_id_ck2">아이디: 8자 이상의 영문, 숫자와 특수기호만 사용 가능합니다.</span><!-- 아이디 유효성 확인 -->
+			</div><br>
 		
-		<div>비밀번호
-		<input type="password" id="member_pw" name="memberPw" required><br>
-		<span class="final_pw_ck1">비밀번호: 8자 이상의 영문, 숫자, 특수문자를 사용해 주세요.</span><!-- 비밀번호 유효성 확인 -->
-		</div><br>
+			<div>
+				<input type="password" id="member_pw" class="member__form" name="memberPw" placeholder="비밀번호" required><br>
+				<span class="final_pw_ck1">비밀번호: 8자 이상의 영문, 숫자, 특수문자를 사용해 주세요.</span><!-- 비밀번호 유효성 확인 -->
+			</div><br>
 		
-		<div>비밀번호 재확인
-		<input type="password" id="member_pw_ck" name="member_pw_check" required><br>
-		<span class="final_pw_ck2">비밀번호가 틀렸습니다.</span><!-- 입력한 비밀번호와 똑같은지 체크 -->
-		</div><br>
+			<div>
+				<input type="password" id="member_pw_ck" class="member__form" name="member_pw_check" placeholder="비밀번호 확인" required><br>
+				<span class="final_pw_ck2">비밀번호가 틀렸습니다.</span><!-- 입력한 비밀번호와 똑같은지 체크 -->
+			</div><br>
 		
-		<div>이름
-		<input type="text" id="member_name" name="memberName" placeholder="홍길동" required><br>
-		</div><br>
+			<div>
+				<input type="text" id="member_name" class="member__form" name="memberName" placeholder="홍길동" required><br>
+			</div><br>
 		
-		<div>닉네임
-		<input type="text" id="member_nickname" name="memberNickname" placeholder="calla" required><br>
-		<span class="final_nick_ck1">중복된 닉네임입니다.</span>
-		</div><br>
+			<div>
+				<input type="text" id="member_nickname" class="member__form" name="memberNickname" placeholder="calla" required><br>
+				<span class="final_nick_ck1">중복된 닉네임입니다.</span>
+			</div><br>
 		
-		<div>이메일
-				<input type="text" name="member_email1" id="email_id" placeholder="calla" required>@
-				<input type="text" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
+			<div>
+				<input type="text" class="member__form" name="member_email1" id="email_id" placeholder="calla" required>@
+				<input type="text" class="member__form" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
 				<select class="box" id="domain-list" name="emailSelection" onchange="select_change(this.value);">
 					<option value="type">-직접입력-</option>
 					<option value="naver.com">naver.com</option>
@@ -79,116 +89,49 @@
 				</select>
 				<span class="final_email_ck"></span><!-- 이메일 형식대로 입력하라는 문장출력 -->
 				<input type="hidden" name="memberEmail" id="memberEmail">
-		</div><br>
+			</div><br>
 		
-		<div>핸드폰
-        <input type="tel" id="member_phone" name="memberPhone" placeholder="010-1234-5678" required><br>
-        </div><br>
+			<div>
+        		<input type="tel" id="member_phone" class="member__form" name="memberPhone" placeholder="010-1234-5678" required><br>
+        	</div><br>
         
-        <div>관심사
-      	만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
-      	굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
-      	애니<input type="checkbox" name="check" class="check" id="check3" value="캐릭터"><br>
-      	<input type="hidden" name="memberInterest" id="memberInterest">
-      	<span class="final_interest_ck">관심사를 선택해주세요.</span><!-- 관심사를 선택해주세요 -->
-      	</div><br>
+        	<div>관심사<br>
+      		만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
+      		굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
+      		애니<input type="checkbox" name="check" class="check" id="check3" value="캐릭터"><br>
+      		<input type="hidden" name="memberInterest" id="memberInterest">
+      		<span class="final_interest_ck">관심사를 선택해주세요.</span><!-- 관심사를 선택해주세요 -->
+      		</div><br>
       	
       	
-      	<br>
-      	<div>주소</div> <!-- 주소api -->
-      	<input type="text" id="postcode" placeholder="우편번호" required>
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="address" placeholder="주소" required>
-		<input type="text" id="detailAddress" placeholder="상세주소" required><br>
-		<input type="text" id="extraAddress" placeholder="참고항목" required>
-		<br>
-		<!-- <input type="submit" name="join_button" id="join_button" value="가입완료"> -->
-		<button type="submit" id="join">가입완료</button>
-		<span class="final_add_ck">주소를 확인해주세요.</span><!-- 주소를 확인해주세요 -->
-		<input type="hidden" name="memberAddress" id="memberAddress">
-      	
+      		<br>
+      		<div></div> <!-- 주소api -->
+      		<input type="text" id="postcode" class="member__form" placeholder="우편번호" required>
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+			<input type="text" id="address" class="member__form" placeholder="주소" required>
+			<input type="text" id="detailAddress" class="member__form" placeholder="상세주소" required><br>
+			<input type="text" id="extraAddress" class="member__form" placeholder="참고항목" required>
+			<br>
+			<input type="submit" name="join_button" id="join_button" value="가입하기"> 
+			<!-- <button id="joinbtn">가입완료</button>  -->
+			<span class="final_add_ck">주소를 확인해주세요.</span><!-- 주소를 확인해주세요 -->
+			<input type="hidden" name="memberAddress" id="memberAddress">
+      	</div>
       
    	</form>
 </div>
       <script>
+    	            //event.preventDefault(); // 제출 이벤트 중단
       $(document).ready(function() {
-    	    $("#join").submit(function(event) {
     	        // 폼 제출 이벤트 발생 시 실행되는 코드
-
-    	        // 유효성 검사
-    	        var name = $("#name").val();
-    	        var email = $("#email").val();
-
-    	        if (name === "" || email === "" || !isValidEmail(email)) {
-    	            event.preventDefault(); // 제출 이벤트 중단
-    	            $("#error").text("폼을 올바르게 작성하세요.");
-    	        }
-    	    }); // end submit function		
-    	    
-      });
-      
-      		$("#join").click(function(){
-      			var emailId = $('#email_id').val();
-      			var emailDomain = $('#email_domain').val();
-      			var memberEmail = emailId + '@' + emailDomain;
-      			document.getElementById("memberEmail").value = memberEmail;
-      			
-      		}) // end
-      		
-      		$(document).ready(function() {
-      			
-    	    var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
-    	    
-    	     $(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
-    	    	 var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
-    	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
-    	    		//selectedValues 체크된 요소들을 저장할 배열
-    	            return $(this).val();
-    	        }).get(); // get();  selectedValues jquery객체를 javascript 객체로 바꾸어줌
-				
-    	    	interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
-    	        // join 배열을 하나의 문자열로 합쳐주는 메서드
-    	        document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
-    	        var i = $('#memberInterest').val(); // 변수 값을 저장
-    	        console.log(i); // 값이 제대로 나오는지 확인 
-    	    	});
-    		});
-     
-
-      
-
-      
-      
-      $('#email_domain').blur(function(){
-    	  var inputemail = $('#email_id');
-          
-      })
-      
-      
-      
-      
-
-      
-      /* 유효성 검사 통과유무 변수 */
-      var idckcorCheck = false;			// 아이디 유효성 검사
-      var idckCheck = false;            // 아이디 중복 검사
-      var pwckCheck = false;            // 비밀번호 유효성 검사
-      var pwckcorCheck = false;        	// 비밀번호 일치 확인
-      var nameCheck = false;            // 이름입력 유무 검사
-      var nickNameCheck = false;		// 닉네임 중복 검사
-      var mailCheck = false;            // 이메일
-      var phoneCheck = false;			// 핸드폰
-      var addressCheck = false         	// 주소
-      
-      // 아이디 유효성 검사 + 중복체크
+				// 아이디 유효성 + 중복검사 
       $('#member_id').blur(function() {
        var memberId = $('#member_id').val(); // 클라이언트가 입력한 아이디 변수에 저장
        console.log("입력한 아이디 : " + memberId); // 입력한 아이디 콘솔에 띄우기
     	    // 아이디 정규식
-       var idEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+       var idEffectiveness = /^[A-Za-z0-9]{8,}$/;
     	// 아이디 유효성 확인
     	if (idEffectiveness.test(memberId)){
-    		console.log("아이디 유효성 검사 통과");
     		idckcorCheck = true; // 아이디 유효성 검사 통과 변수
     		// 중복확인 ajax
     		$.ajax({ // JoinRestController의 checkId 송수신
@@ -196,10 +139,11 @@
         		 url : '/calla/member/checkId', // 뭐라 할까나 ~ 
         		 data : {memberId : memberId},
         		 success : function(result){
-        			 console.log("성공시 result = " + result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+        			 console.log("성공시 result = " + result); 
         			 if (result == 1) {
         				 console.log("사용불가능한아이디")
         				 idckCheck = false; // 아이디 중복검사 통과 변수
+        				 
         			 } else {
         				 console.log("사용가능한아이디")
         				 idckCheck = true; // 아이디 중복검사 통과 변수
@@ -215,7 +159,7 @@
        
        				 
     	}); // end 아이디 function(아이디 유효성 검사 + 중복체크)
-
+    	
     	// 비밀번호 유효성 검사 
     	$('#member_pw').blur(function() {
     		var memberPw = $('#member_pw').val(); // 클라이언트가 입력한 비밀번호 변수에 저장
@@ -224,8 +168,10 @@
     		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     		if (pwEffectiveness.test(memberPw)){
     			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+    			pwckCheck = true;
     		} else {
     			console.log("비밀번호 유효성 검사 실패");
+    			pwckCheck = false;
     		}
     	}); // end 비밀번호 function(비밀번호 유효성 검사)
 		
@@ -236,11 +182,14 @@
       		
       		if (memberPw === memberPwCk) {
       			console.log("비밀번호 재확인 성공");
+      			pwckcorCheck = true;
       		} else {
       			console.log("비밀번호 재확인 실패");
+      			pwckcorCheck = false;
       		}
       	}); // end 재확인 function(비밀번호 재확인)
-      	
+    	        
+
       	// 이름 입력확인
 		$('#member_name').blur(function(){
 			var memberName = $('#member_name').val(); // 입력한 이름
@@ -274,8 +223,10 @@
         			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
         			 if (result == 1) {
         				 console.log("사용불가능한닉네임")
+        				 nickNameCheck = false;
         			 } else {
         				 console.log("사용가능한닉네임")
+        				 nickNameCheck = true;
         			 }
         		 } // end success
         	 }) // end ajax
@@ -283,10 +234,66 @@
 				console.log("입력한 닉네임 : " + memberNickname);
 			}
 		}) // end 닉네임 중복확인
-		
-		
-		
+    	       
+     $('#member_phone').blur(function(){
+    	 var memberPhone = $('#member_phone').val();
+    	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
+		 
+    	 // 연락처 입력 유무 검사
+    	 if (phoneEffectiveness.test(memberPhone)){
+    		 console.log(memberPhone);
+    		 phoneCheck = true;
+    	 }
+    	 console.log(memberPhone)
+     }) // end 입력한 핸드폰 번호
+    	            
+
+    	    
+      }); // end document ready(맨처음)
       
+       	    $("#join").submit(function(event) {
+      			var emailId = $('#email_id').val();
+      			var emailDomain = $('#email_domain').val();
+      			var memberEmail = emailId + '@' + emailDomain;
+      			document.getElementById("memberEmail").value = memberEmail;
+      			console.log("입력한 아이디: " + memberEmail)
+      			mailCheck = true;
+      			event.preventDefault();
+      			//console.log(idckcorCheck); true 확인
+      			
+    	}); // end click function		
+    	
+      		$(document).ready(function() {
+      			
+    	    var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
+    	    
+    	     $(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
+    	    	 var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
+    	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
+    	    		//selectedValues 체크된 요소들을 저장할 배열
+    	            return $(this).val();
+    	        }).get(); // get();  selectedValues jquery객체를 javascript 객체로 바꾸어줌
+				
+    	    	interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
+    	        // join 배열을 하나의 문자열로 합쳐주는 메서드
+    	        document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
+    	        var i = $('#memberInterest').val(); // 변수 값을 저장
+    	        console.log(i); // 값이 제대로 나오는지 확인 
+    	    	});
+    		});
+     
+      
+      /* 유효성 검사 통과유무 변수 */
+      var idckcorCheck = false;			// 아이디 유효성 검사
+      var idckCheck = false;            // 아이디 중복 검사
+      var pwckCheck = false;            // 비밀번호 유효성 검사
+      var pwckcorCheck = false;        	// 비밀번호 일치 확인
+      var nameCheck = false;            // 이름입력 유무 검사
+      var nickNameCheck = false;		// 닉네임 중복 검사
+      var mailCheck = false;            // 이메일
+      var phoneCheck = false;			// 핸드폰
+      var addressCheck = false         	// 주소
+ 
       var select_change = function(value){
     	  console.log("값 변경 테스트 : " + value);
     	  $("#email_domain").val(value);
@@ -304,17 +311,6 @@
        
     	}); // end function 
       
-     $('#member_phone').blur(function(){
-    	 var memberPhone = $('#member_phone').val();
-    	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
-		 
-    	 // 연락처 입력 유무 검사
-    	 if (phoneEffectiveness.test(memberPhone)){
-    		 console.log(memberPhone);
-    		 phoneCheck = true;
-    	 }
-    	 console.log(memberPhone)
-     }) // end 입력한 핸드폰 번호
      
 
 	
@@ -391,6 +387,7 @@
 						// add1,2,3,4를 memberAddress에 넣는다
 						document.getElementById("memberAddress").value = address;
 						console.log(address);
+						addressCheck = true;
                 			
                 		});
 					      
@@ -398,7 +395,7 @@
         		}).open();
     		}
     		
-    	
+    		
 
     		
 </script>
