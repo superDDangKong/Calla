@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
+import project.spring.calla.service.ProductCommentService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -39,14 +41,19 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private ProductCommentService productCommentService;
+	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
 	
 	@GetMapping("/list")
-	public void list(Model model, Integer page, Integer numsPerPage) {
+	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
+		List<ProductVO> list = null;
 		
+		//Paginf 처리
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -54,13 +61,28 @@ public class ProductController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		
-		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("list",list);
-		
 		PageMaker pageMaker = new PageMaker();
+		if(option != null) {
+			if(option.equals("searchMemberNickname")) {
+				logger.info("if");
+				list = productService.readByProductNameOrProductContent(criteria, keyword);
+				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));	
+			} else {
+				logger.info("if else");
+				list = productService.read(criteria);
+				pageMaker.setTotalCount(productService.getTotalCounts());
+			}
+		}else {
+			logger.info("else");
+			list = productService.read(criteria);
+			pageMaker.setTotalCount(productService.getTotalCounts());
+		}
+		logger.info("totalCount = " + pageMaker.getTotalCount());
+		model.addAttribute("list",list);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(productService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 	} // end list()
@@ -107,6 +129,7 @@ public class ProductController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 	} // end detail()
+
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, Integer productId, Integer page) {

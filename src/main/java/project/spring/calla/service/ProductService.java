@@ -12,5 +12,8 @@ public interface ProductService {
 	int update(ProductVO vo); // 상품 정보 수정
 	int delete(int productId); // 상품 삭제
 	int getTotalCounts(); // 상품 전체 갯수
+	List<ProductVO> readByProductNameOrProductContent(PageCriteria criteria, String keyword);
+	int getTotalCountsByProductNameOrProductContent(String keyword);
+	int updateViews(int views, int productId);
 
 }

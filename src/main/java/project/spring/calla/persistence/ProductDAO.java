@@ -13,9 +13,9 @@ public interface ProductDAO {
 	int delete(int productId); // 상품 삭제
 	List<ProductVO> select(PageCriteria criteria);
 	int getTotalCount();
-	List<ProductVO> select(String productName);
-	List<ProductVO> selectByName(String keyword);
+	List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword);
+	int getTotalCountsByProductNameOrProductContent(String keyword);
 	int updateProductCommentCount(int amount, int productId);
-	
+	int updateViews(int views, int productId);
 	
 }

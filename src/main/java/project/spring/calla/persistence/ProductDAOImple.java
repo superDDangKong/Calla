@@ -70,24 +70,39 @@ public class ProductDAOImple implements ProductDAO {
 	}
 
 	@Override
-	public List<ProductVO> select(String productName) {
-		logger.info("select() 호출 : productName = " + productName);
-		return sqlSession.selectList(NAMESPACE + ".select_by_product_name", "%" + productName);
-	}
-
-	@Override
-	public List<ProductVO> selectByName(String keyword) {
-		logger.info("selectByName() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_by_name", "%" + keyword + "%");
-	}
-
-	@Override
 	public int updateProductCommentCount(int amount, int productId) {
 		logger.info("updateProdcutCommentCount() : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
 		return sqlSession.update(NAMESPACE + ".update_product_comment_count", args);
+	}
+
+	@Override
+	public List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword) {
+		logger.info("selectByTitleOrContent() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", args);
+	}
+
+	@Override
+	public int getTotalCountsByProductNameOrProductContent(String keyword) {
+		logger.info("getTotalTitleContent()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
+	}
+
+	@Override
+	public int updateViews(int views, int productId) {
+		logger.info("updateViews() : fBoardId = " + productId);
+		Map<String, Integer> args = new HashMap();
+		args.put("views", views);
+		args.put("productId", productId);
+		return sqlSession.update(NAMESPACE + ".update_views", args);
 	}
 
 	

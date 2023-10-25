@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductCommentVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
 public class ProductCommentDAOImple implements ProductCommentDAO {
@@ -50,6 +51,20 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 	public int delete(int productCommentId) {
 		logger.info("delete() 호출 : productCommentId = " + productCommentId);
 		return sqlSession.delete(NAMESPACE + ".delete", productCommentId);
+	}
+
+	@Override
+	public List<ProductCommentVO> select(PageCriteria criteria) {
+		logger.info("select() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
+	}
+
+	@Override
+	public int getTotalCount() {
+		logger.info("getTotalCounts()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
 }
