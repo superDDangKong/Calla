@@ -28,5 +28,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productCommentId} = #{productCommentId}
 	</delete>
 	
+	<select id="paging" resultType="ProductCommentVO">
+		select *
+		from(
+			select rownum rn, a.*from(
+				select * from ${product_comment} where ${productId} = #{productId}
+				order by ${productCommentId}
+				)a
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="total_count" resultType="Integer">
+	  	select count(*) total_cnt from ${productComment} where ${productId} = #{productId}
+	 </select>
 	
 </mapper>

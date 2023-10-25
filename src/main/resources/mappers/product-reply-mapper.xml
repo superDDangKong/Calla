@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.ProductReplyMapper">
+	
+	<insert id="insert">
+		insert into ${product_reply}
+		(${ProductCommentId}, ${memeberNickname}, ${ProductReplyContent})
+		values (#{ProductCommentId}, #{memberNickname}, #{ProductReplyContent})
+	</insert>
+	
+	<select id="select_all_by_product_comment_id" resultType="ProductReplyVO">
+		select * from ${product_reply}
+		where ${ProductCommentId} = #{ProductCommentId}
+		order by ${ProductReplyId}
+	</select>
+	
+	<update id="update">
+		update ${product_reply}
+		set ${ProductReplyContent} = #{ProductReplyContent}
+		where ${ProductReplyId} = #{ProductReplyId}
+	</update>
+	
+	<delete id="delete">
+		delete from ${product_reply}
+		where ${ProductReplyId} = #{ProductReplyId}
+	</delete>
+
+</mapper>

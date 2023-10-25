@@ -55,16 +55,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) total_cnt from ${product}
 	</select>
 	
-	<select id="select_by_product_name" resultType="ProductVO">
-		select * from ${product}
-		where ${productName} like #{productName} 
+	<select id="select_by_product_name_or_product_content" resultType="ProductVO">
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}
+		form(
+			select rownum rn, a.* from(
+				select * from ${product}
+				where ${productName} like #{keyword} or
+				${productContent} like #{keyword}
+				order by ${productId} desc
+				)a
+		) where rn between #{start} and #{end}
 	</select>
 	
-	<select id="select_by_name" resultType="ProductVO">
-		select * from ${product}
-		where ${productName} like #{keyword} or
-			${productContent} like #{keyword}
-			order by ${productId} desc
+	<select id="total_count_by_product_name_or_product_content" resultType="Integer">
+		select count(*) total_cnt from ${product}
+		where ${productName} like #{keyword} or ${productContent} like #{keyword}
 	</select>
 	
 	<update id="update_product_comment_count">
@@ -72,6 +77,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	set ${productCommentCount} = ${productCommentCount} + #{amount}
     	where ${productId} = #{productId}
 	</update>
-
+	
+	<update id="update_views">
+		update ${product}
+		set ${productViews} = ${productViews} + #{views}
+		where ${productId} = #{productId}
+	</update>
 	
 </mapper>

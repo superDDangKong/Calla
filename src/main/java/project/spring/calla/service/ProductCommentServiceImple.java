@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.ProductCommentVO;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductCommentDAO;
 import project.spring.calla.persistence.ProductDAO;
 
@@ -57,5 +58,20 @@ public class ProductCommentServiceImple implements ProductCommentService {
 		logger.info(result + "행 수정 성공, productId = " + productId);
 		return 1;
 	}
+
+	@Override
+	public List<ProductCommentVO> read(PageCriteria criteria, int productId) {
+		logger.info("read() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return productCommentDAO.select(criteria);
+	}
+
+	@Override
+	public int getTotalCounts(int productId) {
+		logger.info("getTotalCounts() 호출");
+		return productCommentDAO.getTotalCount();
+	}
+
 
 }
