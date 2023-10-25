@@ -30,6 +30,7 @@
 		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
 	</beans:bean> 
 	
+	
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 파일 업로드 최대 용량 설정 : 1024 * 1024 * 10B = 10MB -->

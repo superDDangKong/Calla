@@ -1,8 +1,10 @@
 package project.spring.calla;
 
+import java.security.Provider.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -21,24 +23,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import oracle.jdbc.driver.OracleDriver;
 import project.spring.calla.domain.UproductVO;
-import project.spring.calla.domain.UImageVO;
-import project.spring.calla.persistence.UBoardDAO;
+import project.spring.calla.persistence.UproductDAO;
+import project.spring.calla.service.UproductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
 @WebAppConfiguration
 
-public class UBoardDAOTest {
-	private static final Logger logger = LoggerFactory.getLogger(UBoardDAOTest.class);
+public class UproductDAOTest {
+	private static final Logger logger = LoggerFactory.getLogger(UproductDAOTest.class);
 
 	@Autowired
-	private UBoardDAO dao;
-
+	private UproductDAO dao;
+	UproductService service;
+	
 	@Transactional
 	@Test
 	public void testDAO() {
-//		testInsert();
+		testInsert();
 //		testImageInsert();
 //		testSelectAll();
 //		testSelectByBoardId();
@@ -49,10 +52,40 @@ public class UBoardDAOTest {
 //		testSelectSearch();
 	}
 
+//	private void testSelectByBoardId() {
+//		UproductVO vo = dao.select(30);
+//		logger.info(vo.toString());
+//		
+//	}
+//
+//	private void testSelectAll() {
+//		// TODO Auto-generated method stub
+//		List<UproductVO> list = dao.select();
+//		for(UproductVO vo : list) {
+//			logger.info(vo.toString());
+//		}
+//		
+//	}
 
 
+//	private void testImageInsert() {
+//		
+//		UImageVO vo = new UImageVO("test2", "test2", "test2", 5);
+//		
+//		int result = dao.imageinsert(vo);
+//		if (result == 1) {
+//			logger.info("insert 성공");
+//		} else {
+//			logger.info("insert 실패");
+//	
+//		}
+//		
+//		
+//	}
+
+	
 	private void testInsert() {
-		UproductVO vo = new UproductVO(1, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요");
+		UproductVO vo = new UproductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0);
 
 		
 		int result = dao.insert(vo);
@@ -60,9 +93,28 @@ public class UBoardDAOTest {
 			logger.info("insert 성공");
 		} else {
 			logger.info("insert 실패");
+	
 		}
+		
+		System.out.println("등록된 VO : " + vo);
 		
 		
 	}
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

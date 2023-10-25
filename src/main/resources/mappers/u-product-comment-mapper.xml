@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.Uproductcommentmapper">
+
+	<insert id="insert">
+		insert into ${u_product_comment}
+		(${uProductId}, ${memberNickname}, ${uProductCommentContent})
+		values (#{uProductId}, #{memberNickname}, #{uProductCommentContent})
+	</insert>
+	
+	<select id="select_all_by_board_id" resultType="UproductCommentVO">
+		select * from ${u_product_comment}
+		where ${uProductId} = #{uProductId}
+		order by ${uProductCommentId}
+	</select>
+
+	<update id="update">
+		update ${u_product_comment}
+		set ${uProductCommentContent} = #{uProductCommentContent}
+		where ${uProductCommentId} = #{uProductCommentId}
+	</update> 	
+	
+	<delete id="delete">
+		delete from ${u_product_comment}
+		where ${uProductCommentId} = #{uProductCommentId}
+	</delete>
+	
+
+</mapper>

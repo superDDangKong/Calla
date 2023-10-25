@@ -23,7 +23,6 @@ import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
 @Controller // @Component
-
 @RequestMapping(value="/member") // url : /ex02/board
 public class MemberController {
 
@@ -67,6 +66,8 @@ public class MemberController {
 		// RedirectAttributes
 		// 
 		logger.info("loginPOST() ȣ��");
+		// - 由щ떎�씠�젆�듃 �떆 �뜲�씠�꽣瑜� �쟾�떖�븯湲� �쐞�븳 �씤�꽣�럹�씠�뒪
+		logger.info("loginPOST() �샇異�");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -85,6 +86,9 @@ public class MemberController {
 			}
 			
 			// redirect request 
+			return "redirect:/uProduct/list";
+			
+			// redirect�뒗 request �젙蹂닿� �뾾�뼱吏�...
 		} else {
 			logger.info("로그인 실패");
 			if(targetURL != null) {
@@ -103,6 +107,7 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
 		logger.info("logout() ȣ��");
+		logger.info("logout() �샇異�");
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
@@ -110,14 +115,14 @@ public class MemberController {
 	
 	@GetMapping("/myPage")
 	public void myPageGET(Model model, String memberId) {
-		logger.info("myPageGET() ȣ�� memberId = " + memberId);
+		logger.info("myPageGET() �샇異� memberId = " + memberId);
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
-		logger.info("updateGET() ȣ��");
+		logger.info("updateGET() �샇異�");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
@@ -128,7 +133,7 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo) {
-		logger.info("updatePOST() ȣ�� : vo = " + vo.toString());
+		logger.info("updatePOST() �샇異� : vo = " + vo.toString());
 		int result = memberService.update(vo);
 		String memberId = vo.getMemberId();
 		if(result == 1) {
@@ -145,7 +150,7 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likesGET() ȣ��");
+		logger.info("likesGET() �샇異�");
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
