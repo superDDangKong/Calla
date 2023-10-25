@@ -293,7 +293,7 @@
       var mailCheck = false;            // 이메일
       var phoneCheck = false;			// 핸드폰
       var addressCheck = false         	// 주소
- 
+ 	  if(idckCheck == true && pwckCheck == true && pwckcorCheck == true && nameCheck == true && ){}
       var select_change = function(value){
     	  console.log("값 변경 테스트 : " + value);
     	  $("#email_domain").val(value);
@@ -395,7 +395,7 @@
         		}).open();
     		}
     		
-    		
+    		if()
 
     		
 </script>
