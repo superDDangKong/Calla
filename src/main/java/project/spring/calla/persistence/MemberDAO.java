@@ -10,4 +10,6 @@ public interface MemberDAO {
 	int update(MemberVO vo);
 	MemberVO select(String memberId);
 	String login(String memberId, String memberPw);
+	String searchId(String memberName, String memberEmail);
+	String searchPw(String memberId, String memberPhone);
 }

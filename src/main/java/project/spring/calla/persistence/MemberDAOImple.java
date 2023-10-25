@@ -65,5 +65,25 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
+	@Override
+	public String searchId(String memberName, String memberEmail) {
+		logger.info("searchId() 호출 memberName : " + memberName);
+		logger.info("searchId() 호출 memberEmail : " + memberEmail);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberName", memberName);
+		args.put("memberEmail", memberEmail);
+		return sqlSession.selectOne(NAMESPACE + ".search_id", args);
+	}
+
+	@Override
+	public String searchPw(String memberId, String memberPhone) {
+		logger.info("searchPw() 호출 memberId : " + memberId);
+		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberPhone", memberPhone);
+		return sqlSession.selectOne(NAMESPACE + ".search_pw", args);
+	}
+
 	
 }

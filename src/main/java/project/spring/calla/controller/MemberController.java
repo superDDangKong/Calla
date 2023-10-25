@@ -65,9 +65,7 @@ public class MemberController {
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
 		// 
-		logger.info("loginPOST() ȣ��");
-		// - 由щ떎�씠�젆�듃 �떆 �뜲�씠�꽣瑜� �쟾�떖�븯湲� �쐞�븳 �씤�꽣�럹�씠�뒪
-		logger.info("loginPOST() �샇異�");
+		logger.info("loginPOST() 호출");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -77,18 +75,15 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
-			session.setMaxInactiveInterval(30);
+			session.setMaxInactiveInterval(10);
 			
-//			if(targetURL != null) {
-//				return "redirect:" + targetURL; 
-//			} else {
-//				return "redirect:/";
-//			}
+			if(targetURL != null) {
+				return "redirect:" + targetURL; 
+			} else {
+				return "redirect:/";
+			}
 			
-			// redirect request 
-			return "redirect:/uProduct/list";
 			
-			// redirect�뒗 request �젙蹂닿� �뾾�뼱吏�...
 		} else {
 			logger.info("로그인 실패");
 			if(targetURL != null) {
@@ -106,8 +101,7 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-		logger.info("logout() ȣ��");
-		logger.info("logout() �샇異�");
+		logger.info("logout() 호출");
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
@@ -115,14 +109,14 @@ public class MemberController {
 	
 	@GetMapping("/myPage")
 	public void myPageGET(Model model, String memberId) {
-		logger.info("myPageGET() �샇異� memberId = " + memberId);
+		logger.info("myPageGET() 호출 memberId = " + memberId);
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
-		logger.info("updateGET() �샇異�");
+		logger.info("updateGET() 호출");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
@@ -133,7 +127,7 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo) {
-		logger.info("updatePOST() �샇異� : vo = " + vo.toString());
+		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = memberService.update(vo);
 		String memberId = vo.getMemberId();
 		if(result == 1) {
@@ -150,7 +144,7 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likesGET() �샇異�");
+		logger.info("likesGET() 호출");
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
@@ -160,8 +154,47 @@ public class MemberController {
 		}
 	} // end likesGET()
 	
-	@GetMapping("/qBoard")
-	public String qBoardGET() {
-		return "redirect:/qBoard/list";
-	} // end fBoardGET()
+	@GetMapping("/searchId")
+	public void searchIdGET() {} // end searchIdGET()
+	
+	@GetMapping("/searchPw")
+	public void searchPwGET() {} // end searchPwGET()
+	
+	@PostMapping("/searchId")
+	public String searchIdPOST(String memberName, String memberEmail, RedirectAttributes reAttr) {
+		logger.info("searchId() 호출 memberName = " + memberName);
+		logger.info("searchId() 호출 memberEmail = " + memberEmail);
+		String result = memberService.searchId(memberName, memberEmail);
+		if(result != null) {
+			reAttr.addFlashAttribute("searchResult", "idSearch");
+			reAttr.addFlashAttribute("searchId", result);
+			logger.info("searchId 성공 memberId = " + result);
+			return "redirect:/member/login";
+		} else {
+			reAttr.addFlashAttribute("searchResult", "fail");
+			return "redirect:/member/searchId";
+		}
+		
+		
+	} // end searchIdPOST()
+	
+	@PostMapping("/searchPw")
+	public String searchPwPOST(Model model, String memberId, String memberPhone, RedirectAttributes reAttr) {
+		logger.info("searchPw() 호출 memberId = " + memberId);
+		logger.info("searchPw() 호출 memberPhone = " + memberPhone);
+		String result = memberService.searchPw(memberId, memberPhone);
+		if(result != null) {
+			reAttr.addFlashAttribute("searchResult", "pwSearch");
+			reAttr.addFlashAttribute("searchPw", result);
+			logger.info("searchPw 성공 memberPw = " + result);
+			return "redirect:/member/login";
+		} else {
+			reAttr.addFlashAttribute("searchResult", "fail");
+			return "redirect:/member/searchPw";
+		}
+		
+	} // end searchPwPOST()
+	
+	@GetMapping("/order")
+	public void orderGET() {}
 }

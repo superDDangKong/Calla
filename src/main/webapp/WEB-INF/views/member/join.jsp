@@ -268,6 +268,7 @@
     	    var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
     	    
     	     $(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
+    	    	 console.log("check.change")
     	    	 var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
     	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
     	    		//selectedValues 체크된 요소들을 저장할 배열

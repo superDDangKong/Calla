@@ -47,4 +47,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${memberNickname} = #{memberNickname}
 		where ${memberId} = #{memberId}
 	</update>
+	
+	<select id="search_id" resultType="String">
+		select ${memberId} from ${member}
+		where ${memberName} = #{memberName} and ${memberEmail} = #{memberEmail}
+	</select>
+	
+	<select id="search_pw" resultType="String">
+		select ${memberPw} from ${member}
+		where ${memberId} = #{memberId} and ${memberPhone} = #{memberPhone}
+	</select>
 </mapper>

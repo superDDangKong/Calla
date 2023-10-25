@@ -68,7 +68,7 @@
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	
 	<script type="text/javascript">
-		var result = ${'#insertAlert'}.val();
+		var result = $('#insertAlert').val();
 		if(result == 'success'){
 			alert('새 상품 등록 완료');
 		}

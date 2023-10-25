@@ -8,4 +8,7 @@ public interface MemberService {
 	int checkNick(String memberNickname);
 	MemberVO read(String memberId);
 	int update(MemberVO vo);
+	String searchId(String memberName, String memberEmail);
+	String searchPw(String memberId, String memberPhone);
+	
 }

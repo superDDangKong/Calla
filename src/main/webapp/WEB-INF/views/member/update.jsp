@@ -7,28 +7,76 @@
 <title>회원 정보 수정</title>
 </head>
 <body>
-<h2>글 수정 페이지</h2>
-	<form action="update" method="POST">
-			<p>회원 ID : ${vo.memberId }</p>
-			<p>회원 등급 : ${vo.memberLevel } </p>
-			<input type="hidden" name="memberId" value="${vo.memberId }">
-			${vo.memberPw }
-			<input type="password" name="memberPw"> <br>
-			${vo.memberName }
-			<input type="text" name="memberName"> <br>
-			${vo.memberEmail }
-			<input type="text" name="memberEmail"> <br>
-			${vo.memberPhone }
-			<input type="text" name="memberPhone"> <br>
-			${vo.memberInterest }
-			<input type="text" name="memberInterest"> <br>
-			${vo.memberAddress }
-			<input type="text" name="memberAddress"> <br>
-			${vo.memberNickname }
-			<input type="text" name="memberNickname"> <br>
-	
-			<input type="submit" value="수정">
-	</form>
+<%@ include file="../header.jspf" %> 	
+<h2>회원 정보 수정</h2>
+<table style="text-align: left;">
+	<tbody>
+		<tr>
+			<th scope="row">아이디</th>
+			<td>${vo.memberId }</td>
+		</tr>
+		<tr>
+			<th scope="row">회원 등급</th>
+			<td>${vo.memberLevel }</td>
+		</tr>
+		<tr>
+			<th scope="row">이름</th>
+			<td>${vo.memberName }</td>
+		</tr>
+		<tr>
+			<th scope="row">닉네임</th>
+			<td>${vo.memberNickname }</td>
+			<td><input type="text"></td>
+			<td><input type="button" value="닉네임 변경"></td>
+			
+		</tr>
+		<tr>
+			<th scope="row">비밀번호</th>
+			<td>
+				<table style="text-align: left;">
+					<tbody>
+						<tr>
+							<th scope="row">현재 비밀번호</th>
+							<td><input type="password"></td>
+						</tr>
+						<tr>
+							<th scope="row">새 비밀번호</th>
+							<td><input type="password"></td>
+						</tr>
+						<tr>
+							<th scope="row">비밀번호 다시입력</th>
+							<td><input type="password"></td>
+						</tr>												
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">휴대폰 번호</th>
+			<td>${vo.memberPhone }</td>
+			<td><input type="text"></td>
+			<td><input type="button" value="휴대폰 번호 변경"></td>
+		</tr>
+		<tr>
+			<th scope="row">이메일</th>
+			<td>${vo.memberEmail }</td>
+			<td><input type="text"></td>
+		</tr>
+		<tr>
+			<th scope="row">관심사</th>
+			<td>${vo.memberInterest }</td>
+			<td><input type="checkbox">굿즈</td>
+			<td><input type="button" value="관심사 변경"></td>
+		</tr>
+
+		<tr>
+			<th scope="row">주소</th>
+			<td>${vo.memberAddress }</td>
+			<td><input type="text"></td>
+			<td><input type="button" value="주소 변경"></td>
+		</tr>
+	</tbody>
+</table>
 
 </body>
 </html>

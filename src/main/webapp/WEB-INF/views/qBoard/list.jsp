@@ -28,6 +28,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 <title>게시판 메인 페이지</title>
 </head>
 <body>
+	<%@ include file="../header.jspf" %>
 	<h1>Q&N 게시판</h1>
 	
 	<a href="register"><input type="button" value="글 작성"></a>

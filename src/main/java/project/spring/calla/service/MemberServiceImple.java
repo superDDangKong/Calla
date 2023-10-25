@@ -20,7 +20,7 @@ public class MemberServiceImple implements MemberService {
   
 	@Override
 	public int create(MemberVO vo) { 
-		logger.info("create() ȣ�� : vo = " + vo.toString());
+		logger.info("create() 호출 : vo = " + vo.toString());
 		return MemberDAO.insert(vo); 
 		
 	}
@@ -47,14 +47,28 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public MemberVO read(String memberId) {
-		logger.info("read(memberId) ȣ�� memberId : " + memberId);
+		logger.info("read(memberId) ȣ�� memberId : " + memberId);
 		return MemberDAO.select(memberId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() ȣ�� vo : " + vo.toString());
+		logger.info("update() 호출 vo : " + vo.toString());
 		return MemberDAO.update(vo);
+	}
+
+	@Override
+	public String searchId(String memberName, String memberEmail) {
+		logger.info("searchId() 호출 memberName : " + memberName);
+		logger.info("searchId() 호출 memberEmail : " + memberEmail);
+		return MemberDAO.searchId(memberName, memberEmail);
+	}
+
+	@Override
+	public String searchPw(String memberId, String memberPhone) {
+		logger.info("searchPw() 호출 memberId : " + memberId);
+		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
+		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
 	
