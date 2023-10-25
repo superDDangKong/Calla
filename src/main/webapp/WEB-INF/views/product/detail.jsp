@@ -40,6 +40,8 @@
 		<input type="submit" value="상품 삭제">
 	</form>
 	
+	
+	
 	<hr>
 	<div>
 		<input type="text" id="memberNickname" >
@@ -48,6 +50,7 @@
 	</div>
 	<hr>
 	<div id="productComments"></div>
+	
 	
 	<script type="text/javascript">
 		$(document).ready(function(){

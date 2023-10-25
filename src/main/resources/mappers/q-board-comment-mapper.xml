@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.QNABoardCommentMapper"> <!-- DAO 하나 당 mapper 하나 -->
+
+	<insert id="insert">
+		insert into ${q_board_comment}
+		(${qBoardId}, ${memberNickname}, ${qBoardCommentContent})
+		values (#{qBoardId}, #{memberNickname}, #{qBoardCommentContent})
+	</insert>
+	
+	<select id="select_all_by_qboard_id" resultType="QBoardCommentVO">
+		select * from ${q_board_comment}
+		where ${qBoardId} = #{qBoardId}
+		order by ${qBoardCommentId}		
+	</select>
+	
+	<update id="update">
+		update ${q_board_comment}
+		set ${qBoardCommentContent} = #{qBoardCommentContent}
+		where ${qBoardCommentId} = #{qBoardCommentId}
+	</update>
+	
+	<delete id="delete">
+		delete from ${q_board_comment}
+		where ${qBoardCommentId} = #{qBoardCommentId}
+	</delete>
+
+</mapper>
+
+
+
+
+

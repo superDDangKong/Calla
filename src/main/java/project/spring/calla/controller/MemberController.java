@@ -7,12 +7,7 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
 @Controller // @Component
-//* 표현 계층(Presentation Layer)
-//- view(페이지)와 service를 연결하는 역할
-//- request에 대한 response를 전달하는 역할
+
 @RequestMapping(value="/member") // url : /ex02/board
 public class MemberController {
-	
-	private static final Logger logger = 
+
+
+	private static final Logger logger =
 			LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
@@ -46,7 +39,21 @@ public class MemberController {
 	
   	
 	@GetMapping("/join")
-	public void showJoinPage() {}
+	public void showJoinPage() {
+		
+	}
+	
+	@PostMapping("/join")
+	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
+		logger.info("joinPOST ȣ�� : " + vo.toString());
+		int result = memberService.create(vo);
+		if(result == 1) {
+			reAttr.addFlashAttribute("insert", "success");
+			return "redirect:/member/login";
+		} else {
+			return "redirect:/member/join";
+		}
+	}
 	
 	@GetMapping("/login")
 	public void loginGET(String targetURL) {
@@ -58,8 +65,8 @@ public class MemberController {
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
-		// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
-		logger.info("loginPOST() 호출");
+		// 
+		logger.info("loginPOST() ȣ��");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -77,7 +84,7 @@ public class MemberController {
 				return "redirect:/";
 			}
 			
-			// redirect는 request 정보가 없어짐...
+			// redirect request 
 		} else {
 			logger.info("로그인 실패");
 			if(targetURL != null) {
@@ -95,7 +102,7 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-		logger.info("logout() 호출");
+		logger.info("logout() ȣ��");
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
@@ -103,14 +110,14 @@ public class MemberController {
 	
 	@GetMapping("/myPage")
 	public void myPageGET(Model model, String memberId) {
-		logger.info("myPageGET() 호출 memberId = " + memberId);
+		logger.info("myPageGET() ȣ�� memberId = " + memberId);
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
-		logger.info("updateGET() 호출");
+		logger.info("updateGET() ȣ��");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
@@ -121,7 +128,7 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo) {
-		logger.info("updatePOST() 호출 : vo = " + vo.toString());
+		logger.info("updatePOST() ȣ�� : vo = " + vo.toString());
 		int result = memberService.update(vo);
 		String memberId = vo.getMemberId();
 		if(result == 1) {
@@ -138,7 +145,7 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likesGET() 호출");
+		logger.info("likesGET() ȣ��");
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
@@ -147,4 +154,9 @@ public class MemberController {
 		model.addAttribute("vo", vo);
 		}
 	} // end likesGET()
+	
+	@GetMapping("/qBoard")
+	public String qBoardGET() {
+		return "redirect:/qBoard/list";
+	} // end fBoardGET()
 }

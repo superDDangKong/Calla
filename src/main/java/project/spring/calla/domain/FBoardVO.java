@@ -11,7 +11,7 @@ public class FBoardVO {
 	private Date fBoardCreatedDate;
 	private int fBoardViews;
 	private int fBoardCommentCount;
-	
+
 	public FBoardVO() {}
 
 	public FBoardVO(int fBoardId, String memberNickname, String fBoardTitle, String fBoardContent,
