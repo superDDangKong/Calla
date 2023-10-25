@@ -11,6 +11,7 @@
 	<h2>글 작성 페이지</h2>
 	<form action="register" method="POST">
 		<div>
+		dd
 			<p>제목 : </p>
 			<input type="text" name="fBoardTitle" placeholder="제목 입력" required>
 		</div>
