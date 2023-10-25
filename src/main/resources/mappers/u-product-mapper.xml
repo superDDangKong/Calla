@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.UboardMapper">
+
+	<insert id="insert">
+		insert into ${u_product}
+		(${memberNickname}, ${uProductName}, ${uProductPrice}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress})
+		values (#{memberNickname}, #{uProductName}, #{uProductPrice}, #{uProductCategori}, #{uProductImagePath}, #{uProductContent}, #{memberAddress})
+	</insert>
+	<select id="select_all" resultType="UproductVO">
+		select * from ${u_product}
+		order by ${uProductId} desc
+	</select>
+	<select id="select_by_product_id" resultType="UproductVO">
+		select * from ${u_product} where ${uProductId} = #{uProductId}
+	</select>
+	<update id="update">
+		update ${u_product}
+		set ${uProductName} = #{uProductName}, ${uProductPrice} = #{uProductPrice}, ${uProductCategori} = #{uProductCategori}, ${uProductImagePath} = #{uProductImagePath}, ${uProductContent} = #{uProductContent}
+		where ${uProductId} = #{uProductId} 
+	</update>
+	<delete id="delete">
+		delete from ${u_product}
+		where ${uProductId} = #{uProductId}
+	</delete>
+	
+	<select id="paging" resultType="UproductVO">
+		select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
+		from(
+			select rownum rn, a.* from(
+				select * from ${u_product} order by ${uProductId} desc
+			)a
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="total_count" resultType="Integer">
+		select count(*) total_cnt from ${u_product}
+	</select>
+	
+	<select id="select_by_product_name" resultType="UproductVO">
+		select * from ${u_product}
+		where ${uProductName} like #{uProductName} 
+	</select>
+	
+	<select id="select_by_name" resultType="UproductVO">
+		select * from ${u_product}
+		where ${uProductName} like #{keyword} or
+			${uProductContent} like #{keyword}
+			order by ${uProductId} desc
+	</select>
+	
+	<update id="update_product_comment_count">
+    	update ${u_product}
+    	set ${uProductCommentCount} = ${uProductCommentCount} + #{amount}
+    	where ${uProductId} = #{uProductId}
+	</update>
+	
+
+</mapper>

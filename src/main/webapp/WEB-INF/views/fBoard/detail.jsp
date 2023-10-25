@@ -34,6 +34,7 @@
 	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
 	<c:if test="${memberNickname == voMemberNickname}">
 	<a href="update?fBoardId=${vo.fBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+	
 	<form action="delete" method="POST">
 		<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
 		<input type="submit" value="글 삭제">
