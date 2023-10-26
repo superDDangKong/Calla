@@ -18,7 +18,7 @@ import project.spring.calla.pageutil.PageCriteria;
 public class FBoardCommentDAOImple implements FBoardCommentDAO {
 
 	private static final Logger logger =
-			LoggerFactory.getLogger(FBoardDAOImple.class);
+			LoggerFactory.getLogger(FBoardCommentDAOImple.class);
 	
 	private static final String NAMESPACE = 
 			"project.spring.calla.FreeBoardCommentMapper";

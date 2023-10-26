@@ -109,10 +109,10 @@ public class MemberServiceImple implements MemberService {
 	public Map<String, Object> readComments(String memberNickname) {
 		logger.info("readComments() 호출 memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
+		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
+		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
 		args.put("fBoardCommentList", fBoardCommentDAO.select(memberNickname));
 		args.put("qBoardCommentList", qBoardCommentDAO.select(memberNickname));
-		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
-		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
 		return args;
 	}
 	
@@ -125,6 +125,12 @@ public class MemberServiceImple implements MemberService {
 		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
 		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberNickname));
 		return args;
+	}
+
+	@Override
+	public int updatePw(String memberId, String memberPw) {
+		logger.info("update() 호출 memberPw : " + memberPw);
+		return MemberDAO.updatePw(memberId, memberPw);
 	}
 	
 }

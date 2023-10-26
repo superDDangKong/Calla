@@ -22,6 +22,7 @@ table, th, td {
 		<tr>
 			<th scope="row">아이디</th>
 			<td>${vo.memberId }</td>
+			<input type="hidden" id="memberId" value=${vo.memberId }>
 		</tr>
 		<tr>
 			<th scope="row">회원 등급</th>
@@ -45,15 +46,21 @@ table, th, td {
 					<tbody>
 						<tr>
 							<th scope="row">현재 비밀번호</th>
-							<td><input type="password"></td>
+							<td><input type="password" id="currentPw"></td>
 						</tr>
 						<tr>
 							<th scope="row">새 비밀번호</th>
-							<td><input type="password"></td>
+							<td><input type="password" id="newPw"></td>
+							<td><div id="newPwEffect"></div></td>
 						</tr>
 						<tr>
 							<th scope="row">비밀번호 다시입력</th>
-							<td><input type="password"></td>
+							<td><input type="password" id="newPwCheck"></td>
+							<td><div id="newPwCheckEffect"></div></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="button" id="btnUpdatePw" value="비밀번호 변경" disabled></button></td>
 						</tr>												
 					</tbody>
 				</table>
@@ -87,5 +94,74 @@ table, th, td {
 	</tbody>
 </table>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		var newPwFlag = false;
+		var newPwCheckFlag = false;
+		
+		$('#newPw').on('keyup blur', (function(){
+			$('#btnUpdatePw').prop("disabled", true);
+			newPwFlag = false;
+			var newPw = $('#newPw').val();
+			var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+			if (pwEffectiveness.test(newPw)){
+				$('#newPwEffect').html("비밀번호 사용이 가능합니다.")
+				newPwFlag = true;
+				if(newPwFlag==true && newPwCheckFlag==true){
+					$('#btnUpdatePw').prop("disabled", false);
+				}
+			} else {
+				$('#newPwEffect').html("영문, 숫자, 특수기호(!@#$%^&*) 모두 조합하여 8글자 이상.")
+			}
+		})) // end newPw.keyup
+
+		$('#newPwCheck').on('keyup blur', (function(){
+			$('#btnUpdatePw').prop("disabled", true);
+			newPwCheckFlag = false;
+			var newPw = $('#newPw').val();
+			var newPwCheck = $('#newPwCheck').val();
+			if (newPw == newPwCheck){
+				$('#newPwCheckEffect').html("비밀번호가 일치합니다.")
+				newPwCheckFlag = true;
+				if(newPwFlag==true && newPwCheckFlag==true){
+					$('#btnUpdatePw').prop("disabled", false);
+				}
+			} else {
+				$('#newPwCheckEffect').html("비밀번호가 일치하지 않습니다.")
+			}
+		})) // end newPw.keyup
+		
+		$('#btnUpdatePw').click(function(){
+			var currentPw = $('#currentPw').val();
+			var newPw = $('#newPw').val();
+			var newPwCheck = $('#newPwCheck').val();
+			var memberId=$('#memberId').val();
+			
+			var obj = {
+					'currentPw' : currentPw, 
+					'newPw' : newPw,
+					'newPwCheck' : newPwCheck
+			};
+			$.ajax({
+				type : 'PUT',
+				url : 'updatePw/' + memberId,
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				data : JSON.stringify(obj), // JSON으로 변환
+				success : function(result) {
+					console.log(result);
+					if(result == 1) {
+						alert('비밀번호 수정 성공');
+					} else {
+						alert('현재 비밀번호가 다릅니다.');
+						$('#currentPw').val("");
+					}
+				}
+				
+			}); // end ajax()
+		})// end btnUpdatePw.click
+	}); // end document.ready
+</script>
 </body>
 </html>

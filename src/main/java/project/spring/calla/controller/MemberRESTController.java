@@ -2,6 +2,7 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -61,6 +63,27 @@ public class MemberRESTController {
 //		int result = memberService.update(memberNickname);
 //		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
+	
+	@PutMapping("/updatePw/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args) {
+		logger.info("updateMemberPw() 호출");
+		logger.info("memberId = " + memberId);
+		logger.info(args.get("currentPw").toString());
+		logger.info(args.get("newPw").toString());
+		logger.info(args.get("newPwCheck").toString());
+		MemberVO vo = memberService.read(memberId);
+		String memberPw = vo.getMemberPw();
+		int result = 0;
+		if (memberPw.equals(args.get("currentPw"))) {
+			logger.info("pw 일치");
+			result = memberService.updatePw(memberId, memberPw);
+		} else {
+			logger.info("pw 불일치");
+			
+		}
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 }
 	
 	

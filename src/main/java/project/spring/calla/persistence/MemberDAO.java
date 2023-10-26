@@ -12,4 +12,5 @@ public interface MemberDAO {
 	String login(String memberId, String memberPw);
 	String searchId(String memberName, String memberEmail);
 	String searchPw(String memberId, String memberPhone);
+	int updatePw(String memberId, String memberPw);
 }

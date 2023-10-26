@@ -22,12 +22,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="productCommentVo" items="${lists.productCommentList }">
+			<c:forEach var="productCommentVo" items="${lists.ProductCommentList }">
 				<tr>
 					<td>${productCommentVo.memberNickname }</td>
 					<td>${productCommentVo.productCommentContent }</td>
 					<fmt:formatDate value="${productCommentVo.productCommentCreatedDate }"
-					pattern="yyyy-MM-dd HH:mm:ss" var="prductCommentCreatedDate"/>
+					pattern="yyyy-MM-dd HH:mm:ss" var="productCommentCreatedDate"/>
 					<td>${productCommentCreatedDate }</td>
 				</tr>
 			</c:forEach>
@@ -49,7 +49,7 @@
 					<td>${uProductCommentVo.memberNickname }</td>
 					<td>${uProductCommentVo.uProductCommentContent }</td>
 					<fmt:formatDate value="${uProductCommentVo.uProductCommentCreatedDate }"
-					pattern="yyyy-MM-dd HH:mm:ss" var="uPrductCommentCreatedDate"/>
+					pattern="yyyy-MM-dd HH:mm:ss" var="uProductCommentCreatedDate"/>
 					<td>${uProductCommentCreatedDate }</td>
 				</tr>
 			</c:forEach>

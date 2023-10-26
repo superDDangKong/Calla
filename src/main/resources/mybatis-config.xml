@@ -110,6 +110,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productCommentId" value="product_comment_id"/>
 		<property name="productReplyContent" value="product_reply_content"/>
 		<property name="productReplyCreatedDate" value="product_reply_created_date"/>
+		
+		<property name="product_like" value="product_like"/>
+		<property name="productLikeId" value="product_like_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="memberNickname" value="member_nickname"/>
+		
+		<property name="u_product_like" value="u_product_like"/>
+		<property name="uProductLikeId" value="u_product_like_id"/>
+		<property name="uProductId" value="u_product_id"/>
+		<property name="memberNickname" value="member_nickname"/>
 	</properties>
 	
 

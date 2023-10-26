@@ -83,7 +83,7 @@ public class MemberController {
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(300);
 			
 			if(targetURL != null) {
 				return "redirect:" + targetURL; 
@@ -215,6 +215,8 @@ public class MemberController {
 		
 		Map<String, Object> args = memberService.readComments(memberNickname);
 		model.addAttribute("lists", args);
+		
+		
 		
 	}
 	

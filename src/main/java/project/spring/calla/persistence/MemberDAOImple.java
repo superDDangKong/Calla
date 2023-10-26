@@ -61,7 +61,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override 
 	public int update(MemberVO vo) {
-		logger.info("update() ȣ�� vo : " + vo);
+		logger.info("update() 호출 vo : " + vo);
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
@@ -83,6 +83,15 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		args.put("memberPhone", memberPhone);
 		return sqlSession.selectOne(NAMESPACE + ".search_pw", args);
+	}
+
+	@Override
+	public int updatePw(String memberId, String memberPw) {
+		logger.info("updatePw() 호출 memberPw : " + memberPw);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberPw", memberPw);
+		return sqlSession.update(NAMESPACE + ".updatePw", args);
 	}
 
 	

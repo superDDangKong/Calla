@@ -30,8 +30,10 @@
 					<td>${uProductCommentVo.memberNickname }</td>
 					<td>${uProductCommentVo.uProductCommentContent }</td>
 					<fmt:formatDate value="${uProductCommentVo.uProductCommentCreatedDate }"
-					pattern="yyyy-MM-dd HH:mm:ss" var="uPrductCommentCreatedDate"/>
+					pattern="yyyy-MM-dd HH:mm:ss" var="uProductCommentCreatedDate"/>
 					<td>${uProductCommentCreatedDate }</td>
+					<td>${uProductCommentVo.uProductViews }</td>
+					<td>${uProductCommentVo.uProductCommentCount }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -56,6 +58,8 @@
 					<fmt:formatDate value="${fBoardVo.fBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="fBoardCreatedDate"/>
 					<td>${fBoardCreatedDate }</td>
+					<td>${fBoardVo.fBoardViews }</td>
+					<td>${fBoardVo.fBoardCommentCount }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -80,6 +84,8 @@
 					<fmt:formatDate value="${qBoardVo.qBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCreatedDate"/>
 					<td>${qBoardCreatedDate }</td>
+					<td>${qBoardVo.qBoardViews }</td>
+					<td>${qBoardVo.qBoardCommentCount }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

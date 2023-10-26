@@ -6,25 +6,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${product_reply}
-		(${ProductCommentId}, ${memeberNickname}, ${ProductReplyContent})
-		values (#{ProductCommentId}, #{memberNickname}, #{ProductReplyContent})
+		(${productCommentId}, ${memberNickname}, ${productReplyContent})
+		values (#{productCommentId}, #{memberNickname}, #{productReplyContent})
 	</insert>
 	
 	<select id="select_all_by_product_comment_id" resultType="ProductReplyVO">
 		select * from ${product_reply}
-		where ${ProductCommentId} = #{ProductCommentId}
-		order by ${ProductReplyId}
+		where ${productCommentId} = #{productCommentId}
+		order by ${productReplyId}
 	</select>
 	
 	<update id="update">
 		update ${product_reply}
-		set ${ProductReplyContent} = #{ProductReplyContent}
-		where ${ProductReplyId} = #{ProductReplyId}
+		set ${productReplyContent} = #{productReplyContent}
+		where ${productReplyId} = #{productReplyId}
 	</update>
 	
 	<delete id="delete">
 		delete from ${product_reply}
-		where ${ProductReplyId} = #{ProductReplyId}
+		where ${productReplyId} = #{productReplyId}
 	</delete>
 
 </mapper>

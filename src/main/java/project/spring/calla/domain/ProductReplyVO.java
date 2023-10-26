@@ -5,17 +5,18 @@ import java.util.Date;
 public class ProductReplyVO {
 	private int productReplyId;
 	private int productCommentId;
-	private String memberNickName;
+	private String memberNickname;
 	private String productReplyContent;
 	private Date productReplyCreatedDate;
 	
 	public ProductReplyVO() {}
 
-	public ProductReplyVO(int productReplyId, int productCommentId, String memberNickName, String productReplyContent,
+	public ProductReplyVO(int productReplyId, int productCommentId, String memberNickname, String productReplyContent,
 			Date productReplyCreatedDate) {
+		super();
 		this.productReplyId = productReplyId;
 		this.productCommentId = productCommentId;
-		this.memberNickName = memberNickName;
+		this.memberNickname = memberNickname;
 		this.productReplyContent = productReplyContent;
 		this.productReplyCreatedDate = productReplyCreatedDate;
 	}
@@ -36,12 +37,12 @@ public class ProductReplyVO {
 		this.productCommentId = productCommentId;
 	}
 
-	public String getMemberNickName() {
-		return memberNickName;
+	public String getMemberNickname() {
+		return memberNickname;
 	}
 
-	public void setMemberNickName(String memberNickName) {
-		this.memberNickName = memberNickName;
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
 
 	public String getProductReplyContent() {
@@ -63,10 +64,9 @@ public class ProductReplyVO {
 	@Override
 	public String toString() {
 		return "ProductReplyVO [productReplyId=" + productReplyId + ", productCommentId=" + productCommentId
-				+ ", memberNickName=" + memberNickName + ", productReplyContent=" + productReplyContent
+				+ ", memberNickname=" + memberNickname + ", productReplyContent=" + productReplyContent
 				+ ", productReplyCreatedDate=" + productReplyCreatedDate + "]";
 	}
-	
 	
 	
 	

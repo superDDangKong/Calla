@@ -66,7 +66,7 @@ public class ProductCommentVO {
 	public String toString() {
 		return "ProductCommentVO [productCommentId=" + productCommentId + ", productId=" + productId
 				+ ", memberNickname=" + memberNickname + ", productCommentContent=" + productCommentContent
-				+ ", productCreatedDate=" + productCommentCreatedDate + "]";
+				+ ", productCommentCreatedDate=" + productCommentCreatedDate + "]";
 	}
 	
 	
