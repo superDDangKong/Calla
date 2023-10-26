@@ -5,128 +5,86 @@
 <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
 	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
 	crossorigin="anonymous"></script>
-<!DOCTYPE html>
-<html>
-<head>
+	
 <style type="text/css">
+table, th, td {
+	border-style : solid;
+	border-width : 1px;
+	text-align : center;
+}
+
 ul {
-	list-style-type: none;
+	list-style-type : none;
+	text-align : center;
 }
 
 li {
-	display: inline-block;
+	display : inline-block;
+	text-align : center;
 }
 </style>
-<meta charset="UTF-8">
-<title>List</title>
-<link rel="stylesheet" href="../resources/css/main.css">
-</head>
-<body>
-	<div id="login">
-		<input type="hidden" id="memberNickname" value=${memberNickname }>
-	</div>
 
-	<div id="product"></div>
-	<div class="wrapper">
-		<div class="wrap">
-			<div class="top_gnb_area">
-
-				<h1></h1>
-
-				<a href="register"><input type="button" value="내 물건 등록"></a>
-				<a href="list"><input type="button" value="상품 목록"></a>
-
-			</div>
-			<div class="top_area">
-				<div class="logo_area">
-					<h1>logo area</h1>
-				</div>
-				<div class="search_area">
-					<h1>Search area</h1>
-				</div>
-				<div class="login_area">
-					<div class="login_button">
-					<c:if test="${empty memberNickname }">
-						<a href="/calla/member/login">로그인</a>
-					</c:if>
-					<c:if test="${not empty memberNickname }">
-						<a href="/calla/member/login">로그아웃</a>
-					</c:if>
-					</div>
-					<span><a href="/calla/member/join">회원가입</a></span>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="navi_bar_area">
-				<div class="dropdown">
-			    <button class="dropbtn">공용구매 
-			      <i class="fa fa-caret-down"></i>
-			    </button>
-			    <div class="dropdown-content">
-			    	<a href="/calla/product/list">전체품목</a>
-			  	  	<a href="#">테스트1</a>
-			    	<a href="#">테스트2</a>
-			    	<a href="#">테스트3</a>
-			    	<a href="#">테스트4</a>
-			    	<a href="#">테스트5</a>
-			    	<a href="#">테스트6</a>	      		      		      
-			    </div>			
-			</div>
-			<div class="dropdown">
-			    <button class="dropbtn">중고구매 
-			      <i class="fa fa-caret-down"></i>
-			    </button>
-			    <div class="dropdown-content">
-			    	<a href="#">테스트1</a>
-			    	<a href="#">테스트2</a>
-			    	<a href="#">테스트3</a>
-			    	<a href="#">테스트4</a>
-			    	<a href="#">테스트5</a>
-			    	<a href="#">테스트6</a>	      		      		      
-			    </div>			
-			</div>
-			</div>
-			<div class="content_area">
-				<hr>
-				<table>
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>이미지</th>
-							<th>이름</th>
-							<th>가격</th>
-							<th>카테고리</th>
-							<th>작성일</th>
-							<th>리뷰수</th>
-							<th>좋아요수</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="vo" items="${list }">
-							<tr>
-								<td>${vo.uProductId }</td>
-								<td>
-									<div>
-										<img src="display?fileName=${vo.uProductImagePath}"
-											width="100px" height="100px">
-									</div>
-								</td>
-								<td><a
-									href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a></td>
-								<td>${vo.uProductPrice }</td>
-								<td>${vo.uProductCategori }</td>
-								<fmt:formatDate value="${vo.uProductCreatedDate }"
-									pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
-								<td>${uProductCreatedDate }</td>
-								<td>${vo.uProductContent }</td>
-								<td>${vo.uProductLikes }</td>
-								<td>${vo.uProductViews }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				<ul>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>메타독 메인페이지</title>
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../resources/css/styles.css" rel="stylesheet" />
+        <%@ include file="header.jsp"%>
+    </head>
+    <body>
+         <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                  
+                   <c:forEach var="vo" items="${list }">
+                   
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="display?fileName=${vo.uProductImagePath}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">
+                                    
+                                    <a href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
+                                    
+                                    </h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    ${vo.uProductPrice }
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    </c:forEach>
+                    
+                </div>
+            </div>
+            
+            <ul>
 					<c:if test="${pageMaker.hasPrev }">
 						<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 					</c:if>
@@ -138,9 +96,13 @@ li {
 						<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 					</c:if>
 				</ul>
-
-				<input type="hidden" id="insertAlert" value="${insert_result }">
-			</div>
-		</div>
-	</div>
+				
+        </section>
+        <!-- Footer-->
+        <%@ include file="footer.jsp"%>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
