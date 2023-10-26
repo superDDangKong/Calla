@@ -164,9 +164,12 @@
     		if (pwEffectiveness.test(memberPw)){
     			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
     			pwckCheck = true;
+    			$('.error_msg').text('');
     		} else {
     			console.log("비밀번호 유효성 검사 실패");
     			pwckCheck = false;
+    			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
+		    	$('.error_msg').css('color', 'red');
     		}
     	}); // end 비밀번호 function(비밀번호 유효성 검사)
 		
@@ -177,9 +180,12 @@
       		
       		if (memberPw === memberPwCk) {
       			console.log("비밀번호 재확인 성공");
+      			$('.error_msg').text('');
       			pwckcorCheck = true;
       		} else {
       			console.log("비밀번호 재확인 실패");
+      			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
+		    	$('.error_msg').css('color', 'red');
       			pwckcorCheck = false;
       		}
       	}); // end 재확인 function(비밀번호 재확인)
