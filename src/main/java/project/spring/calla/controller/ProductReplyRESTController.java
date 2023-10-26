@@ -20,7 +20,7 @@ import project.spring.calla.domain.ProductReplyVO;
 import project.spring.calla.service.ProductReplyService;
 
 @RestController
-@RequestMapping(value="/product/productReplies")
+@RequestMapping(value="/product/replies")
 public class ProductReplyRESTController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(ProductReplyRESTController.class);

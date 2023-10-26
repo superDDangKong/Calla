@@ -24,7 +24,7 @@ import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
 
 @RestController
-@RequestMapping(value="/product/productComments")
+@RequestMapping(value="/product/comments")
 
 public class ProductCommentRESTController {
 	private static final Logger logger=
@@ -48,7 +48,7 @@ public class ProductCommentRESTController {
 	
 	@GetMapping("/all/{productId}/{commentPage}/{commentNumsPerPage}") // GET : 댓글 선택(all)
 	public ResponseEntity<Map<String, Object>> readComments(
-			@PathVariable("ProductId") int productId, @PathVariable("commentPage") Integer commentPage,
+			@PathVariable("productId") int productId, @PathVariable("commentPage") Integer commentPage,
 			@PathVariable("commentNumsPerPage") Integer commentNumsPerPage){
 		// @PathVariable("productId") : /all/{productId} 값을 설정된 변수에 저장
 		logger.info("readComments() 호출 : productId = " + productId);
@@ -75,8 +75,8 @@ public class ProductCommentRESTController {
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("list", list);
 		responseMap.put("pageMaker", pageMaker);
-		
-		return new ResponseEntity<Map<String,Object>>(responseMap, HttpStatus.OK);
+
+		return new ResponseEntity<Map<String, Object>>(responseMap, HttpStatus.OK);
 		
 	}
 	

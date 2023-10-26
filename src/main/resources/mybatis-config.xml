@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productImagePath" value="product_image_path"/>
 		<property name="productContent" value="product_content"/>
 		<property name="productCommentCount" value="product_comment_count"/>
-	
+		
 		<property name="product_comment" value="product_comment"/>
 		<property name="productCommentId" value="product_comment_id"/>
 		<property name="productId" value="product_id"/>
@@ -103,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberNickname" value="member_nickname"/>
 		<property name="qBoardCommentContent" value="q_board_comment_content"/>
 		<property name="qBoardCommentCreatedDate" value="q_board_comment_Created_date"/>		
+		
 		<property name="product_reply" value="product_reply"/>
 		<property name="productReplyId" value="product_reply_id"/>
 		<property name="memberNickname" value="member_nickname"/>

@@ -6,17 +6,17 @@ public class ProductReplyVO {
 	private int productReplyId;
 	private int productCommentId;
 	private String memberNickName;
-	private String prodcutReplyContent;
+	private String productReplyContent;
 	private Date productReplyCreatedDate;
 	
 	public ProductReplyVO() {}
 
-	public ProductReplyVO(int productReplyId, int productCommentId, String memberNickName, String prodcutReplyContent,
+	public ProductReplyVO(int productReplyId, int productCommentId, String memberNickName, String productReplyContent,
 			Date productReplyCreatedDate) {
 		this.productReplyId = productReplyId;
 		this.productCommentId = productCommentId;
 		this.memberNickName = memberNickName;
-		this.prodcutReplyContent = prodcutReplyContent;
+		this.productReplyContent = productReplyContent;
 		this.productReplyCreatedDate = productReplyCreatedDate;
 	}
 
@@ -44,12 +44,12 @@ public class ProductReplyVO {
 		this.memberNickName = memberNickName;
 	}
 
-	public String getProdcutReplyContent() {
-		return prodcutReplyContent;
+	public String getProductReplyContent() {
+		return productReplyContent;
 	}
 
-	public void setProdcutReplyContent(String prodcutReplyContent) {
-		this.prodcutReplyContent = prodcutReplyContent;
+	public void setProductReplyContent(String productReplyContent) {
+		this.productReplyContent = productReplyContent;
 	}
 
 	public Date getProductReplyCreatedDate() {
@@ -63,7 +63,7 @@ public class ProductReplyVO {
 	@Override
 	public String toString() {
 		return "ProductReplyVO [productReplyId=" + productReplyId + ", productCommentId=" + productCommentId
-				+ ", memberNickName=" + memberNickName + ", prodcutReplyContent=" + prodcutReplyContent
+				+ ", memberNickName=" + memberNickName + ", productReplyContent=" + productReplyContent
 				+ ", productReplyCreatedDate=" + productReplyCreatedDate + "]";
 	}
 	

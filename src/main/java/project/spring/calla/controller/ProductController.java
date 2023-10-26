@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -122,12 +125,53 @@ public class ProductController {
 	}  // end registerPOST()
 	
 	@GetMapping("/detail")
-	public void detail(Model model, Integer productId, Integer page) {
-		logger.info("detail() 호출 : productId = " + productId);
+	public String detail(Model model, Integer productId, Integer page, HttpServletRequest request, HttpServletResponse response) {
+		String cookieName = "product_" + productId;
+		Cookie[] cookies = request.getCookies();
+		boolean cookieFound = false;
+		
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals(cookieName)) {
+					cookieFound = true;
+					break;
+				}
+			}
+		}
+		
+		if(!cookieFound) { // 쿠키가 존재하지 않는 경우, 조회수 증감 및 쿠키 설정
+			int views = 1; // 첫번째 조회
+			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
+			viewCookie.setMaxAge(180); // 쿠키 유효 시간 3분
+			response.addCookie(viewCookie);
+			
+			int result = productService.updateViews(views, productId);
+			if(result == 1) {
+				logger.info("조회수 증가");
+			} else {
+				logger.info("실패");
+			}
+			
+		}
+		logger.info("deatil() 호출 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
-		logger.info("호출 : prdocutVO = " + vo);
+		ProductCommentVO commentVO = new ProductCommentVO();
+		PageMaker pageMaker = new PageMaker();
+		PageCriteria criteria = new PageCriteria();
+		
+		pageMaker.setTotalCount(productCommentService.getTotalCounts(productId));
+		
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		String memberNickname = commentVO.getMemberNickname();
+		
+		model.addAttribute("memberNickname", memberNickname);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "/product/detail";
 	} // end detail()
 
 	

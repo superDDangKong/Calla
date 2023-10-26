@@ -6,10 +6,10 @@ import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface ProductCommentDAO {
-	int insert(ProductCommentVO vo); // ´ñ±Û µî·Ï
-	List<ProductCommentVO> select(int productId); // »óÇ°ÀÇ ´ñ±Û °Ë»ö
-	int update(int productCommentId, String productCommentContent); // ´ñ±Û ¼öÁ¤
-	int delete(int productCommentId); // ´ñ±Û »èÁ¦
+	int insert(ProductCommentVO vo); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	List<ProductCommentVO> select(int productId); // ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
+	int update(int productCommentId, String productCommentContent); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int delete(int productCommentId); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	List<ProductCommentVO> select(PageCriteria criteria);
 	int getTotalCount();
 	List<ProductCommentVO> select(String memberNickname);

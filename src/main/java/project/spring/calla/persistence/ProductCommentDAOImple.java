@@ -28,19 +28,19 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 	
 	@Override
 	public int insert(ProductCommentVO vo) {
-		logger.info("insert() È£Ãâ : vo = " + vo.toString());
+		logger.info("insert() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<ProductCommentVO> select(int productId) {
-		logger.info("select() È£Ãâ : productId = " + productId);
+		logger.info("select() È£ï¿½ï¿½ : productId = " + productId);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_product_id", productId);
 	}
 
 	@Override
 	public int update(int productCommentId, String productCommentContent) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() È£ï¿½ï¿½");
 		logger.info("productCommentId = " + productCommentId + ", productCommentContent = " + productCommentContent);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("productCommentId", productCommentId);
@@ -50,27 +50,28 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 
 	@Override
 	public int delete(int productCommentId) {
-		logger.info("delete() È£Ãâ : productCommentId = " + productCommentId);
+		logger.info("delete() È£ï¿½ï¿½ : productCommentId = " + productCommentId);
 		return sqlSession.delete(NAMESPACE + ".delete", productCommentId);
 	}
 
 	@Override
-	public List<ProductCommentVO> select(PageCriteria criteria) {
-		logger.info("select() È£Ãâ");
-		logger.info("start = " + criteria.getStart());
-		logger.info("end = " + criteria.getEnd());
-		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
+	public List<ProductCommentVO> select(PageCriteria criteria, int productId) {
+		Map<String, Object> args = new HashMap();
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("productId", productId);
+		return sqlSession.selectList(NAMESPACE + ".paging", args);
 	}
 
 	@Override
-	public int getTotalCount() {
+	public int getTotalCount(int productId) {
 		logger.info("getTotalCounts()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count");
+		return sqlSession.selectOne(NAMESPACE + ".total_count", productId);
 	}
 
 	@Override
 	public List<ProductCommentVO> select(String memberNickname) {
-		logger.info("select(memberNickname) È£Ãâ memberNickname = " + memberNickname);
+		logger.info("select(memberNickname) È£ï¿½ï¿½ memberNickname = " + memberNickname);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
 	}
 }
