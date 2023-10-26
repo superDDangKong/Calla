@@ -15,6 +15,10 @@
 <body>
 	<h2>상품 보기</h2>
 	<div>
+		<p>작성자 : ${vo.memberNickname }</p>
+	</div>
+	
+	<div>
 		<p>상품 번호 : ${vo.uProductId }</p>
 	</div>
 	<div>
@@ -60,11 +64,16 @@
 				var uProductId = $('#uProductId').val();
 				var memberNickname = $('#memberNickname').val();
 				var uProductCommentContent = $('#uProductCommentContent').val();
+				var uProductSecretComment = "n";
+				if($("#uProductSecretComment").is(":checked")){
+					uProductSecretComment ="y";
+				}
 				
 				var obj = {
 						'uProductId' : uProductId,
 						'memberNickname' : memberNickname,
-						'uProductCommentContent' : uProductCommentContent
+						'uProductCommentContent' : uProductCommentContent,
+						'uProductSecretComment' : uProductSecretComment
 						
 						  }
 				console.log(obj);

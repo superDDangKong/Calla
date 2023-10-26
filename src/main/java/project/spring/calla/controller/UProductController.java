@@ -52,6 +52,13 @@ public class UProductController {
 		
 	}
 	
+	@RequestMapping(value="test", method = RequestMethod.GET)
+	public void TestGET() throws Exception{
+		
+		logger.info("메인 출력");
+		
+	}
+	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
 		logger.info("list() 호출");

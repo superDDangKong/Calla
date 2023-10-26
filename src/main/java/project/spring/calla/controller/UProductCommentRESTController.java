@@ -63,11 +63,6 @@ public class UProductCommentRESTController {
 	}
 	
 	
-	
-	
-	
-	
-
 	@PutMapping("/{uProductCommentId}") // PUT : ´ñ±Û ¼öÁ¤
 	public ResponseEntity<Integer> updateComment(@PathVariable("uProductCommentId") int uProductCommentId,
 			@RequestBody String uProductCommentContent) {
