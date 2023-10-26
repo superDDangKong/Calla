@@ -15,7 +15,6 @@
     <label for="memberPw">비밀번호:</label> 
     <input type="password" id="memberPw" name="memberPw"> 
     <input type="submit" value="로그인">
-    
     <c:if test="${not empty param.targetURL}">
     <input type="hidden" id="targetURL" name="targetURL" value="${param.targetURL}">
     </c:if>
