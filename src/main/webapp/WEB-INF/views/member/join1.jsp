@@ -5,28 +5,26 @@
 <html>
 <head>
 <style type="text/css">
-
-.member__form{
- 	border: 1px solid rgba(0, 0, 0, 0.3);
+.final_id_ck1{
+	visibility: visible;
+	color: red;
+	font-size: 13px;
+	color: #ff3f3f;
+}
+#member_id{
+	border-width: 3px;
 	width: 20%;
     padding: 16px 0 12px;
+    border: 25;
     background: none transparent;
     font-family: dotum,sans-serif;
     font-size: 14px;
     line-height: 20px;
+    color: #111;
     font-weight: 700;
     text-indent: 10px;
 }
 
-#member_id{
-	border-top-left-radius: 10px; /* 상단 좌측 모서리를 10px로 둥글게 만듭니다. */
-    border-top-right-radius: 10px; /* 상단 우	측 모서리를 10px로 둥글게 만듭니다. */
-}
-
-#member_nickname{
-	border-bottom-left-radius: 10px; /* 하단 좌측 모서리를 10px로 둥글게 만듭니다. */
-    border-bottom-right-radius: 10px; /* 하단 우측 모서리를 10px로 둥글게 만듭니다. */
-}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
@@ -35,78 +33,23 @@
 <body>
 
 <div style="text-align:center">
-	 <form name="join" action="join" id="join"method="post"> 
-	 	<div>
-			<div id="f">
-				<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디" required>
-				<br>
-			
+	 <form name="join" id="join"method="post"> 
+	 	
+		
+				<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디"><button id="joinbtn">가입완료</button><br>
+				<span id="final_id_ck1"></span>
+				<span class="final_id_ck2"></span><!-- 아이디 유효성 확인 -->
+				
 		
 			
-				<input type="password" id="member_pw" class="member__form" name="memberPw" placeholder="비밀번호" required>
-				<br>
-		
-			
-				<input type="password" id="member_pw_ck" class="member__form" name="member_pw_check" placeholder="비밀번호 확인" required>
-				<br>
-			
-		
-			
-				<input type="text" id="member_name" class="member__form" name="memberName" placeholder="홍길동" required>
-				<br>
-		
-			
-				<input type="text" id="member_nickname" class="member__form" name="memberNickname" placeholder="calla" required><br>
-				<span class="error_msg"></span>
-			</div><br>
-		
-			<div>
-				<input type="text" class="member__form" name="member_email1" id="email_id" placeholder="calla" required>@
-				<input type="text" class="member__form" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
-				<select class="box" id="domain-list" name="emailSelection" onchange="select_change(this.value);">
-					<option value="type">-직접입력-</option>
-					<option value="naver.com">naver.com</option>
-  					<option value="gmail.com">gmail.com</option>
-  					<option value="hanmail.net">hanmail.net</option>
-  					<option value="nate.com">nate.com</option>
-  					<option value="kakao.com">kakao.com</option>
-				</select>
-				<span class="final_email_ck"></span><!-- 이메일 형식대로 입력하라는 문장출력 -->
-				<input type="hidden" name="memberEmail" id="memberEmail">
-			</div><br>
-		
-			<div>
-        		<input type="tel" id="member_phone" class="member__form" name="memberPhone" placeholder="010-1234-5678" required><br>
-        	</div><br>
-        
-        	<div>관심사<br>
-        		만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
-        		굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
-        		캐릭터<input type="checkbox" name="check" class="check" id="check3" value="캐릭터">
-        		<input type="hidden" name="memberInterest" id="memberInterest">
-        		<span class="final_interest_ck"></span>
-        	</div>
-      	
-      	
-      		<br>
-      		<div></div> <!-- 주소api -->
-      		<input type="text" id="postcode" class="member__form" placeholder="우편번호" required>
-			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-			<input type="text" id="address" class="member__form" placeholder="주소" required>
-			<input type="text" id="detailAddress" class="member__form" placeholder="상세주소" required><br>
-			<input type="text" id="extraAddress" class="member__form" placeholder="참고항목" required>
-			<br>
-			<input type="submit" name="join_button" id="join_button" value="가입하기"> 
-			<!-- <button id="joinbtn">가입완료</button>  -->
-			<span class="final_add_ck"></span><!-- 주소를 확인해주세요 -->
-			<input type="hidden" name="memberAddress" id="memberAddress">
-      	</div>
+      		
+	
       
    	</form>
 </div>
       <script>
-    	            //event.preventDefault(); // 제출 이벤트 중단
-      $(document).ready(function() {
+    	            
+      
     	        // 폼 제출 이벤트 발생 시 실행되는 코드
 				// 아이디 유효성 + 중복검사 
       $('#member_id').blur(function() {
@@ -119,7 +62,7 @@
         	// 아이디 유효성 확인
     	if (idEffectiveness.test(memberId)){
     		idckcorCheck = true; // 아이디 유효성 검사 통과 변수
-    		$(".error_msg").css('display', 'block');
+    		$("#final_id_ck1").css('display', 'block');
     		
     		// 중복확인 ajax
     		$.ajax({ // JoinRestController의 checkId 송수신
@@ -131,13 +74,13 @@
         			 if (result == 1) {
         				 console.log("사용불가능한아이디")
         				 idckCheck = false; // 아이디 중복검사 통과 변수
-        				 $('.error_msg').text('사용 불가능한 아이디 입니다.');
-        		    	 $('.error_msg').css('color', 'red');
+        				 $('#final_id_ck1').text('사용 불가능한 아이디 입니다.');
+        		    	 $('#final_id_ck1').css('color', 'red');
         				 
         			 } else {
         				 console.log("사용가능한아이디")
         				 idckCheck = true; // 아이디 중복검사 통과 변수
-        				 $('.error_msg').text('');
+        				 $('#final_id_ck1').text('');
         			 }
         		 } // end success
         	 }) // end ajax
@@ -145,13 +88,13 @@
     	} else {
     		console.log("아이디 유효성 검사 실패");
     		idckcorCheck = false; // 아이디 유효성 검사 실패 변수
-    		$('.error_msg').text('아이디 유효성 검사 실패');
-    		$('.error_msg').css('color', 'red');
+    		$('#final_id_ck1').text('아이디 유효성 검사 실패');
+    		$('#final_id_ck1').css('color', 'red');
     	}
        
       } else {
-    	  $('.error_msg').text('아이디를 입력해주세요.');
-  		  $('.error_msg').css('color', 'red');
+    	  $('#final_id_ck1').text('아이디를 입력해주세요.');
+  		  $('#final_id_ck1').css('color', 'red');
       }			 
     	}); // end 아이디 function(아이디 유효성 검사 + 중복체크)
     	
@@ -164,12 +107,9 @@
     		if (pwEffectiveness.test(memberPw)){
     			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
     			pwckCheck = true;
-    			$('.error_msg').text('');
     		} else {
     			console.log("비밀번호 유효성 검사 실패");
     			pwckCheck = false;
-    			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
-		    	$('.error_msg').css('color', 'red');
     		}
     	}); // end 비밀번호 function(비밀번호 유효성 검사)
 		
@@ -180,12 +120,9 @@
       		
       		if (memberPw === memberPwCk) {
       			console.log("비밀번호 재확인 성공");
-      			$('.error_msg').text('');
       			pwckcorCheck = true;
       		} else {
       			console.log("비밀번호 재확인 실패");
-      			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
-		    	$('.error_msg').css('color', 'red');
       			pwckcorCheck = false;
       		}
       	}); // end 재확인 function(비밀번호 재확인)
@@ -237,6 +174,11 @@
 		}) // end 닉네임 중복확인
     	       
      $('#member_phone').blur(function(){
+    	 var emailId = $('#email_id').val();
+		 var emailDomain = $('#email_domain').val();
+		 var memberEmail = emailId + '@' + emailDomain;
+		 document.getElementById("memberEmail").value = memberEmail;
+		 mailCheck = true;
     	 var memberPhone = $('#member_phone').val();
     	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
 		 
@@ -248,31 +190,33 @@
     	 console.log(memberPhone)
      }) // end 입력한 핸드폰 번호
     	            
-
-    	    
-      }); // end document ready(맨처음)
-      
+	$("#joinbtn").click(function(){
+     if(idckcorCheck&&idckCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&nickNameCheck&&mailCheck&&phoneCheck&&addressCheck) {
+    	 $("#join_form").attr("action", "join");
+         $("#join_form").submit(); 
+     }
+		return false;
+	})
        	   
     	
-      		$(document).ready(function() {
-      			
-    	    var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
-    	    
-    	     $(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
-    	    	 console.log("check.change")
-    	    	 var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
-    	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
-    	    		//selectedValues 체크된 요소들을 저장할 배열
-    	            return $(this).val();
-    	        }).get(); // get();  selectedValues jquery객체를 javascript 객체로 바꾸어줌
-				
-    	    	interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
-    	        // join 배열을 하나의 문자열로 합쳐주는 메서드
-    	        document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
-    	        var i = $('#memberInterest').val(); // 변수 값을 저장
-    	        console.log(i); // 값이 제대로 나오는지 확인 
-    	    	});
-    		});
+    	$(document).ready(function() {
+  			
+	    	var interestValues = ''; // 체크된 value 값들 저장할 문자열 변수 선언
+	    
+	     	$(".check").change(function() { // 클래스가 check인 모든 체크박스 요소를 선택하고, 상태가 변경될 때 마다 실행
+	    	 	var selectedValues = $(".check:checked").map(function() { // $(".check:checked") ckeck인 요소중에 체크된 요소를 선택
+	    		// .map(function) .map은 결과들을 배열에 저장하는 메서드
+	    		//selectedValues 체크된 요소들을 저장할 배열
+	            return $(this).val();
+	        	}).get(); // get();  selectedValues jquery객체를 javascript 객체로 바꾸어줌
+			
+	    		interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
+	        	// join 배열을 하나의 문자열로 합쳐주는 메서드
+	        	document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
+	        	var i = $('#memberInterest').val(); // 변수 값을 저장
+	        	console.log(i); // 값이 제대로 나오는지 확인 
+	    	});
+		});
      
       
       /* 유효성 검사 통과유무 변수 */
@@ -387,15 +331,98 @@
         		}).open();
     		}
     		
-    		$("#join").submit(function(event){
-    			if(idckCheck === true){
-    				var emailId = $('#email_id').val();
-          			var emailDomain = $('#email_domain').val();
-          			var memberEmail = emailId + '@' + emailDomain;
-          			document.getElementById("memberEmail").value = memberEmail;
-          			mailCheck = true;
+    		$("#joinbtn").submit(function(event){
+    				
           			event.preventDefault();
-    			}
+          			
+          			var isValid = true; // true일 경우 폼 제출함
+					
+          			
+          			
+          			if (idckcorCheck == false) {
+          				$(".final_id_ck2").text("＊아이디: 8자 이상의 영어 대문자, 소문자 및 숫자만 사용 가능합니다.");
+          				console.log(idckcorCheck);
+          				isValid = false;
+          			} else {
+          				$(".final_id_ck2").text("");
+          				console.log(idckcorCheck);
+          			} // 아이디 유효성 검사
+          			
+          	        if (idckCheck == false) {
+          	            $(".final_id_ck2").text("＊사용할 수 없는 아이디입니다.");
+          	          	console.log(idckCheck);
+          	            isValid = false;
+          	        } else {
+          	            $(".final_id_ck2").text("");
+          	          	console.log(idckCheck);
+          	        } // 아이디 중복검사
+
+          	        if (pwckCheck == false) {
+          	            $(".final_pw_ck1").text("＊비밀번호: 8자 이상의 영어 대문자, 소문자, 숫자, 특수 문자만 사용 가능합니다.");
+          	          	console.log(pwckCheck);
+          	            isValid = false;
+          	        } else {
+          	            $(".final_pw_ck1").text("");
+          	          	console.log(pwckCheck);
+          	        } // 비밀번호 유효성 검사
+    				
+          	        if (pwckcorCheck == false) {
+          	        	$(".final_pw_ck2").text("＊비밀번호가 일치하지 않습니다.");
+          	        	console.log(pwckcorCheck);
+          	            isValid = false;
+          	        } else {
+          	        	$(".final_pw_ck2").text("");
+          	        	console.log(pwckcorCheck);
+          	        } // 비밀번호 재확인
+          	        
+          	        if (nameCheck == false) {
+          	        	$(".final_name_ck").text("＊이름을 입력해주세요.");
+          	        	console.log(nameCheck);
+          	            isValid = false;
+          	        } else {
+          	        	$(".final_name_ck").text("");	
+          	        	console.log(nameCheck);
+          	        } // 이름 입력확인
+          	        
+          	        if (nickNameCheck == false) {
+          	        	$(".final_nick_ck").text("＊사용할 수 없는 닉네임입니다.");
+          	        	console.log(nickNameCheck);
+          	            isValid = false;
+          	        } else {
+          	        	$(".final_nick_ck").text("");
+          	        	console.log(nickNameCheck);
+          	        } // 닉네임 중복확인
+          	        
+          	        if (mailCheck == false) {
+          	        	$(".final_nick_ck").text("＊사용할 수 없는 이메일입니다.");
+          	        	console.log(mailCheck);
+          	        	isValid = false;
+          	        } else {
+          	        	$(".final_nick_ck").text("");
+          	        	console.log(mailCheck);
+          	        } // 이메일 확인
+          	        
+          	        if (phoneCheck == false) {
+          	        	$(".final_nick_ck").text("＊핸드폰 번호를 입력해주세요.");
+          	        	console.log(phoneCheck);
+          	        	isValid = false;
+          	        } else {
+          	        	$(".final_nick_ck").text("");
+          	        	console.log(phoneCheck);
+          	        }
+          	        
+          	        if (addressCheck == false) {
+          	        	$(".final_nick_ck").text("＊핸드폰 번호를 입력해주세요.");
+          	        	console.log(addressCheck);
+          	        	isValid = false;
+          	        } else {
+          	        	$(".final_nick_ck").text("");
+          	        	console.log(addressCheck);
+          	        }
+          	      	if (isValid){
+          	      	this.submit();
+          	      	}
+          	      
     		});
 
     		
