@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>세션 만료</title>
 </head>
-<body>
+<body style="text-align:center">
 <h1>세션이 만료되었습니다.</h1>
 <h2>다시 로그인 해주세요.</h2>
 <br>

@@ -1,5 +1,7 @@
 package project.spring.calla.service;
 
+import java.util.Map;
+
 import project.spring.calla.domain.MemberVO;
 
 public interface MemberService {
@@ -10,5 +12,6 @@ public interface MemberService {
 	int update(MemberVO vo);
 	String searchId(String memberName, String memberEmail);
 	String searchPw(String memberId, String memberPhone);
-	
+	Map<String, Object> readComments(String memberNickname);
+	Map<String, Object> readBoards(String memberNickname);
 }

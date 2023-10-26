@@ -20,4 +20,5 @@ public interface FBoardDAO {
 	int getTotalCountsByTitleContent(String keyword);
 	int updateCommentCount(int amount, int fBoardId);
 	int updateViews(int views, int fBoardId);
+	List<FBoardVO> selectAllByMemberNickname(String menberNickname);
 }

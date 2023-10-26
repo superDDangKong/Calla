@@ -9,5 +9,5 @@ public interface QBoardCommentDAO {
 	List<QBoardCommentVO> select(int qBoardId);
 	int update(int qBoardCommentId, String qBoardCommentContent);
 	int delete(int qBoardCommentId);
-	
+	List<QBoardCommentVO> select(String memberNickname);
 }

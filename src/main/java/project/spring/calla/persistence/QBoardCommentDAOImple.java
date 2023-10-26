@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.QBoardCommentVO;
+import project.spring.calla.domain.UproductCommentVO;
 
 @Repository
 public class QBoardCommentDAOImple implements QBoardCommentDAO{
@@ -50,5 +51,11 @@ public class QBoardCommentDAOImple implements QBoardCommentDAO{
 	public int delete(int qBoardCommentId) {
 		logger.info("delete() 호출 : qBoardCommentId = " + qBoardCommentId);
 		return sqlSession.delete(NAMESPACE + ".delete", qBoardCommentId);
+	}
+	
+	@Override
+	public List<QBoardCommentVO> select(String memberNickname) {
+		logger.info("select(memberNickname) 호출 memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
 	}
 }

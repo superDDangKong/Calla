@@ -108,4 +108,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${fBoardId} = #{fBoardId}
 	 </update>
 	 
+	 <select id="select_all_by_memberNickname" resultType="FBoardVO">
+	  	select * from ${f_board} where ${memberNickname} = #{memberNickname}
+	 </select>
+	 
 </mapper>

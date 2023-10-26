@@ -69,5 +69,11 @@ public class FBoardCommentDAOImple implements FBoardCommentDAO {
 		return sqlSession.selectOne(NAMESPACE + ".total_count", fBoardId);
 	}
 
+	@Override
+	public List<FBoardCommentVO> select(String memberNickname) {
+		logger.info("select(memberNickname) »£√‚ memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
+	}
+
 	
 }

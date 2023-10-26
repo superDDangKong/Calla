@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.FBoardCommentVO;
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.pageutil.PageCriteria;
 
@@ -132,6 +133,10 @@ public class FBoardDAOImple implements FBoardDAO {
 		return sqlSession.update(NAMESPACE + ".update_views", args);
 	}
 
-
+	@Override
+	public List<FBoardVO> selectAllByMemberNickname(String memberNickname) {
+		logger.info("selectAllByMemberNickname() »£√‚ memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
+	}
 
 }

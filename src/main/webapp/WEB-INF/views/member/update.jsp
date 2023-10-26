@@ -4,7 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+table, th, td {
+	border-style : solid;
+	border-width : 1px;
+	text-align : center;
+}
+</style>
 <title>회원 정보 수정</title>
+
 </head>
 <body>
 <%@ include file="../header.jspf" %> 	
@@ -61,6 +69,7 @@
 			<th scope="row">이메일</th>
 			<td>${vo.memberEmail }</td>
 			<td><input type="text"></td>
+			<td><input type="button" value="이메일 변경"></td>
 		</tr>
 		<tr>
 			<th scope="row">관심사</th>

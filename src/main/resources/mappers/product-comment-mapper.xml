@@ -40,6 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="total_count" resultType="Integer">
 	  	select count(*) total_cnt from ${productComment} where ${productId} = #{productId}
-	 </select>
+	</select>
+	
+	<select id="select_by_memberNickname" resultType="ProductCommentVO">
+	  	select * from ${product_comment} where ${memberNickname} = #{memberNickname}
+	</select>
 	
 </mapper>

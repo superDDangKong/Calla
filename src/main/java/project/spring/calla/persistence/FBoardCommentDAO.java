@@ -14,4 +14,5 @@ public interface FBoardCommentDAO {
 	int delete(int fBoardCommentId);
 	List<FBoardCommentVO> select(PageCriteria criteria, int fBoardId);
 	int getTotalCounts(int fBoardId);
+	List<FBoardCommentVO> select(String memberNickname);
 }

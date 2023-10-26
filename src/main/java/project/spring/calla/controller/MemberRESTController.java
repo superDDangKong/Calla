@@ -56,11 +56,11 @@ public class MemberRESTController {
 		return memberService.checkNick(nick);
 	} // end checkNick
 	
-	@PutMapping("memberNickname/{memberNickname}") // PUT : ´ñ±Û ¼öÁ¤
-	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberNickname") String memberNickname) {
-		int result = memberService.update(memberNickname);
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
+//	@PutMapping("memberNickname/{memberNickname}") // PUT : ´ñ±Û ¼öÁ¤
+//	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberNickname") String memberNickname) {
+//		int result = memberService.update(memberNickname);
+//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+//	}
 }
 	
 	

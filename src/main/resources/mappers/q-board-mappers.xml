@@ -69,7 +69,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	set ${qBoardCommentCount} = ${qBoardCommentCount} + #{amount}<!-- 댓글을 입력하면 amount에 1이 입력됨 -->
 	  	where ${qBoardId} = #{qBoardId}
 	  </update>
-
+	  
+	 <select id="select_all_by_memberNickname" resultType="QBoardVO">
+	  	select * from ${q_board} where ${memberNickname} = #{memberNickname}
+	 </select>
 	  
 </mapper>
 

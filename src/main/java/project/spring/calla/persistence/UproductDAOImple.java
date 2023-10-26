@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UproductVO;
 import project.spring.calla.pageutil.PageCriteria;
@@ -91,6 +92,10 @@ public class UproductDAOImple implements UproductDAO {
 		return sqlSession.update(NAMESPACE + ".update_product_comment_count", args);
 	}
 
-	
+	@Override
+	public List<UproductVO> selectAllByMemberNickname(String memberNickname) {
+		logger.info("selectAllByMemberNickname() »£√‚ memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
+	}
 
 }

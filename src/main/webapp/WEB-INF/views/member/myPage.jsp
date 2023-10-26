@@ -11,6 +11,7 @@
 <body>
 <%@ include file="../header.jspf" %> 	
 <input type="hidden" id="memberId" value=${memberId }>
+<input type="hidden" id="memberNickname" value=${memberNickname }>
 <h2>마이페이지</h2>
 	
 	<ul>
@@ -21,8 +22,8 @@
 			</ul>
 		<li>MY 활동</li>
 			<ul>
-				<li>작성글</li>
-				<li>작성댓글</li>
+				<li><a href="boards">작성글</a></li>
+				<li><a href="comments">작성댓글</a></li>
 				<li><a href="likes">좋아요 리스트</a></li>
 			</ul>
 		<li>MY 정보</li>

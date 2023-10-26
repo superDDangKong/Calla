@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductCommentVO;
+import project.spring.calla.domain.UproductCommentVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
@@ -67,4 +68,9 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
+	@Override
+	public List<ProductCommentVO> select(String memberNickname) {
+		logger.info("select(memberNickname) »£√‚ memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
+	}
 }

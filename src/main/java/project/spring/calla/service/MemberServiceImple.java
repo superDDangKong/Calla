@@ -1,12 +1,24 @@
 package project.spring.calla.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.spring.calla.domain.FBoardReplyVO;
+import org.springframework.transaction.annotation.Transactional;
+
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.persistence.FBoardCommentDAO;
+import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
+import project.spring.calla.persistence.ProductCommentDAO;
+import project.spring.calla.persistence.ProductDAO;
+import project.spring.calla.persistence.QBoardCommentDAO;
+import project.spring.calla.persistence.QBoardDAO;
+import project.spring.calla.persistence.UProductCommentDAO;
+import project.spring.calla.persistence.UproductDAO;
 
 
 @Service
@@ -17,7 +29,32 @@ public class MemberServiceImple implements MemberService {
     
 	@Autowired
 	private MemberDAO MemberDAO;
+	
+	@Autowired
+	private FBoardCommentDAO fBoardCommentDAO;
   
+	@Autowired
+	private QBoardCommentDAO qBoardCommentDAO;
+	
+	@Autowired
+	private UProductCommentDAO uProductCommentDAO;
+	
+	@Autowired
+	private ProductCommentDAO productCommentDAO;
+	
+	@Autowired
+	private FBoardDAO fBoardDAO;
+  
+	@Autowired
+	private QBoardDAO qBoardDAO;
+	
+	@Autowired
+	private UproductDAO uProductDAO;
+	
+	@Autowired
+	private ProductDAO productDAO;
+	
+	
 	@Override
 	public int create(MemberVO vo) { 
 		logger.info("create() 호출 : vo = " + vo.toString());
@@ -39,10 +76,6 @@ public class MemberServiceImple implements MemberService {
 		return result;
 	}
 	  
-	 
-	   
-
-
 
 
 	@Override
@@ -71,5 +104,27 @@ public class MemberServiceImple implements MemberService {
 		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
+	@Transactional(value = "transactionManager")
+	@Override
+	public Map<String, Object> readComments(String memberNickname) {
+		logger.info("readComments() 호출 memberNickname : " + memberNickname);
+		Map<String, Object> args = new HashMap();
+		args.put("fBoardCommentList", fBoardCommentDAO.select(memberNickname));
+		args.put("qBoardCommentList", qBoardCommentDAO.select(memberNickname));
+		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
+		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
+		return args;
+	}
+	
+	@Transactional(value = "transactionManager")
+	@Override
+	public Map<String, Object> readBoards(String memberNickname) {
+		logger.info("readBoards() 호출 memberNickname : " + memberNickname);
+		Map<String, Object> args = new HashMap();
+		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(memberNickname));
+		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
+		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberNickname));
+		return args;
+	}
 	
 }

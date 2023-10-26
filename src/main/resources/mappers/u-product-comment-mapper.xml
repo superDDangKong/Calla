@@ -27,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${u_product_comment}
 		where ${uProductCommentId} = #{uProductCommentId}
 	</delete>
-	
+
+	<select id="select_by_memberNickname" resultType="UproductCommentVO">
+	  	select * from ${u_product_comment} where ${memberNickname} = #{memberNickname}
+	</select>	
 
 </mapper>

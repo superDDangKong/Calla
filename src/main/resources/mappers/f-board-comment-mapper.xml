@@ -42,4 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	select count(*) total_cnt from ${f_board_comment} where ${fBoardId} = #{fBoardId}
 	 </select>
 	 
+	 <select id="select_by_memberNickname" resultType="FBoardCommentVO">
+	  	select * from ${f_board_comment} where ${memberNickname} = #{memberNickname}
+	 </select>
+	 
 </mapper>

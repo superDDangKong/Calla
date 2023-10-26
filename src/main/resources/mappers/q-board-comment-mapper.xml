@@ -27,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${qBoardCommentId} = #{qBoardCommentId}
 	</delete>
 
+	<select id="select_by_memberNickname" resultType="QBoardCommentVO">
+	  	select * from ${q_board_comment} where ${memberNickname} = #{memberNickname}
+	</select>	
 </mapper>
 
 

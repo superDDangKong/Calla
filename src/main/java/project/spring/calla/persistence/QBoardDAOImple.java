@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.pageutil.PageCriteria;
 
@@ -96,6 +97,12 @@ public class QBoardDAOImple implements QBoardDAO {
 		args.put("amount", amount);
 		args.put("qBoardId", qBoardId);
 		return sqlSession.update(NAMESPACE + ".update_comment_count", args); // 여기 나중에 수정
+	}
+	
+	@Override
+	public List<QBoardVO> selectAllByMemberNickname(String memberNickname) {
+		logger.info("selectAllByMemberNickname() 호출 memberNickname = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
 	}
 
 }

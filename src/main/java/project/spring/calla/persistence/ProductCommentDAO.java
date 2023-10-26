@@ -12,4 +12,5 @@ public interface ProductCommentDAO {
 	int delete(int productCommentId); // ¥Ò±€ ªË¡¶
 	List<ProductCommentVO> select(PageCriteria criteria);
 	int getTotalCount();
+	List<ProductCommentVO> select(String memberNickname);
 }
