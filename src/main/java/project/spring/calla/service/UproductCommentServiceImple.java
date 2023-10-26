@@ -19,14 +19,13 @@ import project.spring.calla.persistence.UProductCommentDAO;
 import project.spring.calla.persistence.UproductDAO;
 
 @Service
-public class UproductCommentServiceImple implements UproductCommentService{
-	
-	private static final Logger logger = 
-			LoggerFactory.getLogger(UproductCommentServiceImple.class);
-	
+public class UproductCommentServiceImple implements UproductCommentService {
+
+	private static final Logger logger = LoggerFactory.getLogger(UproductCommentServiceImple.class);
+
 	@Autowired
 	private UProductCommentDAO uProductCommentDAO;
-	
+
 	@Autowired
 	private UproductDAO uProductDAO;
 
@@ -35,31 +34,32 @@ public class UproductCommentServiceImple implements UproductCommentService{
 	public int create(UproductCommentVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = uProductCommentDAO.insert(vo);
-		logger.info(resultInsert +  " 행 댓글 입력 성공");
+		logger.info(resultInsert + " 행 댓글 입력 성공");
 		int result = uProductDAO.updateUproductCommentCount(1, vo.getuProductId());
 		logger.info(result + " 행 수정 성공");
 		return 1;
 	}
 
+	@Transactional(value = "transactionManager")
 	@Override
 	public List<UproductCommentVO> read(int uProductId, HttpSession session) {
 		logger.info("read() 호출 : uProductId = " + uProductId);
-		
+		UproductVO product = uProductDAO.select(uProductId);
+
 		String memberNickname = (String) session.getAttribute("memberNickname");
-		
+
 		List<UproductCommentVO> items = uProductCommentDAO.select(uProductId);
-		
-		for(UproductCommentVO vo : items) {
-			if(vo.getuProductSecretComment().equals("y")) {
-				String writer = vo.getMemberNickname();
-				if(memberNickname.equals(writer)) {
+
+		for (UproductCommentVO vo : items) {
+			if(memberNickname == null) {
+				vo.setuProductCommentContent("비밀 댓글입니다");
+			} else {
+				String commenter = vo.getMemberNickname();
+				String writer = product.getMemberNickname();
+				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) {
 					vo.setuProductCommentContent("비밀 댓글입니다");
 				}
-				
-			} else {
-				return items;
 			}
-			
 		}
 		
 		return items;
@@ -82,9 +82,5 @@ public class UproductCommentServiceImple implements UproductCommentService{
 		logger.info(result + "행 수정 성공");
 		return 1;
 	}
-
-
-
-	
 
 }
