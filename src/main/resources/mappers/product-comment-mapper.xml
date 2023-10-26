@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="total_count" resultType="Integer">
-	  	select count(*) total_cnt from ${productComment} where ${productId} = #{productId}
+	  	select count(*) total_cnt from ${product_comment} where ${productId} = #{productId}
 	 </select>
 	
 </mapper>

@@ -15,7 +15,7 @@ public interface ProductDAO {
 	int getTotalCount();
 	List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword);
 	int getTotalCountsByProductNameOrProductContent(String keyword);
-	int updateProductCommentCount(int amount, int productId);
+	int updateCommentCount(int amount, int productId);
 	int updateViews(int views, int productId);
 	
 }

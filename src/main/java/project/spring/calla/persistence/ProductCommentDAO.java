@@ -10,6 +10,6 @@ public interface ProductCommentDAO {
 	List<ProductCommentVO> select(int productId); // 상품의 댓글 검색
 	int update(int productCommentId, String productCommentContent); // 댓글 수정
 	int delete(int productCommentId); // 댓글 삭제
-	List<ProductCommentVO> select(PageCriteria criteria);
-	int getTotalCount();
+	List<ProductCommentVO> select(PageCriteria criteria, int productId);
+	int getTotalCount(int productId);
 }

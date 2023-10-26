@@ -88,7 +88,8 @@ public class FBoardCommentRESTController {
 	}
 
 	@PutMapping("/{FBoardCommentId}") // PUT : ´ñ±Û ¼öÁ¤
-	public ResponseEntity<Integer> updateComment(@PathVariable("FBoardCommentId") int fBoardCommentId,
+	public ResponseEntity<Integer> updateComment(
+			@PathVariable("FBoardCommentId") int fBoardCommentId,
 			@RequestBody String fBoardCommentContent) {
 		int result = fBoardCommentService.update(fBoardCommentId, fBoardCommentContent);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);

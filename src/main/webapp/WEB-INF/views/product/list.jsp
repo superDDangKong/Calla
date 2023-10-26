@@ -1,33 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-	crossorigin="anonymous"></script>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+table, th, td {
+	border-style : solid;
+	border-width : 1px;
+	text-align : center;
+}
+
+ul {
+	list-style-type : none;
+}
+
+li {
+	display : inline-block;
+}
+</style>
 <meta charset="UTF-8">
 <title>List</title>
 </head>
 <body>
 	<h1>List</h1>
-	<a href="register"><input type="button" value="상품등록"></a>
+	<%@ include file="../header.jspf" %> 	
+	<h1>상품 게시판</h1>
+	<button id="home"><a href="/calla/">홈</a></button>
+	<input type="hidden" id="selectedOption" value=${option }>
+	<input type="hidden" id="sessionNickname" value=${memberNickname }>
+	
+	<div id="register">
+		<a href="register"><input type="button" value="상품 등록"></a>
+	</div>
 	
 	<hr>
 	<table>
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>이미지</th>
-				<th>이름</th>
-				<th>가격</th>
-				<th>카테고리</th>
-				<th>작성일</th>
-				<th>리뷰수</th>
-				<th>좋아요수</th>
-				<th>조회수</th>
+				<th style="width : 60px">번호</th>
+				<th style="width : 60px">이미지</th>
+				<th style="width : 60px">이름</th>
+				<th style="width : 60px">가격</th>
+				<th style="width : 60px">카테고리</th>
+				<th style="width : 60px">작성일</th>
+				<th style="width : 60px">리뷰수</th>
+				<th style="width : 60px">좋아요수</th>
+				<th style="width : 60px">조회수</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -68,7 +89,7 @@
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	
 	<script type="text/javascript">
-		var result = ${'#insertAlert'}.val();
+		var result = $('#insertAlert').val();
 		if(result == 'success'){
 			alert('새 상품 등록 완료');
 		}

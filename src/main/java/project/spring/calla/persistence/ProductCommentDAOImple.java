@@ -54,17 +54,20 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 	}
 
 	@Override
-	public List<ProductCommentVO> select(PageCriteria criteria) {
-		logger.info("select() »£√‚");
-		logger.info("start = " + criteria.getStart());
-		logger.info("end = " + criteria.getEnd());
-		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
+	public List<ProductCommentVO> select(PageCriteria criteria, int productId) {
+		Map<String, Object> args = new HashMap();
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("productId", productId);
+		return sqlSession.selectList(NAMESPACE + ".paging", args);
 	}
 
 	@Override
-	public int getTotalCount() {
+	public int getTotalCount(int productId) {
 		logger.info("getTotalCounts()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count");
+		return sqlSession.selectOne(NAMESPACE + ".total_count", productId);
 	}
+
+	
 
 }

@@ -19,7 +19,7 @@ li {
 <title>${vo.productName }</title>
 </head>
 <body>
-	
+	<%@ include file="../header.jspf" %>
 	<h2>상품 보기</h2>
 	<div>
 		<p>상품 번호 : ${vo.productId }</p>
@@ -70,7 +70,7 @@ li {
 	
 	<hr>
 	<div style="text-align: center;">
-		<div id="productComments"></div>
+		<div id="comments"></div>
 	</div>
 	<hr>
 	
@@ -82,14 +82,13 @@ li {
 	<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}">
 	<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
 	<div>
-		<br><br><br><br><br><br><br><br><br><br>
+		<br>
 	</div>
 	
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			getAllProductComments();
-			
+			getAllComments();
 			$('#btnCommentAdd').click(function(){
 				var productId = $('#productId').val(); // 상품 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 닉네임 데이터
@@ -104,7 +103,7 @@ li {
 				// $.ajax로 송수신
 				$.ajax({
 					type : 'POST',
-					url : 'productComments',
+					url : 'comments',
 					headers : {
 						'Content-Type' : 'application/json'
 					},
@@ -114,25 +113,26 @@ li {
 						if(result == 1){
 							console.log('댓글 입력 성공');
 							alert('댓글 입력 성공');
-							getAllProductComments();
+							getAllComments();
+							console.log("getAllcomments")
 						}
 					}
 				});
 			}); // end btnAdd
 			
 			// 댓글 전체 가져오기
-			function getAllProductComments(){
-				console.log("getAllProductComments() 호출");
+			function getAllComments(){
+				console.log("getAllComments() 호출");
 				var productId = $('#productId').val();
 				var commentPage = $('#pageMaker_commentPage').val();
 				console.log("page = " + commentPage);
-				var commentNumsPerPage = $('pageMaker_commentNumsPerPage').val();
-				var url = 'productComments/all/' + productId + '/' + commentPage + '/' + commentNumsPerPage;
+				var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
+				var url = 'comments/all/' + productId + '/' + commentPage + '/' + commentNumsPerPage;
 				
 				$.getJSON(
 						url,
 						function(data){
-							console.log(data);
+							
 							var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
 							var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
 							$('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
@@ -144,79 +144,84 @@ li {
 							var list = '';
 							
 							$(data.list).each(function(){
+								// this : 컬렉션의 각 인덱스 데이터를 의미
 								console.log(this);
 								
 								var productCommentCreatedDate = new Date(this.productCommentCreatedDate);
 								var disabled = 'disabled';
 								var readonly = 'readonly';
 								
-								if(memberNickname == this.memberNickname){
+								if(memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
 									disabled = '';
 									readonly = '';
 								}
 								
 								
 								
-								list += '<div class="product_comment_item">'
-									+'<pre>'
-									+'<input type="hidden" id="productCommentId" value="' + this.productCommentId + '">'
+								list += '<div class="comment_item">'
+									+ '<pre>'
+									+ '<input type="hidden" class="productCommentId" value="' + this.productCommentId + '">'
 									+ this.memberNickname
-									+ '&nbsp;&nbsp;'
-									+'<input type="text" id="productCommentContent" value="' + this.productCommentContent + '">'
-									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;' // 공백
+									+ '<input type="text" class="productCommentContent" value="' + this.productCommentContent + '" required>'	 
+									+ '&nbsp;&nbsp;' // 공백
 									+ productCommentCreatedDate
-									+ '&nbsp;&nbsp;'
-									+'<button class="btn_update"> 수정</button>'
-									+'<button class="btn_delete"> 삭제</button>'
-									+'<button class="btn_Reply">답글</button>'
+									+ '&nbsp;&nbsp;' // 공백
+									+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
+									+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
+									+ '<button class="btnReply">답글</button>'
+									+ '<br>'
 									+ '</pre>'
-									+ '</div>';			
+									+ '</div>';
 							}); // end each()
-							list +='<ul id="productComment_page">'
-							
-							if(pageMaker_hasPrev){
-								list += '<li><button class="btn_productComment_prev">이전</button></li>'
-							}
-							
-							for(var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++){
-								list += '<li><button class="btn_productComment_page" value='+num+'>'+num+'</button></li>'
-							}
-							
-							if(pageMaker_hasNext) {
-								list += '<li><button class="btn_productComment_next">이후</button></li>'
-								}
-							
-							list += '</ul>'
-							
-							$('#productComments').html(list);
+							list += '<ul id="comment_page">'
+								
+								if(pageMaker_hasPrev) {
+									list += '<li><button class="btn_comment_prev">이전</button></li>'
+									}
+									
+								for(var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
+									list += '<li><button class="btn_comment_page" value='+num+'>'+num+'</button></li>'
+									
+									}		
+								
+								if(pageMaker_hasNext) {
+									list += '<li><button class="btn_comment_next">이후</button></li>'
+									}
+								
+								list += '</ul>'
+									
+								$('#comments').html(list);
 						}
-						});
+					); // end JSON()
 			} // end getAllproductComments
 			
-			$(document).on('click', '.btn_productComment_page', function(){				
+			$(document).on('click', '.btn_comment_page', function(){				
 				$('#pageMaker_commentPage').val($(this).val());
-				getAllproductComments();
-			})// end btn_productComment_page.click()
-			$(document).on('click', '.btn_productComment_prev', function(){				
-				$('#pageMaker_commentPage').val(+$('#pageMaker_startPageNo').val() - 1);
-				getAllproductComments();
-			})// end btn_productComment_prev.click()
-			$(document).on('click', '.btn_productComment_next', function(){				
-				$('#pageMaker_commentPage').val(+$('#pageMaker_endPageNo').val() + 1);
-				getAllproductComments();
-			})// end btn_productComment_prev.click()
+				getAllComments();
+			})// end btn_comment_page.click()
 			
-			$("#productComments").on('click', '.product_comment_item .btn_update', function(){
+			$(document).on('click', '.btn_comment_prev', function(){				
+				$('#pageMaker_commentPage').val(+$('#pageMaker_startPageNo').val() - 1);
+				getAllComments();
+			})// end btn_comment_prev.click()
+			
+			$(document).on('click', '.btn_comment_next', function(){				
+				$('#pageMaker_commentPage').val(+$('#pageMaker_endPageNo').val() + 1);
+				getAllComments();
+			})// end btn_comment_prev.click()
+			
+			$('#comments').on('click', '.comment_item .btnCommentUpdate', function(){
 				console.log(this);
 				
-				var productCommentId = $(this).prevAll('#productCommentId').val();
-				var productCommentContent = $(this).prevAll('#productCommentContent').val();
+				var productCommentId = $(this).prevAll('.productCommentId').val();
+				var productCommentContent = $(this).prevAll('.productCommentContent').val();
 				console.log("선택된 댓글 번호 : " + productCommentId + ", 댓글 내용 : " + productCommentContent);
 				
 				// ajax 요청
 				$.ajax({
 					type : 'PUT',
-					url : 'productComments/' + productCommentId,
+					url : 'comments/' + productCommentId,
 					headers : {
 						'Content-Type' : 'application/json'
 					},
@@ -225,22 +230,22 @@ li {
 						console.log(result);
 						if(result == '1'){
 							alert('댓글 수정 성공')
-							getAllProductComments();
+							getAllComments();
 						}
 					}
 				}); // end ajax
 			}); // end click
 			
-			$("#productComments").on('click', '.product_comment_item .btn_delete', function(){
+			$("#comments").on('click', '.comment_item .btnCommentDelete', function(){
 				console.log(this);
 				
 				var productId = $('#productId').val();
-				var productCommentId = $(this).prevAll('#productCommentId').val();
+				var productCommentId = $(this).prevAll('.productCommentId').val();
 				console.log("선택된 댓글 번호 : " + productCommentId);
 			
 				$.ajax({
 					type : 'DELETE',
-					url : 'productComments/' + productCommentId,
+					url : 'comments/' + productCommentId,
 					headers : {
 						'Content-Type' : 'application/json'
 					},
@@ -249,7 +254,7 @@ li {
 						console.log(result);
 						if(result == 1){
 							alert('댓글 삭제 성공')
-							getAllProductComments();
+							getAllComments();
 						}
 					}
 				}); //end ajax
@@ -258,137 +263,146 @@ li {
 			
 		}); // end document
 		
-		$('#productComments').on('click', '.product_comment_item . btn_Reply', function(){
-			if($('#memberNickname').val() == null){
-				alert('답글을 작성하려면 로그인 해주세요')
+		$('#comments').on('click', '.comment_item .btnReply', function(){
+			if($('#memberNickname').val() == null) {
+				alert('답글을 작성하려면 로그인 해 주세요')
 				return;
 			}
 			console.log(this);
-			var productCommentId = $(this).closest('.product_comment_item').find('.productCommentId');
-			getAllProductReplies(productCommentId);
+			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
+			getAllReplies(productCommentId);
 		}); // end btn_Reply()
 		
-		function getAllProductReplies(productCommentId){
-			$('.productReplies').html('');
-			console.log("getAllProductReplies() 호출");
-			var url = 'productReplies/all/' + productCommentId.val();
-			var product_comment_item = productCommentId.closest('.product_comment_item');
+		function getAllReplies(productCommentId) {
+			$('.replies').html('');
+			console.log("getAllReplies() 호출");
+			var url = 'replies/all/' + productCommentId.val();
+			var comment_item = productCommentId.closest('.comment_item');
 			$.getJSON(
 				url,
-				function(data){
+				function(data) {
+					// data : 서버에서 전송받은 list 데이터가 저장되어 있음.
+					// getJSON()에서 json 데이터는
+					// javascript object로 자동 parsing됨.
 					console.log(data);
 					
-					var memberNickname = $('#memerNickname').val();
-					var list = '';
+					var memberNickname = $('#memberNickname').val();
+					var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
 					
+					// $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수
 					$(data).each(function(){
+						// this : 컬렉션의 각 인덱스 데이터를 의미
 						console.log(this);
 						
 						var productReplyCreatedDate = new Date(this.productReplyCreatedDate);
 						var disabled = 'disabled';
 						var readonly = 'readonly';
 						
-						if(memberNickname == this.memberNickname){
+						if(memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
 							console.log("nickname 일치")
 							disabled = '';
 							readonly = '';
 						}
 						
-						list += '<div class="product_reply_item">'
-								+ '<pre>'
-								+ '<input type="hidden" class="productReplyId" value="' + this.productReplyId + '">'
-								+ this.memberNickname
-								+ '&nbsp;&nbsp;' 
-								+ '<input type="text" class=productReplyContent" value="' + this.productReplyContent + '" required>'
-								+ '&nbsp;&nbsp;' 
-								+ productReplyCreatedDate
-								+ '&nbsp;&nbsp;' 
-								+ '<button class="btn_reply_update"' + disabled + '>수정</button>'
-								+ '<button class="btn_reply_delete"' + disabled + '>삭제</button>'
-								+ '<br>'
-								+ '</pre>'
-								+ '</div>';
-					}); // end each
+						list += '<div class="reply_item">'
+							+ '<pre>'
+							+ '<input type="hidden" class="productReplyId" value="' + this.productReplyId + '">'
+							+ this.memberNickname
+							+ '&nbsp;&nbsp;' // 공백
+							+ '<input type="text" class="productReplyContent" value="' + this.productReplyContent + '" required>'	 
+							+ '&nbsp;&nbsp;' // 공백
+							+ productReplyCreatedDate
+							+ '&nbsp;&nbsp;' // 공백
+							+ '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
+							+ '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
+							+ '<br>'
+							+ '</pre>'
+							+ '</div>';
+					}); // end each()
 					
-					list += '<div style="text=align: center;">'
-							+ memberNickname
-							+ '&nbsp;&nbsp;' 
-							+ '<input type="text" class="productReplyContent" reauired>'
-							+ '&nbsp;&nbsp;' 
-							+ '<button class="btn_reply_add">작성</button>'
-							+ '</div>'
-					product_comment_item.append('<div class="productReplies">' + list + '</div>');
+					list +=  '<div style="text-align: center;">'
+						+ memberNickname
+						+ '&nbsp;&nbsp;'
+						+ '<input type="text" class="productReplyContent" required>'
+						+ '&nbsp;&nbsp;'
+						+ '<button class="btnReplyAdd">작성</button>' 
+						+ '</div>'
+					comment_item.append('<div class="replies">' + list + '</div>');	
 				}
 			); // end getJSON()
-		} // end getAllProductReplies
+		} // end getAllReplies()
 		
-		$(document).on('click', '.btn_reply_add', function(){
+		$(document).on('click', '.btnReplyAdd', function(){
 			console.log(this);
-			var productCommentItem = $(this).closest('.product_comment_item');
-			var productCommentId = $(this).closest('.product_comment_item').find('.productCommentId');
-			var productCommentIdVal = $(this).closest('.product_comment_item').find('.productCommentId').val();
-			var memberNickname = $('#memberNickname').val();
-			var productReplyContent = $(this).prevAll('.productReplyContent').val();
+			var commentItem = $(this).closest('.comment_item');
+			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
+			var productCommentIdVal = $(this).closest('.comment_item').find('.productCommentId').val();
+		    var memberNickname = $('#memberNickname').val();
+		    var productReplyContent = $(this).prevAll('.productReplyContent').val();
+
+
+			var obj = {
+					'productCommentId' : productCommentIdVal, 
+					'memberNickname' : memberNickname,
+					'productReplyContent' : productReplyContent
+			};
+			console.log(obj);
 			
-				var obj = {
-						'productCommentId' : productCommentIdVal,
-						'memberNickname' : memberNickname,
-						'productReplyContent' : productReplyContent
-				};
-				console.log(obj);
-				
-				$.ajax({
-					type : 'POST',
-					url : 'productReplies',
-					headers : {
-						'Content-Type' : 'application/json'
-					},
-					data : JSON.stringify(obj), // JSON으로 변환
-					success : function(result){
-						console.log(result);
-						if(result == 1){
-							alert('답글 입력 성공');
-							getAllProductReplies(productCommentId);
-						}
+			// $.ajax로 송수신
+			$.ajax({
+				type : 'POST',
+				url : 'replies',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				data : JSON.stringify(obj), // JSON으로 변환
+				success : function(result) {
+					console.log(result);
+					if(result == 1) {
+						alert('답글 입력 성공');
+						getAllReplies(productCommentId);
 					}
-				}); // end ajax()
-		}); // end btnreplyadd()
+				}
+			}); // end ajax()
+		}); // end btnReplyAdd.click()
 		
-		$(document).on('click', '/btn_reply_update', function(){
+		$(document).on('click', '.btnReplyUpdate', function(){
 			console.log(this);
-			var productCommentItem = $(this).closest('.product_comment_item');
-			var productCommentId = $(this).closest('.product_comment_item').find('.productCommentId');
-			var productReplyId = $(this).preAll('.productReplyId').val();
-			console.log("선택된 답글 번호 : " + productReplyId + ", 답글 내용 : " + productReplyContent);
+			var commentItem = $(this).closest('.comment_item');
+			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
+			var productReplyId = $(this).prevAll('.productReplyId').val();
+			var productReplyContent = $(this).prevAll('.productReplyContent').val();
+			console.log("선택된 답글 번호 : " + productReplyId + ", 답글 내용 : " + productReplyContent);	
 			
+			// ajax 요청
 			$.ajax({
 				type : 'PUT',
-				url : 'productReplies/' + productReplyId,
+				url : 'replies/' + productReplyId,
 				headers : {
 					'Content-Type' : 'application/json'
 				},
 				data : productReplyContent,
-				success : function(result){
+				success : function(result) {
 					console.log(result);
-					if(result == 1){
-						alert('답글 수정 성공');
-						getAllProductReplies(productCommentId);
+					if(result == 1) {
+						alert('답글 수정 성공!');
+						getAllReplies(productCommentId);
 					}
 				}
-			}); // end ajax()
-		}); // end btnreplyupdate()
+			}) // end ajax()
+		}); // end btnReplyUpdate.on()
 		
-		$(document).on('click', '/btn_reply_delete', function(){
+		$(document).on('click', '.btnReplyDelete', function(){
 			console.log(this);
-			var productCommentItem = $(this).closest('.product_comment_item');
-			var productCommentId = $(this).closest('.product_comment_item').find('.productCommentId');
+			var commentItem = $(this).closest('.comment_item');
+			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
 			var productReplyId = $(this).prevAll('.productReplyId').val();
 			
 			console.log("선택된 댓글 번호 : " + productReplyId);
 			
 			$.ajax({
 				type : 'DELETE',
-				url : 'productReplies/' + productReplyId,
+				url : 'replies/' + productReplyId,
 				headers : {
 					'Content-Type' : 'application/json'
 				},
@@ -396,7 +410,7 @@ li {
 					console.log(result);
 					if(result == 1){
 						alert('답글 삭제 성공');
-						getAllProductReplies(productCommentId);
+						getAllReplies(productCommentId);
 					}
 				}
 			}); // end ajax()
