@@ -82,18 +82,18 @@ public class ProductDAOImple implements ProductDAO {
 	public List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword) {
 		logger.info("selectByTitleOrContent() »£√‚");
 		Map<String, Object> args = new HashMap();
-		args.put("criteria", criteria);
+//		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
 		args.put("end", criteria.getEnd());
 		args.put("keyword", "%" + keyword + "%");
 		logger.info("args = " + args);
-		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_product_name_or_product_content", args);
 	}
 
 	@Override
 	public int getTotalCountsByProductNameOrProductContent(String keyword) {
 		logger.info("getTotalTitleContent()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_product_name_or_product_content", "%" + keyword + "%");
 	}
 
 	@Override
@@ -103,6 +103,16 @@ public class ProductDAOImple implements ProductDAO {
 		args.put("views", views);
 		args.put("productId", productId);
 		return sqlSession.update(NAMESPACE + ".update_views", args);
+	}
+
+	@Override
+	public int updateLikeCount(int amount, int productId) {
+		logger.info("updateLikeCount() : productId = " + productId);
+		Map<String, Integer> args = new HashMap();
+		args.put("amount", amount);
+		args.put("productId", productId);
+		return sqlSession.update(NAMESPACE + ".update_like_count", args);
+		
 	}
 
 	

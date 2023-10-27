@@ -46,7 +46,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name ="memberInterest" value="member_interest"/>
 		<property name ="memberAddress" value="member_address"/>
 		<property name ="memberNickname" value="member_nickname"/>
-		<property name ="memberLevel" value="member_level"/>
 
 		<property name="u_product" value="u_product" />
 		<property name="uProductId" value="u_product_id" />
@@ -80,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productImagePath" value="product_image_path"/>
 		<property name="productContent" value="product_content"/>
 		<property name="productCommentCount" value="product_comment_count"/>
+		<property name="memberLevel" value="product_member_level"/>
 		
 		<property name="product_comment" value="product_comment"/>
 		<property name="productCommentId" value="product_comment_id"/>
@@ -110,6 +110,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productCommentId" value="product_comment_id"/>
 		<property name="productReplyContent" value="product_reply_content"/>
 		<property name="productReplyCreatedDate" value="product_reply_created_date"/>
+	
+		<property name="product_like" value="product_like"/>
+		<property name="productLikeId" value="product_like_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="memberNickname" value="member_nickname"/>
 	</properties>
 	
 

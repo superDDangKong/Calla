@@ -56,26 +56,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_by_product_name_or_product_content" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}
-		form(
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productImagePath}, ${productContent}, ${productCommentCount}
+		from(
 			select rownum rn, a.* from(
-				select * from ${product}
-				where ${productName} like #{keyword} or
-				${productContent} like #{keyword}
-				order by ${productId} desc
-				)a
-		) where rn between #{start} and #{end}
+	 			select * from ${product} 
+	 			where ${productName} like #{keyword} or 
+	 			${productContent} like #{keyword}
+	 			order by ${productId} desc
+	 		)a
+	 	) where rn between #{start} and #{end}
+
 	</select>
 	
 	<select id="total_count_by_product_name_or_product_content" resultType="Integer">
-		select count(*) total_cnt from ${product}
-		where ${productName} like #{keyword} or ${productContent} like #{keyword}
+		select count(*) total_cnt from ${product} 
+	  	where ${productName} like #{keyword} or	${productContent} like #{keyword}
 	</select>
 	
 	<update id="update_comment_count">
     	update ${product}
     	set ${productCommentCount} = ${productCommentCount} + #{amount}
     	where ${productId} = #{productId}
+	</update>
+	
+	<update id="update_like_count">
+		update ${product}
+		set ${productLikes} = ${productLikes} + #{amount}
+		where ${productId} = #{productId}
 	</update>
 	
 	<update id="update_views">

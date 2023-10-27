@@ -15,5 +15,6 @@ public interface ProductService {
 	List<ProductVO> readByProductNameOrProductContent(PageCriteria criteria, String keyword);
 	int getTotalCountsByProductNameOrProductContent(String keyword);
 	int updateViews(int views, int productId);
+	
 
 }

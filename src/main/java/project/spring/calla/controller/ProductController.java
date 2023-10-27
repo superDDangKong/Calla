@@ -47,6 +47,8 @@ public class ProductController {
 	@Autowired
 	private ProductCommentService productCommentService;
 	
+	
+	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
 	
@@ -66,7 +68,7 @@ public class ProductController {
 		}
 		PageMaker pageMaker = new PageMaker();
 		if(option != null) {
-			if(option.equals("searchMemberNickname")) {
+			if(option.equals("searchTitleOrContent")) {
 				logger.info("if");
 				list = productService.readByProductNameOrProductContent(criteria, keyword);
 				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));	
@@ -165,6 +167,8 @@ public class ProductController {
 		pageMaker.setPageData();
 		
 		String memberNickname = commentVO.getMemberNickname();
+		
+		
 		
 		model.addAttribute("memberNickname", memberNickname);
 		model.addAttribute("vo", vo);

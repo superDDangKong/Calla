@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style type="text/css">
 ul {
@@ -14,7 +15,10 @@ ul {
 li {
 	display : inline-block;
 }
+
 </style>
+
+
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
 </head>
@@ -44,10 +48,11 @@ li {
 	
 	<c:set var="memberNickname" value="${memberNickname }" />
 	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
+	<c:set var="memberLevel" value="${memberLevel }" />
+	<c:set var="voMemberLevel" value="${vo.memberLevel }" />
 	
-	
-	<c:if test="${memberNickname == voMemberNickname}">
-	<a href="update?ProductId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
+	<c:if test="${memberLevel > 1}">
+	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
 		<input type="submit" value="상품 삭제">
@@ -66,14 +71,11 @@ li {
 		<br> 댓글을 작성하려면 로그인해 주세요.
 	</c:if>
 	
-	
-	
 	<hr>
 	<div style="text-align: center;">
 		<div id="comments"></div>
 	</div>
 	<hr>
-	
 	
 	<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}">
 	<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}">
@@ -260,7 +262,6 @@ li {
 				}); //end ajax
 			}); // end click
 			
-			
 		}); // end document
 		
 		$('#comments').on('click', '.comment_item .btnReply', function(){
@@ -415,6 +416,10 @@ li {
 				}
 			}); // end ajax()
 		}); // end btnreplydelete()
+		
+		
+	
+		
 	</script>
 	
 </body>
