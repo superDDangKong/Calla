@@ -48,17 +48,17 @@ public class MemberController {
 		
 	}
 	
-	@PostMapping("/join")
-	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
-		logger.info("joinPOST ȣ�� : " + vo.toString());
-		int result = memberService.create(vo);
-		if(result == 1) {
-			reAttr.addFlashAttribute("insert", "success");
-			return "redirect:/member/login";
-		} else {
-			return "redirect:/member/join";
-		}
-	}
+//	@PostMapping("/join")
+//	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
+//		logger.info("joinPOST ȣ�� : " + vo.toString());
+//		int result = memberService.create(vo);
+//		if(result == 1) {
+//			reAttr.addFlashAttribute("insert", "success");
+//			return "redirect:/member/login";
+//		} else {
+//			return "redirect:/member/join";
+//		}
+//	}
 	
 	@GetMapping("/login")
 	public void loginGET(String targetURL) {
@@ -71,7 +71,7 @@ public class MemberController {
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
 		// 
-		logger.info("loginPOST() 호출");
+		logger.info("loginPOST() ȣ��");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -93,7 +93,7 @@ public class MemberController {
 			
 			
 		} else {
-			logger.info("로그인 실패");
+			
 			if(targetURL != null) {
 				try {
 					targetURL = URLEncoder.encode(targetURL, "UTF-8");
@@ -109,7 +109,7 @@ public class MemberController {
 	
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-		logger.info("logout() 호출");
+		
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
@@ -117,14 +117,14 @@ public class MemberController {
 	
 	@GetMapping("/myPage")
 	public void myPageGET(Model model, String memberId) {
-		logger.info("myPageGET() 호출 memberId = " + memberId);
+		
 		MemberVO vo = memberService.read(memberId);
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
-		logger.info("updateGET() 호출");
+		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
@@ -135,7 +135,6 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo) {
-		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = memberService.update(vo);
 		String memberId = vo.getMemberId();
 		if(result == 1) {
@@ -152,7 +151,7 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likesGET() 호출");
+		
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
@@ -170,13 +169,12 @@ public class MemberController {
 	
 	@PostMapping("/searchId")
 	public String searchIdPOST(String memberName, String memberEmail, RedirectAttributes reAttr) {
-		logger.info("searchId() 호출 memberName = " + memberName);
-		logger.info("searchId() 호출 memberEmail = " + memberEmail);
+		
 		String result = memberService.searchId(memberName, memberEmail);
 		if(result != null) {
 			reAttr.addFlashAttribute("searchResult", "idSearch");
 			reAttr.addFlashAttribute("searchId", result);
-			logger.info("searchId 성공 memberId = " + result);
+			
 			return "redirect:/member/login";
 		} else {
 			reAttr.addFlashAttribute("searchResult", "fail");
@@ -188,13 +186,10 @@ public class MemberController {
 	
 	@PostMapping("/searchPw")
 	public String searchPwPOST(Model model, String memberId, String memberPhone, RedirectAttributes reAttr) {
-		logger.info("searchPw() 호출 memberId = " + memberId);
-		logger.info("searchPw() 호출 memberPhone = " + memberPhone);
 		String result = memberService.searchPw(memberId, memberPhone);
 		if(result != null) {
 			reAttr.addFlashAttribute("searchResult", "pwSearch");
 			reAttr.addFlashAttribute("searchPw", result);
-			logger.info("searchPw 성공 memberPw = " + result);
 			return "redirect:/member/login";
 		} else {
 			reAttr.addFlashAttribute("searchResult", "fail");
@@ -208,7 +203,6 @@ public class MemberController {
 	
 	@GetMapping("/comments")
 	public void commentsGET(Model model, HttpServletRequest request) {
-		logger.info("commentsGET() 호출");
 		
 		HttpSession session = request.getSession();
 		String memberNickname = (String) session.getAttribute("memberNickname");
@@ -221,7 +215,6 @@ public class MemberController {
 	
 	@GetMapping("/boards")
 	public void boardsGET(Model model, HttpServletRequest request) {
-		logger.info("commentsGET() 호출");
 		
 		HttpSession session = request.getSession();
 		String memberNickname = (String) session.getAttribute("memberNickname");

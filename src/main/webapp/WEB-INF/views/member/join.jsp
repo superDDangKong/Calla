@@ -27,6 +27,10 @@
 	border-bottom-left-radius: 10px; /* 하단 좌측 모서리를 10px로 둥글게 만듭니다. */
     border-bottom-right-radius: 10px; /* 하단 우측 모서리를 10px로 둥글게 만듭니다. */
 }
+
+.error_msg{
+	font-size: 14px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
@@ -35,31 +39,33 @@
 <body>
 
 <div style="text-align:center">
+	<h1><a href="http://localhost:8080/calla/"><span>Calla</span></a></h1>
 	 <form name="join" action="join" id="join"method="post"> 
 	 	<div>
 			<div id="f">
 				<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디" required>
 				<br>
-			
-		
-			
+						
 				<input type="password" id="member_pw" class="member__form" name="memberPw" placeholder="비밀번호" required>
 				<br>
-		
-			
+					
 				<input type="password" id="member_pw_ck" class="member__form" name="member_pw_check" placeholder="비밀번호 확인" required>
 				<br>
-			
-		
-			
+						
 				<input type="text" id="member_name" class="member__form" name="memberName" placeholder="홍길동" required>
 				<br>
 		
 			
 				<input type="text" id="member_nickname" class="member__form" name="memberNickname" placeholder="calla" required><br>
-				<span class="error_msg"></span>
-			</div><br>
-		
+				<span class="error_msg" id="error_id_msg"></span>
+				<span class="error_msg" id="error_pw_msg"></span>
+				<span class="error_msg" id="error_name_msg"></span>
+				<span class="error_msg" id="error_nick_msg"></span>
+			</div>
+			<span class="error_msg" id="error_email_msg"></span>
+			<span class="error_msg" id="error_phone_msg"></span>
+			<span class="error_msg" id="error_interest_msg"></span>
+			<span class="error_msg" id="error_address_msg"></span>
 			<div>
 				<input type="text" class="member__form" name="member_email1" id="email_id" placeholder="calla" required>@
 				<input type="text" class="member__form" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
@@ -93,11 +99,11 @@
       		<input type="text" id="postcode" class="member__form" placeholder="우편번호" required>
 			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 			<input type="text" id="address" class="member__form" placeholder="주소" required>
-			<input type="text" id="detailAddress" class="member__form" placeholder="상세주소" required><br>
+			<input type="text" id="detailAddress" class="member__form" placeholder="상세주소"><br>
 			<input type="text" id="extraAddress" class="member__form" placeholder="참고항목" required>
 			<br>
-			<input type="submit" name="join_button" id="join_button" value="가입하기"> 
-			<!-- <button id="joinbtn">가입완료</button>  -->
+			<input type="submit" name="join_button" id="join_button" value="가입하기">  
+			  
 			<span class="final_add_ck"></span><!-- 주소를 확인해주세요 -->
 			<input type="hidden" name="memberAddress" id="memberAddress">
       	</div>
@@ -105,8 +111,69 @@
    	</form>
 </div>
       <script>
-    	            //event.preventDefault(); // 제출 이벤트 중단
-      $(document).ready(function() {
+      /* 유효성 검사 통과유무 변수 */
+      var idckcorCheck = false;			// 아이디 유효성 검사
+      var idckCheck = false;            // 아이디 중복 검사
+      var pwckCheck = false;            // 비밀번호 유효성 검사
+      var pwckcorCheck = false;        	// 비밀번호 일치 확인
+      var nameCheck = false;            // 이름입력 유무 검사
+      var nickNameCheck = false;		// 닉네임 중복 검사
+      var mailCheck = false;            // 이메일
+      var phoneCheck = false;			// 핸드폰
+      var addressCheck = false;         	// 주소
+      
+      $('#join').submit(function(event){
+    	  var memberId = $('#member_id').val();
+    	  var memberPw = $('#member_pw').val();
+    	  var memberName = $('#member_name').val(); 
+    	  var memberNickname = $('#member_nickname').val();
+    	  var memberPhone = $('#member_phone').val();
+    	  var memberEmail = $('#memberEmail').val();
+    	  var memberAddress = $('#memberAddress').val();
+    	  var memberInterest = $('#memberInterest').val(); 
+    	  event.preventDefault();
+    	  console.log(idckcorCheck);
+    	  console.log(idckCheck);
+    	  console.log(pwckCheck);
+    	  console.log(pwckcorCheck);
+    	  console.log(nameCheck);
+    	  console.log(nickNameCheck);
+    	  console.log(mailCheck);
+    	  console.log(phoneCheck);
+    	  console.log(addressCheck);
+    	  if(idckcorCheck && idckCheck && pwckCheck && pwckcorCheck && nameCheck && nickNameCheck && mailCheck && phoneCheck && addressCheck){
+    		  var obj = {
+    				  'memberId' : memberId,
+    				  'memberPw' : memberPw,
+    				  'memberName' : memberName,
+    				  'memberNickname' : memberNickname,
+    				  'memberEmail' : memberEmail,
+    				  'memberPhone' : memberPhone,
+    				  'memberInterest' : memberInterest,
+    				  'memberAddress' : memberAddress
+      		  }
+    		  console.log(obj);
+    		  $.ajax({ // 회원가입 ajax
+    			  type : 'POST',
+    			  url : '/calla/member/join',
+    			  headers : {
+                      'Content-Type' : 'application/json'
+                   },
+    			  data : JSON.stringify(obj),
+    			  success : function(result){
+    				  if(result == 1) {
+    					  alert('회원가입을 축하합니다!');
+    					  location.href = 'http://localhost:8080/calla/';
+    				  }
+    			  }
+    		  }) // end ajax
+    	  } else {
+    		  alert("안돼 돌아가");
+    		  //location.reload();
+    	  }// 유효성 검사 통과 조건문
+      })// end submit 
+    		           
+      
     	        // 폼 제출 이벤트 발생 시 실행되는 코드
 				// 아이디 유효성 + 중복검사 
       $('#member_id').blur(function() {
@@ -119,7 +186,6 @@
         	// 아이디 유효성 확인
     	if (idEffectiveness.test(memberId)){
     		idckcorCheck = true; // 아이디 유효성 검사 통과 변수
-    		$(".error_msg").css('display', 'block');
     		
     		// 중복확인 ajax
     		$.ajax({ // JoinRestController의 checkId 송수신
@@ -131,13 +197,14 @@
         			 if (result == 1) {
         				 console.log("사용불가능한아이디")
         				 idckCheck = false; // 아이디 중복검사 통과 변수
-        				 $('.error_msg').text('사용 불가능한 아이디 입니다.');
-        		    	 $('.error_msg').css('color', 'red');
+        				 $('#error_id_msg').text('사용 불가능한 아이디 입니다.');
+        				 $("#error_id_msg").append("<br>");
+        		    	 $('#error_id_msg').css('color', 'red');
         				 
         			 } else {
         				 console.log("사용가능한아이디")
         				 idckCheck = true; // 아이디 중복검사 통과 변수
-        				 $('.error_msg').text('');
+        				 $('#error_id_msg').text('');
         			 }
         		 } // end success
         	 }) // end ajax
@@ -145,66 +212,118 @@
     	} else {
     		console.log("아이디 유효성 검사 실패");
     		idckcorCheck = false; // 아이디 유효성 검사 실패 변수
-    		$('.error_msg').text('아이디 유효성 검사 실패');
-    		$('.error_msg').css('color', 'red');
+    		$('#error_id_msg').text('아이디 유효성 검사 실패');
+    		$('#error_id_msg').append("<br>");
+    		$('#error_id_msg').css('color', 'red');
     	}
        
       } else {
-    	  $('.error_msg').text('아이디를 입력해주세요.');
-  		  $('.error_msg').css('color', 'red');
+    	  $('#error_id_msg').text('아이디를 입력해주세요.');
+    	  $('#error_id_msg').append("<br>");
+  		  $('#error_id_msg').css('color', 'red');
       }			 
     	}); // end 아이디 function(아이디 유효성 검사 + 중복체크)
     	
-    	// 비밀번호 유효성 검사 
-    	$('#member_pw').blur(function() {
+     	/* // 비밀번호 유효성 검사 
+    	$('#member_pw').focus(function() {
     		var memberPw = $('#member_pw').val(); // 클라이언트가 입력한 비밀번호 변수에 저장
-    		console.log("입력한 비밀번호 : " + memberPw); // 입력한 비밀번호 콘솔에 띄우기
+    		if(memberPw !== ''){
+    			console.log("입력한 비밀번호 : " + memberPw); // 입력한 비밀번호 콘솔에 띄우기
     		// 비밀번호 정규식
-    		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    		if (pwEffectiveness.test(memberPw)){
-    			console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
-    			pwckCheck = true;
-    			$('.error_msg').text('');
+    			var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    			if (pwEffectiveness.test(memberPw)){
+    				console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+    				pwckCheck = true;
+    				$('#error_pw_msg').text('');
+    			} else {
+    				console.log("비밀번호 유효성 검사 실패");
+    				pwckCheck = false;
+    				$('#error_pw_msg').text('사용 불가능한 비밀번호 입니다.');
+    				$('#error_pw_msg').append("<br>");
+		    		$('#error_pw_msg').css('color', 'red');
+    			}
     		} else {
-    			console.log("비밀번호 유효성 검사 실패");
-    			pwckCheck = false;
-    			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
-		    	$('.error_msg').css('color', 'red');
+    			 $('#error_pw_msg').text('비밀번호를 입력해주세요.');
+    			 $('#error_pw_msg').append("<br>");
+    	  		 $('#error_pw_msg').css('color', 'red');
     		}
-    	}); // end 비밀번호 function(비밀번호 유효성 검사)
+    	}); // end 비밀번호 function(비밀번호 유효성 검사) */
 		
+    	//1.비번검사(key up)
+    	//3
+    	//2.비번재확인(key up)
+    	//3
+    	
+    	//3.비번유형성 + 비번 재확인()
+    	
+    	 // 비밀번호 검사
+    	$('#member_pw').blur(function(event){
+    		passwordCheck();
+    	});
+    	
       	// 비밀번호 재확인
-      	$('#member_pw_ck').blur(function(){
-      		var memberPw = $('#member_pw').val(); // 유효성 검사 통과한 비밀번호
+      	$('#member_pw_ck').blur(function(event){
+      		passwordCheck();
+    	}); // end 재확인 function(비밀번호 재확인)
+    	
+    	function passwordCheck() { // 비밀번호 유효성 + 재확인 함수
+    		var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    		var memberPw = $('#member_pw').val(); // 유효성 검사 통과한 비밀번호
       		var memberPwCk = $('#member_pw_ck').val(); // 비밀번호 재확인
-      		
-      		if (memberPw === memberPwCk) {
-      			console.log("비밀번호 재확인 성공");
-      			$('.error_msg').text('');
-      			pwckcorCheck = true;
+    		// 비밀번호 공백인지 확인
+      		if(memberPw !== ''){ // 이거는 실행됨
+      			if (pwEffectiveness.test(memberPw)){ // 비밀번호 유효성 검사
+      				console.log("입력한 비밀번호 : " + memberPw); // 입력한 비밀번호 콘솔에 띄우기
+    				console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+    				pwckCheck = true; // 유효성 검사를 통과 했다는 변수
+    				$('#error_pw_msg').text(''); // 에러 메세지 없애기
+      				if (memberPw === memberPwCk) { // 유효성 통과한 비밀번호와 재확인 검사
+      					console.log("비밀번호 재확인 성공");
+      					pwckcorCheck = true; // 비밀번호 재확인 변수
+      				} else { // 틀리면 실행 할 오류 메시지지
+      					console.log("비밀번호 재확인 실패");
+      					$('#error_pw_msg').text('비밀번호가 일치하지 않습니다.');
+      					$('#error_id_msg').append("<br>");
+		    			$('#error_pw_msg').css('color', 'red');
+      					pwckcorCheck = false;
+      				}
+    			} else {
+    				console.log("비밀번호 유효성 검사 실패");
+    				pwckCheck = false; 
+    				$('#error_pw_msg').text('사용 불가능한 비밀번호 입니다.');
+    				$('#error_pw_msg').append("<br>");
+		    		$('#error_pw_msg').css('color', 'red');
+    			}
       		} else {
-      			console.log("비밀번호 재확인 실패");
-      			$('.error_msg').text('사용 불가능한 비밀번호 입니다.');
-		    	$('.error_msg').css('color', 'red');
-      			pwckcorCheck = false;
+      			$('#error_pw_msg').text('비밀번호를 입력해주세요.');
+   			 	$('#error_pw_msg').append("<br>");
+   	  		 	$('#error_pw_msg').css('color', 'red');
       		}
-      	}); // end 재확인 function(비밀번호 재확인)
+    	} // 비밀번호 유효성 + 재확인 
+    	
     	        
 
       	// 이름 입력확인
 		$('#member_name').blur(function(){
 			var memberName = $('#member_name').val(); // 입력한 이름
 			// 이름 정규식
-			var nameEffectiveness = /[\p{Script=Hangul}\p{Script=Latin}]{1,}/gu;
+			if(memberName !== ''){
+				$('#error_name_msg').text('');
+				var nameEffectiveness = /^[가-힣a-zA-Z0-9]{2,20}$/;
 
-			if (nameEffectiveness.test(memberName)){
-				console.log("이름 입력 성공");
-				nameCheck = true;
-				console.log(nameCheck);
+				if (nameEffectiveness.test(memberName)){
+					console.log("이름 입력 성공");
+					nameCheck = true;
+					console.log(nameCheck);
+				} else {
+					console.log("이름 입력 실패");
+					console.log(nameCheck);
+					nameCheck = false;
+				}
 			} else {
-				console.log("이름 입력 실패");
-				console.log(nameCheck);
-				nameCheck = false;
+				$('#error_name_msg').text('이름을 입력해주세요.');
+				$('#error_name_msg').append("<br>");
+		    	$('#error_name_msg').css('color', 'red');
 			}
 		}) // end 이름 입력확인
       	
@@ -212,45 +331,81 @@
 			var memberNickname = $('#member_nickname').val();
 			// 닉네임 정규식
 			var nicknameEffectiveness = /[\p{Script=Hangul}\p{Script=Latin}]{1,}/gu;
-			
-			if(nicknameEffectiveness.test(memberNickname)){
+			if(memberNickname !== ''){
+				$('#error_nick_msg').text('');
+				if(nicknameEffectiveness.test(memberNickname)){
 				
-				// ajax를 이용한 닉네임 중복체크
-				$.ajax({ // JoinRestController의 checkNick 송수신
-        		 type : 'POST',
-        		 url : '/calla/member/checkNick', 
-        		 data : {memberNickname : memberNickname},
-        		 success : function(result){
-        			 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
-        			 if (result == 1) {
-        				 console.log("사용불가능한닉네임")
-        				 nickNameCheck = false;
-        			 } else {
-        				 console.log("사용가능한닉네임")
-        				 nickNameCheck = true;
-        			 }
-        		 } // end success
-        	 }) // end ajax
+					// ajax를 이용한 닉네임 중복체크
+					$.ajax({ // JoinRestController의 checkNick 송수신
+        		 	type : 'POST',
+        		 	url : '/calla/member/checkNick', 
+        		 	data : {memberNickname : memberNickname},
+        		 	success : function(result){
+        				 console.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
+        			 	if (result == 1) {
+        					 console.log("사용불가능한닉네임")
+        				 	nickNameCheck = false;
+        					$('#error_nick_msg').text('사용 불가능한 닉네임입니다.');
+        					$('#error_nick_msg').append("<br>");
+        				   	$('#error_nick_msg').css('color', 'red');
+        			 	} else {
+        					console.log("사용가능한닉네임")
+        				 	nickNameCheck = true;
+        					
+        			 	}
+        		 	} // end success
+        	 	}) // end ajax
+				} else {
+					console.log("입력한 닉네임 : " + memberNickname);
+				}
 			} else {
-				console.log("입력한 닉네임 : " + memberNickname);
+				$('#error_nick_msg').text('닉네임을 입력해주세요.');
+				$('#error_nick_msg').append("<br>");
+		    	$('#error_nick_msg').css('color', 'red');
 			}
 		}) // end 닉네임 중복확인
-    	       
-     $('#member_phone').blur(function(){
+		
+		$(document).click(function(){
+			var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			var emailId = $('#email_id').val();
+  			var emailDomain = $('#email_domain').val();
+  			var email = emailId + '@' + emailDomain;
+  			$("#memberEmail").val(email);
+  			var memberEmail = $('#memberEmail').val();
+  			if(emailRegex.test(memberEmail)){
+	  			mailCheck = true;
+  				console.log(mailCheck);
+  				$('#error_email_msg').text('');
+  			} else {
+  				$('#error_email_msg').text('사용 불가능한 이메일입니다.');
+				$('#error_email_msg').append("<br>");
+			   	$('#error_email_msg').css('color', 'red');
+  			}
+  			
+		})// end 이메일 합치기	 
+		
+		
+    	$('#member_phone').blur(function(){
     	 var memberPhone = $('#member_phone').val();
+    	 
     	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
 		 
+    	 
     	 // 연락처 입력 유무 검사
     	 if (phoneEffectiveness.test(memberPhone)){
     		 console.log(memberPhone);
     		 phoneCheck = true;
+    		 $('#error_phone_msg').text('');
+    	 } else {
+    		 $('#error_phone_msg').text('사용 불가능한 이메일입니다.');
+			 $('#error_phone_msg').append("<br>");
+			 $('#error_phone_msg').css('color', 'red');
     	 }
     	 console.log(memberPhone)
      }) // end 입력한 핸드폰 번호
     	            
+	
 
-    	    
-      }); // end document ready(맨처음)
       
        	   
     	
@@ -269,22 +424,12 @@
     	    	interestValues = selectedValues.join(', '); // 선택된 값을 쉼표로 구분하여 문자열로 저장
     	        // join 배열을 하나의 문자열로 합쳐주는 메서드
     	        document.getElementById("memberInterest").value = interestValues; // 아이디가 memberInterest인 요소에 interestValues를 저장 
-    	        var i = $('#memberInterest').val(); // 변수 값을 저장
-    	        console.log(i); // 값이 제대로 나오는지 확인 
+    	        var memberInterest = $('#memberInterest').val(); // 변수 값을 저장
+    	        console.log(memberInterest); // 값이 제대로 나오는지 확인 
     	    	});
     		});
      
       
-      /* 유효성 검사 통과유무 변수 */
-      var idckcorCheck = false;			// 아이디 유효성 검사
-      var idckCheck = false;            // 아이디 중복 검사
-      var pwckCheck = false;            // 비밀번호 유효성 검사
-      var pwckcorCheck = false;        	// 비밀번호 일치 확인
-      var nameCheck = false;            // 이름입력 유무 검사
-      var nickNameCheck = false;		// 닉네임 중복 검사
-      var mailCheck = false;            // 이메일
-      var phoneCheck = false;			// 핸드폰
-      var addressCheck = false         	// 주소
  	  
       var select_change = function(value){
     	  console.log("값 변경 테스트 : " + value);
@@ -375,28 +520,26 @@
 	   					var add2 = $('#address').val(); // 주소
 	    				var add3 = $('#detailAddress').val(); // 상세주소
 	    				var add4 = $('#extraAddress').val(); // 참고항목
-	    				var address = add1 + add2 + add3 + add4;
+	    				var memberAddress = add1 + add2 + add3 + add4;
 						// add1,2,3,4를 memberAddress에 넣는다
-						document.getElementById("memberAddress").value = address;
-						console.log(address);
+						document.getElementById("memberAddress").value = memberAddress;
+						console.log(memberAddress);
 						addressCheck = true;
-                			
+                		if(memberAddress !== ''){
+                			addressCheck = true;
+                			$('#error_address_msg').text('');
+                		} else {
+                			$('#error_address_msg').text('사용 불가능한 이메일입니다.');
+               			 	$('#error_address_msg').append("<br>");
+               			 	$('#error_address_msg').css('color', 'red');
+                		}
                 		});
 					      
             		}
         		}).open();
     		}
     		
-    		$("#join").submit(function(event){
-    			if(idckCheck === true){
-    				var emailId = $('#email_id').val();
-          			var emailDomain = $('#email_domain').val();
-          			var memberEmail = emailId + '@' + emailDomain;
-          			document.getElementById("memberEmail").value = memberEmail;
-          			mailCheck = true;
-          			event.preventDefault();
-    			}
-    		});
+    		
 
     		
 </script>
