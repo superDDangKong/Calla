@@ -29,7 +29,7 @@ import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
 @Controller // @Component
-@RequestMapping(value="/member") // url : /ex02/board
+@RequestMapping(value="/member") // url : /ex02/board ㅇㄹㅇㄹ
 public class MemberController {
 
 
@@ -215,7 +215,6 @@ public class MemberController {
 		
 		Map<String, Object> args = memberService.readComments(memberNickname);
 		model.addAttribute("lists", args);
-		
 		
 		
 	}

@@ -15,4 +15,9 @@ public interface MemberService {
 	Map<String, Object> readComments(String memberNickname);
 	Map<String, Object> readBoards(String memberNickname);
 	int updatePw(String memberId, String memberPw);
+	int updateNickname(String memberId, String memberNickname);
+	int updatePhone(String memberId, String memberPhone);
+	int updateEmail(String memberId, String memberEmail);
+	int updateInterest(String memberId, String memberInterest);
+	int updateAddress(String memberId, String memberAddress);
 }

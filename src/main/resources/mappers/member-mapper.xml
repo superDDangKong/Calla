@@ -63,4 +63,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${memberPw} = #{memberPw}
 		where ${memberId} = #{memberId}
 	</update>
+	
+	<update id="updateNickname">
+		update ${member}
+		set ${memberNickname} = #{memberNickname}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	<update id="updatePhone">
+		update ${member}
+		set ${memberPhone} = #{memberPhone}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	<update id="updateEmail">
+		update ${member}
+		set ${memberEmail} = #{memberEmail}
+		where ${memberId} = #{memberId}
+	</update>
+
+	<update id="updateInterest">
+		update ${member}
+		set ${memberInterest} = #{memberInterest}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	<update id="updateAddress">
+		update ${member}
+		set ${memberAddress} = #{memberAddress}
+		where ${memberId} = #{memberId}
+	</update>
+	
 </mapper>

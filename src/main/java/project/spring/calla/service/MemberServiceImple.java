@@ -71,9 +71,8 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int checkNick(String memberNickname) { // 
-		int result = 0;
-        result = MemberDAO.checkNickname(memberNickname);
-		return result;
+		logger.info("checkNick() 호출 : memberNickname = " + memberNickname);
+		return MemberDAO.checkNickname(memberNickname);
 	}
 	  
 
@@ -131,6 +130,31 @@ public class MemberServiceImple implements MemberService {
 	public int updatePw(String memberId, String memberPw) {
 		logger.info("update() 호출 memberPw : " + memberPw);
 		return MemberDAO.updatePw(memberId, memberPw);
+	}
+
+	@Override
+	public int updateNickname(String memberId, String memberNickname) {
+		return MemberDAO.updateNickname(memberId, memberNickname);
+	}
+
+	@Override
+	public int updatePhone(String memberId, String memberPhone) {
+		return MemberDAO.updatePhone(memberId, memberPhone);
+	}
+
+	@Override
+	public int updateEmail(String memberId, String memberEmail) {
+		return MemberDAO.updateEmail(memberId, memberEmail);
+	}
+
+	@Override
+	public int updateInterest(String memberId, String memberInterest) {
+		return MemberDAO.updateInterest(memberId, memberInterest);
+	}
+
+	@Override
+	public int updateAddress(String memberId, String memberAddress) {
+		return MemberDAO.updateAddress(memberId, memberAddress);
 	}
 	
 }

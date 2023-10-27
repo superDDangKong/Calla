@@ -55,7 +55,9 @@ public class MemberRESTController {
 				e.printStackTrace();
 			}
 			logger.info(nick);
-		return memberService.checkNick(nick);
+		int result = memberService.checkNick(nick);
+		logger.info(String.valueOf(result));
+		return result;
 	} // end checkNick
 	
 //	@PutMapping("memberNickname/{memberNickname}") // PUT : 댓글 수정
@@ -73,17 +75,59 @@ public class MemberRESTController {
 		logger.info(args.get("newPwCheck").toString());
 		MemberVO vo = memberService.read(memberId);
 		String memberPw = vo.getMemberPw();
+		String newPw = args.get("newPw").toString();
 		int result = 0;
 		if (memberPw.equals(args.get("currentPw"))) {
 			logger.info("pw 일치");
-			result = memberService.updatePw(memberId, memberPw);
+			result = memberService.updatePw(memberId, newPw);
 		} else {
 			logger.info("pw 불일치");
 			
 		}
 			
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
+	}// end updatePw
+	
+	@PutMapping("/updateNickname/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname) {
+		logger.info("updateMemberNickname() 호출");
+		logger.info("newNickname = " + newNickname);
+		
+		int result = memberService.updateNickname(memberId, newNickname);
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updateNickname
+	
+	
+	@PutMapping("/updatePhone/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberPhone(@PathVariable("memberId") String memberId, @RequestBody String newPhone) {
+		logger.info("updateMemberPhone() 호출");
+		logger.info("newPhone = " + newPhone);
+		
+		int result = memberService.updatePhone(memberId, newPhone);
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updatePhone
+	
+//	@PutMapping("/updateEmail/{memberId}") // PUT : 댓글 수정
+//	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
+//		logger.info("updateMemberEmail() 호출");
+//		logger.info("newPhone = " + newEmail);
+//		
+//		int result = memberService.updateEmail(memberId, newEmail);
+//			
+//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+//	}// end updateEmail
+//	
+//	@PutMapping("/updateEmail/{memberId}") // PUT : 댓글 수정
+//	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
+//		logger.info("updateMemberInterest() 호출");
+//		logger.info("newInterest = " + newInterest);
+//		
+//		int result = memberService.updateInterest(memberId, newInterest);
+//			
+//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+//	}// end updateEmail
 }
 	
 	

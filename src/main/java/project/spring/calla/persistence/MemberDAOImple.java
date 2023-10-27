@@ -32,11 +32,9 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public int checkNickname(String memberNickname) { // �г��� �ߺ�üũ
-		logger.info("select_by_nickname() ȣ��");
-		int result = sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
-		logger.info(result+"�ߺ�");
-		return result;
+	public int checkNickname(String memberNickname) { //
+		logger.info("checkNickname() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
 	}
 
 	@Override
@@ -92,6 +90,52 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		args.put("memberPw", memberPw);
 		return sqlSession.update(NAMESPACE + ".updatePw", args);
+	}
+
+	@Override
+	public int updateNickname(String memberId, String memberNickname) {
+		logger.info("updateNickname() 호출 memberNickname : " + memberNickname);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberNickname", memberNickname);
+		return sqlSession.update(NAMESPACE + ".updateNickname", args);
+	}
+
+	@Override
+	public int updatePhone(String memberId, String memberPhone) {
+		logger.info("updatePhone() 호출 memberPhone : " + memberPhone);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberPhone", memberPhone);
+		return sqlSession.update(NAMESPACE + ".updatePhone", args);
+	}
+
+	@Override
+	public int updateEmail(String memberId, String memberEmail) {
+		logger.info("updateEmail() 호출 memberEmail : " + memberEmail);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberEmail", memberEmail);
+		return sqlSession.update(NAMESPACE + ".updateEmail", args);
+	}
+
+	@Override
+	public int updateInterest(String memberId, String memberInterest) {
+		logger.info("updateInterest() 호출 memberInterest : " + memberInterest);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberInterest", memberInterest);
+		return sqlSession.update(NAMESPACE + ".updateInterest", args);
+
+	}
+
+	@Override
+	public int updateAddress(String memberId, String memberAddress) {
+		logger.info("updateAddress() 호출 memberAddress : " + memberAddress);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberAddress", memberAddress);
+		return sqlSession.update(NAMESPACE + ".updateAddress", args);
 	}
 
 	
