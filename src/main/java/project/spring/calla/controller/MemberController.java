@@ -83,7 +83,7 @@ public class MemberController {
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(600);
 			
 			if(targetURL != null) {
 				return "redirect:" + targetURL; 

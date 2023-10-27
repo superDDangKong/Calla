@@ -42,7 +42,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	<!-- header1 -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="#!">Goot mall</a>
+			<a class="navbar-brand" href="/calla/uProduct/list">Goot mall</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -81,7 +81,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 							<a href="/calla/member/login">로그인</a>
 						</c:if>
 						<c:if test="${not empty memberNickname }">
-							<a href="/calla/member/login">로그아웃</a>
+							<a href="/calla/member/login">로그아웃</a>&nbsp;&nbsp;
+							<a href="/calla/uProduct/register">물건등록</a>
 						</c:if>
 
 					<!-- Modal -->
@@ -201,24 +202,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			</div>
 		</div>
 	</header>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container px-4 px-lg-5">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item"></li>
-					<li class="nav-item"><a class="nav-link" href="#!">전체상품</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">신상품</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">베스트</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">야채</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">의류/악세서리</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">목욕/미용</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">장난감</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">용품</a></li>
-
-				</ul>
-			</div>
-		</div>
-	</nav>
+	
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

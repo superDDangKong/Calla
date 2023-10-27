@@ -1,13 +1,14 @@
 package project.spring.calla.domain;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class UproductCommentVO {
 	private int uProductCommentId;
 	private int uProductId;
 	private String memberNickname;
 	private String uProductCommentContent;
-	private String uProductCommentCreatedDate;
+	private Date uProductCommentCreatedDate;
 	private String uProductSecretComment;
 	
 
@@ -15,7 +16,7 @@ public class UproductCommentVO {
 
 
 	public UproductCommentVO(int uProductCommentId, int uProductId, String memberNickname,
-			String uProductCommentContent, String uProductCommentCreatedDate, String uProductSecretComment) {
+			String uProductCommentContent, Date uProductCommentCreatedDate, String uProductSecretComment) {
 		super();
 		this.uProductCommentId = uProductCommentId;
 		this.uProductId = uProductId;
@@ -66,12 +67,12 @@ public class UproductCommentVO {
 	}
 
 
-	public String getuProductCommentCreatedDate() {
+	public Date getuProductCommentCreatedDate() {
 		return uProductCommentCreatedDate;
 	}
 
 
-	public void setuProductCommentCreatedDate(String uProductCommentCreatedDate) {
+	public void setuProductCommentCreatedDate(Date uProductCommentCreatedDate) {
 		this.uProductCommentCreatedDate = uProductCommentCreatedDate;
 	}
 
@@ -93,7 +94,6 @@ public class UproductCommentVO {
 				+ ", uProductCommentCreatedDate=" + uProductCommentCreatedDate + ", uProductSecretComment="
 				+ uProductSecretComment + "]";
 	}
-
 
 
 }

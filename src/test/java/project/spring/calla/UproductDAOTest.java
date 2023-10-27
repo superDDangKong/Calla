@@ -41,16 +41,24 @@ public class UproductDAOTest {
 	@Transactional
 	@Test
 	public void testDAO() {
-		testInsert();
+//		testInsert();
 //		testImageInsert();
 //		testSelectAll();
 //		testSelectByBoardId();
 //		testUpdate();
 //		testDelete();
 //		testSelectPaging();
-//		testTotalCounts();
-//		testSelectSearch();
+//		testSelectDate();
 	}
+
+//private void testSelectDate() {
+//		// TODO Auto-generated method stub
+//	List<UproductVO> list = dao.selectByUproductCreatedDate();
+//	for(UproductVO vo : list) {
+//		logger.info(vo.toString());
+//	}
+//		
+//	}
 
 //	private void testSelectByBoardId() {
 //		UproductVO vo = dao.select(30);

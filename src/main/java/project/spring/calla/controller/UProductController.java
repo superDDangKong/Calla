@@ -60,9 +60,10 @@ public class UProductController {
 	}
 	
 	@GetMapping("/list")
-	public void list(Model model, Integer page, Integer numsPerPage) {
+	public void list(Model model, Integer page, Integer numsPerPage, String name, String keyword) {
 		logger.info("list() »£√‚");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
+		List<UproductVO> list = null;
 		
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
@@ -72,14 +73,43 @@ public class UProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		
-		List<UproductVO> list = uproductService.read(criteria);
-		model.addAttribute("list",list);
-		
 		PageMaker pageMaker = new PageMaker();
+		
+		if (name != null) {
+			
+		    if (name.equals("searchName")) {
+				logger.info("if elseif");
+				list = uproductService.readByCategoriorName(criteria, keyword);
+				pageMaker.setTotalCount(uproductService.getTotalCountsByByCategoriorName(keyword));
+			}  else if(name.equals("searchDate")){
+				
+				list = uproductService.readdate(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBydate());
+			
+			} else {
+				
+				logger.info("if else");
+				list = uproductService.read(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCounts());
+				
+			}
+		} else {
+			logger.info("else");
+			list = uproductService.read(criteria);
+			pageMaker.setTotalCount(uproductService.getTotalCounts());
+		}
+		
+		logger.info("totalCount = " + pageMaker.getTotalCount());
+		model.addAttribute("list",list);
+		model.addAttribute("name", name);
+		model.addAttribute("keyword", keyword);
+		
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(uproductService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
+		
+		
+		
 	} // end list()
 	
 	@GetMapping("/register")

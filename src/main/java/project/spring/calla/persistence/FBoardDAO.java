@@ -14,11 +14,14 @@ public interface FBoardDAO {
 	int delete(int fBoardId);
 	List<FBoardVO> select(PageCriteria criteria);
 	int getTotalCounts();
+	
 	List<FBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword);
+	List<FBoardVO> selectAllByMemberNickname(String menberNickname);
 	int getTotalCountsByMemberNickname(String keyword);
+	
 	List<FBoardVO> selectByTitleOrContent(PageCriteria criteria, String keyword);
 	int getTotalCountsByTitleContent(String keyword);
 	int updateCommentCount(int amount, int fBoardId);
 	int updateViews(int views, int fBoardId);
-	List<FBoardVO> selectAllByMemberNickname(String menberNickname);
+	
 }
