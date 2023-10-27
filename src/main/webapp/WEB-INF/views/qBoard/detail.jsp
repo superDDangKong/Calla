@@ -11,6 +11,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 <title>${vo.qBoardTitle }</title>
 </head>
 <body>
+	<%@ include file="../header.jspf" %>
 	<h2>글 보기</h2>
 	<div>
 		<p>글 번호 : ${vo.qBoardId }</p>
@@ -134,6 +135,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                            + '&nbsp;&nbsp;' // 공백
                            + '<button class="btn_update" >수정</button>'
                            + '<button class="btn_delete" >삭제</button>'
+                           + '<button class="btnReply">답글</button>'
                            + '</pre>'
                            + '</div>';
                   }); // end each()
@@ -145,6 +147,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
             
             
          } // end getAllComment()
+         
+         
          
          // 수정 버튼을 클릭하면 선택된 댓글 수정
          $("#comments").on('click','.comment_item .btn_update', function(){
@@ -205,8 +209,12 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                
             }); // end ajax()
             
-         }); // end relies.on()
+         }); // end comment.on()
          
+         
+		$("#comments").on('click', '.comment_item .btnReply', function(){
+        	 
+         }) // end 대댓글 등록
       }); // end document
    </script>
 	

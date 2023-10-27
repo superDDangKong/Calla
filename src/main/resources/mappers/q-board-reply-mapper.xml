@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.QNABoardReplyMapper">
+
+	<insert id="insert">
+		insert into ${q_board_reply}
+		(${qBoardCommentId}, ${memberNickname}, ${qBoardReplyContent})
+		values (#{qBoardCommentId}, #{memberNickname}, #{qBoardReplyContent})
+	</insert>
+	
+	<select id="select_all_by_board_comment_id" resultType="QBoardReplyVO">
+		select * from ${q_board_reply}
+		where ${qBoardCommentId} = #{qBoardCommentId}
+		order by ${qBoardReplyId}
+	</select>
+
+	<update id="update">
+		update ${q_board_reply}
+		set ${qBoardReplyContent} = #{qBoardReplyContent}
+		where ${qBoardReplyId} = #{qBoardReplyId}
+	</update> 	
+	
+	<delete id="delete">
+		delete from ${q_board_reply}
+		where ${qBoardReplyId} = #{qBoardReplyId}
+	</delete>
+
+	 
+</mapper>
