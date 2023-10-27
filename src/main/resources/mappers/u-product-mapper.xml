@@ -14,9 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from ${u_product}
 		order by ${uProductId} desc
 	</select>
+	
 	<select id="select_by_product_id" resultType="UproductVO">
 		select * from ${u_product} where ${uProductId} = #{uProductId}
 	</select>
+	
+	<select id="select_by_u_product_name" resultType="UproductVO">
+		select * from ${u_product} where ${uProductName} = #{uProductName}
+	</select>
+	
 	<update id="update">
 		update ${u_product}
 		set ${uProductName} = #{uProductName}, ${uProductPrice} = #{uProductPrice}, ${uProductCategori} = #{uProductCategori}, ${uProductImagePath} = #{uProductImagePath}, ${uProductContent} = #{uProductContent}
@@ -58,8 +64,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	where ${uProductId} = #{uProductId}
 	</update>
 	
-	<select id="select_all_by_memberNickname" resultType="UproductVO">
-	  	select * from ${u_product} where ${memberNickname} = #{memberNickname}
-	</select>
+	 <select id="select_by_u_product_categori" resultType="UproductVO">
+	 	select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${u_product} 
+	 			where ${uProductName} like #{keyword} or 
+	 			${uProductCategori} like #{keyword} 
+	 			order by ${uProductId} desc
+	 		)a
+	 	) where rn between #{start} and #{end}
 
+	 </select> 
+	 
+	 <select id="total_count_by_u_product_categori" resultType="Integer">
+	  	select count(*) total_cnt from ${u_product} 
+	  	where ${uProductName} like #{keyword} or ${uProductCategori} like #{keyword}
+	 </select>
+	 
+	 <select id="select_by_u_product_created_date" resultType="UproductVO">
+	 
+        select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			SELECT * FROM ${u_product}
+       		    WHERE to_char(${uProductCreatedDate}, 'yy/mm/dd') = to_char(sysdate-2d, 'yy/mm/dd')
+	 		)a
+	 	) where rn between #{start} and #{end}
+	 
+	 </select>
+	 
+	 <select id="total_count_by_u_product_created_date" resultType="Integer">
+	  	select count(*) total_cnt from ${u_product} 
+	  	WHERE to_char(${uProductCreatedDate}, 'yy/mm/dd') = to_char(sysdate-2d, 'yy/mm/dd')
+	 </select>
+	 
+	 
+	 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -98,4 +98,38 @@ public class UproductDAOImple implements UproductDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
 	}
 
+	@Override
+	public List<UproductVO> selectByCategoriorName(PageCriteria criteria, String keyword) {
+		logger.info("selectByTitleOrContent() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_u_product_categori", args);
+	}
+
+	@Override
+	public int getTotalCountsByCategoriorName(String keyword) {
+		logger.info("getTotalTitleContent()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_categori", "%" + keyword + "%");
+	}
+
+	@Override
+	public List<UproductVO> selectByUproductCreatedDate(PageCriteria criteria) {
+		logger.info("selectByUproductCreatedDate() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_by_u_product_created_date", criteria);
+	}
+
+	@Override
+	public int getTotalCountsByUproductCreatedDate() {
+		logger.info("getTotalCountsByUproductCreatedDate()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_created_date");
+	}
+
+	
+
 }

@@ -51,12 +51,12 @@ public class UproductCommentServiceImple implements UproductCommentService {
 		List<UproductCommentVO> items = uProductCommentDAO.select(uProductId);
 
 		for (UproductCommentVO vo : items) {
-			if(memberNickname == null) {
+			if(memberNickname == null) { // 로그인 안된 상태
 				vo.setuProductCommentContent("비밀 댓글입니다");
-			} else {
+			} else { 
 				String commenter = vo.getMemberNickname();
 				String writer = product.getMemberNickname();
-				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) {
+				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) { // 물건 등록자나 댓글 등록자가 아니면
 					vo.setuProductCommentContent("비밀 댓글입니다");
 				}
 			}

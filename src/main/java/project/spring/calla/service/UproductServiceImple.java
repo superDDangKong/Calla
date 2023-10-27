@@ -59,6 +59,38 @@ public class UproductServiceImple implements UproductService {
 		return dao.getTotalCount();
 	}
 
+	@Override
+	public List<UproductVO> readByCategoriorName(PageCriteria criteria, String keyword) {
+		logger.info("readByTitleOrContent() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("keyword = " + keyword);
+		
+		return dao.selectByCategoriorName(criteria, keyword);
+	}
+
+	@Override
+	public int getTotalCountsByByCategoriorName(String keyword) {
+		logger.info("getTotalCountsByTitleContent() 호출");
+		return dao.getTotalCountsByCategoriorName(keyword);
+	}
+
+	@Override
+	public List<UproductVO> readdate(PageCriteria criteria) {
+		logger.info("readdate() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		
+		return dao.selectByUproductCreatedDate(criteria);
+		
+	}
+
+	@Override
+	public int getTotalCountsBydate() {
+		logger.info("getTotalCountsBydate() 호출");
+		return dao.getTotalCountsByUproductCreatedDate();
+	}
+
 	
 
 }
