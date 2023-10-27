@@ -1,11 +1,9 @@
 package project.spring.calla.service;
 
-import java.util.List;
-
 import project.spring.calla.domain.ProductLikeVO;
 
 public interface ProductLikeService {
-	int create(ProductLikeVO vo);  // ÁÁ¾Æ¿ä µî·Ï
-	List<ProductLikeVO> read(String memberNickname); // ÁÁ¾Æ¿ä °Ë»ö
-	int delete(int productLikeId); // ÁÁ¾Æ¿ä Ãë¼Ò
+	int create(ProductLikeVO vo) throws Exception; // ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½
+	int delete(int productLikeId, int productId) throws Exception; // ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int getTotalCounts(int productId);
 }

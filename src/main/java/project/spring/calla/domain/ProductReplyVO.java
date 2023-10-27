@@ -13,7 +13,6 @@ public class ProductReplyVO {
 
 	public ProductReplyVO(int productReplyId, int productCommentId, String memberNickname, String productReplyContent,
 			Date productReplyCreatedDate) {
-		super();
 		this.productReplyId = productReplyId;
 		this.productCommentId = productCommentId;
 		this.memberNickname = memberNickname;
@@ -67,7 +66,7 @@ public class ProductReplyVO {
 				+ ", memberNickname=" + memberNickname + ", productReplyContent=" + productReplyContent
 				+ ", productReplyCreatedDate=" + productReplyCreatedDate + "]";
 	}
-	
+
 	
 	
 }

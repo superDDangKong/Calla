@@ -17,5 +17,6 @@ public interface ProductDAO {
 	int getTotalCountsByProductNameOrProductContent(String keyword);
 	int updateCommentCount(int amount, int productId);
 	int updateViews(int views, int productId);
+	int updateLikeCount(int amount, int productId);
 	
 }

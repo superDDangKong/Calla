@@ -31,10 +31,20 @@ li {
 	<button id="home"><a href="/calla/">홈</a></button>
 	<input type="hidden" id="selectedOption" value=${option }>
 	<input type="hidden" id="sessionNickname" value=${memberNickname }>
+	<input type="hidden" id="sessionLevel" value=${memberLevel }>
+	
 	
 	<div id="register">
 		<a href="register"><input type="button" value="상품 등록"></a>
 	</div>
+	
+	<form action="list" method="GET">
+		<select id="option" name="option">
+			<option value="searchTitleOrContent">제목&내용</option>
+		</select> 
+		<input type="text" name="keyword" value="${keyword }"> 
+		<input type="submit" value="검색">
+	</form>
 	
 	<hr>
 	<table>
@@ -85,6 +95,22 @@ li {
 			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 		</c:if>
 	</ul>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if($("#selectedOption").val() != ""){
+				$("#option").val($("#selectedOption").val());
+			}
+			
+			if(!($('#sessionLevel').val() >= 2)) {
+				var list = 
+					"상품등록은 관리자기능입니다."
+					+ "&nbsp&nbsp"
+				$("#register").html(list);
+			}
+			
+		}) // end document.ready()
+	</script>
 	
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	
