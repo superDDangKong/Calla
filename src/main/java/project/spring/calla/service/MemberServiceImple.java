@@ -1,6 +1,7 @@
 package project.spring.calla.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int create(MemberVO vo) { 
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return MemberDAO.insert(vo); 
 		
 	}
@@ -79,34 +80,34 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public MemberVO read(String memberId) {
-		logger.info("read(memberId) È£Ãâ memberId : " + memberId);
+		logger.info("read(memberId) È£ï¿½ï¿½ memberId : " + memberId);
 		return MemberDAO.select(memberId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() È£Ãâ vo : " + vo.toString());
+		logger.info("update() È£ï¿½ï¿½ vo : " + vo.toString());
 		return MemberDAO.update(vo);
 	}
 
 	@Override
 	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() È£Ãâ memberName : " + memberName);
-		logger.info("searchId() È£Ãâ memberEmail : " + memberEmail);
+		logger.info("searchId() È£ï¿½ï¿½ memberName : " + memberName);
+		logger.info("searchId() È£ï¿½ï¿½ memberEmail : " + memberEmail);
 		return MemberDAO.searchId(memberName, memberEmail);
 	}
 
 	@Override
 	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() È£Ãâ memberId : " + memberId);
-		logger.info("searchPw() È£Ãâ memberPhone : " + memberPhone);
+		logger.info("searchPw() È£ï¿½ï¿½ memberId : " + memberId);
+		logger.info("searchPw() È£ï¿½ï¿½ memberPhone : " + memberPhone);
 		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readComments(String memberNickname) {
-		logger.info("readComments() È£Ãâ memberNickname : " + memberNickname);
+		logger.info("readComments() È£ï¿½ï¿½ memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
 		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
@@ -118,7 +119,7 @@ public class MemberServiceImple implements MemberService {
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readBoards(String memberNickname) {
-		logger.info("readBoards() È£Ãâ memberNickname : " + memberNickname);
+		logger.info("readBoards() È£ï¿½ï¿½ memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(memberNickname));
 		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
@@ -156,5 +157,18 @@ public class MemberServiceImple implements MemberService {
 	public int updateAddress(String memberId, String memberAddress) {
 		return MemberDAO.updateAddress(memberId, memberAddress);
 	}
+	
+	@Override
+	public int updateLevel(String memberId, int amount) {
+		return MemberDAO.updateLevel(memberId, amount);
+	}
+	
+	@Override
+	public List<MemberVO> read() {
+		logger.info("read() í˜¸ì¶œ");
+		return MemberDAO.select();
+	}
+
+
 	
 }

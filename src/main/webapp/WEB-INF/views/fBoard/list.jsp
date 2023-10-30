@@ -23,9 +23,16 @@ li {
 </style>
 <meta charset="UTF-8">
 <title>자유게시판</title>
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
+<%@ include file="../header.jspf"%>
 </head>
 <body>
-	<%@ include file="../header.jspf" %> 	
+	
 	<h1>자유 게시판</h1>
 	<button id="home"><a href="/calla/">홈</a></button>
 	<input type="hidden" id="selectedOption" value=${option }>
@@ -111,5 +118,6 @@ li {
 			alert('새 글 작성 성공!');
 		}
 	</script>
+		<%@ include file="../footer.jspf"%>
 </body>
 </html>

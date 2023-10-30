@@ -7,6 +7,11 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
 <title>댓글 목록</title>
 </head>
 <body>
@@ -99,6 +104,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	
+	<%@ include file="../footer.jspf"%>	
 </body>
 </html>

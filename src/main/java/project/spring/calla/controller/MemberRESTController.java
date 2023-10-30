@@ -2,6 +2,7 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.spring.calla.domain.FBoardReplyVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.service.MemberService;
 
@@ -117,25 +120,61 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePhone
 	
-//	@PutMapping("/updateEmail/{memberId}") // PUT : 댓글 수정
-//	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
-//		logger.info("updateMemberEmail() 호출");
-//		logger.info("newPhone = " + newEmail);
-//		
-//		int result = memberService.updateEmail(memberId, newEmail);
-//			
-//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-//	}// end updateEmail
+	@PutMapping("/updateEmail/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
+		logger.info("updateMemberEmail() 호출");
+		logger.info("newEmail = " + newEmail);
+		
+		int result = memberService.updateEmail(memberId, newEmail);
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updateEmail
+	
+	@PutMapping("/updateInterest/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
+		logger.info("updateMemberInterest() 호출");
+		logger.info("newInterest = " + newInterest);
+		
+		int result = memberService.updateInterest(memberId, newInterest);
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updateEmail
+	
+	@PutMapping("/updateAddress/{memberId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateMemberAddress(@PathVariable("memberId") String memberId, @RequestBody String newAddress) {
+		logger.info("updateMemberAddress() 호출");
+		logger.info("newAddress = " + newAddress);
+		
+		int result = memberService.updateAddress(memberId, newAddress);
+			
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updateAddress
 //	
-//	@PutMapping("/updateEmail/{memberId}") // PUT : 댓글 수정
-//	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
-//		logger.info("updateMemberInterest() 호출");
-//		logger.info("newInterest = " + newInterest);
-//		
-//		int result = memberService.updateInterest(memberId, newInterest);
-//			
-//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-//	}// end updateEmail
+//	@GetMapping("/updateLevel/{memberId}") // GET : 댓글 선택(all)
+//	public ResponseEntity<Integer> readReplies(@PathVariable("memberId") String memberId) {
+//		// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
+//		logger.info("updateLevelGET() 호출 : memberId = " + memberId);
+//
+//		List<FBoardReplyVO> list = fBoardReplyService.read(fBoardCommentId);
+//		return new ResponseEntity<List<FBoardReplyVO>>(list, HttpStatus.OK);
+//	}
+	
+	@PutMapping("/updateLevel/{memberId}") 
+	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel) {
+		logger.info("updateMemberLevel() 호출");
+		int amount = 0;
+		if(Integer.parseInt(memberLevel) == 1) {
+			amount = 1;
+		} else if (Integer.parseInt(memberLevel) == 2) {
+			amount = -1;
+		}
+		int updateResult = memberService.updateLevel(memberId, amount);
+		MemberVO updatedVO = memberService.read(memberId);
+		int newMemberLevel = updatedVO.getMemberLevel();
+		logger.info(String.valueOf(newMemberLevel));
+
+		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
+	}// end updateAddress
 }
 	
 	

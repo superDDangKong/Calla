@@ -71,7 +71,7 @@ public class MemberController {
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
 		// 
-		logger.info("loginPOST() È£Ãâ");
+		logger.info("loginPOST() í˜¸ì¶œ");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -83,7 +83,7 @@ public class MemberController {
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
-			session.setMaxInactiveInterval(300);
+			session.setMaxInactiveInterval(60*60);
 			
 			if(targetURL != null) {
 				return "redirect:" + targetURL; 
@@ -223,4 +223,9 @@ public class MemberController {
 		model.addAttribute("lists", args);
 		
 	}
+	@GetMapping("/manageMember")
+	public void manageMemberGET(Model model, HttpServletRequest request) {
+			List<MemberVO> list = memberService.read();
+			model.addAttribute("list", list);
+	} // end manageMember
 }

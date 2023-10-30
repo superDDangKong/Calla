@@ -6,16 +6,21 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
 <title>로그인</title>
 </head>
 <body>
-
+<%@ include file="../header.jspf" %> 
 <form action="login" method="POST">
     <label for="memberId">아이디:</label>
-    <input type="text" id="memberId" name="memberId"> 
+    <input type="text" id="memberId" name="memberId" value="test"> 
     <br>
     <label for="memberPw">비밀번호:</label> 
-    <input type="password" id="memberPw" name="memberPw"> 
+    <input type="password" id="memberPw" name="memberPw" value="test"> 
     <br>
     <input type="submit" value="로그인">
     
@@ -50,6 +55,6 @@
 		}
 		
 	</script>
-
+<%@ include file="../footer.jspf" %> 
 </body>
 </html>

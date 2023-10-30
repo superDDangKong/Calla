@@ -5,9 +5,15 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
 <title>아이디 찾기</title>
 </head>
 <body>
+<%@ include file="../header.jspf" %> 
 	<form action="searchId" method="post">
 		이름 : <input type="text" name="memberName" required>
 		이메일 : <input type="text" name="memberEmail" required>
@@ -25,5 +31,6 @@
 		}
 
 	</script>
+	<%@ include file="../footer.jspf" %> 
 </body>
 </html>

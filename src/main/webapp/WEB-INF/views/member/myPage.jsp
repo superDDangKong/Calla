@@ -6,12 +6,18 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
 <title>마이페이지</title>
 </head>
 <body>
 <%@ include file="../header.jspf" %> 	
 <input type="hidden" id="memberId" value=${memberId }>
 <input type="hidden" id="memberNickname" value=${memberNickname }>
+<input type="hidden" id="memberNickname" value=${memberLevel }>
 <h2>마이페이지</h2>
 	
 	<ul>
@@ -29,16 +35,11 @@
 		<li>MY 정보</li>
 			<ul>
 				<li><a href="update">개인정보확인/수정</a>
+				<c:if test="${memberLevel == 3}">
+				<li><a href="manageMember">회원등업(관리자 전용)</a>
+				</c:if>
 			</ul>
 	</ul>
-		
-	
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$()
-		}) // end document.ready
-	</script>
-
+<%@ include file="../footer.jspf" %> 
 </body>
 </html>

@@ -1,5 +1,6 @@
 package project.spring.calla.persistence;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -136,6 +137,21 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		args.put("memberAddress", memberAddress);
 		return sqlSession.update(NAMESPACE + ".updateAddress", args);
+	}
+
+	@Override
+	public List<MemberVO> select() {
+		logger.info("updateAddress() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select");
+	}
+
+	@Override
+	public int updateLevel(String memberId, int amount) {
+		logger.info("updateLevel()");
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("memberId", memberId);
+		args.put("amount", amount);
+		return sqlSession.update(NAMESPACE + ".updateLevel", args);
 	}
 
 	

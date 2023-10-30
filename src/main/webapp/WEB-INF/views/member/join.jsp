@@ -34,10 +34,15 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
+<%@ include file="../header.jspf" %> 
 <title>회원가입</title>
 </head>
 <body>
-
 <div style="text-align:center">
 	<h1><a href="http://localhost:8080/calla/"><span>Calla</span></a></h1>
 	 <form name="join" action="join" id="join"method="post"> 
@@ -541,6 +546,6 @@
     		
     		
 
-    		
 </script>
+<%@ include file="../footer.jspf" %> 
 </html>

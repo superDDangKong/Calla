@@ -6,10 +6,15 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
 <title>좋아요 목록</title>
 </head>
 <body>
-
+<%@ include file="../header.jspf" %> 
 	<div id="product_likes_container">
 		
 		<div id="product">
@@ -30,7 +35,7 @@
 			
 			
 		}) // end document.ready()
-		
+		<%@ include file="../footer.jspf" %> 
 	</script>
 </body>
 </html>

@@ -94,4 +94,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${memberId} = #{memberId}
 	</update>
 	
+	<update id="updateLevel">
+		update ${member}
+		set ${memberLevel} = ${memberLevel} + #{amount}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	<select id="select" resultType="MemberVO">
+		select * from ${member}
+	</select>
 </mapper>
