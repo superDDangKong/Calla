@@ -63,4 +63,10 @@ public class QBoardServiceImple implements QBoardService{
 		return dao.getTotalCounts();
 	}
 
+	@Override
+	public int updateViews(int views, int qBoardId) {
+		logger.info("updateViews() »£√‚");
+		return dao.updateViews(views, qBoardId);
+	}
+
 }

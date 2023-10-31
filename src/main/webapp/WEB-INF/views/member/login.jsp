@@ -12,10 +12,10 @@
 
 <form action="login" method="POST">
     <label for="memberId">아이디:</label>
-    <input type="text" id="memberId" name="memberId"> 
+    <input type="text" id="memberId" name="memberId" value="test"> 
     <br>
     <label for="memberPw">비밀번호:</label> 
-    <input type="password" id="memberPw" name="memberPw"> 
+    <input type="password" id="memberPw" name="memberPw" value="test"> 
     <br>
     <input type="submit" value="로그인">
     

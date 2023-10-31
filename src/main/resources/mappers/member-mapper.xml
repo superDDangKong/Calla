@@ -26,6 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) check_cnt from ${member} where ${memberNickname} =
 		#{memberNickname}
 	</select>
+	
+	<select id="info" resultType="MemberVO">
+		select ${memberId} and ${memberLevel}
+		from ${member}
+	</select>
 
 
 	<select id="login" resultType="String">

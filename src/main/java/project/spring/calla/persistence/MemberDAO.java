@@ -18,4 +18,5 @@ public interface MemberDAO {
 	int updateEmail(String memberId, String memberEmail);
 	int updateInterest(String memberId, String memberInterest);
 	int updateAddress(String memberId, String memberAddress);
+//	String info(String memberNickname, String memberLevel);
 }

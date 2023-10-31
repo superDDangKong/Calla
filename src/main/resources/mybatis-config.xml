@@ -102,7 +102,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="qBoardId" value="q_board_id"/>
 		<property name="memberNickname" value="member_nickname"/>
 		<property name="qBoardCommentContent" value="q_board_comment_content"/>
-		<property name="qBoardCommentCreatedDate" value="q_board_comment_Created_date"/>		
+		<property name="qBoardCommentCreatedDate" value="q_board_comment_Created_date"/>
+		
+		<property name ="q_board_reply" value="q_board_reply"/>
+		<property name ="qBoardReplyId" value="q_board_reply_id"/>
+		<property name ="qBoardCommentId" value="q_board_comment_id"/>
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="qBoardReplyContent" value="q_board_reply_content"/>
+		<property name ="qBoardReplyCreatedDate" value="q_board_reply_created_date"/>		
 		
 		<property name="product_reply" value="product_reply"/>
 		<property name="productReplyId" value="product_reply_id"/>

@@ -36,7 +36,7 @@ public class QBoardReplyServiceImple implements QBoardReplyService {
 	@Override // 수정
 	public int update(int qBoardReplyId, String qBoardReplyContent) {
 		logger.info("update() 호출");
-		logger.info("qBoardReplyId : " + qBoardReplyId + "qBoardReplyContent : " + qBoardReplyContent);
+		logger.info("qBoardReplyId : " + qBoardReplyId + ", qBoardReplyContent : " + qBoardReplyContent);
 		return qBoardReplyDAO.update(qBoardReplyId, qBoardReplyContent);
 	}
 

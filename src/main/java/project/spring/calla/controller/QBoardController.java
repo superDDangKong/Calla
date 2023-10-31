@@ -2,6 +2,10 @@ package project.spring.calla.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,11 +80,37 @@ public class QBoardController {
 	} // end registerPOST
 	
 	@GetMapping("/detail")
-	public void detail(Model model, Integer qBoardId, Integer page) {
+	public String detail(Model model, Integer qBoardId, Integer page,
+			HttpServletRequest request, HttpServletResponse response) {
+		String cookieName = "qBoard_" + qBoardId;
+		Cookie[] cookies = request.getCookies();
+		boolean cookieFound = false;
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals(cookieName)) {
+					cookieFound = true;
+					break;
+				}
+			}
+		}
+		if(!cookieFound) {
+			// 쿠키가 존재하지 않는 경우, 조회수 증가 및 쿠키 설정
+			int views = 1; // 첫 번째 조회
+			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
+			viewCookie.setMaxAge(60); // 쿠키 유효 시간 1분
+			response.addCookie(viewCookie);
+			int result = qBoardService.updateViews(views, qBoardId);
+			if(result == 1) {
+				logger.info("조회수 증가");
+			} else {
+				logger.info("조회수 증가 실패");
+			}	
+		}
 		logger.info("detail() 호출 : boardId = " + qBoardId);
 		QBoardVO vo = qBoardService.read(qBoardId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		return "/qBoard/detail";
 	} // end detail
 	
 	@GetMapping("/update")

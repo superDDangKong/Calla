@@ -20,4 +20,5 @@ public interface MemberService {
 	int updateEmail(String memberId, String memberEmail);
 	int updateInterest(String memberId, String memberInterest);
 	int updateAddress(String memberId, String memberAddress);
+//	Map<String, Object> readInfo(String memberNickname, String memberLevel);
 }

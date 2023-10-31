@@ -20,46 +20,48 @@ ul {
 li {
 	display : inline-block;
 }
+
 </style>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.7.1.js" 
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <title>게시판 메인 페이지</title>
 </head>
 <body>
 	<%@ include file="../header.jspf" %>
-	<h1>Q&N 게시판</h1>
-	
+	<%@ include file="../sidebar.jspf" %>
+	<h1>Q&A 게시판</h1>
 	<a href="register"><input type="button" value="글 작성"></a>
 	<hr>
-	<table>
-		<thead>
-			<tr>
-				<th style="width : 60px">번호</th>
-				<th style="width : 700px">제목</th>
-				<th style="width : 120px">작성자</th>
-				<th style="width : 100px">작성일</th>
-				<th style="width : 60px">댓글수</th>
-				<th style="width : 60px">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="vo" items="${list }">
+	<div>
+		<table style="margin: 0 auto;">
+			<thead>
 				<tr>
-					<td>${vo.qBoardId }</td>
-					<td><a href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
-					<td>${vo.memberNickname }</td>
-					<fmt:formatDate value="${vo.qBoardCreatedDate }"
-					pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCreatedDate"/>
-					<td>${qBoardCreatedDate }</td>
-					<td>${vo.qBoardCommentCount }</td>
-					<td>${vo.qBoardViews }</td>
+					<th style="width : 60px">번호</th>
+					<th style="width : 700px">제목</th>
+					<th style="width : 120px">작성자</th>
+					<th style="width : 100px">작성일</th>
+					<th style="width : 60px">댓글수</th>
+					<th style="width : 60px">조회수</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<ul>
+			</thead>
+			<tbody>
+				<c:forEach var="vo" items="${list }">
+					<tr>
+						<td>${vo.qBoardId }</td>
+						<td><a href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
+						<td>${vo.memberNickname }</td>
+						<fmt:formatDate value="${vo.qBoardCreatedDate }"
+						pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCreatedDate"/>
+						<td>${qBoardCreatedDate }</td>
+						<td>${vo.qBoardCommentCount }</td>
+						<td id="aa">${vo.qBoardViews }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	<ul style="text-align:center">
 		<c:if test="${pageMaker.hasPrev }">
 			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 		</c:if>
@@ -81,6 +83,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		if(result == 'success') {
 			alert('새 글 작성 성공!');
 		}
+
 	</script>
 	
 </body>

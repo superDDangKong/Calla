@@ -58,7 +58,6 @@ li {
 		<input type="submit" value="상품 삭제">
 	</form>
 	</c:if>
-	
 	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
 		${memberNickname}
