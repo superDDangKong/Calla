@@ -7,17 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${product_like}
-		(${productLikeId}, ${productId}, ${memberNickname})
-		values(#{productLikeId}, ${productId}, ${memberNickname})
+		(${productId}, ${memberId})
+		values(#{productId}, #{memberId})
 	</insert>
 	
 	<delete id="delete">
 		delete from ${product_like}
-		where ${productLikeId} = #{productLikeId}
+		where ${memberId} = #{memberId}
 	</delete>
 	
 	<select id="total_count" resultType="Integer">
 		select count(*) total_cnt from ${product_like} where ${productId} = #{productId}
+	</select>
+	
+	<select id="checkProductLike" resultType="Integer">
+    SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+    FROM ${product_like}
+    WHERE ${productLike} = #{productLike} AND ${memberId} = #{memberId}
+	</select>
+	
+	<select id="select_by_member_id" resultType="ProductLikeVO">
+		select * from ${product_like} where ${productId} = #{productId} and ${memberId} = #{memberId}
 	</select>
 	
 </mapper>

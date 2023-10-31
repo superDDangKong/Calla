@@ -4,41 +4,55 @@ public class ProductLikeVO {
 
 	int productLikeId;
 	int productId;
-	String memberNickname;
+	String memberId;
 	
 	public ProductLikeVO() {
 	}
-	
-	public ProductLikeVO(int productLikeId, int productId, String memberNickname) {
+
+	public ProductLikeVO(int productLikeId, int productId, String memberId) {
 		this.productLikeId = productLikeId;
 		this.productId = productId;
-		this.memberNickname = memberNickname;
+		this.memberId = memberId;
 	}
-	
+
 	public int getProductLikeId() {
 		return productLikeId;
 	}
+
 	public void setProductLikeId(int productLikeId) {
 		this.productLikeId = productLikeId;
 	}
+
 	public int getProductId() {
 		return productId;
 	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	public String getMemberNickname() {
-		return memberNickname;
+
+	public String getMemberId() {
+		return memberId;
 	}
-	public void setMemberNickname(String memberNickname) {
-		this.memberNickname = memberNickname;
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ProductLikeVO [productLikeId=" + productLikeId + ", productId=" + productId + ", memberNickname="
-				+ memberNickname + "]";
+		return "ProductLikeVO [productLikeId=" + productLikeId + ", productId=" + productId + ", memberId=" + memberId
+				+ "]";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

@@ -1,5 +1,8 @@
 package project.spring.calla.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,20 +25,46 @@ public class ProductLikeDAOImple implements ProductLikeDAO {
 	
 	@Override
 	public int insert(ProductLikeVO vo) {
-		logger.info("insert() »£ÔøΩÔøΩ : vo = " + vo.toString());
+		logger.info("insert() »£√‚ : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
-	public int delete(int productLikeId) {
-		logger.info("delete() »£ÔøΩÔøΩ : productLikeId = " + productLikeId);
-		return sqlSession.delete(NAMESPACE + ".delete", productLikeId);
+	public int delete(String memberId) {
+		logger.info("delete() »£√‚ : memberId = " + memberId);
+		return sqlSession.delete(NAMESPACE + ".delete", memberId);
 	}
 
 	@Override
 	public int getTotalCount(int productId) {
-		logger.info("getTotalCounts() »£ÔøΩÔøΩ : productId = " + productId);
+		logger.info("getTotalCounts() »£√‚ : productId = " + productId);
 		return sqlSession.selectOne(NAMESPACE + ".total_count", productId);
+	}
+
+	@Override
+	public int checkProductLike(int productId, String memberId) {
+		logger.info("checkProductLike() »£√‚ : productId = " + productId + ", memberId = " + memberId);
+	    Map<String, Object> args = new HashMap<>();
+	    args.put("productId", productId);
+	    args.put("memberId", memberId);
+	    Integer result = sqlSession.selectOne(NAMESPACE + ".checkProductLike", args);
+
+	    if (result != null && result > 0) {
+	        // ¡¡æ∆ø‰∏¶ «— ∞Õ
+	        return 1;
+	    } else {
+	        // ¡¡æ∆ø‰∏¶ «œ¡ˆ æ ¿∫ ∞Õ
+	        return 0;
+	    }
+	}
+
+	@Override
+	public ProductLikeVO select(int productId, String memberId) {
+		logger.info("select() »£√‚ : productId = " + productId + ",memberId = " + memberId);
+		Map<String, Object> args = new HashMap();
+		args.put("productId", productId);
+		args.put("memberId", memberId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_member_id", args);
 	}
 
 }

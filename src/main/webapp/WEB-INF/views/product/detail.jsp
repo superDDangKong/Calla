@@ -38,6 +38,7 @@ li {
 	<div>
 		<p>작성일 : ${vo.productCreatedDate }</p>
 		<p>카테고리 : ${vo.productCategori }</p>
+		<p>가격 : ${vo.productPrice }
 	</div>
 	<div>
 		<textarea rows="20" cols="120" readonly>${vo.productContent }</textarea>
@@ -46,10 +47,12 @@ li {
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
 	<input type="hidden" id="productId" name="productId" value="${vo.productId }" >
 	
+	
 	<c:set var="memberNickname" value="${memberNickname }" />
 	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
 	<c:set var="memberLevel" value="${memberLevel }" />
 	<c:set var="voMemberLevel" value="${vo.memberLevel }" />
+	<c:set var="productOrderId" value="${productOrderId }" />
 	
 	<c:if test="${memberLevel > 1}">
 	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
@@ -58,7 +61,33 @@ li {
 		<input type="submit" value="상품 삭제">
 	</form>
 	</c:if>
-	
+	<c:if test="${memberNickname != null}">
+	<div>
+		<input type="hidden" id="memberNickname" value=${memberNickname }>
+		<c:if test="${productLikeId == 0 }">
+			<button id="likeBtn">좋아요</button>		
+		</c:if>
+		<c:if test="${productLikeId != 0 }">
+			<button id="likeBtn">좋아요취소</button>		
+		</c:if>
+		<span id="likeCnt">${vo.productLikes }</span> 
+		<input type="hidden" id="productLikeId" name="productLikeId" value="${productLikeId }">
+	</div>
+	</c:if>
+	<c:if test="${memberNickname != null}">
+	<div>
+		<c:if test="${productOrderId == null }">
+			<button id="orderBtn">장바구니 넣기</button>		
+		</c:if>
+		<c:if test="${productOrderId != null }">
+			<button id="orderBtn">장바구니 삭제</button>				
+		</c:if>
+	</div>
+	</c:if>
+
+	<c:if test="${memberNickname == null }">
+		<br> 구매하실려면 로그인해 주세요.
+	</c:if>
 	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
 		${memberNickname}
@@ -89,6 +118,7 @@ li {
 	
 	
 	<script type="text/javascript">
+	
 		$(document).ready(function(){
 			getAllComments();
 			$('#btnCommentAdd').click(function(){
@@ -392,7 +422,6 @@ li {
 				}
 			}) // end ajax()
 		}); // end btnReplyUpdate.on()
-		
 		$(document).on('click', '.btnReplyDelete', function(){
 			console.log(this);
 			var commentItem = $(this).closest('.comment_item');
@@ -417,6 +446,100 @@ li {
 			}); // end ajax()
 		}); // end btnreplydelete()
 		
+		$(document).ready(function() {
+		    var likeBtn = $('#likeBtn');
+
+		    likeBtn.click(function() {
+		        var productId = $('#productId').val();
+		        var memberId = $('#memberId').val();
+
+		        if ($(this).text() === '좋아요') { 
+		            $.ajax({
+		                type: 'POST',
+		                url: 'likes',
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                data: JSON.stringify({ productId: productId, memberId: memberId }),
+		                success: function(result) {
+		                    if (result.result == 1) {
+		                        alert('좋아요 등록');
+		                        likeBtn.text('좋아요 취소');
+		                        updateLikeCount(1);
+		                    }
+		                }
+		            });
+		        } else { // 좋아요 취소
+		            $.ajax({
+		                type: 'DELETE',
+		                url: 'likes/' + productId + '/' + memberId,
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                success: function(result) {
+		                    console.log(result);
+		                    if (result.result == 1) {
+		                        alert('좋아요 삭제');
+		                        likeBtn.text('좋아요');
+		                        updateLikeCount(-1);
+		                    }
+		                }
+		            });
+		        }
+		    });
+		    
+		    function updateLikeCount(change) {
+		        var currentCount = parseInt($('#likeCnt').text());
+		        $('#likeCnt').text(currentCount + change);
+		    }
+		}); // end document 
+
+		$(document).ready(function(){
+			var orderBtn = $('#orderBtn');
+			
+			orderBtn.click(function(){
+				console.log('클릭');
+				var productId = $('#productId').val();
+		        var memberNickname = $('#memberNickname').val();
+			
+				if($(this).text() === '장바구니 넣기'){
+			        $.ajax({
+			        	type : 'POST',
+			        	url : 'orders',
+			        	headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                data: JSON.stringify({ productId: productId, memberNickname: memberNickname }),
+		                success : function(result){
+		                	console.log(result);
+		                	if(result.result == 1){
+		                		alert('장바구니 등록');
+		                		orderBtn.text('장바구니 삭제');
+		                	}
+		                }
+			        }); // end ajax
+				} else{
+					$.ajax({
+						type : 'DELETE',
+						url : 'orders/' + productOrderId,
+						headers: {
+			                   'Content-Type': 'application/json'
+			               },
+			            success: function(result) {
+			                 console.log(result);
+			                 if (result.result == 1) {
+			                     alert('장바구니 삭제');
+			                     orderBtn.text('장바구니 등록');
+			                 }
+			             }  
+					}); // end ajax
+				}
+			
+		        
+			}); // end click
+		}); // end document
+		
+			
 		
 	
 		
