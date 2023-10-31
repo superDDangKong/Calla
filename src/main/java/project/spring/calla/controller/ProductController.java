@@ -25,11 +25,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductCommentVO;
+import project.spring.calla.domain.ProductLikeVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
+import project.spring.calla.service.ProductLikeService;
+import project.spring.calla.service.ProductOrderService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -47,7 +52,11 @@ public class ProductController {
 	@Autowired
 	private ProductCommentService productCommentService;
 	
+	@Autowired
+	private ProductLikeService productLikeService;
 	
+	@Autowired
+	private ProductOrderService productOrderService;
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -127,7 +136,7 @@ public class ProductController {
 	}  // end registerPOST()
 	
 	@GetMapping("/detail")
-	public String detail(Model model, Integer productId, Integer page, HttpServletRequest request, HttpServletResponse response) {
+	public String detail(Model model, Integer productId, String memberId, Integer page, HttpServletRequest request, HttpServletResponse response) {
 		String cookieName = "product_" + productId;
 		Cookie[] cookies = request.getCookies();
 		boolean cookieFound = false;
@@ -168,8 +177,14 @@ public class ProductController {
 		
 		String memberNickname = commentVO.getMemberNickname();
 		
-		
-		
+		Integer productLikeId = 0;
+		ProductLikeVO productLikeVO = productLikeService.read(productId, memberId);
+			if (productLikeVO != null) {
+				productLikeId = productLikeVO.getProductLikeId();
+			} 
+		logger.info("productLikeId 호출 몇인데? = " + productLikeId);
+		model.addAttribute("productLikeId", productLikeId);
+		model.addAttribute("memberId", memberId);
 		model.addAttribute("memberNickname", memberNickname);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -256,6 +271,23 @@ public class ProductController {
 		}
 		
 		return entity;
+	}
+	
+	@GetMapping("/order")
+	public String order(Model model, Integer productId, HttpServletRequest request, HttpServletResponse response) {
+		logger.info("order() 호출 : productId = " + productId);
+		MemberVO memberVO = new MemberVO();
+	    List<ProductOrderVO> list = null;
+	    String memberNickname = memberVO.getMemberNickname();
+	    ProductVO productVO = null;
+	    
+	    list = productOrderService.read();
+	    
+	    model.addAttribute("productVO", productVO);
+	    model.addAttribute("list", list);
+	    model.addAttribute("memberNickname", memberNickname);
+		
+	    return "/product/order";
 	}
 	
 

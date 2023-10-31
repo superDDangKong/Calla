@@ -38,6 +38,10 @@ li {
 		<a href="register"><input type="button" value="상품 등록"></a>
 	</div>
 	
+	<div>
+		<a href="order"><input type="button" value="장바구니"></a>
+	</div>
+	
 	<form action="list" method="GET">
 		<select id="option" name="option">
 			<option value="searchTitleOrContent">제목&내용</option>
@@ -70,7 +74,7 @@ li {
 							<img src="display?fileName=${vo.productImagePath}" width="100px" height="100px">
 						</div>
 					</td>
-					<td><a href="detail?productId=${vo.productId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
+					<td><a href="detail?productId=${vo.productId }&memberId=${memberId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
 					<td>${vo.productPrice }</td>
 					<td>${vo.productCategori }</td>
 					<fmt:formatDate value="${vo.productCreatedDate }"

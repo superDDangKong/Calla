@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.ProductOrderMapper">
+
+	
+	<insert id="insert">
+		insert into ${product_order}
+		(${productOrderId}, ${memberNickname}, ${productId}, ${productAmount}, ${productPrice})
+		values (#{productOrderId}, #{productNickname}, #{productId}, #{productAmount}, #{productPrice})
+	</insert>
+	
+	<select id="select_all" resultType="ProductOrderVO">
+		select * from ${product_order}
+		order by ${productOrderId} desc
+	</select>
+	
+	<select id="select_by_product_order_id" resultType="ProductOrderVO">
+		select * from ${product_order} where ${productOrderId} = #{productOrderId}
+	</select>
+	
+	<update id="update">
+		update ${product_order}
+		set ${productAmount} = #{productAmount}
+		where ${productOrderId} = #{productOrderId} 
+	</update>
+	
+	<delete id="delete">
+		delete from ${product_order}
+		where ${productOrderId} = #{productOrderId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
