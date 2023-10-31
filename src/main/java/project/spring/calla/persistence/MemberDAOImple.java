@@ -26,7 +26,7 @@ public class MemberDAOImple implements MemberDAO{
 	
 	@Override
 	public int checkId(String memberId) { // ���̵� �ߺ�üũ
-		logger.info("select_by_id() ȣ��");
+		logger.info("select_by_id() ");
 		int result  = sqlSession.selectOne(NAMESPACE + ".select_by_id", memberId);
 		logger.info(result+"�ߺ�");
 		return result;
@@ -34,18 +34,18 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int checkNickname(String memberNickname) { //
-		logger.info("checkNickname() 호출");
+		logger.info("checkNickname() ");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
 	}
 
 	@Override
 	public int insert(MemberVO vo) { // ȸ������
-		logger.info("insert() ȣ�� : vo = " + vo.toString());
+		logger.info("insert() : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 	
 	public String login(String memberId, String memberPw) {
-		logger.info("login() ȣ�� memberId = " + memberId + "memberPw = " + memberPw);
+		logger.info("login() memberId = " + memberId + "memberPw = " + memberPw);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("memberId", memberId);
 		args.put("memberPw", memberPw);
@@ -54,20 +54,20 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public MemberVO select(String memberId) {
-		logger.info("select(memberId) ȣ�� memberId : " + memberId);
+		logger.info("select(memberId) memberId : " + memberId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_member_id", memberId);
 	}
 
 	@Override 
 	public int update(MemberVO vo) {
-		logger.info("update() 호출 vo : " + vo);
+		logger.info("update()  vo : " + vo);
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() 호출 memberName : " + memberName);
-		logger.info("searchId() 호출 memberEmail : " + memberEmail);
+		logger.info("searchId()  memberName : " + memberName);
+		logger.info("searchId()  memberEmail : " + memberEmail);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberName", memberName);
 		args.put("memberEmail", memberEmail);
@@ -76,8 +76,8 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() 호출 memberId : " + memberId);
-		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
+		logger.info("searchPw()  memberId : " + memberId);
+		logger.info("searchPw()  memberPhone : " + memberPhone);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberPhone", memberPhone);
@@ -86,7 +86,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updatePw(String memberId, String memberPw) {
-		logger.info("updatePw() 호출 memberPw : " + memberPw);
+		logger.info("updatePw()  memberPw : " + memberPw);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberPw", memberPw);
@@ -95,7 +95,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updateNickname(String memberId, String memberNickname) {
-		logger.info("updateNickname() 호출 memberNickname : " + memberNickname);
+		logger.info("updateNickname() memberNickname : " + memberNickname);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberNickname", memberNickname);
@@ -104,7 +104,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updatePhone(String memberId, String memberPhone) {
-		logger.info("updatePhone() 호출 memberPhone : " + memberPhone);
+		logger.info("updatePhone()  memberPhone : " + memberPhone);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberPhone", memberPhone);
@@ -113,7 +113,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updateEmail(String memberId, String memberEmail) {
-		logger.info("updateEmail() 호출 memberEmail : " + memberEmail);
+		logger.info("updateEmail()  memberEmail : " + memberEmail);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberEmail", memberEmail);
@@ -122,7 +122,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updateInterest(String memberId, String memberInterest) {
-		logger.info("updateInterest() 호출 memberInterest : " + memberInterest);
+		logger.info("updateInterest()  memberInterest : " + memberInterest);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberInterest", memberInterest);
@@ -132,7 +132,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int updateAddress(String memberId, String memberAddress) {
-		logger.info("updateAddress() 호출 memberAddress : " + memberAddress);
+		logger.info("updateAddress()  memberAddress : " + memberAddress);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
 		args.put("memberAddress", memberAddress);

@@ -276,6 +276,7 @@ li {
 				}
 				console.log(this);
 				var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
+				console.log(fBoardCommentId);
 				getAllReplies(fBoardCommentId);
 				
 			}); // end btnReply.click()
@@ -377,6 +378,7 @@ li {
 				console.log(this);
 				var commentItem = $(this).closest('.comment_item');
 				var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
+				console.log("abc" + fBoardComenntId);
 				var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
 				var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
 				console.log("선택된 답글 번호 : " + fBoardReplyId + ", 답글 내용 : " + fBoardReplyContent);	

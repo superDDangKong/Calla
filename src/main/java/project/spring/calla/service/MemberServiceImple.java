@@ -64,7 +64,7 @@ public class MemberServiceImple implements MemberService {
 	}
 	
 	@Override
-	public int checkId(String memberId) { // 
+	public int checkId(String memberId) {  
 		int result = 0;
         result = MemberDAO.checkId(memberId);
 		return result;
@@ -160,6 +160,14 @@ public class MemberServiceImple implements MemberService {
 	public int updateAddress(String memberId, String memberAddress) {
 		return MemberDAO.updateAddress(memberId, memberAddress);
 	}
+
+	/*
+	 * @Override public Map<String, Object> readInfo(String memberNickname, String
+	 * memberLevel) { logger.info("readInfo() ȣ�� memberNickname : " + memberNickname
+	 * + " ," + "memberLevel : " + memberLevel); Map<String, Object> args = new
+	 * HashMap<String, Object>(); args.put("memberNickname",
+	 * MemberDAO.info(memberNickname, memberLevel)); return null; }
+	 */
 	
 	@Override
 	public int updateLevel(String memberId, int amount) {

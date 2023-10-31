@@ -13,4 +13,5 @@ public interface QBoardService {
 	int update(QBoardVO vo);
 	int delete(int boardId);
 	int getTotalCounts();
+	int updateViews(int views, int qBoardId);
 }

@@ -262,7 +262,7 @@
     	//3.비번유형성 + 비번 재확인()
     	
     	 // 비밀번호 검사
-    	$('#member_pw').blur(function(event){
+    	$('#member_pw').keyup(function(event){
     		passwordCheck();
     	});
     	
@@ -277,6 +277,7 @@
       		var memberPwCk = $('#member_pw_ck').val(); // 비밀번호 재확인
     		// 비밀번호 공백인지 확인
       		if(memberPw !== ''){ // 이거는 실행됨
+      			console.log(memberPw)
       			if (pwEffectiveness.test(memberPw)){ // 비밀번호 유효성 검사
       				console.log("입력한 비밀번호 : " + memberPw); // 입력한 비밀번호 콘솔에 띄우기
     				console.log("비밀번호 유효성 검사 통과"); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
@@ -335,7 +336,7 @@
 		$('#member_nickname').blur(function(){
 			var memberNickname = $('#member_nickname').val();
 			// 닉네임 정규식
-			var nicknameEffectiveness = /[\p{Script=Hangul}\p{Script=Latin}]{1,}/gu;
+			var nicknameEffectiveness = /^[가-힣ㄱ-ㅎa-zA-Z0-9]{2,20}$/;
 			if(memberNickname !== ''){
 				$('#error_nick_msg').text('');
 				if(nicknameEffectiveness.test(memberNickname)){
@@ -393,7 +394,7 @@
     	$('#member_phone').blur(function(){
     	 var memberPhone = $('#member_phone').val();
     	 
-    	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}/;
+    	 var phoneEffectiveness = /01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
 		 
     	 
     	 // 연락처 입력 유무 검사

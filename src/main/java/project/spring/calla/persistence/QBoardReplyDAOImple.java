@@ -36,10 +36,10 @@ public class QBoardReplyDAOImple implements QBoardReplyDAO {
 	@Override
 	public int update(int qBoardReplyId, String qBoardReplyContent) {
 		logger.info("update »£√‚");
-		logger.info("qBoardReplyId : " + qBoardReplyId + "qBoardReplyContent" + qBoardReplyContent);
+		logger.info("qBoardReplyId : " + qBoardReplyId + ", qBoardReplyContent : " + qBoardReplyContent);
 		Map<String, Object> aya = new HashMap<String, Object>();
 		aya.put("qBoardReplyId", qBoardReplyId);
-		aya.put(qBoardReplyContent, qBoardReplyContent);
+		aya.put("qBoardReplyContent", qBoardReplyContent);
 		return sqlSession.update(NAMESPACE + ".update", aya);
 	}
 

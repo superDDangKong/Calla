@@ -105,4 +105,13 @@ public class QBoardDAOImple implements QBoardDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
 	}
 
+	@Override
+	public int updateViews(int views, int qBoardId) {
+		logger.info("updateViews() : qBoardId = " + qBoardId);
+		Map<String, Integer> args = new HashMap();
+		args.put("views", views);
+		args.put("qBoardId", qBoardId);
+		return sqlSession.update(NAMESPACE + ".update_views", args);
+	}
+
 }

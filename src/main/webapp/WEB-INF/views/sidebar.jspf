@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="table1">
+		<table>
+			<thead>
+				<tr>
+					<th style="">
+						마이페이지
+					</th>
+				</tr>
+				<tr>
+					<td>
+						<div>
+							<img alt="" src="http://mall.smotor.com/skin/gaga_basic_skin/image/H_member_icon.gif">
+						</div>
+						<div>
+							${memberNickname }"님의 회원등급은" <br>
+							<b>${memberLevel }</b>입니다.
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="http://localhost:8080/calla/member/update">회원정보 수정</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a>회원정보 탈퇴하기</a>
+					</td>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</body>
+</html>

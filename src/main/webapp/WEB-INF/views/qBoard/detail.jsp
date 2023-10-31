@@ -4,6 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+
+
+
+</style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
 integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
 </script>
@@ -12,6 +17,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 </head>
 <body>
 	<%@ include file="../header.jspf" %>
+	
 	<h2>글 보기</h2>
 	<div>
 		<p>글 번호 : ${vo.qBoardId }</p>
@@ -116,6 +122,12 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                      console.log(this);
                      
                      var qBoardCommentCreatedDate = new Date(this.qBoardCommentCreatedDate);
+                     var formattedDate = qBoardCommentCreatedDate.getFullYear() + '-' +
+                     ('0' + (qBoardCommentCreatedDate.getMonth() + 1)).slice(-2) + '-' +
+                     ('0' + qBoardCommentCreatedDate.getDate()).slice(-2) + ' ' +
+                     ('0' + qBoardCommentCreatedDate.getHours()).slice(-2) + ':' +
+                     ('0' + qBoardCommentCreatedDate.getMinutes()).slice(-2) + ':' +
+                     ('0' + qBoardCommentCreatedDate.getSeconds()).slice(-2);
                      var disabled = 'disabled';
                      var readonly = 'readonly';
                      
@@ -126,15 +138,15 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                      
                      list += '<div class="comment_item">'
                            + '<pre>'
-                           + '<input type="hidden" id="qBoardCommentId" value="' + this.qBoardCommentId +'">'
+                           + '<input type="hidden" class="qBoardCommentId" value="' + this.qBoardCommentId +'">'
                            + this.memberNickname
                            + '&nbsp;&nbsp;' // 공백
-                           + '<input type="text"  id="qBoardCommentContent" value="' + this.qBoardCommentContent + '">'
+                           + '<input type="text"  class="qBoardCommentContent" value="' + this.qBoardCommentContent + '">'
                            + '&nbsp;&nbsp;' // 공백
-                           + qBoardCommentCreatedDate
+                           + formattedDate
                            + '&nbsp;&nbsp;' // 공백
-                           + '<button class="btn_update" >수정</button>'
-                           + '<button class="btn_delete" >삭제</button>'
+                           + '<button class="btn_update" ' + disabled + ' >수정</button>'
+                           + '<button class="btn_delete" ' + disabled + ' >삭제</button>'
                            + '<button class="btnReply">답글</button>'
                            + '</pre>'
                            + '</div>';
@@ -211,10 +223,178 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
             
          }); // end comment.on()
          
+         // btnReply 답글들 불러오기, btnReplyAdd 답글작성버튼
+		$('#comments').on('click', '.comment_item .btnReply', function(){ // 대댓글 입력
+			if($('#memberNickname').val() == null) { // 로그인 확인
+				alert('답글을 작성하려면 로그인 해 주세요')
+				return;
+			}
+			console.log(this); // this 멤버닉네임?
+			var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
+			console.log(qBoardCommentId);
+			getAllReplies(qBoardCommentId);
+         }) // end btnReply.click()
          
-		$("#comments").on('click', '.comment_item .btnReply', function(){
+      // 게시판 대댓글 전체 가져오기
+         function getAllReplies(qBoardCommentId){
+  
+
+            $('.replies').html('');
+            console.log("getAllReplies() 호출");
+            console.log("getAllReplies() 호출" + qBoardCommentId.val());
+            
+            var url = 'replies/all/' + qBoardCommentId.val();
+            var comment_item = qBoardCommentId.closest('.comment_item');
+            $.getJSON( // 머지이거
+               url,
+               function(data) {
+                  // data : 서버에서 전송받은 list 데이터가 저장되어 있음.
+                  // getJSON()에서 json 데이터는
+                  // javascript object로 자동 parsing됨.
+                  console.log(data);
+               
+                  var memberNickname = $('#memberNickname').val();
+               
+                  var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+                  
+                  // $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수. 사실 걍 for문 써도 됌
+                  $(data).each(function(){
+                     // this : 컬렉션의 각 인덱스 데이터를 의미
+                     console.log(this);
+                     
+                     var qBoardReplyCreatedDate = new Date(this.qBoardReplyCreatedDate);
+                  // 날짜를 원하는 형식으로 형식화
+                     var formattedDate = qBoardReplyCreatedDate.getFullYear() + '-' +
+                                        ('0' + (qBoardReplyCreatedDate.getMonth() + 1)).slice(-2) + '-' +
+                                        ('0' + qBoardReplyCreatedDate.getDate()).slice(-2) + ' ' +
+                                        ('0' + qBoardReplyCreatedDate.getHours()).slice(-2) + ':' +
+                                        ('0' + qBoardReplyCreatedDate.getMinutes()).slice(-2) + ':' +
+                                        ('0' + qBoardReplyCreatedDate.getSeconds()).slice(-2);
+                     var disabled = 'disabled';
+                     var readonly = 'readonly';
+                     
+                     if(memberNickname == this.memberNickname) { // 로그인한 아이디 == 댓글작성한 아이디
+                        disabled = '';
+                        readonly = '';
+                     }
+                     
+                     list += '<div class="reply_item">'
+                           + '<pre>'
+                           + '<input type="hidden" class="qBoardReplyId" value="' + this.qBoardReplyId +'">'
+                           + this.memberNickname
+                           + '&nbsp;&nbsp;' // 공백
+                           + '<input type="text"  class="qBoardReplyContent" value="' + this.qBoardReplyContent + '">'
+                           + '&nbsp;&nbsp;' // 공백
+                           + formattedDate
+                           + '&nbsp;&nbsp;' // 공백
+                           + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
+                           + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
+                           + '<br>'
+                           + '</pre>'
+                           + '</div>';
+                  }); // end each()
+               
+                  list += '<div style="text-align: center;">'
+					  + memberNickname
+					  + '&nbsp;&nbsp;'
+					  + '<input type="text" class="qBoardReplyContent" required>'
+					  + '&nbsp;&nbsp;'
+					  + '<button class="btnReplyAdd">작성</button>' 
+					  + '</div>'
+				  comment_item.append('<div class="replies">' + list + '</div>');	
+                  
+               }
+            ); // end getJSON()
+         } // end getAllReply()  
+         
+         // 대댓글 입력
+         $(document).on('click', '.btnReplyAdd', function(){
+        	console.log(this);
+        	var commentItem = $(this).closest('.comment_item');
+ 			var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
+ 			var qBoardCommentIdVal = $(this).closest('.comment_item').find('.qBoardCommentId').val();
+ 		    var memberNickname = $('#memberNickname').val();
+ 		    var qBoardReplyContent = $(this).prevAll('.qBoardReplyContent').val(); 
+ 		    console.log(memberNickname);
+ 		    console.log(qBoardCommentIdVal);
+ 		    console.log(qBoardReplyContent);
+ 		    var obj = {
+ 					'qBoardCommentId' : qBoardCommentIdVal, 
+ 					'memberNickname' : memberNickname,
+ 					'qBoardReplyContent' : qBoardReplyContent
+ 			};
+ 			console.log(obj);
+ 			
+
+ 			 $.ajax({
+ 				type : 'POST',
+ 				url : 'replies',
+ 				headers : {
+ 					'Content-Type' : 'application/json'
+ 				},
+ 				data : JSON.stringify(obj),
+ 				success : function(result){
+ 					console.log(result);
+ 					if(result == 1){
+ 						alert('답글 입력 성공');
+ 						getAllReplies(qBoardCommentId);
+ 					} // end if
+ 				} // end success
+ 			}) // end ajax
+         }) // end 대댓글 등록 
+         
+         // 대댓글 수정
+         $(document).on('click', '.btnReplyUpdate', function(){
+        	 console.log(this);
+        	 var commentItem = $(this).closest('.comment_item');
+        	 var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
+        	 console.log("아좀 제발" + qBoardCommentId.val());
+        	 var qBoardReplyId = $(this).prevAll('.qBoardReplyId').val();
+        	 var qBoardReplyContent = $(this).prevAll('.qBoardReplyContent').val();
+        	 console.log("선택된 답글 번호 : " + qBoardReplyId + ", 답글 내용 : " + qBoardReplyContent);
         	 
-         }) // end 대댓글 등록
+        	 // ajax
+        	 $.ajax({
+        		 type : 'PUT',
+        		 url : 'replies/' + qBoardReplyId,
+        		 headers : {
+        			 'Content-Type' : 'application/json'
+        		 },
+        		 data : qBoardReplyContent,
+        		 success : function(result){
+        			 console.log(result);
+        			 if(result == 1){
+        				 alert('답글 수정 성공!');
+        				 getAllReplies(qBoardCommentId);
+        			 }
+        		 } // end success
+        	 }) // end ajax
+         }) // end 대댓글 수정
+         
+         // 대댓글 삭제
+         $(document).on('click', '.btnReplyDelete', function(){
+        	 console.log(this);
+        	 var commentItem = $(this).closest('.comment_item');
+			 var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
+			 var qBoardReplyId = $(this).prevAll('.qBoardReplyId').val();
+			 console.log("선택된 댓글 번호 : " + qBoardReplyId);
+			 
+			 // ajax
+			 $.ajax({
+				 type : 'DELETE',
+				 url : 'replies/' + qBoardReplyId,
+				 headers : {
+					 'Content-Type' : qBoardReplyId,
+				 },
+				 success : function(result) {
+					 console.log(result);
+					 if(result == 1){
+						 alert('답글 삭제 성공!');
+						 getAllReplies(qBoardCommentId);
+					 }
+				 } // end success
+			 }) // end ajax
+         }); // end 대댓글 삭제
       }); // end document
    </script>
 	

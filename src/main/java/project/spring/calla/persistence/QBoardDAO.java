@@ -18,4 +18,5 @@ public interface QBoardDAO {
 	List<QBoardVO> selectByTitleOrContent(String keyword); // 게시글 제목 또는 내용으로 검색
 	int updateCommentCnt(int amount, int qBoardId);
 	List<QBoardVO> selectAllByMemberNickname(String menberNickname);
+	int updateViews(int views, int qBoardId);
 }
