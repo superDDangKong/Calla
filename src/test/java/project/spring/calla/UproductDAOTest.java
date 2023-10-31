@@ -22,9 +22,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import oracle.jdbc.driver.OracleDriver;
-import project.spring.calla.domain.UproductVO;
-import project.spring.calla.persistence.UproductDAO;
-import project.spring.calla.service.UproductService;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.persistence.UProductDAO;
+import project.spring.calla.service.UProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -35,8 +35,8 @@ public class UproductDAOTest {
 	private static final Logger logger = LoggerFactory.getLogger(UproductDAOTest.class);
 
 	@Autowired
-	private UproductDAO dao;
-	UproductService service;
+	private UProductDAO dao;
+	UProductService service;
 	
 	@Transactional
 	@Test
@@ -93,7 +93,7 @@ public class UproductDAOTest {
 
 	
 	private void testInsert() {
-		UproductVO vo = new UproductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0);
+		UProductVO vo = new UProductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0);
 
 		
 		int result = dao.insert(vo);
@@ -112,17 +112,3 @@ public class UproductDAOTest {
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

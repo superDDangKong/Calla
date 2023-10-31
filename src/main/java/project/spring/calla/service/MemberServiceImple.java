@@ -18,7 +18,7 @@ import project.spring.calla.persistence.ProductDAO;
 import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
 import project.spring.calla.persistence.UProductCommentDAO;
-import project.spring.calla.persistence.UproductDAO;
+import project.spring.calla.persistence.UProductDAO;
 
 
 @Service
@@ -49,7 +49,7 @@ public class MemberServiceImple implements MemberService {
 	private QBoardDAO qBoardDAO;
 	
 	@Autowired
-	private UproductDAO uProductDAO;
+	private UProductDAO uProductDAO;
 	
 	@Autowired
 	private ProductDAO productDAO;
@@ -57,7 +57,7 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int create(MemberVO vo) { 
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString());
 		return MemberDAO.insert(vo); 
 		
 	}
@@ -71,7 +71,7 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int checkNick(String memberNickname) { // 
-		logger.info("checkNick() í˜¸ì¶œ : memberNickname = " + memberNickname);
+		logger.info("checkNick() ï¿½ìƒ‡ç•°ï¿½ : memberNickname = " + memberNickname);
 		return MemberDAO.checkNickname(memberNickname);
 	}
 	  
@@ -79,34 +79,34 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public MemberVO read(String memberId) {
-		logger.info("read(memberId) È£Ãâ memberId : " + memberId);
+		logger.info("read(memberId) í˜¸ì¶œ memberId : " + memberId);
 		return MemberDAO.select(memberId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() È£Ãâ vo : " + vo.toString());
+		logger.info("update() í˜¸ì¶œ vo : " + vo.toString());
 		return MemberDAO.update(vo);
 	}
 
 	@Override
 	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() È£Ãâ memberName : " + memberName);
-		logger.info("searchId() È£Ãâ memberEmail : " + memberEmail);
+		logger.info("searchId() í˜¸ì¶œ memberName : " + memberName);
+		logger.info("searchId() í˜¸ì¶œ memberEmail : " + memberEmail);
 		return MemberDAO.searchId(memberName, memberEmail);
 	}
 
 	@Override
 	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() È£Ãâ memberId : " + memberId);
-		logger.info("searchPw() È£Ãâ memberPhone : " + memberPhone);
+		logger.info("searchPw() í˜¸ì¶œ memberId : " + memberId);
+		logger.info("searchPw() í˜¸ì¶œ memberPhone : " + memberPhone);
 		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readComments(String memberNickname) {
-		logger.info("readComments() È£Ãâ memberNickname : " + memberNickname);
+		logger.info("readComments() í˜¸ì¶œ memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
 		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
@@ -118,7 +118,7 @@ public class MemberServiceImple implements MemberService {
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readBoards(String memberNickname) {
-		logger.info("readBoards() È£Ãâ memberNickname : " + memberNickname);
+		logger.info("readBoards() í˜¸ì¶œ memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(memberNickname));
 		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
@@ -128,7 +128,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int updatePw(String memberId, String memberPw) {
-		logger.info("update() í˜¸ì¶œ memberPw : " + memberPw);
+		logger.info("update() ï¿½ìƒ‡ç•°ï¿½ memberPw : " + memberPw);
 		return MemberDAO.updatePw(memberId, memberPw);
 	}
 

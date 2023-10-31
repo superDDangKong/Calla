@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.domain.UproductCommentVO;
+import project.spring.calla.domain.UProductCommentVO;
 
 @Repository
 public class UProductCommentDAOImple implements UProductCommentDAO{
@@ -26,13 +26,13 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public int insert(UproductCommentVO vo) {
+	public int insert(UProductCommentVO vo) {
 		logger.info("insert() 호출 : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
-	public List<UproductCommentVO> select(int uProductId) {
+	public List<UProductCommentVO> select(int uProductId) {
 		logger.info("select() 호출 : uProductId = " + uProductId);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_board_id", uProductId);
 	}
@@ -54,7 +54,7 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 	}
 	
 	@Override
-	public List<UproductCommentVO> select(String memberNickname) {
+	public List<UProductCommentVO> select(String memberNickname) {
 		logger.info("select(memberNickname) 호출 memberNickname = " + memberNickname);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
 	}

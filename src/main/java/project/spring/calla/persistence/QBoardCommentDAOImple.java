@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.domain.UproductCommentVO;
+import project.spring.calla.domain.UProductCommentVO;
 
 @Repository
 public class QBoardCommentDAOImple implements QBoardCommentDAO{

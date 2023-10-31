@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.domain.UproductCommentVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.service.FBoardCommentService;
-import project.spring.calla.service.UproductCommentService;
+import project.spring.calla.service.UProductCommentService;
 
 @RestController
 @RequestMapping(value="/uProduct/uproductcomments")
@@ -31,10 +31,10 @@ public class UProductCommentRESTController {
 				= LoggerFactory.getLogger(UProductCommentRESTController.class);
 
 	@Autowired
-	private UproductCommentService uProductCommentService;
+	private UProductCommentService uProductCommentService;
 
 	@PostMapping // POST : 댓글 입력
-	public ResponseEntity<Integer> createComment(@RequestBody UproductCommentVO vo) {
+	public ResponseEntity<Integer> createComment(@RequestBody UProductCommentVO vo) {
 		// @RequestBody
 		// - 클라이언트에서 전송받은 json 데이터를
 		// 자바 객체로 변환해주는 annotation
@@ -54,12 +54,12 @@ public class UProductCommentRESTController {
 	}
 
 	@GetMapping("/all/{uProductId}") // GET : 댓글 선택(all)
-	public ResponseEntity<List<UproductCommentVO>> readComments(@PathVariable("uProductId") int uProductId, HttpSession session) {
+	public ResponseEntity<List<UProductCommentVO>> readComments(@PathVariable("uProductId") int uProductId, HttpSession session) {
 		// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
 		logger.info("readComments() 호출 : uProductId = " + uProductId);
 
-		List<UproductCommentVO> list = uProductCommentService.read(uProductId, session);
-		return new ResponseEntity<List<UproductCommentVO>>(list, HttpStatus.OK);
+		List<UProductCommentVO> list = uProductCommentService.read(uProductId, session);
+		return new ResponseEntity<List<UProductCommentVO>>(list, HttpStatus.OK);
 	}
 	
 	

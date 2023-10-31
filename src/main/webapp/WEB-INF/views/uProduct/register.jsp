@@ -18,7 +18,7 @@
 			<input type="text" name="memberNickname" value="${sessionScope.memberNickname }" readonly="readonly">
 		</div>
 		<div>
-			<p>상품 이름</p>
+			<p>상품 제목</p>
 			<input type="text" name="uProductName" placeholder="이름 입력" required>
 		</div>
 		<div>
