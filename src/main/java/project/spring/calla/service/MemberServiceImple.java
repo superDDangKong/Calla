@@ -19,7 +19,7 @@ import project.spring.calla.persistence.ProductDAO;
 import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
 import project.spring.calla.persistence.UProductCommentDAO;
-import project.spring.calla.persistence.UproductDAO;
+import project.spring.calla.persistence.UProductDAO;
 
 
 @Service
@@ -50,7 +50,7 @@ public class MemberServiceImple implements MemberService {
 	private QBoardDAO qBoardDAO;
 	
 	@Autowired
-	private UproductDAO uProductDAO;
+	private UProductDAO uProductDAO;
 	
 	@Autowired
 	private ProductDAO productDAO;
@@ -58,7 +58,7 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int create(MemberVO vo) { 
-		logger.info("create() ȣ�� : vo = " + vo.toString());
+		logger.info("create() 호출 : vo = " + vo.toString());
 		return MemberDAO.insert(vo); 
 		
 	}
@@ -72,7 +72,7 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public int checkNick(String memberNickname) { // 
-		logger.info("checkNick() 호출 : memberNickname = " + memberNickname);
+		logger.info("checkNick() �샇異� : memberNickname = " + memberNickname);
 		return MemberDAO.checkNickname(memberNickname);
 	}
 	  
@@ -80,34 +80,34 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public MemberVO read(String memberId) {
-		logger.info("read(memberId) ȣ�� memberId : " + memberId);
+		logger.info("read(memberId) 호출 memberId : " + memberId);
 		return MemberDAO.select(memberId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() ȣ�� vo : " + vo.toString());
+		logger.info("update() 호출 vo : " + vo.toString());
 		return MemberDAO.update(vo);
 	}
 
 	@Override
 	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() ȣ�� memberName : " + memberName);
-		logger.info("searchId() ȣ�� memberEmail : " + memberEmail);
+		logger.info("searchId() 호출 memberName : " + memberName);
+		logger.info("searchId() 호출 memberEmail : " + memberEmail);
 		return MemberDAO.searchId(memberName, memberEmail);
 	}
 
 	@Override
 	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() ȣ�� memberId : " + memberId);
-		logger.info("searchPw() ȣ�� memberPhone : " + memberPhone);
+		logger.info("searchPw() 호출 memberId : " + memberId);
+		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
 		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readComments(String memberNickname) {
-		logger.info("readComments() ȣ�� memberNickname : " + memberNickname);
+		logger.info("readComments() 호출 memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
 		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
@@ -119,7 +119,7 @@ public class MemberServiceImple implements MemberService {
 	@Transactional(value = "transactionManager")
 	@Override
 	public Map<String, Object> readBoards(String memberNickname) {
-		logger.info("readBoards() ȣ�� memberNickname : " + memberNickname);
+		logger.info("readBoards() 호출 memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
 		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(memberNickname));
 		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
@@ -129,7 +129,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int updatePw(String memberId, String memberPw) {
-		logger.info("update() 호출 memberPw : " + memberPw);
+		logger.info("update() �샇異� memberPw : " + memberPw);
 		return MemberDAO.updatePw(memberId, memberPw);
 	}
 	

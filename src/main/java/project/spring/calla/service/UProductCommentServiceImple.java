@@ -10,28 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import project.spring.calla.domain.UproductCommentVO;
-import project.spring.calla.domain.UproductVO;
+import project.spring.calla.domain.UProductCommentVO;
+import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.UProductCommentDAO;
-import project.spring.calla.persistence.UproductDAO;
+import project.spring.calla.persistence.UProductDAO;
 
 @Service
-public class UproductCommentServiceImple implements UproductCommentService {
+public class UProductCommentServiceImple implements UProductCommentService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UproductCommentServiceImple.class);
+	private static final Logger logger = LoggerFactory.getLogger(UProductCommentServiceImple.class);
 
 	@Autowired
 	private UProductCommentDAO uProductCommentDAO;
 
 	@Autowired
-	private UproductDAO uProductDAO;
+	private UProductDAO uProductDAO;
 
 	@Transactional(value = "transactionManager")
 	@Override
-	public int create(UproductCommentVO vo) throws Exception {
+	public int create(UProductCommentVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = uProductCommentDAO.insert(vo);
 		logger.info(resultInsert + " 행 댓글 입력 성공");
@@ -42,15 +42,15 @@ public class UproductCommentServiceImple implements UproductCommentService {
 
 	@Transactional(value = "transactionManager")
 	@Override
-	public List<UproductCommentVO> read(int uProductId, HttpSession session) {
+	public List<UProductCommentVO> read(int uProductId, HttpSession session) {
 		logger.info("read() 호출 : uProductId = " + uProductId);
-		UproductVO product = uProductDAO.select(uProductId);
+		UProductVO product = uProductDAO.select(uProductId);
 
 		String memberNickname = (String) session.getAttribute("memberNickname");
 
-		List<UproductCommentVO> items = uProductCommentDAO.select(uProductId);
+		List<UProductCommentVO> items = uProductCommentDAO.select(uProductId);
 
-		for (UproductCommentVO vo : items) {
+		for (UProductCommentVO vo : items) {
 			if(memberNickname == null) { // 로그인 안된 상태
 				vo.setuProductCommentContent("비밀 댓글입니다");
 			} else { 

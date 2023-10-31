@@ -3,7 +3,7 @@ package project.spring.calla.domain;
 import java.util.Date;
 import java.util.List;
 
-public class UproductVO {
+public class UProductVO {
 	private int uProductId;
 	private String uProductName; // 등록
 	private String uProductPrice; // 등록
@@ -18,10 +18,10 @@ public class UproductVO {
 	private int uProductCommentCount;
 	
 	
-	public UproductVO() {}
+	public UProductVO() {}
 
 
-	public UproductVO(int uProductId, String uProductName, String uProductPrice, int uProductViews, int uProductLikes,
+	public UProductVO(int uProductId, String uProductName, String uProductPrice, int uProductViews, int uProductLikes,
 			Date uProductCreatedDate, String uProductCategori, String memberAddress, String uProductContent,
 			String memberNickname, String uProductImagePath, int uProductCommentCount) {
 		super();

@@ -2,7 +2,7 @@ package project.spring.calla.domain;
 
 import java.util.Date;
 
-public class UproductCommentVO {
+public class UProductCommentVO {
 	private int uProductCommentId;
 	private int uProductId;
 	private String memberNickname;
@@ -11,10 +11,10 @@ public class UproductCommentVO {
 	private String uProductSecretComment;
 	
 
-	public UproductCommentVO() {}
+	public UProductCommentVO() {}
 
 
-	public UproductCommentVO(int uProductCommentId, int uProductId, String memberNickname,
+	public UProductCommentVO(int uProductCommentId, int uProductId, String memberNickname,
 			String uProductCommentContent, Date uProductCommentCreatedDate, String uProductSecretComment) {
 		super();
 		this.uProductCommentId = uProductCommentId;

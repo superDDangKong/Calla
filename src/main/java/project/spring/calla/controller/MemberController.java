@@ -24,7 +24,7 @@ import project.spring.calla.domain.FBoardCommentVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.domain.UproductCommentVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 

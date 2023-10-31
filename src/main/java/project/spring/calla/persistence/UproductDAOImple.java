@@ -12,41 +12,41 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
-import project.spring.calla.domain.UproductVO;
+import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
-public class UproductDAOImple implements UproductDAO {
+public class UProductDAOImple implements UProductDAO {
 	
 	private static final Logger logger=
-			LoggerFactory.getLogger(UproductDAOImple.class);
+			LoggerFactory.getLogger(UProductDAOImple.class);
 	
 	private static final String NAMESPACE =
-			"project.spring.calla.UboardMapper";
+			"project.spring.calla.UProductMapper";
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@Override
-	public int insert(UproductVO vo) {
+	public int insert(UProductVO vo) {
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	} // end insert()
 
 	@Override
-	public List<UproductVO> select() {
+	public List<UProductVO> select() {
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	} // end select()
 
 	@Override
-	public UproductVO select(int uProductId) {
+	public UProductVO select(int uProductId) {
 		logger.info("select() 호출 : uProductId = " + uProductId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", uProductId);
 	}
 
 	@Override
-	public int update(UproductVO vo) {
+	public int update(UProductVO vo) {
 		logger.info("update() 호출 : vo = " + vo.toString());
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
@@ -58,7 +58,7 @@ public class UproductDAOImple implements UproductDAO {
 	}
 
 	@Override
-	public List<UproductVO> select(PageCriteria criteria) {
+	public List<UProductVO> select(PageCriteria criteria) {
 		logger.info("select() 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
@@ -72,13 +72,13 @@ public class UproductDAOImple implements UproductDAO {
 	}
 
 	@Override
-	public List<UproductVO> select(String uProductName) {
+	public List<UProductVO> select(String uProductName) {
 		logger.info("select() 호출 : uProductName = " + uProductName);
 		return sqlSession.selectList(NAMESPACE + ".select_by_product_name", "%" + uProductName);
 	}
 
 	@Override
-	public List<UproductVO> selectByName(String keyword) {
+	public List<UProductVO> selectByName(String keyword) {
 		logger.info("selectByName() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_by_name", "%" + keyword + "%");
 	}
@@ -93,13 +93,13 @@ public class UproductDAOImple implements UproductDAO {
 	}
 
 	@Override
-	public List<UproductVO> selectAllByMemberNickname(String memberNickname) {
+	public List<UProductVO> selectAllByMemberNickname(String memberNickname) {
 		logger.info("selectAllByMemberNickname() 호출 memberNickname = " + memberNickname);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
 	}
 
 	@Override
-	public List<UproductVO> selectByCategoriorName(PageCriteria criteria, String keyword) {
+	public List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword) {
 		logger.info("selectByTitleOrContent() 호출");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
@@ -117,7 +117,7 @@ public class UproductDAOImple implements UproductDAO {
 	}
 
 	@Override
-	public List<UproductVO> selectByUproductCreatedDate(PageCriteria criteria) {
+	public List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria) {
 		logger.info("selectByUproductCreatedDate() 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
@@ -128,6 +128,24 @@ public class UproductDAOImple implements UproductDAO {
 	public int getTotalCountsByUproductCreatedDate() {
 		logger.info("getTotalCountsByUproductCreatedDate()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_created_date");
+	}
+
+	@Override
+	public List<UProductVO> selectByAddress(PageCriteria criteria, String keyword) {
+		logger.info("selectByAddress() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_u_product_Address", args);
+	}
+
+	@Override
+	public int getTotalCountsByAddress(String keyword) {
+		logger.info("getTotalTitleContent()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_Address", "%" + keyword + "%");
 	}
 
 	
