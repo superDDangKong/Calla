@@ -163,7 +163,6 @@ public class MemberRESTController {
 	
 	@PutMapping("/updateLevel/{memberId}") 
 	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {
-		UserSession userSession = (UserSession) session.getAttribute("user_session");
 		logger.info("updateMemberLevel() »£√‚");
 		int amount = 0;
 		if(Integer.parseInt(memberLevel) == 1) {

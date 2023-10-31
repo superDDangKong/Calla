@@ -4,6 +4,7 @@ package project.spring.calla.controller;
 	
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
@@ -232,6 +230,7 @@ public class MemberController {
 	public String deleteGET(String memberId) {
 		memberService.delete(memberId);
 		return "redirect:/";
+	}
 	
 	@GetMapping("/info")
 	public void InfoGET(Model model, HttpServletRequest request) {
