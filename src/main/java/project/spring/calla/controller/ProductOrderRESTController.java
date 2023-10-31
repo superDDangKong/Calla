@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.service.ProductOrderService;
+import project.spring.calla.service.ProductService;
 
 @RestController
 @RequestMapping(value="/product/orders")
@@ -28,6 +29,9 @@ public class ProductOrderRESTController {
 	
 	@Autowired
 	private ProductOrderService productOrderService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@PostMapping
 	public ResponseEntity<Integer> createProductOrder(@RequestBody ProductOrderVO vo){

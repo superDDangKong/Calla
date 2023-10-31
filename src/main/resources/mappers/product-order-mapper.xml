@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert">
 		insert into ${product_order}
 		(${productOrderId}, ${memberNickname}, ${productId}, ${productAmount}, ${productPrice})
-		values (#{productOrderId}, #{productNickname}, #{productId}, #{productAmount}, #{productPrice})
+		values (#{productOrderId}, #{memberNickname}, #{productId}, #{productAmount}, #{productPrice})
 	</insert>
 	
 	<select id="select_all" resultType="ProductOrderVO">

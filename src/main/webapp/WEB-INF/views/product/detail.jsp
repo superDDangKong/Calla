@@ -38,6 +38,7 @@ li {
 	<div>
 		<p>작성일 : ${vo.productCreatedDate }</p>
 		<p>카테고리 : ${vo.productCategori }</p>
+		<p>가격 : ${vo.productPrice }
 	</div>
 	<div>
 		<textarea rows="20" cols="120" readonly>${vo.productContent }</textarea>
@@ -51,6 +52,7 @@ li {
 	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
 	<c:set var="memberLevel" value="${memberLevel }" />
 	<c:set var="voMemberLevel" value="${vo.memberLevel }" />
+	<c:set var="productOrderId" value="${productOrderId }" />
 	
 	<c:if test="${memberLevel > 1}">
 	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
@@ -63,26 +65,26 @@ li {
 	<div>
 		<input type="hidden" id="memberNickname" value=${memberNickname }>
 		<c:if test="${productLikeId == 0 }">
-		<button id="likeBtn">좋아요</button>		
+			<button id="likeBtn">좋아요</button>		
 		</c:if>
 		<c:if test="${productLikeId != 0 }">
-		<button id="likeBtn">좋아요취소</button>		
+			<button id="likeBtn">좋아요취소</button>		
 		</c:if>
 		<span id="likeCnt">${vo.productLikes }</span> 
 		<input type="hidden" id="productLikeId" name="productLikeId" value="${productLikeId }">
 	</div>
 	</c:if>
-	
-	<c:if test="${memberNickname != null }">
-		<div>
-			<c:if test="">
-				<button id="orderBtn">장바구니 넣기</button>
-			</c:if>
-			<c:if test="">
-				<button id="orderBtn">장바구니 삭제</button>
-			</c:if>
-		</div>
+	<c:if test="${memberNickname != null}">
+	<div>
+		<c:if test="${productOrderId == null }">
+			<button id="orderBtn">장바구니 넣기</button>		
+		</c:if>
+		<c:if test="${productOrderId != null }">
+			<button id="orderBtn">장바구니 삭제</button>				
+		</c:if>
+	</div>
 	</c:if>
+
 	<c:if test="${memberNickname == null }">
 		<br> 구매하실려면 로그인해 주세요.
 	</c:if>
@@ -490,12 +492,13 @@ li {
 		        var currentCount = parseInt($('#likeCnt').text());
 		        $('#likeCnt').text(currentCount + change);
 		    }
-		});
+		}); // end document 
 
-		$(document).ready(function{
-			var orderBtn = $('#oderBtn');
+		$(document).ready(function(){
+			var orderBtn = $('#orderBtn');
 			
 			orderBtn.click(function(){
+				console.log('클릭');
 				var productId = $('#productId').val();
 		        var memberNickname = $('#memberNickname').val();
 			
