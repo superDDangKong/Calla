@@ -2,15 +2,15 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.spring.calla.domain.FBoardReplyVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.service.MemberService;
 
@@ -77,8 +76,8 @@ public class MemberRESTController {
 //		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
 	
-	@PutMapping("/updatePw/{memberId}") // PUT : 댓글 수정
-	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args) {
+	@PutMapping("/updatePw/{memberId}") // 비밀번호 수정
+	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args, HttpSession session) {
 		logger.info("updateMemberPw() 호출");
 		logger.info("memberId = " + memberId);
 		logger.info(args.get("currentPw").toString());
@@ -91,6 +90,7 @@ public class MemberRESTController {
 		if (memberPw.equals(args.get("currentPw"))) {
 			logger.info("pw 일치");
 			result = memberService.updatePw(memberId, newPw);
+			
 		} else {
 			logger.info("pw 불일치");
 			
@@ -100,12 +100,14 @@ public class MemberRESTController {
 	}// end updatePw
 	
 	@PutMapping("/updateNickname/{memberId}") // PUT : 댓글 수정
-	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname) {
+	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname, HttpSession session) {
 		logger.info("updateMemberNickname() 호출");
 		logger.info("newNickname = " + newNickname);
 		
 		int result = memberService.updateNickname(memberId, newNickname);
-			
+			if (result==1) {
+				session.setAttribute("memberNickname", newNickname);
+			}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateNickname
 	
@@ -149,7 +151,7 @@ public class MemberRESTController {
 			
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateAddress
-//	
+	
 //	@GetMapping("/updateLevel/{memberId}") // GET : 댓글 선택(all)
 //	public ResponseEntity<Integer> readReplies(@PathVariable("memberId") String memberId) {
 //		// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
@@ -160,7 +162,8 @@ public class MemberRESTController {
 //	}
 	
 	@PutMapping("/updateLevel/{memberId}") 
-	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel) {
+	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {
+		UserSession userSession = (UserSession) session.getAttribute("user_session");
 		logger.info("updateMemberLevel() 호출");
 		int amount = 0;
 		if(Integer.parseInt(memberLevel) == 1) {

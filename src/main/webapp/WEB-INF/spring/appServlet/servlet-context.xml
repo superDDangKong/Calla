@@ -49,11 +49,12 @@
 			<mapping path="/fBoard/update"/> <!-- interceptor할 url 경로 -->
 			<mapping path="/fBoard/delete"/> <!-- interceptor할 url 경로 -->
 			<mapping path="/fBoard/comments/*"/> <!-- interceptor할 url 경로 -->
+			<mapping path="/member/boards"/> <!-- interceptor할 url 경로 -->
+			<mapping path="/member/comments"/> <!-- interceptor할 url 경로 -->
+			<mapping path="/member/likes"/> <!-- interceptor할 url 경로 -->
+			<mapping path="/member/manageMember"/> <!-- interceptor할 url 경로 -->
 			<mapping path="/member/myPage"/> <!-- interceptor할 url 경로 -->
 			<mapping path="/member/update"/> <!-- interceptor할 url 경로 -->
-			<mapping path="/member/comments"/> <!-- interceptor할 url 경로 -->
-			<mapping path="/member/boards"/> <!-- interceptor할 url 경로 -->
-			<mapping path="/member/likes"/> <!-- interceptor할 url 경로 -->
 			<beans:ref bean="LoginSessionInterceptor"/> <!-- 참조할 bean 객체 id -->
 		</interceptor>
 	</interceptors>

@@ -132,6 +132,7 @@ table, th, td {
 	</tbody>
 </table>
 
+<button id="btnDeleteMember"><a href="delete?memberId=${memberId }">회원 탈퇴</a></button>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#newPw').on('keyup', function() {

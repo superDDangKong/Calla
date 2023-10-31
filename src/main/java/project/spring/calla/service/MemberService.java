@@ -23,4 +23,5 @@ public interface MemberService {
 	int updateInterest(String memberId, String memberInterest);
 	int updateAddress(String memberId, String memberAddress);
 	int updateLevel(String memberId, int amount);
+	int delete(String memberId);
 }

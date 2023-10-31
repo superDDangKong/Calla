@@ -228,4 +228,10 @@ public class MemberController {
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
 	} // end manageMember
+	
+	@GetMapping("/delete")
+	public String deleteGET(String memberId) {
+		memberService.delete(memberId);
+		return "redirect:/";
+	}
 }

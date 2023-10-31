@@ -154,5 +154,11 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.update(NAMESPACE + ".updateLevel", args);
 	}
 
+	@Override
+	public int delete(String memberId) {
+		logger.info("delete()");
+		return sqlSession.delete(NAMESPACE + ".delete", memberId);
+	}
+
 	
 }
