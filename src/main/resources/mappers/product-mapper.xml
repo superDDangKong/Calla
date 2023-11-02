@@ -91,4 +91,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productId} = #{productId}
 	</update>
 	
+	<select id="select_product_with_amount" resultType="ProductVO">
+		SELECT p.*, o.product_amount 
+		FROM product p 
+		JOIN product_order_list o ON p.product_id = o.product_id
+		WHERE o.member_id = #{memberId}
+	</select>
+	
 </mapper>

@@ -115,6 +115,12 @@ public class ProductDAOImple implements ProductDAO {
 		
 	}
 
+	@Override
+	public List<ProductVO> selectProductWithAmount(String memberId) {
+	    return sqlSession.selectList(NAMESPACE + ".select_product_with_amount", memberId);
+	}
+
+
 	
 
 }

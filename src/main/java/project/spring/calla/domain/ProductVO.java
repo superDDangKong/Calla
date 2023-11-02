@@ -15,6 +15,7 @@ public class ProductVO {
 	private int productCommentCount; // 상품 댓글 갯수
 	private String memberNickname; // 회원 닉네임
 	private int memberLevel; // 회원 등급
+	private int productAmount;
 	
 	
 	public ProductVO() {}
@@ -156,7 +157,14 @@ public class ProductVO {
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
 	}
-
+	
+	public int getProductAmount() {
+		return productAmount;
+	}
+	
+	public void setProductAmount(int productAmount) {
+		this.productAmount = productAmount;
+	}
 
 	@Override
 	public String toString() {

@@ -130,12 +130,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductId" value="u_product_id"/>
 		<property name="memberId" value="member_id"/>
 		
-		<property name="product_order" value="product_order"/>
-		<property name="productOrderId" value="product_order_id"/>
-		<property name="memberNickname" value="member_nickname"/>
+		<property name="product_order_list" value="product_order_list"/>
+		<property name="productOrderListId" value="product_order_list_id"/>
+		<property name="memberId" value="member_id"/>
 		<property name="productId" value="product_id"/>
 		<property name="productAmount" value="product_amount"/>
-		<property name="productPrice" value="product_price"/>
+		
+		
 	</properties>
 	
 
