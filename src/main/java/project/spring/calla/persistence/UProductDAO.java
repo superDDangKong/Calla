@@ -22,13 +22,15 @@ public interface UProductDAO {
 	int updateUproductCommentCount(int amount, int uProductId);
 	List<UProductVO> selectAllByMemberNickname(String menberNickname);
 	
-	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword);
+	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // 상품 이름또는 카테고리 검색
 	int getTotalCountsByCategoriorName(String keyword);
 	
-	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria);
+	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria); // 신상품 검색
 	int getTotalCountsByUproductCreatedDate();
 	
-	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword);
+	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword); // 상품 주소 검색
 	int getTotalCountsByAddress(String keyword);
+	
+	List<UProductVO> recommendCategori(String uProductCategori, int uProductId);
 	
 }

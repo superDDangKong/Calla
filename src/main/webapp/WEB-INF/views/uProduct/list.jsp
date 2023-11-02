@@ -72,9 +72,8 @@ li {
 							href="/calla/uProduct/list?name=searchName&keyword=장난감">장난감</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="/calla/uProduct/list?name=searchName&keyword=야채">야채 </a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">의류/악세서리</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">목욕/미용</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">장난감</a></li>
+						<li class="nav-item"><a class="nav-link" 
+							href="/calla/uProduct/list?name=searchName&keyword=의류">의류</a></li>
 						<li class="nav-item"><a class="nav-link" 
 							href="/calla/uProduct/map">매물지도</a></li>
 

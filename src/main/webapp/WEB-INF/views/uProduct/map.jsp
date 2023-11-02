@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +22,9 @@ li {
 	text-align: center;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.7.1.js" 
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous">
 </script>
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -95,37 +96,35 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 				<c:if test="${SessionScope.id==null}">
 					<!-- Button trigger modal -->
 					<c:if test="${empty memberNickname }">
-							<a href="/calla/member/login">로그인</a>
-						</c:if>
-						<c:if test="${not empty memberNickname }">
-							<a href="/calla/member/login">로그아웃</a>&nbsp;&nbsp;
+						<a href="/calla/member/login">로그인</a>
+					</c:if>
+					<c:if test="${not empty memberNickname }">
+						<a href="/calla/member/login">로그아웃</a>&nbsp;&nbsp;
 							<a href="/calla/uProduct/register">물건등록</a>
-						</c:if>
+					</c:if>
 
 				</c:if>
 				<!-- 		</form> -->
 			</div>
 		</div>
 	</nav>
-	
+
 	<form action="map" method="GET">
 		<select id="Address" name="Address">
 			<option value="searchAddress" selected>주소</option>
-		</select>
-			
-			 <input type="text" name="keyword" value="${keyword }"> <input
+		</select> <input type="text" name="keyword" value="${keyword }"> <input
 			type="submit" value="검색">
-			
+
 	</form>
-	
-	
-	<section class="py-5" style="width:50%;height:750px;float:left;">
+
+
+	<section class="py-5" style="width: 50%; height: 750px; float: left;">
 		<div class="container px-4 px-lg-5 mt-5">
 			<div
 				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 				<c:forEach var="vo" items="${list }">
-
+					<input type="hidden" name="memberAddress" value="${vo.memberAddress }">
 					<div class="col mb-5">
 						<div class="card h-100">
 							<!-- Product image-->
@@ -170,7 +169,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 
 			</div>
 		</div>
-		
+
 		<ul>
 			<c:if test="${pageMaker.hasPrev }">
 				<li><a href="map?page=${pageMaker.startPageNo - 1 }">이전</a></li>
@@ -178,78 +177,84 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 
 			<c:forEach begin="${pageMaker.startPageNo }"
 				end="${pageMaker.endPageNo }" var="num">
-				<li><a href="map?page=${num }&Address=${Address}&keyword=${keyword}">${num }</a></li>
+				<li><a
+					href="map?page=${num }&Address=${Address}&keyword=${keyword}">${num }</a></li>
 			</c:forEach>
-			
+
 			<c:if test="${pageMaker.hasNext }">
 				<li><a href="map?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 			</c:if>
 		</ul>
 
 	</section>
-	
-	
-		
-<div id="map" style="width:50%;height:750px;float:right;"></div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d1bf5eface4b1d2d29fa03fe32944641&libraries=services"></script>
-<script>
+
+
+	<div id="map" style="width: 50%; height: 750px; float: right;"></div>
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d1bf5eface4b1d2d29fa03fe32944641&libraries=services"></script>
+	<script>
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        level: 5 // 지도의 확대 레벨
     };  
 
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-// 장소 검색 객체를 생성합니다
-var ps = new kakao.maps.services.Places();
-var keyword = $('#keyword').val();
+// 주소-좌표 변환 객체를 생성합니다
 
-// 키워드로 장소를 검색합니다
-ps.keywordSearch(this.keyword, placesSearchCB); 
 
-// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-function placesSearchCB (data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        var bounds = new kakao.maps.LatLngBounds();
+var geocoder = new kakao.maps.services.Geocoder();
 
-        for (var i=0; i<data.length; i++) {
-            displayMarker(data[i]);    
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }       
+var memberAddresses = [];
+var places = [];
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-    } 
+<c:forEach var="vo" items="${list}">
+  var address = "${vo.memberAddress}";
+  var place = "${vo.uProductName}"; 
+  places.push(place); 
+  memberAddresses.push(address);
+</c:forEach>
+
+
+console.log(memberAddresses);
+
+
+for (var i = 0; i < memberAddresses.length; i++) {
+    geocoder.addressSearch(memberAddresses[i], createMarkerCallback(i)); // {vo.memberAddress}에 담겨있는 주소로 search
 }
 
-// 지도에 마커를 표시하는 함수입니다
-function displayMarker(place) {
-    
-    // 마커를 생성하고 지도에 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(place.y, place.x) 
-    });
+function createMarkerCallback(index) { // 검색시 
+    return function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  //결과값으로 위치를 마커로 표시합니다 
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords,
+            });
 
-    // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function() {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-        infowindow.open(map, marker);
-        
-        
-        
-    });
+            var infowindow = new kakao.maps.InfoWindow({
+                content: places[index], // infowwindow 이름
+            });
+
+            kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭하면 정보창 열기 
+                infowindow.open(map, marker);
+            });
+
+            map.setCenter(coords);  // 마커를 지도 중심으로 설정
+        }
+    };
 }
+
+
+
 </script>
 </body>
 </html>

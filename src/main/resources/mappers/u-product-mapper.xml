@@ -7,116 +7,178 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${u_product}
-		(${memberNickname}, ${uProductName}, ${uProductPrice}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress})
-		values (#{memberNickname}, #{uProductName}, #{uProductPrice}, #{uProductCategori}, #{uProductImagePath}, #{uProductContent}, #{memberAddress})
+		(${memberNickname},
+		${uProductName}, ${uProductPrice}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress})
+		values
+		(#{memberNickname}, #{uProductName}, #{uProductPrice},
+		#{uProductCategori}, #{uProductImagePath}, #{uProductContent},
+		#{memberAddress})
 	</insert>
 	<select id="select_all" resultType="UproductVO">
 		select * from ${u_product}
 		order by ${uProductId} desc
 	</select>
-	
+
 	<select id="select_by_product_id" resultType="UproductVO">
-		select * from ${u_product} where ${uProductId} = #{uProductId}
+		select * from
+		${u_product} where ${uProductId} = #{uProductId}
 	</select>
-	
+
 	<select id="select_by_u_product_name" resultType="UproductVO">
-		select * from ${u_product} where ${uProductName} = #{uProductName}
+		select * from
+		${u_product} where ${uProductName} = #{uProductName}
 	</select>
-	
+
 	<update id="update">
 		update ${u_product}
-		set ${uProductName} = #{uProductName}, ${uProductPrice} = #{uProductPrice}, ${uProductCategori} = #{uProductCategori}, ${uProductImagePath} = #{uProductImagePath}, ${uProductContent} = #{uProductContent}
-		where ${uProductId} = #{uProductId} 
+		set ${uProductName} =
+		#{uProductName}, ${uProductPrice} = #{uProductPrice},
+		${uProductCategori} = #{uProductCategori}, ${uProductImagePath} =
+		#{uProductImagePath}, ${uProductContent} = #{uProductContent}
+		where
+		${uProductId} = #{uProductId}
 	</update>
 	<delete id="delete">
 		delete from ${u_product}
-		where ${uProductId} = #{uProductId}
+		where ${uProductId} =
+		#{uProductId}
 	</delete>
-	
+
 	<select id="paging" resultType="UproductVO">
-		select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
+		select ${uProductId},
+		${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes},
+		${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath},
+		${uProductContent}, ${memberAddress}, ${memberNickname},
+		${uProductCommentCount}
 		from(
-			select rownum rn, a.* from(
-				select * from ${u_product} order by ${uProductId} desc
-			)a
-		) where rn between #{start} and #{end}
+		select rownum rn, a.* from(
+		select * from
+		${u_product} order by ${uProductId} desc
+		)a
+		) where rn between #{start}
+		and #{end}
 	</select>
-	
+
 	<select id="total_count" resultType="Integer">
-		select count(*) total_cnt from ${u_product}
+		select count(*) total_cnt
+		from ${u_product}
 	</select>
-	
+
 	<select id="select_by_product_name" resultType="UproductVO">
-		select * from ${u_product}
-		where ${uProductName} like #{uProductName} 
+		select * from
+		${u_product}
+		where ${uProductName} like #{uProductName}
 	</select>
-	
+
 	<select id="select_by_name" resultType="UproductVO">
-		select * from ${u_product}
+		select * from
+		${u_product}
 		where ${uProductName} like #{keyword} or
-			${uProductContent} like #{keyword}
-			order by ${uProductId} desc
+		${uProductContent} like #{keyword}
+		order by ${uProductId} desc
 	</select>
-	
+
 	<update id="update_product_comment_count">
-    	update ${u_product}
-    	set ${uProductCommentCount} = ${uProductCommentCount} + #{amount}
-    	where ${uProductId} = #{uProductId}
+		update ${u_product}
+		set ${uProductCommentCount} =
+		${uProductCommentCount} + #{amount}
+		where ${uProductId} = #{uProductId}
 	</update>
-	
-	 <select id="select_by_u_product_categori" resultType="UproductVO">
-	 	select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
-	 	from(
-	 		select rownum rn, a.* from(
-	 			select * from ${u_product} 
-	 			where ${uProductName} like #{keyword} or 
-	 			${uProductCategori} like #{keyword} 
-	 			order by ${uProductId} desc
-	 		)a
-	 	) where rn between #{start} and #{end}
 
-	 </select> 
-	 
-	 <select id="total_count_by_u_product_categori" resultType="Integer">
-	  	select count(*) total_cnt from ${u_product} 
-	  	where ${uProductName} like #{keyword} or ${uProductCategori} like #{keyword}
-	 </select>
-	 
-	 <select id="select_by_u_product_created_date" resultType="UproductVO">
-	 
-        select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
-	 	from(
-	 		select rownum rn, a.* from(
-	 			SELECT * FROM ${u_product}
-       		    WHERE to_char(${uProductCreatedDate}, 'yy/mm/dd') = to_char(sysdate-2d, 'yy/mm/dd')
-	 		)a
-	 	) where rn between #{start} and #{end}
-	 
-	 </select>
-	 
-	 <select id="total_count_by_u_product_created_date" resultType="Integer">
-	  	select count(*) total_cnt from ${u_product} 
-	  	WHERE to_char(${uProductCreatedDate}, 'yy/mm/dd') = to_char(sysdate-2d, 'yy/mm/dd')
-	 </select>
-	 
-	 <select id="select_by_u_product_Address" resultType="UproductVO">
-	 	select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath}, ${uProductContent}, ${memberAddress}, ${memberNickname}, ${uProductCommentCount}
-	 	from(
-	 		select rownum rn, a.* from(
-	 			select * from ${u_product} 
-	 			where ${memberAddress} like #{keyword} order by ${uProductId} desc
-	 		)a
-	 	) where rn between #{start} and #{end}
+	<select id="select_by_u_product_categori"
+		resultType="UproductVO">
+		select ${uProductId}, ${uProductName}, ${uProductPrice},
+		${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate},
+		${uProductCategori},
+		${uProductImagePath}, ${uProductContent},
+		${memberAddress},
+		${memberNickname}, ${uProductCommentCount}
+		from(
+		select rownum rn, a.* from(
+		select * from ${u_product}
+		where
+		${uProductName} like #{keyword} or
+		${uProductCategori} like #{keyword}
+		order by ${uProductId} desc
+		)a
+		) where rn between #{start} and #{end}
 
-	 </select> 
-	 
-	 <select id="total_count_by_u_product_Address" resultType="Integer">
-	  	select count(*) total_cnt from ${u_product} 
-	  	where ${memberAddress} like #{keyword}
-	 </select>
-	 
-	 
-	 
+	</select>
+
+	<select id="total_count_by_u_product_categori"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product}
+		where
+		${uProductName} like #{keyword} or ${uProductCategori} like
+		#{keyword}
+	</select>
+
+	<select id="select_by_u_product_created_date"
+		resultType="UproductVO">
+
+		select ${uProductId}, ${uProductName}, ${uProductPrice},
+		${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate},
+		${uProductCategori},
+		${uProductImagePath}, ${uProductContent},
+		${memberAddress},
+		${memberNickname}, ${uProductCommentCount}
+		from(
+		select rownum rn, a.* from(
+		SELECT * FROM ${u_product}
+		WHERE
+		to_char(${uProductCreatedDate}, 'yy/mm/dd') > to_char(sysdate-2d,
+		'yy/mm/dd')
+		)a
+		) where rn between #{start} and #{end}
+
+	</select>
+
+	<select id="total_count_by_u_product_created_date"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product}
+		WHERE
+		to_char(${uProductCreatedDate}, 'yy/mm/dd') > to_char(sysdate-2d,
+		'yy/mm/dd')
+	</select>
+
+	<select id="select_by_u_product_Address" resultType="UproductVO">
+		select
+		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress},
+		${memberNickname}, ${uProductCommentCount}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product}
+		where ${memberAddress} like #{keyword}
+		order by ${uProductId} desc
+		)a
+		) where rn between #{start} and #{end}
+
+	</select>
+
+	<select id="total_count_by_u_product_Address"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product}
+		where
+		${memberAddress} like #{keyword}
+	</select>
+
+
+	<select id="recommend_by_u_product_categori"
+		resultType="UproductVO">
+		SELECT *
+		FROM ${u_product}
+		WHERE ${uProductCategori} = #{uProductCategori}
+		AND ${uProductId} != #{uProductId}
+	</select>
+
+
+
 </mapper>
 
 

@@ -93,11 +93,10 @@
       </div>
       <div class="product-desc">
         <h2>
-          이쁜 핸드폰 케이스 팝니다
-          <span class="price"> 가격:5,000</span>
+          ${vo.uProductName}
         </h2>
-        <p>${vo.uProductContent }</p>
         <p>가격 문의는 비밀 댓글로 해주세요</p>
+         <span class="price"> 가격 : ${vo.uProductPrice}</span>
       </div>
       <div class="item-order">
         <div class="input-group mb-3">
@@ -109,6 +108,8 @@
             class="form-control"
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
+             value = ${vo.memberNickname }
+            readonly
           />
         </div>
         <div class="input-group mb-3">
@@ -124,30 +125,37 @@
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">주소</span>
+            <span class="input-group-text">카테고리</span>
           </div>
           <input
             type="text"
             class="form-control"
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
-            value = ${vo.memberAddress }
+            value = ${vo.uProductCategori }
             readonly
           />
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">전화번호</span>
+            <span class="input-group-text">작성자 주소</span>
           </div>
           <input
             type="text"
             class="form-control"
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
-            value = ${vo.memberAddress }
+            value = "${vo.memberAddress }"
             readonly
           />
         </div>
+        
+        <div>
+		<textarea rows="10" cols="60" readonly>${vo.uProductContent }</textarea>
+		</div>
+		
+		  <br>
+		
         <button type="button" onclick="order()" class="btn btn-primary btn-order">
           주문하기
         </button>
@@ -160,6 +168,10 @@
     
     <a href="list?page=${page }"><input type="button" value="상품 목록" style="float:right;"></a>
     
+    <br>
+	<br>
+	<br>
+    
 	<a href="update?uProductId=${vo.uProductId }&page=${page }"><input type="button" value="글 수정" style="float:right;"></a>
 	
 	
@@ -171,7 +183,21 @@
 	<br>
 	<br>
 	<br>
-	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container px-4 px-lg-5">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<div>
+
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+						
+					</ul>
+					
+				</div>
+
+			</div>
+		</div>
+	</nav>
 	<div>
 		<input type="text" id="memberNickname" value="${sessionScope.memberNickname }" readonly="readonly">
         <input type="text" id="uProductCommentContent">
@@ -181,8 +207,72 @@
 	</div>
 	
 	<hr>
+	
     
 	<div id="uproductcomments"></div>
+	
+	<br>
+	<br>
+	<br>
+	
+	<div>
+		<h3>이런 상품은 어떠세요?</h3>
+	</div>
+	
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 mt-5">
+			<div
+				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+				<c:forEach var="vo" items="${list }">
+
+					<div class="col mb-5">
+						<div class="card h-100">
+							<!-- Product image-->
+							<img class="card-img-top"
+								src="display?fileName=${vo.uProductImagePath}" alt="..." />
+							<!-- Product details-->
+							<div class="card-body p-4">
+								<div class="text-center">
+									<!-- Product name-->
+									<h5 class="fw-bolder">
+
+										<a
+											href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
+
+									</h5>
+									<!-- Product reviews-->
+									<div
+										class="d-flex justify-content-center small text-warning mb-2">
+										<div class="bi-star-fill"></div>
+										<div class="bi-star-fill"></div>
+										<div class="bi-star-fill"></div>
+										<div class="bi-star-fill"></div>
+										<div class="bi-star-fill"></div>
+									</div>
+									<!-- Product price-->
+									${vo.uProductPrice }
+
+								</div>
+							</div>
+							<!-- Product actions-->
+							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+								<div class="text-center">
+									<a class="btn btn-outline-dark mt-auto" href="#">Add to
+										cart</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</c:forEach>
+
+			</div>
+		</div>
+
+
+	</section>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -204,6 +294,7 @@
 						'uProductSecretComment' : uProductSecretComment
 						
 						  }
+				
 				console.log(obj);
 				
 				$.ajax({
@@ -315,6 +406,13 @@
 			
 			
 		}); // end document
+		
 	</script>	
+	<%@ include file="footer.jsp"%>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="js/scripts.js"></script>
   </body>
 </html>
