@@ -3,12 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+#sidebar{
+	width : 250px;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="table1">
-		<table>
+	<div>
+		<table id="sidebar">
 			<thead>
 				<tr>
 					<th style="">
@@ -21,23 +26,50 @@
 							<img alt="" src="http://mall.smotor.com/skin/gaga_basic_skin/image/H_member_icon.gif">
 						</div>
 						<div>
-							${memberNickname }"님의 회원등급은" <br>
-							<b>${memberLevel }</b>입니다.
+							<b id="sessionNickname">${memberNickname }</b>
+							<div class="aaa">회원등급은<b id="sessionLevel">${memberLevel }</b>입니다. </div>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<a href="http://localhost:8080/calla/member/update">회원정보 수정</a>
+						<div class="link">
+							<a id="updateLink" href="http://localhost:8080/calla/member/update">회원정보 수정</a>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<a>회원정보 탈퇴하기</a>
+						<div class="link">
+							<a id="deleteLink">회원정보 탈퇴하기</a>
+						</div>
 					</td>
 				</tr>
 			</thead>
 		</table>
 	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var nickname = $('#sessionNickname').text();
+			var level = $('#sessionLevel').text();
+			console.log("사용자 별명 : " + nickname);
+			console.log("사용자 등급 : " + level);
+			if(level == 1){
+				$('#sessionLevel').text("일반회원");
+			} else if(level == 2){
+				$('#sessionLevel').text("관리자");
+			} else {
+				$('#sessionLevel').text("슈퍼관리자");
+				$('.aaa').text('');
+			}
+			/* if(nickname == ""){
+				$('#sessionNickname').text("로그인을 해주세요.");
+				$('.aaa').text("");
+				$('#updateLink').css("display", "none");
+				$('#deleteLink').css("display", "none");
+			}  */
+		})
+	</script>
 </body>
 </html>
