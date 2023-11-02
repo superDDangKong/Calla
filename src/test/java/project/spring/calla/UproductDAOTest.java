@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import oracle.jdbc.driver.OracleDriver;
 import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.UProductDAO;
 import project.spring.calla.service.UProductService;
 
@@ -42,23 +43,32 @@ public class UproductDAOTest {
 	@Test
 	public void testDAO() {
 //		testInsert();
-//		testImageInsert();
+//		testRecommand();
 //		testSelectAll();
 //		testSelectByBoardId();
 //		testUpdate();
 //		testDelete();
 //		testSelectPaging();
-//		testSelectDate();
+		testSelectDate();
 	}
 
-//private void testSelectDate() {
-//		// TODO Auto-generated method stub
-//	List<UproductVO> list = dao.selectByUproductCreatedDate();
-//	for(UproductVO vo : list) {
-//		logger.info(vo.toString());
-//	}
-//		
-//	}
+private void testRecommand() {
+	List<UProductVO> list = dao.recommendCategori("¾ßÃ¤", 60);
+	for(UProductVO vo : list) {
+		logger.info(vo.toString());
+	}
+		
+	}
+
+private void testSelectDate() {
+		// TODO Auto-generated method stub
+	PageCriteria criteria = new PageCriteria(1, 3);
+	List<UProductVO> list = dao.selectByUproductCreatedDate(criteria);
+	for(UProductVO vo : list) {
+		logger.info(vo.toString());
+	}
+		
+	}
 
 //	private void testSelectByBoardId() {
 //		UproductVO vo = dao.select(30);

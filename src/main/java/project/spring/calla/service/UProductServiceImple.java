@@ -106,6 +106,12 @@ public class UProductServiceImple implements UProductService {
 		return dao.getTotalCountsByAddress(keyword);
 	}
 
+	@Override
+	public List<UProductVO> readrecommend(String uProductCategori, int uProductId) {
+		logger.info("readrecommend() »£√‚");
+		return dao.recommendCategori(uProductCategori, uProductId);
+	}
+
 	
 
 }

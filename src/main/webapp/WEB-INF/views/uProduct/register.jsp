@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+	crossorigin="anonymous"></script>
 <%@ page import="org.springframework.web.multipart.MultipartFile" %>
 <!DOCTYPE html>
 <html>
@@ -40,12 +45,34 @@
 		<div>
 			<p>이미지</p>
 			<input id="productImage" type="file" name="productImage" placeholder="이미지" >
+			
 		</div>
 		
+		<div>
 			<input type="submit" value="등록">
 		</div>
+		
+		
 	</form>
 	
-	
 </body>
+	
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

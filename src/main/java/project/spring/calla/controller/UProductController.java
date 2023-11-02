@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +60,8 @@ public class UProductController {
 	}
 
 	@GetMapping("/map")
-	public void TestMAP(Model model, Integer page, Integer numsPerPage, String Address, String keyword) 
+	public void TestMAP(Model model, Integer page, Integer numsPerPage, String Address, String keyword,
+			ModelMap models) 
 			throws Exception {
 		logger.info("맵 출력");
 
@@ -94,7 +96,8 @@ public class UProductController {
 			list = uproductService.read(criteria);
 			pageMaker.setTotalCount(uproductService.getTotalCounts());
 		}
-
+		
+		
 		logger.info("totalCount = " + pageMaker.getTotalCount());
 		model.addAttribute("list", list);
 		model.addAttribute("Address", Address);
@@ -197,6 +200,11 @@ public class UProductController {
 		logger.info("detail() 호출 : productId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
 		logger.info("호출 : prdocutVO = " + vo);
+		
+		List<UProductVO> list = uproductService.readrecommend(vo.getuProductCategori(), uProductId);
+		
+		
+		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 	} // end detail()

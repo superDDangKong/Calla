@@ -148,6 +148,16 @@ public class UProductDAOImple implements UProductDAO {
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_Address", "%" + keyword + "%");
 	}
 
+	@Override
+	public List<UProductVO> recommendCategori(String uProductCategori, int uProductId) {
+		logger.info("select() »£√‚ : uProductCategori = " + uProductCategori);
+		Map<String, Object> args = new HashMap();
+		args.put("uProductCategori", uProductCategori);
+		args.put("uProductId", uProductId);
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".recommend_by_u_product_categori", args);
+	}
+
 	
 
 }
