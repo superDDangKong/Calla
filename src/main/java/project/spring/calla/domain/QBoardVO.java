@@ -10,11 +10,12 @@ public class QBoardVO {
 	private Date qBoardCreatedDate;
 	private int qBoardViews;
 	private int qBoardCommentCount;
+	private String qBoardImagePath;
 	
 	public QBoardVO() {}
-
+	
 	public QBoardVO(int qBoardId, String memberNickname, String qBoardTitle, String qBoardContent,
-			Date qBoardCreatedDate, int qBoardViews, int qBoardCommentCount) {
+			Date qBoardCreatedDate, int qBoardViews, int qBoardCommentCount, String qBoardImagePath) {
 		super();
 		this.qBoardId = qBoardId;
 		this.memberNickname = memberNickname;
@@ -23,6 +24,7 @@ public class QBoardVO {
 		this.qBoardCreatedDate = qBoardCreatedDate;
 		this.qBoardViews = qBoardViews;
 		this.qBoardCommentCount = qBoardCommentCount;
+		this.qBoardImagePath = qBoardImagePath;
 	}
 
 	public int getqBoardId() {
@@ -81,13 +83,24 @@ public class QBoardVO {
 		this.qBoardCommentCount = qBoardCommentCount;
 	}
 
+	public String getqBoardImagePath() {
+		return qBoardImagePath;
+	}
+
+	public void setqBoardImagePath(String qBoardImagePath) {
+		this.qBoardImagePath = qBoardImagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "QBoardVO [qBoardId=" + qBoardId + ", memberNickname=" + memberNickname + ", qBoardTitle=" + qBoardTitle
 				+ ", qBoardContent=" + qBoardContent + ", qBoardCreatedDate=" + qBoardCreatedDate + ", qBoardViews="
-				+ qBoardViews + ", qBoardCommentCount=" + qBoardCommentCount + "]";
+				+ qBoardViews + ", qBoardCommentCount=" + qBoardCommentCount + ", qBoardImagePath=" + qBoardImagePath
+				+ "]";
 	}
 
+	
+	
 	
 	
 }

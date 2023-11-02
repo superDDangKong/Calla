@@ -14,59 +14,71 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 </script>
 <meta charset="UTF-8">
 <title>${vo.qBoardTitle }</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<%@ include file="../header.jspf" %>
-	
-	<h2>글 보기</h2>
-	<div>
-		<p>글 번호 : ${vo.qBoardId }</p>
-	</div>
-	<div>
-		<p>제목 : </p>
-		<p>${vo.qBoardTitle }</p>
-	</div>
-	<div>
-		<p>작성자 : ${vo.memberNickname }</p>
-		<p>작성일 : ${vo.qBoardCreatedDate}</p>
-	</div>
-	<div>
-		<textarea rows="20" cols="120" readonly>${vo.qBoardContent }</textarea>
-	</div>
-	
-	<a href="list?page=${page }"><input type="button" value="글 목록"></a>
-	
-	
-		<a href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
-		<form action="delete" method="POST">
-			<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }">
-			<input type="submit" value="글 삭제"> 
-		</form>
-
-		<c:if test="${memberNickname != null}">
-			<div style="text-align: center;">
-				${memberNickname}
-				<input type="hidden" id="memberNickname" value=${memberNickname }>
-				<input type="text" id="qBoardCommentContent" required>
-				<button id="btnCommentAdd">작성</button> 
-			</div>
-		</c:if>
-		
-		<c:if test="${memberNickname == null}">
-			<br> 댓글을 작성하려면 로그인해 주세요.
-		</c:if>
-		<hr>
-	
-		<div style="text-align: center;">
-			<div id="comments"></div>
-		</div>
-	
+	<div class="container">
+		<h2>글 보기</h2>
 		<div>
-			<br><br><br><br><br><br><br><br><br><br>
+			<p>글 번호 : ${vo.qBoardId }</p>
 		</div>
-
+		<div>
+			<p>제목 : </p>
+			<p>${vo.qBoardTitle }</p>
+		</div>
+		<div>
+			<p>작성자 : ${vo.memberNickname }</p>
+			<p id="date">작성일 : ${vo.qBoardCreatedDate}</p>
+		</div>
+		<div>
+			<textarea rows="20" cols="120" readonly>${vo.qBoardContent }</textarea>
+		</div>
+		
+		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
+		
+		
+			<a href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+			<form action="delete" method="POST">
+				<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }">
+				<input type="submit" value="글 삭제"> 
+			</form>
+	
+			<c:if test="${memberNickname != null}">
+				<div style="text-align: center;">
+					${memberNickname}
+					<input type="hidden" id="memberNickname" value=${memberNickname }>
+					<input type="text" id="qBoardCommentContent" required>
+					<button id="btnCommentAdd">작성</button> 
+				</div>
+			</c:if>
+			
+			<c:if test="${memberNickname == null}">
+				<br> 댓글을 작성하려면 로그인해 주세요.
+			</c:if>
+			<hr>
+		
+			<div style="text-align: center;">
+				<div id="comments"></div>
+			</div>
+		
+			<div>
+				<br><br><br><br><br><br><br><br><br><br>
+			</div>
+	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
+    	  var date = $('#date').val();
+    	  
          getAllComments();
          
          $('#btnCommentAdd').click(function(){ // 댓글작성 버튼 클릭 할 때 함수
@@ -398,7 +410,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
       }); // end document
    </script>
 	
-	
+	<%@ include file="../footer.jspf"%>
 </body>
 </html>
 

@@ -98,6 +98,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="qBoardCreatedDate" value="q_board_created_date"/>
 		<property name="qBoardViews" value="q_board_views"/>
 		<property name="qBoardCommentCount" value="q_board_comment_count"/>
+		<property name="qBoardImagePath" value="q_board_image_path"/>
 		
 		<property name="q_board_comment" value="q_board_comment"/>
 		<property name="qBoardCommentId" value="q_board_comment_id"/>

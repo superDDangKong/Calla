@@ -47,7 +47,7 @@ public class MemberController {
 	
 //	@PostMapping("/join")
 //	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
-//		logger.info("joinPOST ȣ�� : " + vo.toString());
+//		logger.info("joinPOST  : " + vo.toString());
 //		int result = memberService.create(vo);
 //		if(result == 1) {
 //			reAttr.addFlashAttribute("insert", "success");
@@ -68,7 +68,7 @@ public class MemberController {
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		// RedirectAttributes
 		// 
-		logger.info("loginPOST() 호출");
+		logger.info("loginPOST() ");
 		String result = memberDAO.login(memberId, memberPw);
 		if(result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -233,7 +233,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/info")
-	public void InfoGET(Model model, HttpServletRequest request) {
+	public ModelAndView InfoGET(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String memberNickname = (String) session.getAttribute("memberNickname");
 		String memberLevel = (String) session.getAttribute("memberLevel");
@@ -241,6 +241,6 @@ public class MemberController {
 		mv.addObject("memberNickname", memberNickname);
 		mv.addObject("memberLevel", memberLevel);
 		mv.setViewName("sidebar");
-		
+		return mv;
 	}
 }

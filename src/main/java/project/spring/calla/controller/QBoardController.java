@@ -97,7 +97,7 @@ public class QBoardController {
 			// 쿠키가 존재하지 않는 경우, 조회수 증가 및 쿠키 설정
 			int views = 1; // 첫 번째 조회
 			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
-			viewCookie.setMaxAge(60); // 쿠키 유효 시간 1분
+			viewCookie.setMaxAge(1); // 쿠키 유효 시간 1초
 			response.addCookie(viewCookie);
 			int result = qBoardService.updateViews(views, qBoardId);
 			if(result == 1) {
