@@ -91,4 +91,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productId} = #{productId}
 	</update>
 	
+	<select id="select_join_like" resultType="productVO">
+		select p.${productName}, p.${productPrice}, p.${productCategori}, p.${productContent}
+		from product p
+		inner join ${product_like} pl on p.${productId} = pl.${productId}
+		where pl.${memberId} = #{memberId} 
+	</select>
 </mapper>

@@ -126,6 +126,15 @@ public class MemberServiceImple implements MemberService {
 		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberNickname));
 		return args;
 	}
+	
+	@Override
+	public Map<String, Object> readLikes(String memberId) {
+		logger.info("readLikes() 호출 memberId : " + memberId);
+		Map<String, Object> args = new HashMap();
+//		args.put("productList", productDAO.selectAllByMemberNickname(memberId));
+//		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberId));
+		return args;
+	}
 
 	@Override
 	public int updatePw(String memberId, String memberPw) {
@@ -186,6 +195,8 @@ public class MemberServiceImple implements MemberService {
 		logger.info("delete() 호출");
 		return MemberDAO.delete(memberId);
 	}
+
+
 
 
 }

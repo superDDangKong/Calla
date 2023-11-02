@@ -115,6 +115,12 @@ public class ProductDAOImple implements ProductDAO {
 		
 	}
 
+	@Override
+	public List<ProductVO> selectLikes(String memberId) {
+		logger.info("updateLikeCount() : memberId = " + memberId);
+		return null;
+	}
+
 	
 
 }

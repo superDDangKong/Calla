@@ -88,6 +88,9 @@ public class FBoardController {
 		logger.info("registerGET()");
 	} // end registerGET()
 	
+	@GetMapping("/boottest")	
+	public void boottestGET() {}
+	
 	@PostMapping("/register")
 	public String registerPOST(FBoardVO vo, RedirectAttributes reAttr) {
 		// RedirectAttributes

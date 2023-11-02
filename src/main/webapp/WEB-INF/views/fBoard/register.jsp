@@ -1,27 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="../resources/css/styles.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="../header.jspf" %> 	
 <title>글 작성 페이지</title>
 </head>
 <body>
-	<%@ include file="../header.jspf" %> 	
-	<h2>글 작성 페이지</h2>
+
 	<form action="register" method="POST">
 		<div>
 			<p>제목 : </p>
 			<input type="text" name="fBoardTitle" placeholder="제목 입력" required>
-		</div>
-		<div>
-			<p>작성자 : </p>
-			<input type="text" name="memberNickname" value="${memberNickname}" readonly="readonly">
 		</div>
 		<div>
 			<p>내용 : </p>
@@ -30,7 +27,7 @@
 		<div>
 			<input type="submit" value="등록">
 		</div>
-		
 	</form>
+	
 </body>
 </html>

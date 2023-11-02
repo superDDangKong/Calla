@@ -18,5 +18,6 @@ public interface ProductDAO {
 	int updateCommentCount(int amount, int productId);
 	int updateViews(int views, int productId);
 	int updateLikeCount(int amount, int productId);
+	List<ProductVO> selectLikes(String memberId);
 	
 }

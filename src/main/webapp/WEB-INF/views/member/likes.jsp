@@ -15,27 +15,27 @@
 </head>
 <body>
 <%@ include file="../header.jspf" %> 
-	<div id="product_likes_container">
-		
-		<div id="product">
-			<button>공용상품</button>
-			<div id="product_likes_list">
-			</div>
-		</div>
-		
-		<div id="u_product">
-			<button>중고상품</button>
-			<div id="u_product_likes_list">
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			
-			
-			
-		}) // end document.ready()
+<h1>공용상품</h1>
+	<table>
+		<thead>
+			<tr>
+				<th style="width : 120px">작성자</th>
+				<th style="width : 700px">내용</th>
+				<th style="width : 100px">작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="productCommentVo" items="${lists.ProductCommentList }">
+				<tr>
+					<td>${productCommentVo.memberNickname }</td>
+					<td><a href="/calla/product/detail?productId=${productCommentVo.productId}&memberId=${memberId}">${productCommentVo.productCommentContent }</a></td>
+					<fmt:formatDate value="${productCommentVo.productCommentCreatedDate }"
+					pattern="yyyy-MM-dd HH:mm:ss" var="productCommentCreatedDate"/>
+					<td>${productCommentCreatedDate }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 		<%@ include file="../footer.jspf" %> 
-	</script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -6,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style type="text/css">
 ul {
 	list-style-type : none;
@@ -18,74 +16,89 @@ li {
 </style>
 <meta charset="UTF-8">
 <title>${vo.fBoardTitle }</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="../resources/css/styles.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="../header.jspf" %> 	
 </head>
 <body>
-
-	<%@ include file="../header.jspf" %> 	
-	<h2>글 보기</h2>
-	<div>
-		<p>글 번호 : ${vo.fBoardId }</p>
-	</div>
-	<div>
-		<p>제목 : </p> 
-		<p>${vo.fBoardTitle } </p>
-	</div>
-	<div>
-		<p>작성자 : ${vo.memberNickname }</p>
-		<p>작성일 : ${vo.fBoardCreatedDate }</p>
-	</div>
-	<div>
-		<textarea rows="20" cols="120" readonly>${vo.fBoardContent }</textarea>
-	</div>
 	
-	<a href="list?page=${page }"><input type="button" value="글 목록"></a>
-	<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
-	
-	
-	<c:set var="memberNickname" value="${memberNickname }" />
-	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
-
-	<c:if test="${memberNickname == voMemberNickname}">
-	<a href="update?fBoardId=${vo.fBoardId }&page=${page }"><input type="button" value="글 수정"></a>
-	
-	<form action="delete" method="POST">
-		<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
-		<input type="submit" value="글 삭제">
-	</form>
-	</c:if>
-	
-	<c:if test="${memberNickname != null}">
-	<div style="text-align: center;">
-		${memberNickname}
-		<input type="hidden" id="memberNickname" value=${memberNickname }>
-		<input type="text" id="fBoardCommentContent" required>
-		<button id="btnCommentAdd">작성</button> 
-	</div>
-	</c:if>
-	<c:if test="${memberNickname == null}">
-		<br> 댓글을 작성하려면 로그인해 주세요.
-	</c:if>
-	<hr>
-	
-	<div style="text-align: center;">
-		<div id="comments"></div>
-	</div>
-	
-	<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}">
-	<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}">
-	<input type="hidden" id="pageMaker_startPageNo" value="${pageMaker.startPageNo}">
-	<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-	<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}">
-	<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
-	<div>
-		<br><br><br><br><br><br><br><br><br><br>
-	</div>
-	
+	<div class="container">
+		<br>
+		<a href="list?page=${page }"><input type="button" class="btn btn-secondary float-right" value="글 목록"></a>
+		<br>
+		<div class="post-detail">
+			<br>
+			<h2>${vo.fBoardTitle } </h2>
+			
+			<p>${vo.memberNickname }</p>
+			<fmt:formatDate value="${vo.fBoardCreatedDate }"
+			pattern="yyyy.MM.dd. hh:mm" var="fBoardCreatedDate"/>
+			<p>${fBoardCreatedDate }</p>
+			<hr>
+			<div>
+				<textarea style="width:100%; height:500px;" readonly>${vo.fBoardContent }</textarea>
+			</div>
+			
+			
+			<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
+			
+			
+			<c:set var="memberNickname" value="${memberNickname }" />
+			<c:set var="voMemberNickname" value="${vo.memberNickname }" />
+		
+			<c:if test="${memberNickname == voMemberNickname}">
+				<div class="d-flex">
+				    <div class="p-2">
+				        <a href="update?fBoardId=${vo.fBoardId}&page=${page}" class="btn btn-primary">글 수정</a>
+				    </div>
+				    <div class="p-2">
+				        <form action="delete" method="POST">
+				            <input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId}">
+				            <input type="submit" value="글 삭제" class="btn btn-danger">
+				        </form>
+				    </div>
+				</div>
+			</c:if>
+			<hr>
+			<br>
+			<c:if test="${memberNickname != null}">
+			<div>
+				<p> 댓글 </p>
+				<div class="border">
+					<br>
+					${memberNickname}<br>
+					<input type="hidden" id="memberNickname" value=${memberNickname }>
+					<div class="form-group">
+					    <textarea id="fBoardCommentContent" class="form-control" rows="1" 
+					    placeholder="댓글 내용을 입력해 주세요" style="border:none;" required></textarea>
+					</div>
+					 <div style="text-align: right;">
+       					 <button id="btnCommentAdd" class="btn btn-dark">작성</button>
+   					 </div>
+				</div>
+			</div>
+			</c:if>
+			<c:if test="${memberNickname == null}">
+				<br> 댓글을 작성하려면 <a href="/member/login">로그인해 주세요.</a>
+			</c:if>
+			
+			<br>
+			<div>
+				<div id="comments"></div>
+			</div>
+			
+			<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}">
+			<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}">
+			<input type="hidden" id="pageMaker_startPageNo" value="${pageMaker.startPageNo}">
+			<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+			<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}">
+			<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
+			<br>
+		</div> <!-- end main -->
+	</div> <!-- end 컨테이너 -->
 	<script type="text/javascript">
 		$(document).ready(function(){
 			getAllComments();
@@ -160,24 +173,27 @@ li {
 								readonly = '';
 							}
 							
-							list += '<div class="comment_item">'
-								+ '<pre>'
+							list +=
+								 '<div class="comment_item">'
 								+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
 								+ this.memberNickname
-								+ '&nbsp;&nbsp;' // 공백
-								+ '<input type="text" class="fBoardCommentContent" value="' + this.fBoardCommentContent + '" required>'	 
-								+ '&nbsp;&nbsp;' // 공백
+								+ '<br>'
+								+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
+								+ this.fBoardCommentContent
+								+ '</textarea>'
 								+ fBoardCommentCreatedDate
-								+ '&nbsp;&nbsp;' // 공백
+								+ '<br>'
 								+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
 								+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
 								+ '<button class="btnReply">답글</button>'
 								+ '<br>'
-								+ '</pre>'
+								+ '<hr>'
 								+ '</div>';
 								
 						}); // end each()
-						list += '<ul id="comment_page">'
+						list += '<div style="text-align: center;">' 
+							+'<ul id="comment_page">'
+							
 						
 						if(pageMaker_hasPrev) {
 							list += '<li><button class="btn_comment_prev">이전</button></li>'
@@ -193,6 +209,7 @@ li {
 							}
 						
 						list += '</ul>'
+							+'</div>'
 							
 						$('#comments').html(list);
 					}
@@ -313,41 +330,50 @@ li {
 								readonly = '';
 							}
 							
-							list += '<div class="reply_item">'
+							list += 
+								 '<div class="reply_item bg-light border">'
 								+ '<pre>'
 								+ '<input type="hidden" class="fBoardReplyId" value="' + this.fBoardReplyId + '">'
-								+ this.memberNickname
-								+ '&nbsp;&nbsp;' // 공백
-								+ '<input type="text" class="fBoardReplyContent" value="' + this.fBoardReplyContent + '" required>'	 
-								+ '&nbsp;&nbsp;' // 공백
-								+ fBoardReplyCreatedDate
-								+ '&nbsp;&nbsp;' // 공백
-								+ '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
-								+ '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
+								+ 'ㄴ  ' + this.memberNickname
+								+ '<br>'
+								+ '&nbsp&nbsp' + '<textarea class="fBoardReplyContent form-control bg-light" rows="1" style="border:none;">'
+								+ '&nbsp&nbsp' + this.fBoardReplyContent 
+								+ '</textarea>' 
+								+ '<br>'
+								+ '&nbsp&nbsp&nbsp&nbsp' + fBoardReplyCreatedDate
+								+ '<br>' 
+								+ '&nbsp&nbsp&nbsp&nbsp' + '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
+								+ '&nbsp' + '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
 								+ '<br>'
 								+ '</pre>'
 								+ '</div>';
 						}); // end each()
 						
-						list +=  '<div style="text-align: center;">'
-							+ memberNickname
-							+ '&nbsp;&nbsp;'
-							+ '<input type="text" class="fBoardReplyContent" required>'
-							+ '&nbsp;&nbsp;'
-							+ '<button class="btnReplyAdd">작성</button>' 
+						list += 
+							 memberNickname
+							+ '<br>'
+		   					+ '<div class="form-group bg-transparent border">'
+		   					+ '<textarea class="fBoardReplyContent form-control" rows="1" placeholder="답글 내용을 입력해 주세요." style="border:none;" required>'
+		   					+ '</textarea> </div>'
+		   					+ '<div style="text-align:right;">'
+							+ '<button class="btnReplyAdd btn btn-dark">작성</button>'
 							+ '</div>'
-						comment_item.append('<div class="replies">' + list + '</div>');	
+							+ '<hr>'
+							+ '<br>'
+						
+						comment_item.append('<div class="replies bg-light">' + list + '</div>');	
 					}
 				); // end getJSON()
 			} // end getAllReplies()
+			
 			$(document).on('click', '.btnReplyAdd', function(){
 				console.log(this);
 				var commentItem = $(this).closest('.comment_item');
-				var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
-				var fBoardCommentIdVal = $(this).closest('.comment_item').find('.fBoardCommentId').val();
+				var fBoardCommentId = commentItem.find('.fBoardCommentId');
+				var fBoardCommentIdVal = fBoardCommentId.val();
 			    var memberNickname = $('#memberNickname').val();
-			    var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
-
+			    var fBoardReplyContent = commentItem.find('.fBoardReplyContent').val();
+				console.log(fBoardReplyContent);
 
 				var obj = {
 						'fBoardCommentId' : fBoardCommentIdVal, 
@@ -376,9 +402,8 @@ li {
 			
 			$(document).on('click', '.btnReplyUpdate', function(){
 				console.log(this);
-				var commentItem = $(this).closest('.comment_item');
-				var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
-				console.log("abc" + fBoardComenntId);
+				var commentItem = $(this).parent().closest('.comment_item');
+				var fBoardCommentId = commentItem.find('.fBoardCommentId');
 				var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
 				var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
 				console.log("선택된 답글 번호 : " + fBoardReplyId + ", 답글 내용 : " + fBoardReplyContent);	

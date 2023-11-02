@@ -32,13 +32,13 @@
 		<tbody>
 			<c:forEach var="uProductVo" items="${lists.uProductList }">
 				<tr>
-					<td>${uProductCommentVo.memberNickname }</td>
-					<td>${uProductCommentVo.uProductCommentContent }</td>
-					<fmt:formatDate value="${uProductCommentVo.uProductCommentCreatedDate }"
-					pattern="yyyy-MM-dd HH:mm:ss" var="uProductCommentCreatedDate"/>
-					<td>${uProductCommentCreatedDate }</td>
-					<td>${uProductCommentVo.uProductViews }</td>
-					<td>${uProductCommentVo.uProductCommentCount }</td>
+					<td><a href="/calla/uProduct/detail?uProductId=${uProductVo.uProductId}">${uProductVo.uProductName }</a></td>
+					<td>${uProductVo.uProductPrice }</td>
+					<fmt:formatDate value="${uProductVo.uProductCreatedDate }"
+					pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate"/>
+					<td>${uProductCreatedDate }</td>
+					<td>${uProductVo.uProductViews }</td>
+					<td>${uProductVo.uProductCommentCount }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -58,7 +58,7 @@
 		<tbody>
 			<c:forEach var="fBoardVo" items="${lists.fBoardList }">
 				<tr>
-					<td>${fBoardVo.fBoardTitle }</td>
+					<td><a href="/calla/fBoard/detail?fBoardId=${fBoardVo.fBoardId}">${fBoardVo.fBoardTitle }</a></td>
 					<td>${fBoardVo.fBoardContent }</td>
 					<fmt:formatDate value="${fBoardVo.fBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="fBoardCreatedDate"/>
@@ -84,7 +84,7 @@
 		<tbody>
 			<c:forEach var="qBoardVo" items="${lists.qBoardList }">
 				<tr>
-					<td>${qBoardVo.qBoardTitle }</td>
+					<td><a href="/calla/qBoard/detail?qBoardId=${qBoardVo.qBoardId}">${qBoardVo.qBoardTitle }</a></td>
 					<td>${qBoardVo.qBoardContent }</td>
 					<fmt:formatDate value="${qBoardVo.qBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCreatedDate"/>

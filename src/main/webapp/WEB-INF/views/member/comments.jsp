@@ -30,7 +30,7 @@
 			<c:forEach var="productCommentVo" items="${lists.ProductCommentList }">
 				<tr>
 					<td>${productCommentVo.memberNickname }</td>
-					<td>${productCommentVo.productCommentContent }</td>
+					<td><a href="/calla/product/detail?productId=${productCommentVo.productId}&memberId=${memberId}">${productCommentVo.productCommentContent }</a></td>
 					<fmt:formatDate value="${productCommentVo.productCommentCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="productCommentCreatedDate"/>
 					<td>${productCommentCreatedDate }</td>
@@ -52,7 +52,7 @@
 			<c:forEach var="uProductCommentVo" items="${lists.uProductCommentList }">
 				<tr>
 					<td>${uProductCommentVo.memberNickname }</td>
-					<td>${uProductCommentVo.uProductCommentContent }</td>
+					<td><a href="/calla/uProduct/detail?uProductId=${uProductCommentVo.uProductId }">${uProductCommentVo.uProductCommentContent }</a></td>
 					<fmt:formatDate value="${uProductCommentVo.uProductCommentCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="uProductCommentCreatedDate"/>
 					<td>${uProductCommentCreatedDate }</td>
@@ -74,7 +74,7 @@
 			<c:forEach var="fBoardCommentVo" items="${lists.fBoardCommentList }">
 				<tr>
 					<td>${fBoardCommentVo.memberNickname }</td>
-					<td>${fBoardCommentVo.fBoardCommentContent }</td>
+					<td><a href="/calla/fBoard/detail?fBoardId=${fBoardCommentVo.fBoardId}">${fBoardCommentVo.fBoardCommentContent }</a></td>
 					<fmt:formatDate value="${fBoardCommentVo.fBoardCommentCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="fBoardCommentCreatedDate"/>
 					<td>${fBoardCommentCreatedDate }</td>
@@ -96,7 +96,7 @@
 			<c:forEach var="qBoardCommentVo" items="${lists.qBoardCommentList }">
 				<tr>
 					<td>${qBoardCommentVo.memberNickname }</td>
-					<td>${qBoardCommentVo.qBoardCommentContent }</td>
+					<td><a href="/calla/qBoard/detail?qBoardId=${qBoardCommentVo.qBoardId}">${qBoardCommentVo.qBoardCommentContent }</a></td>
 					<fmt:formatDate value="${qBoardCommentVo.qBoardCommentCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCommentCreatedDate"/>
 					<td>${qBoardCommentCreatedDate }</td>
