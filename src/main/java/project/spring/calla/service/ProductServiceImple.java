@@ -78,6 +78,12 @@ public class ProductServiceImple implements ProductService {
 		return dao.updateViews(views, productId);
 	}
 
+	@Override
+	public List<ProductVO> selectProductWithAmount(String memberId) {
+		logger.info("productwuthaomut()");
+		return dao.selectProductWithAmount(memberId);
+	}
+
 	
 
 }

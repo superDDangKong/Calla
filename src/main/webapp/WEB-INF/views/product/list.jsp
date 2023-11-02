@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+	crossorigin="anonymous"></script>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style type="text/css">
 table, th, td {
 	border-style : solid;
@@ -15,33 +15,33 @@ table, th, td {
 
 ul {
 	list-style-type : none;
+	text-align: center;
 }
 
 li {
 	display : inline-block;
+	text-align: center;
 }
 </style>
+<!DOCTYPE html>
+<html lang="en">
 <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <title>List</title>
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
+<%@ include file="../header.jspf" %> 	
+
 </head>
 <body>
-	<h1>List</h1>
-	<%@ include file="../header.jspf" %> 	
-	<h1>상품 게시판</h1>
-	<button id="home"><a href="/calla/">홈</a></button>
-	<input type="hidden" id="selectedOption" value=${option }>
-	<input type="hidden" id="sessionNickname" value=${memberNickname }>
-	<input type="hidden" id="sessionLevel" value=${memberLevel }>
-	
-	
-	<div id="register">
-		<a href="register"><input type="button" value="상품 등록"></a>
-	</div>
-	<c:if test="${memberNickname != null}">
-		<div>
-			<a href="order"><input type="button" value="장바구니"></a>
-		</div>
-	</c:if>
+	<h1>상품목록</h1>
 	<form action="list" method="GET">
 		<select id="option" name="option">
 			<option value="searchTitleOrContent">제목&내용</option>
@@ -49,44 +49,55 @@ li {
 		<input type="text" name="keyword" value="${keyword }"> 
 		<input type="submit" value="검색">
 	</form>
+	<input type="hidden" id="selectedOption" value=${option }>
+	<input type="hidden" id="sessionNickname" value=${memberNickname }>
+	<input type="hidden" id="sessionLevel" value=${memberLevel }>
+	
+	
+	<div id="register">
+		<button id="home"><a href="/calla/">홈</a></button>
+		<a href="register"><input type="button" value="상품 등록"></a>
+		<c:if test="${memberNickname != null}">
+			<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니"></a>
+		</c:if>
+	</div>
 	
 	<hr>
-	<table>
-		<thead>
-			<tr>
-				<th style="width : 60px">번호</th>
-				<th style="width : 60px">이미지</th>
-				<th style="width : 60px">이름</th>
-				<th style="width : 60px">가격</th>
-				<th style="width : 60px">카테고리</th>
-				<th style="width : 60px">작성일</th>
-				<th style="width : 60px">리뷰수</th>
-				<th style="width : 60px">좋아요수</th>
-				<th style="width : 60px">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
+	<section class="py-5">
+	<div class="container px-4 px-lg-5 mt-5">
+		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 			<c:forEach var="vo" items="${list }">
-				<tr>
-					<td>${vo.productId }</td>					
-					<td>
-						<div>
-							<img src="display?fileName=${vo.productImagePath}" width="100px" height="100px">
-						</div>
-					</td>
-					<td><a href="detail?productId=${vo.productId }&memberId=${memberId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
-					<td>${vo.productPrice }</td>
-					<td>${vo.productCategori }</td>
-					<fmt:formatDate value="${vo.productCreatedDate }"
-						pattern="yyyy-MM-dd HH:mm:ss" var="productCreatedDate"/>
-					<td>${productCreatedDate }</td>
-					<td>${vo.productCommentCount }</td>
-					<td>${vo.productLikes }</td>
-					<td>${vo.productViews }</td>
-				</tr>
+				<div class="col mb-5">
+					<div class="card h-100">
+						<img class="card-img-top" src="display?fileName=${vo.productImagePath}" width="200px" height="150px" alt="..." />
+							<div class="card-body p-4">
+								<div class="text-center">
+									<h5 class="fw-bolder">
+										<a href="detail?productId=${vo.productId }&memberId=${memberId }&page=${pageMaker.criteria.page}">${vo.productName }</a>
+									</h5>
+										<div>										
+											<h6>
+												${vo.productCategori } 
+											</h6>
+										</div>
+									<div class="d-flex justify-content-center small text-warning mb-2">
+										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews }
+									</div>
+									가격 : ${vo.productPrice }
+								</div>
+							</div>
+							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+								<div class="text-center">
+									<a class="btn btn-outline-dark mt-auto" href="detail?productId=${vo.productId }&memberId=${memberId }&page=${pageMaker.criteria.page}">상품 보기</a>
+								</div>
+							</div>
+					</div>
+				</div>
+				
 			</c:forEach>
-		</tbody>
-	</table>
+		</div>
+	</div>
+	
 	<ul>
 		<c:if test="${pageMaker.hasPrev }">
 			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
@@ -99,6 +110,8 @@ li {
 			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 		</c:if>
 	</ul>
+</section>
+	
 	
 	<script type="text/javascript">
 		$(document).ready(function(){

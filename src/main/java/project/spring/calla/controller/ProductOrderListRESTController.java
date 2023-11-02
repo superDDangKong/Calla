@@ -16,60 +16,63 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.spring.calla.domain.ProductOrderVO;
-import project.spring.calla.service.ProductOrderService;
+import project.spring.calla.domain.ProductOrderListVO;
+import project.spring.calla.service.ProductOrderListService;
 import project.spring.calla.service.ProductService;
 
 @RestController
 @RequestMapping(value="/product/orders")
-public class ProductOrderRESTController {
+public class ProductOrderListRESTController {
 	
 	private static final Logger logger=
-			LoggerFactory.getLogger(ProductOrderRESTController.class);
+			LoggerFactory.getLogger(ProductOrderListRESTController.class);
 	
 	@Autowired
-	private ProductOrderService productOrderService;
+	private ProductOrderListService productOrderListService;
 	
 	@Autowired
 	private ProductService productService;
 	
 	@PostMapping
-	public ResponseEntity<Integer> createProductOrder(@RequestBody ProductOrderVO vo){
+	public ResponseEntity<Integer> createProductOrder(@RequestBody ProductOrderListVO vo){
 		logger.info("createProductOrder() 호출 : vo = " + vo.toString());
+		
 		int result = 0;
 		try {
-			result = productOrderService.create(vo);
+			result = productOrderListService.create(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all/{porductOrderId}")
-	public ResponseEntity<List<ProductOrderVO>> productOrders(){
+	@GetMapping("/all/{porductOrderListId}")
+	public ResponseEntity<List<ProductOrderListVO>> productOrders(){
 		logger.info("orders() 호출");
 		
-		List<ProductOrderVO> list = productOrderService.read();
-		return new ResponseEntity<List<ProductOrderVO>>(list, HttpStatus.OK);
+		List<ProductOrderListVO> list = productOrderListService.read();
+		return new ResponseEntity<List<ProductOrderListVO>>(list, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{productOrderId}")
+	@PutMapping("/{productId}/{memberId}/{productAmount}")
 	public ResponseEntity<Integer> updateProductOrder(
-			@PathVariable("productOrderId") int productOrderId,
-			@RequestBody ProductOrderVO vo
+			@PathVariable("productId") int productId,
+			@PathVariable("memberId") String memberId,
+			@PathVariable("productAmount") int productAmount
 			){
-		int result = productOrderService.update(vo);
+		int result = productOrderListService.update(productId, memberId, productAmount);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{productOrderId}")
+	@DeleteMapping("/{productId}/{memberId}")
 	public ResponseEntity<Integer> deleteProductOrder(
-			@PathVariable("productOrderId") int productOrderId){
-		logger.info("productOrderId = " + productOrderId);
+			@PathVariable("productId") int productId,
+			@PathVariable("memberId") String memberId){
+		logger.info("memberId = " + memberId);
 		
 		int result = 0;
 		try {
-			result = productOrderService.delete(productOrderId);
+			result = productOrderListService.delete(productId, memberId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -2,51 +2,106 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+	crossorigin="anonymous"></script>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<style type="text/css">
-ul {
-	list-style-type : none;
-}
+<!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-li {
-	display : inline-block;
-}
+<!-- Bootstrap CSS -->
+    <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/css/styles.css" rel="stylesheet" />
+    
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+ <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        font-family: "Jua", sans-serif;
+      }
+      .product-img {
+        width: 500px;
+        height: 300px;
+        background-position: center;
+        background-size: cover;
+      }
+      .product-desc {
+        width: 500px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
 
-</style>
+      .price {
+        font-size: 20px;
+        font-style: italic;
+      }
+
+      .item-order {
+        width: 500px;
+      }
+
+      .btn-order {
+        margin: auto;
+        width: 100px;
+
+        display: block;
+      }
+      .wrap {
+        width: 500px;
+        padding-top: 50px;
+        margin: auto;
+      }
+     .productImage {
+	    width: 500px;
+	    height: 300px;
+	    background-position: center;
+	    background-size: cover;
+     }
+     .productTextarea {
+     	width: 100%; /* Full width */
+   		height: auto; /* Automatically set height */
+    	max-width: 100%; /* Maximum width */
+    	resize: none; /* Disable resizing */
+     }
+    </style>
+
+
 
 
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
 </head>
+<%@ include file="../header.jspf" %> 
 <body>
-	<%@ include file="../header.jspf" %>
-	<h2>상품 보기</h2>
-	<div>
-		<p>상품 번호 : ${vo.productId }</p>
-	</div>
-	<div>
-		<p>상품 이름 : ${vo.productName }</p>
-	</div>
-	<div>
-		<p>상품 이미지 : </p>
-		<img src="display?fileName=${vo.productImagePath}" width="100px" height="100px">
-	</div>
-	<div>
-		<p>작성일 : ${vo.productCreatedDate }</p>
-		<p>카테고리 : ${vo.productCategori }</p>
-		<p>가격 : ${vo.productPrice }
-	</div>
-	<div>
-		<textarea rows="20" cols="120" readonly>${vo.productContent }</textarea>
-	</div>
-	
-	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
 	<input type="hidden" id="productId" name="productId" value="${vo.productId }" >
-	
+	<input type="hidden" id="productId" value="${productId}" />
+	<input type="hidden" id="memberId" value="${memberId}" />
+	<input type="hidden" id="productPrice" value="${productPrice}" />
+	<input type="hidden" id="productOrderListId" value="${productOrderListId}" />
 	
 	<c:set var="memberNickname" value="${memberNickname }" />
 	<c:set var="voMemberNickname" value="${vo.memberNickname }" />
@@ -54,40 +109,69 @@ li {
 	<c:set var="voMemberLevel" value="${vo.memberLevel }" />
 	<c:set var="productOrderId" value="${productOrderId }" />
 	
-	<c:if test="${memberLevel > 1}">
-	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
-	<form action="delete" method="POST">
-		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
-		<input type="submit" value="상품 삭제">
-	</form>
-	</c:if>
-	<c:if test="${memberNickname != null}">
-	<div>
-		<input type="hidden" id="memberNickname" value=${memberNickname }>
-		<c:if test="${productLikeId == 0 }">
-			<button id="likeBtn">좋아요</button>		
+	<div class="wrap">
+		<div class="product-img">
+      		<img src="display?fileName=${vo.productImagePath}" class="productImage">
+      	</div>
+	 	<div class="product-desc">
+        	<h2>
+          	${vo.productName }
+        	</h2>
+        	<textarea class="productTextarea" rows="20" cols="120" readonly>${vo.productContent }</textarea>
+        	<p>상품 등록일 : ${vo.productCreatedDate }</p>
+			<p>카테고리 : ${vo.productCategori }</p>
+          	<span class="price"> 가격: ${vo.productPrice} </span>
+      	</div>
+      	<div>
+    		<label for="productAmount">수량:</label>
+    		<input type="number" id="productAmount" name="productAmount" min="1" value="1" required>
+		</div>
+		<div style="display: inline-block">
+    		<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
+			<c:if test="${memberLevel > 1}">
+				<a href="update?productId=${vo.productId }&page=${page }">
+					<input type="button" class="productUpdateBtn" value="상품 수정">
+				</a>
+			</c:if>
+		</div>
+		<div style="display: inline-block">
+			<c:if test="${memberLevel > 1}">
+				<form action="delete" method="POST">
+					<input type="hidden" id="productId" name="productId" value="${vo.productId }"> 
+					<input type="submit" class="productDeleteBtn" value="상품 삭제">
+				</form>
+			</c:if>
+		</div>
+		<p></p>
+		<c:if test="${memberNickname != null}">
+			<div style="display: inline-block">
+				<input type="hidden" id="memberNickname" value=${memberNickname }>
+			<c:if test="${productLikeId == 0 }">
+				<button id="likeBtn">좋아요</button>		
+			</c:if>
+			<c:if test="${productLikeId != 0 }">
+				<button id="likeBtn">좋아요취소</button>		
+			</c:if>
+				<span id="likeCnt">${vo.productLikes }</span> 
+				<input type="hidden" id="productLikeId" name="productLikeId" value="${productLikeId }">
+			</div>
+			
+			<div style="display: inline-block">
+				<c:if test="${productOrderListId == 0 }">
+					<button id="orderBtn">장바구니 넣기</button>		
+				</c:if>
+				<c:if test="${productOrderListId != 0 }">
+					<button id="orderBtn">장바구니 삭제</button>				
+				</c:if>
+			</div>
+		
 		</c:if>
-		<c:if test="${productLikeId != 0 }">
-			<button id="likeBtn">좋아요취소</button>		
-		</c:if>
-		<span id="likeCnt">${vo.productLikes }</span> 
-		<input type="hidden" id="productLikeId" name="productLikeId" value="${productLikeId }">
 	</div>
-	</c:if>
-	<c:if test="${memberNickname != null}">
-	<div>
-		<c:if test="${productOrderId == null }">
-			<button id="orderBtn">장바구니 넣기</button>		
-		</c:if>
-		<c:if test="${productOrderId != null }">
-			<button id="orderBtn">장바구니 삭제</button>				
-		</c:if>
-	</div>
-	</c:if>
-
+		
 	<c:if test="${memberNickname == null }">
 		<br> 구매하실려면 로그인해 주세요.
 	</c:if>
+	<p></p>
 	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
 		${memberNickname}
@@ -500,8 +584,16 @@ li {
 			orderBtn.click(function(){
 				console.log('클릭');
 				var productId = $('#productId').val();
-		        var memberNickname = $('#memberNickname').val();
-			
+		        var memberId = $('#memberId').val();
+				var productPrice = $('#productPrice').val();
+				var productAmount = parseInt(document.getElementById('productAmount').value, 10);
+
+				
+				var obj = {
+						'productId' : productId, 
+						'memberId' : memberId,
+						'productAmount' : productAmount
+				};
 				if($(this).text() === '장바구니 넣기'){
 			        $.ajax({
 			        	type : 'POST',
@@ -509,10 +601,10 @@ li {
 			        	headers: {
 		                    'Content-Type': 'application/json'
 		                },
-		                data: JSON.stringify({ productId: productId, memberNickname: memberNickname }),
+		                data : JSON.stringify(obj),
 		                success : function(result){
 		                	console.log(result);
-		                	if(result.result == 1){
+		                	if(result == 1){
 		                		alert('장바구니 등록');
 		                		orderBtn.text('장바구니 삭제');
 		                	}
@@ -521,15 +613,15 @@ li {
 				} else{
 					$.ajax({
 						type : 'DELETE',
-						url : 'orders/' + productOrderId,
+						url : 'orders/' + productId + '/' + memberId,
 						headers: {
 			                   'Content-Type': 'application/json'
 			               },
 			            success: function(result) {
 			                 console.log(result);
-			                 if (result.result == 1) {
+			                 if (result == 1) {
 			                     alert('장바구니 삭제');
-			                     orderBtn.text('장바구니 등록');
+			                     orderBtn.text('장바구니 넣기');
 			                 }
 			             }  
 					}); // end ajax

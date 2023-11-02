@@ -6,11 +6,11 @@ import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface ProductDAO {
-	int insert(ProductVO vo); // »óÇ° µî·Ï
-	List<ProductVO> select(); // »óÇ° ÀüÃ¼ °Ë»ö
-	ProductVO select(int productId); // »óÇ° °Ë»ö	
-	int update(ProductVO vo); // »óÇ° ¼öÁ¤
-	int delete(int productId); // »óÇ° »èÁ¦
+	int insert(ProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
+	List<ProductVO> select(); // ï¿½ï¿½Ç° ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
+	ProductVO select(int productId); // ï¿½ï¿½Ç° ï¿½Ë»ï¿½	
+	int update(ProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	int delete(int productId); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 	List<ProductVO> select(PageCriteria criteria);
 	int getTotalCount();
 	List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword);
@@ -19,5 +19,6 @@ public interface ProductDAO {
 	int updateViews(int views, int productId);
 	int updateLikeCount(int amount, int productId);
 	List<ProductVO> selectLikes(String memberId);
+	List<ProductVO> selectProductWithAmount(String memberId);
 	
 }

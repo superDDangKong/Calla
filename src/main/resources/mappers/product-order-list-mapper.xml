@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.ProductOrderListMapper">
+
+	
+	<insert id="insert">
+		insert into ${product_order_list}
+		(${memberId}, ${productId}, ${productAmount})
+		values (#{memberId}, #{productId}, #{productAmount})
+	</insert>
+	
+	<select id="select_all" resultType="ProductOrderListVO">
+		select * from ${product_order_list}
+		order by ${productOrderListId} desc
+	</select>
+	
+	<select id="select_by_product_order_id" resultType="ProductOrderListVO">
+		select * from ${product_order_list} where ${productOrderListId} = #{productOrderListId}
+	</select>
+	
+	<update id="update">
+		update ${product_order_list}
+		set ${productAmount} = #{productAmount}
+		where ${memberId} = #{memberId} and ${productId} = #{productId}
+	</update>
+	
+	<delete id="delete">
+		delete from ${product_order_list}
+		where ${productId} = #{productId} and ${memberId} = #{memberId}
+	</delete>
+	
+	<select id="select_by_member_id" resultType="ProductOrderListVO">
+		select * from ${product_order_list} where ${productId} = #{productId} and ${memberId} = #{memberId}
+	</select>
+	
+	<select id="select_by_id" resultType="ProductOrderListVO">
+		select ${productId} from ${product_order_list} where ${memberId} = #{memberId}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>

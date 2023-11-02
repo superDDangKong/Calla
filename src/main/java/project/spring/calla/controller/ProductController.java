@@ -2,6 +2,7 @@ package project.spring.calla.controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -28,13 +29,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.ProductLikeVO;
-import project.spring.calla.domain.ProductOrderVO;
+import project.spring.calla.domain.ProductOrderListVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
 import project.spring.calla.service.ProductLikeService;
-import project.spring.calla.service.ProductOrderService;
+import project.spring.calla.service.ProductOrderListService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -56,7 +57,7 @@ public class ProductController {
 	private ProductLikeService productLikeService;
 	
 	@Autowired
-	private ProductOrderService productOrderService;
+	private ProductOrderListService productOrderListService;
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -92,6 +93,8 @@ public class ProductController {
 			pageMaker.setTotalCount(productService.getTotalCounts());
 		}
 		logger.info("totalCount = " + pageMaker.getTotalCount());
+		
+		
 		model.addAttribute("list",list);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
@@ -182,7 +185,15 @@ public class ProductController {
 			if (productLikeVO != null) {
 				productLikeId = productLikeVO.getProductLikeId();
 			} 
-		logger.info("productLikeId 호출 몇인데? = " + productLikeId);
+			
+		Integer productOrderListId = 0;
+		ProductOrderListVO productOrderListVO = productOrderListService.read(productId, memberId);
+			if (productOrderListVO != null) {
+				productOrderListId = productOrderListVO.getProductOrderListId();
+			} 		
+		
+		logger.info("productLikeId = "+ productLikeId + ", productOrderListid = " + productOrderListId);
+		model.addAttribute("productOrderListId", productOrderListId);
 		model.addAttribute("productLikeId", productLikeId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("memberNickname", memberNickname);
@@ -273,21 +284,23 @@ public class ProductController {
 		return entity;
 	}
 	
-	@GetMapping("/order")
-	public String order(Model model, Integer productId, HttpServletRequest request, HttpServletResponse response) {
-		logger.info("order() 호출 : productId = " + productId);
-		MemberVO memberVO = new MemberVO();
-	    List<ProductOrderVO> list = null;
-	    String memberNickname = memberVO.getMemberNickname();
-	    ProductVO productVO = null;
+	@GetMapping("/orderList")
+	public String orderList(Model model, String memberId, HttpServletRequest request, HttpServletResponse response) {
+		logger.info("orderList() 호출 : memberId = " + memberId);
 	    
-	    list = productOrderService.read();
+	    List<ProductVO> productList = productService.selectProductWithAmount(memberId);
+
+	    double totalSum = 0;
+	    for (ProductVO vo : productList) {
+	        totalSum += vo.getProductPrice() * vo.getProductAmount();
+	    }
 	    
-	    model.addAttribute("productVO", productVO);
-	    model.addAttribute("list", list);
-	    model.addAttribute("memberNickname", memberNickname);
+	    model.addAttribute("totalSum", totalSum);
+	    model.addAttribute("memberId", memberId);
+	    model.addAttribute("productList", productList);
+	    
 		
-	    return "/product/order";
+	    return "/product/orderList";
 	}
 	
 

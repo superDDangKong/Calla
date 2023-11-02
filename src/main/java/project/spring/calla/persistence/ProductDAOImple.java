@@ -27,37 +27,37 @@ public class ProductDAOImple implements ProductDAO {
 	
 	@Override
 	public int insert(ProductVO vo) {
-		logger.info("insert() È£Ãâ");
+		logger.info("insert() È£ï¿½ï¿½");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	} // end insert()
 
 	@Override
 	public List<ProductVO> select() {
-		logger.info("select() È£Ãâ");
+		logger.info("select() È£ï¿½ï¿½");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	} // end select()
 
 	@Override
 	public ProductVO select(int productId) {
-		logger.info("select() È£Ãâ : productId = " + productId);
+		logger.info("select() È£ï¿½ï¿½ : productId = " + productId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() È£Ãâ : vo = " + vo.toString());
+		logger.info("update() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(int productId) {
-		logger.info("delete() È£Ãâ : productId = " + productId);
+		logger.info("delete() È£ï¿½ï¿½ : productId = " + productId);
 		return sqlSession.delete(NAMESPACE + ".delete", productId);
 	}
 
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select() È£Ãâ");
+		logger.info("select() È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
@@ -80,7 +80,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword) {
-		logger.info("selectByTitleOrContent() È£Ãâ");
+		logger.info("selectByTitleOrContent() È£ï¿½ï¿½");
 		Map<String, Object> args = new HashMap();
 //		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
@@ -120,6 +120,11 @@ public class ProductDAOImple implements ProductDAO {
 		logger.info("updateLikeCount() : memberId = " + memberId);
 		return null;
 	}
+
+	public List<ProductVO> selectProductWithAmount(String memberId) {
+	    return sqlSession.selectList(NAMESPACE + ".select_product_with_amount", memberId);
+	}
+
 
 	
 
