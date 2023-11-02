@@ -179,7 +179,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	 </select> 
 	 
 	 <select id="total_count_by_u_product_Address" resultType="Integer">
 	  	select count(*) total_cnt from ${u_product} 
