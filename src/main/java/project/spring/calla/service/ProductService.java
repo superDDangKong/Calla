@@ -16,5 +16,6 @@ public interface ProductService {
 	int getTotalCountsByProductNameOrProductContent(String keyword);
 	int updateViews(int views, int productId);
 	List<ProductVO> selectProductWithAmount(String memberId);
-
+	List<ProductVO> read();
+	List<ProductVO> readByInterest(String interest);
 }

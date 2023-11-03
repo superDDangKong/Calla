@@ -112,6 +112,18 @@ public class UProductServiceImple implements UProductService {
 		return dao.recommendCategori(uProductCategori, uProductId);
 	}
 
+	@Override
+	public List<UProductVO> read() {
+		logger.info("read() 호출");
+		return dao.select();
+	}
+
+	@Override
+	public List<UProductVO> readByInterest(String interest) {
+		logger.info("readByInterest() 호출");
+		return dao.selectByInterest(interest);
+	}
+
 	
 
 }

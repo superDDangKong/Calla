@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +12,18 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <%@ include file="../header.jspf" %> 
-<title>세션 만료</title>
+<title>작성 글</title>
 </head>
-<body style="text-align:center">
-<h1>세션이 만료되었습니다.</h1>
-<h2>다시 로그인 해주세요.</h2>
-<br>
-<form action="login" method="get">
-	<input type="hidden" id="targetURL" name="targetURL" value="${param.targetURL }">
-	<input type="submit" value="로그인 하러 가기">
-</form>
-	<%@ include file="../footer.jspf"%>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="../sidebar2.jspf"%>
+			
+			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				취소 내역 페이지
+			</main>
+		</div>
+	</div>
+	<%@ include file="../footer.jspf"%>	
 </body>
-<script>
-	console.log($('#targetURL').val());
-</script>
 </html>

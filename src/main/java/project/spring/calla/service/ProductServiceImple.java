@@ -84,6 +84,18 @@ public class ProductServiceImple implements ProductService {
 		return dao.selectProductWithAmount(memberId);
 	}
 
+	@Override
+	public List<ProductVO> read() {
+		logger.info("read() 호출");
+		return dao.select();
+	}
+
+	@Override
+	public List<ProductVO> readByInterest(String interest) {
+		logger.info("readByInterest() 호출");
+		return dao.selectByInterest(interest);
+	}
+
 	
 
 }

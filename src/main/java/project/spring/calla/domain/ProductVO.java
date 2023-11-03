@@ -16,6 +16,7 @@ public class ProductVO {
 	private String memberNickname; // 회원 닉네임
 	private int memberLevel; // 회원 등급
 	private int productAmount;
+	private int productLikeId;
 	
 	
 	public ProductVO() {}
@@ -23,7 +24,8 @@ public class ProductVO {
 
 	public ProductVO(int productId, String productName, int productPrice, int productViews, int productLikes,
 			Date productCreatedDate, String productCategori, String productImagePath, String productContent,
-			int productCommentCount, String memberNickname, int memberLevel) {
+			int productCommentCount, String memberNickname, int memberLevel, int productAmount, int productLikeId) {
+		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.productPrice = productPrice;
@@ -36,6 +38,8 @@ public class ProductVO {
 		this.productCommentCount = productCommentCount;
 		this.memberNickname = memberNickname;
 		this.memberLevel = memberLevel;
+		this.productAmount = productAmount;
+		this.productLikeId = productLikeId;
 	}
 
 
@@ -157,14 +161,27 @@ public class ProductVO {
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
 	}
-	
+
+
 	public int getProductAmount() {
 		return productAmount;
 	}
-	
+
+
 	public void setProductAmount(int productAmount) {
 		this.productAmount = productAmount;
 	}
+
+
+	public int getProductLikeId() {
+		return productLikeId;
+	}
+
+
+	public void setProductLikeId(int productLikeId) {
+		this.productLikeId = productLikeId;
+	}
+
 
 	@Override
 	public String toString() {
@@ -172,12 +189,9 @@ public class ProductVO {
 				+ ", productViews=" + productViews + ", productLikes=" + productLikes + ", productCreatedDate="
 				+ productCreatedDate + ", productCategori=" + productCategori + ", productImagePath=" + productImagePath
 				+ ", productContent=" + productContent + ", productCommentCount=" + productCommentCount
-				+ ", memberNickname=" + memberNickname + ", memberLevel=" + memberLevel + "]";
+				+ ", memberNickname=" + memberNickname + ", memberLevel=" + memberLevel + ", productAmount="
+				+ productAmount + ", productLikeId=" + productLikeId + "]";
 	}
-	
-	
-	
-	
 	
 	
 }

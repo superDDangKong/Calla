@@ -16,6 +16,7 @@ public class UProductVO {
 	private String memberNickname;
 	private String uProductImagePath; 
 	private int uProductCommentCount;
+	private int uProductLikeId;
 	
 	
 	public UProductVO() {}
@@ -23,7 +24,7 @@ public class UProductVO {
 
 	public UProductVO(int uProductId, String uProductName, String uProductPrice, int uProductViews, int uProductLikes,
 			Date uProductCreatedDate, String uProductCategori, String memberAddress, String uProductContent,
-			String memberNickname, String uProductImagePath, int uProductCommentCount) {
+			String memberNickname, String uProductImagePath, int uProductCommentCount, int uProductLikeId) {
 		super();
 		this.uProductId = uProductId;
 		this.uProductName = uProductName;
@@ -37,6 +38,7 @@ public class UProductVO {
 		this.memberNickname = memberNickname;
 		this.uProductImagePath = uProductImagePath;
 		this.uProductCommentCount = uProductCommentCount;
+		this.uProductLikeId = uProductLikeId;
 	}
 
 
@@ -160,19 +162,25 @@ public class UProductVO {
 	}
 
 
+	public int getuProductLikeId() {
+		return uProductLikeId;
+	}
+
+
+	public void setuProductLikeId(int uProductLikeId) {
+		this.uProductLikeId = uProductLikeId;
+	}
+
+
 	@Override
 	public String toString() {
-		return "UproductVO [uProductId=" + uProductId + ", uProductName=" + uProductName + ", uProductPrice="
+		return "UProductVO [uProductId=" + uProductId + ", uProductName=" + uProductName + ", uProductPrice="
 				+ uProductPrice + ", uProductViews=" + uProductViews + ", uProductLikes=" + uProductLikes
 				+ ", uProductCreatedDate=" + uProductCreatedDate + ", uProductCategori=" + uProductCategori
 				+ ", memberAddress=" + memberAddress + ", uProductContent=" + uProductContent + ", memberNickname="
 				+ memberNickname + ", uProductImagePath=" + uProductImagePath + ", uProductCommentCount="
-				+ uProductCommentCount + "]";
+				+ uProductCommentCount + ", uProductLikeId=" + uProductLikeId + "]";
 	}
 
-
 	
-
-
-		
 }

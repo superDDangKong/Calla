@@ -3,6 +3,7 @@ package project.spring.calla.persistence;
 import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
+import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
@@ -32,5 +33,8 @@ public interface UProductDAO {
 	int getTotalCountsByAddress(String keyword);
 	
 	List<UProductVO> recommendCategori(String uProductCategori, int uProductId);
+	
+	List<UProductVO> selectLikes(String memberId);
+	List<UProductVO> selectByInterest(String interest);
 	
 }

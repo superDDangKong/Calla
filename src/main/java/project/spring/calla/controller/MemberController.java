@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductVO;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.service.MemberService;
 
@@ -112,13 +113,14 @@ public class MemberController {
 		return "redirect:/";
 	} // end logoutGET()
 	
-	@GetMapping("/myPage")
-	public void myPageGET(Model model, String memberId) {
+	@GetMapping("/order")
+	public void orderGET(Model model) {
 		
-		MemberVO vo = memberService.read(memberId);
-		model.addAttribute("vo", vo);
-	} // end myPageGET()
-	
+	} // end orderGET()
+	@GetMapping("/cancel")
+	public void cancel(Model model) {
+		
+	} // end orderGET()
 	@GetMapping("/update")
 	public void updateGET(Model model, HttpServletRequest request) {
 		
@@ -148,13 +150,13 @@ public class MemberController {
 	
 	@GetMapping("/likes")
 	public void likesGET(Model model, HttpServletRequest request) {
-		
-		
+		logger.info("likes() 호출 ");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		if(memberId != null) {
-		MemberVO vo = memberService.read(memberId);
-		model.addAttribute("vo", vo);
+			Map<String, Object> args = memberService.readLikes(memberId);
+			model.addAttribute("lists", args);
+			logger.info(args.toString());
 		}
 	} // end likesGET()
 	
@@ -194,9 +196,6 @@ public class MemberController {
 		}
 		
 	} // end searchPwPOST()
-	
-	@GetMapping("/order")
-	public void orderGET() {}
 	
 	@GetMapping("/comments")
 	public void commentsGET(Model model, HttpServletRequest request) {

@@ -117,12 +117,18 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectLikes(String memberId) {
-		logger.info("updateLikeCount() : memberId = " + memberId);
-		return null;
+		logger.info("selectLikes() : memberId = " + memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
 
 	public List<ProductVO> selectProductWithAmount(String memberId) {
 	    return sqlSession.selectList(NAMESPACE + ".select_product_with_amount", memberId);
+	}
+
+	@Override
+	public List<ProductVO> selectByInterest(String interest) {
+		logger.info("selectselectByInterest : interest = " + interest);
+		return sqlSession.selectList(NAMESPACE + ".select_by_interest", interest);
 	}
 
 

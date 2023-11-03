@@ -68,7 +68,7 @@ public class ProductController {
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		List<ProductVO> list = null;
 		
-		//Paginf 贸府
+		//Paging 贸府
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -302,9 +302,6 @@ public class ProductController {
 		
 	    return "/product/orderList";
 	}
-	
-
-	
 	
 	
 } 

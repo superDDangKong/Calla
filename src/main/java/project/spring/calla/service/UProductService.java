@@ -21,5 +21,7 @@ public interface UProductService {
 	List<UProductVO> readByAddress(PageCriteria criteria, String keyword);
 	int getTotalCountsByAddress(String keyword);
 	List<UProductVO> readrecommend(String uProductCategori, int uProductId); 
-
+	List<UProductVO> read();
+	List<UProductVO> readByInterest(String interest);
+	
 }

@@ -131,8 +131,8 @@ public class MemberServiceImple implements MemberService {
 	public Map<String, Object> readLikes(String memberId) {
 		logger.info("readLikes() 호출 memberId : " + memberId);
 		Map<String, Object> args = new HashMap();
-//		args.put("productList", productDAO.selectAllByMemberNickname(memberId));
-//		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberId));
+		args.put("productLikesList", productDAO.selectLikes(memberId));
+		args.put("uProductLikesList", uProductDAO.selectLikes(memberId));
 		return args;
 	}
 

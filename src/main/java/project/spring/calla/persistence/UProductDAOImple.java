@@ -158,6 +158,15 @@ public class UProductDAOImple implements UProductDAO {
 		return sqlSession.selectList(NAMESPACE + ".recommend_by_u_product_categori", args);
 	}
 
-	
+	@Override
+	public List<UProductVO> selectLikes(String memberId) {
+		logger.info("selectLikes() »£√‚ : memberId = " + memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
+	}
 
+	@Override
+	public List<UProductVO> selectByInterest(String interest) {
+		logger.info("selectselectByInterest : interest = " + interest);
+		return sqlSession.selectList(NAMESPACE + ".select_by_interest", interest);
+	}
 }

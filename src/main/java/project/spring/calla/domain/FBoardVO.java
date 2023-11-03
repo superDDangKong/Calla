@@ -11,11 +11,13 @@ public class FBoardVO {
 	private Date fBoardCreatedDate;
 	private int fBoardViews;
 	private int fBoardCommentCount;
+	private String fBoardImagePath;
 
 	public FBoardVO() {}
 
 	public FBoardVO(int fBoardId, String memberNickname, String fBoardTitle, String fBoardContent,
-			Date fBoardCreatedDate, int fBoardViews, int fBoardCommentCount) {
+			Date fBoardCreatedDate, int fBoardViews, int fBoardCommentCount, String fBoardImagePath) {
+		super();
 		this.fBoardId = fBoardId;
 		this.memberNickname = memberNickname;
 		this.fBoardTitle = fBoardTitle;
@@ -23,6 +25,7 @@ public class FBoardVO {
 		this.fBoardCreatedDate = fBoardCreatedDate;
 		this.fBoardViews = fBoardViews;
 		this.fBoardCommentCount = fBoardCommentCount;
+		this.fBoardImagePath = fBoardImagePath;
 	}
 
 	public int getfBoardId() {
@@ -81,14 +84,21 @@ public class FBoardVO {
 		this.fBoardCommentCount = fBoardCommentCount;
 	}
 
+	public String getfBoardImagePath() {
+		return fBoardImagePath;
+	}
+
+	public void setfBoardImagePath(String fBoardImagePath) {
+		this.fBoardImagePath = fBoardImagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "FBoardVO [fBoardId=" + fBoardId + ", memberNickname=" + memberNickname + ", fBoardTitle=" + fBoardTitle
 				+ ", fBoardContent=" + fBoardContent + ", fBoardCreatedDate=" + fBoardCreatedDate + ", fBoardViews="
-				+ fBoardViews + ", fBoardCommentCount=" + fBoardCommentCount + "]";
+				+ fBoardViews + ", fBoardCommentCount=" + fBoardCommentCount + ", fBoardImagePath=" + fBoardImagePath
+				+ "]";
 	}
-
-	
 	
 	
 }
