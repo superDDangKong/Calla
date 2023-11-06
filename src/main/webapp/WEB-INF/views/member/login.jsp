@@ -14,32 +14,40 @@
 <title>로그인</title>
 </head>
 <body>
-<form action="login" method="POST">
-    <label for="memberId">아이디:</label>
-    <input type="text" id="memberId" name="memberId" value="test"> 
-    <br>
-    <label for="memberPw">비밀번호:</label> 
-    <input type="password" id="memberPw" name="memberPw" value="test"> 
-    <br>
-    <input type="submit" value="로그인">
-    
-    
-    <c:if test="${not empty param.targetURL}">
-    <input type="hidden" id="targetURL" name="targetURL" value="${param.targetURL}">
-    </c:if>
-</form>
-
-<form action="searchId" method="get">
-	<input type="submit" value="아이디 찾기">
-</form>
-
-<form action="searchPw" method="get">
-	<input type="submit" value="비밀번호 찾기">
-</form>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">로그인</h4>
+                        <form action="login" method="POST">
+                            <div class="form-group">
+                                <label for="memberId">아이디:</label>
+                                <input type="text" id="memberId" name="memberId" value="test" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberPw">비밀번호:</label>
+                                <input type="password" id="memberPw" name="memberPw" value="test" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">로그인</button>
+                            <c:if test="${not empty param.targetURL}">
+                                <input type="hidden" id="targetURL" name="targetURL" value="${param.targetURL}">
+                            </c:if>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="searchId">아이디 찾기</a> | <a href="searchPw">비밀번호 찾기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<input type="hidden" name="searchResult" id="searchResult" value="${searchResult }">
 	<input type="hidden" name="searchId" id="searchId" value="${searchId }">
 	<input type="hidden" name="searchPw" id="searchPw" value="${searchPw }">
+	
+	
 	<script type="text/javascript">
 		var searchResult = $('#searchResult').val();
 		var searchId = $('#searchId').val();

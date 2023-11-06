@@ -20,23 +20,22 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
-
-			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<h1>공용상품</h1>
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th style="width: 120px">상품명</th>
 							<th style="width: 120px">상품가격</th>
-							<th style="width: 700px">상품 카테고리</th>
-							<th style="width: 100px">상품 설명</th>
+							<th style="width: 200px">상품 카테고리</th>
+							<th style="width: 200px">상품 설명</th>
+							<th style="width: 200px"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="productVo" items="${lists.productLikesList }">
 							<tr>
-								<input type="hidden" name="productLikeId"
-									value=${productVo.productLikeId }>
+								<input type="hidden" name="productLikeId" value="${productVo.productLikeId}">
 								<td><a
 									href="/calla/product/detail?productId=${productVo.productId}&memberId=${memberId}">${productVo.productName }</a></td>
 								<td>${productVo.productPrice }</td>
@@ -47,22 +46,21 @@
 						</c:forEach>
 					</tbody>
 				</table>
-
 				<h1>중고상품</h1>
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th style="width: 120px">상품명</th>
 							<th style="width: 120px">상품가격</th>
-							<th style="width: 700px">상품 카테고리</th>
-							<th style="width: 100px">상품 설명</th>
+							<th style="width: 200px">상품 카테고리</th>
+							<th style="width: 200px">상품 설명</th>
+							<th style="width: 200px"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="uProductVo" items="${lists.uProductLikesList }">
 							<tr>
-								<input type="hidden" name="uProductLikeId"
-									value=${uProductVo.uProductLikeId }>
+								<input type="hidden" name="uProductLikeId" value="${uProductVo.uProductLikeId}">
 								<td><a
 									href="/calla/uProduct/detail?uProductId=${uProductVo.uProductId}">${uProductVo.uProductName }</a></td>
 								<td>${uProductVo.uProductPrice }</td>
@@ -74,6 +72,7 @@
 					</tbody>
 				</table>
 			</main>
+			<%@ include file="../sidebarRight.jspf"%>
 		</div>
 	</div>
 	<%@ include file="../footer.jspf"%>

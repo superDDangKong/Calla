@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 public interface MemberService {
 	int create(MemberVO vo);
@@ -17,6 +18,8 @@ public interface MemberService {
 	Map<String, Object> readComments(String memberNickname);
 	Map<String, Object> readBoards(String memberNickname);
 	Map<String, Object> readLikes(String memberId);
+	Map<String, Object> readRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
+	Map<String, Integer> getTotalCountsByRecentlyView(String memberId);
 	int updatePw(String memberId, String memberPw);
 	int updateNickname(String memberId, String memberNickname);
 	int updatePhone(String memberId, String memberPhone);

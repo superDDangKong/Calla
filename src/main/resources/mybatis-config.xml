@@ -138,6 +138,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productId" value="product_id"/>
 		<property name="productAmount" value="product_amount"/>
 		
+		<property name="product_recently_view" value="product_recently_view"/>
+		<property name="productRecentlyViewId" value="product_recently_view_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="productRecentlyViewDate" value="product_recently_view_date"/>
+		
+		<property name="u_product_recently_view" value="u_product_recently_view"/>
+		<property name="uProductRecentlyViewId" value="u_product_recently_view_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="uProductId" value="u_product_id"/>
+		<property name="uProductRecentlyViewDate" value="u_product_recently_view_date"/>
 		
 	</properties>
 	

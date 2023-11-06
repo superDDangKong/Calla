@@ -195,6 +195,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM ${u_product} 
 		WHERE ${uProductCategori} = #{interest}
 	</select>
+	
+	<insert id="insert_recently_view">
+		insert into ${u_product_recently_view}
+		(${uProductId}, ${memberId})
+		values (#{uProductId}, #{memberId})
+	</insert>
+	
+	<select id="select_recently_view" resultType="UProductVO">
+		select up.*, upr.${uProductRecentlyViewId}
+		from ${u_product} up
+		join ${u_product_recently_view} upr on up.${uProductId} = upr.${uProductId}
+		where upr.${memberId} = #{memberId} order by ${uProductRecentlyViewDate} desc
+	</select>
+	
+	<select id="get_total_counts_by_recently_view" resultType="Integer">
+	  	select count(*) total_cnt
+		from ${u_product} up
+		join ${u_product_recently_view} upr on up.${uProductId} = upr.${uProductId}
+		where upr.${memberId} = #{memberId}
+	</select>
 </mapper>
 
 

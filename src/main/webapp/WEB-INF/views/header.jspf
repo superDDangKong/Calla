@@ -32,6 +32,7 @@
 					</form>
 				</c:if>
 				<c:if test="${not empty memberNickname }">
+					${memberNickname }&nbsp;님&nbsp; 
 					<form action="/calla/member/logout" method="get">
 						<input type="submit" value="로그아웃">
 					</form>

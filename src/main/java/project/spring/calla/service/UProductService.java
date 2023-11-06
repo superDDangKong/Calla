@@ -23,5 +23,5 @@ public interface UProductService {
 	List<UProductVO> readrecommend(String uProductCategori, int uProductId); 
 	List<UProductVO> read();
 	List<UProductVO> readByInterest(String interest);
-	
+	int createRecentlyView(int uProductId, String memberId);
 }

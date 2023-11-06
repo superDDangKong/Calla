@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
@@ -135,6 +136,26 @@ public class MemberServiceImple implements MemberService {
 		args.put("uProductLikesList", uProductDAO.selectLikes(memberId));
 		return args;
 	}
+	
+	@Override
+	public Map<String, Object> readRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+		logger.info("readRecentlyView() 호출 memberId : " + memberId);
+		logger.info("getTotalCountsByRecentlyView 호출 criteria : " + criteria.toString());
+		Map<String, Object> args = new HashMap();
+		args.put("productList", productDAO.selectRecentlyView(criteria, memberId));
+		args.put("uProductList", uProductDAO.selectRecentlyView(criteria, memberId));
+		return args;
+	}
+
+	@Override
+	public Map<String, Integer> getTotalCountsByRecentlyView(String memberId) {
+		logger.info("getTotalCountsByRecentlyView 호출 memberId : " + memberId);
+
+		Map<String, Integer> args = new HashMap();
+		args.put("productCount", productDAO.getTotalCountsByRecentlyView(memberId));
+		args.put("uProductCount", uProductDAO.getTotalCountsByRecentlyView(memberId));
+		return args;
+	}
 
 	@Override
 	public int updatePw(String memberId, String memberPw) {
@@ -195,6 +216,7 @@ public class MemberServiceImple implements MemberService {
 		logger.info("delete() 호출");
 		return MemberDAO.delete(memberId);
 	}
+
 
 
 

@@ -7,6 +7,7 @@ import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 public interface UProductDAO {
 	int insert(UProductVO vo); // 상품 등록
@@ -36,5 +37,9 @@ public interface UProductDAO {
 	
 	List<UProductVO> selectLikes(String memberId);
 	List<UProductVO> selectByInterest(String interest);
+	
+	int insertRecentlyView(int uProductId, String memberId);
+	List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
+	int getTotalCountsByRecentlyView(String memberId);
 	
 }

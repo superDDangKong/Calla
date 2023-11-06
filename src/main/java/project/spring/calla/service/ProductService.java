@@ -18,4 +18,6 @@ public interface ProductService {
 	List<ProductVO> selectProductWithAmount(String memberId);
 	List<ProductVO> read();
 	List<ProductVO> readByInterest(String interest);
+	int createRecentlyView(int productId, String memberId);
+	
 }

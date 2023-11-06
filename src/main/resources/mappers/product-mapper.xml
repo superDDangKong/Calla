@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(${productName}, ${productPrice}, ${productCategori}, ${productImagePath}, ${productContent})
 		values (#{productName}, #{productPrice}, #{productCategori}, #{productImagePath}, #{productContent})
 	</insert>
+	
 	<select id="select_all" resultType="ProductVO">
 		select * from ${product}
 		order by ${productId} desc
@@ -91,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productId} = #{productId}
 	</update>
 	
-	<select id="select_likes" resultType="productVO">
+	<select id="select_likes" resultType="ProductVO">
 		select p.${productName}, p.${productPrice}, p.${productCategori}, p.${productContent}, pl.${productLikeId}, pl.${productId}
 		from ${product} p
 		join ${product_like} pl on p.${productId} = pl.${productId}
@@ -109,6 +110,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * 
 		FROM ${product} 
 		WHERE ${productCategori} = #{interest}
+	</select>
+	
+	<insert id="insert_recently_view">
+		insert into ${product_recently_view}
+		(${productId}, ${memberId})
+		values (#{productId}, #{memberId})
+	</insert>
+	
+<!-- 	<select id="select_recently_view" resultType="ProductVO">
+		select p.*, pr.${productRecentlyViewId}
+		from ${product} p
+		join ${product_recently_view} pr on p.${productId} = pr.${productId}
+		where pr.${memberId} = #{memberId} order by ${productRecentlyViewDate} desc
+	</select> -->
+	
+	<select id="select_recently_view" resultType="ProductVO">
+		select ${productId}, ${productName}, ${productPrice}, ${productRecentlyViewId}
+		from(
+			select rownum rn, a.* from(
+				select p.*, pr.${productRecentlyViewId}
+				from ${product} p
+				join ${product_recently_view} pr on p.${productId} = pr.${productId}
+				where pr.${memberId} = #{memberId} order by ${productRecentlyViewDate} desc
+			)a
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="get_total_counts_by_recently_view" resultType="Integer">
+	  	select count(*) total_cnt
+		from ${product} p
+		join ${product_recently_view} pr on p.${productId} = pr.${productId}
+		where pr.${memberId} = #{memberId}
 	</select>
 	
 </mapper>

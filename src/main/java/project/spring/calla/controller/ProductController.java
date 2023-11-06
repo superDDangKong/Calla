@@ -191,6 +191,11 @@ public class ProductController {
 			if (productOrderListVO != null) {
 				productOrderListId = productOrderListVO.getProductOrderListId();
 			} 		
+			
+		if(!memberId.isEmpty()) {
+			int recentlyViewInsert = productService.createRecentlyView(productId, memberId);
+			logger.info(String.valueOf(recentlyViewInsert));
+		}
 		
 		logger.info("productLikeId = "+ productLikeId + ", productOrderListid = " + productOrderListId);
 		model.addAttribute("productOrderListId", productOrderListId);
@@ -200,6 +205,7 @@ public class ProductController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 		model.addAttribute("pageMaker", pageMaker);
+		
 		
 		return "/product/detail";
 	} // end detail()

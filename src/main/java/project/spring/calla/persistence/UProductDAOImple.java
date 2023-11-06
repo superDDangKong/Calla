@@ -10,10 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 @Repository
 public class UProductDAOImple implements UProductDAO {
@@ -163,10 +162,37 @@ public class UProductDAOImple implements UProductDAO {
 		logger.info("selectLikes() »£√‚ : memberId = " + memberId);
 		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
+	
 
 	@Override
 	public List<UProductVO> selectByInterest(String interest) {
 		logger.info("selectselectByInterest : interest = " + interest);
 		return sqlSession.selectList(NAMESPACE + ".select_by_interest", interest);
+	}
+	
+	
+	@Override
+	public int insertRecentlyView(int uProductId, String memberId) {
+	logger.info("insertRecentlyView : uProductId = " + uProductId);
+	logger.info("insertRecentlyView : memberId = " + memberId);
+	Map<String, Object> args = new HashMap();
+	args.put("uProductId", uProductId);
+	args.put("memberId", memberId);
+	return sqlSession.insert(NAMESPACE + ".insert_recently_view", args);
+	}
+	
+	@Override
+	public List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+		logger.info("selectRecentlyView() : memberId = " + memberId);
+		Map<String, Object> args = new HashMap();
+		args.put("memberId", memberId);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_recently_view", args);
+	}
+	@Override
+	public int getTotalCountsByRecentlyView(String memberId) {
+		logger.info("getTotalCountsByRecentlyView() : memberId = " + memberId);
+		return sqlSession.selectOne(NAMESPACE + ".get_total_counts_by_recently_view", memberId);
 	}
 }

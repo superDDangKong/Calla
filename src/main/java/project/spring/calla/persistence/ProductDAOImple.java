@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 @Repository
 public class ProductDAOImple implements ProductDAO {
@@ -120,6 +121,8 @@ public class ProductDAOImple implements ProductDAO {
 		logger.info("selectLikes() : memberId = " + memberId);
 		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
+	
+
 
 	public List<ProductVO> selectProductWithAmount(String memberId) {
 	    return sqlSession.selectList(NAMESPACE + ".select_product_with_amount", memberId);
@@ -131,7 +134,31 @@ public class ProductDAOImple implements ProductDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_by_interest", interest);
 	}
 
+	@Override
+	public int insertRecentlyView(int productId, String memberId) {
+		logger.info("insertRecentlyView : productId = " + productId);
+		logger.info("insertRecentlyView : memberId = " + memberId);
+		Map<String, Object> args = new HashMap();
+		args.put("productId", productId);
+		args.put("memberId", memberId);
+		return sqlSession.insert(NAMESPACE + ".insert_recently_view", args);
+	}
 
+	@Override
+	public List<ProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+		logger.info("selectRecentlyView() : memberId = " + memberId);
+		Map<String, Object> args = new HashMap();
+		args.put("memberId", memberId);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_recently_view", args);
+	}
+	
+	@Override
+	public int getTotalCountsByRecentlyView(String memberId) {
+		logger.info("getTotalCountsByRecentlyView() : memberId = " + memberId);
+		return sqlSession.selectOne(NAMESPACE + ".get_total_counts_by_recently_view", memberId);
+	}
 	
 
 }

@@ -103,7 +103,7 @@ private void testSelectDate() {
 
 	
 	private void testInsert() {
-		UProductVO vo = new UProductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0, 0);
+		UProductVO vo = new UProductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0, 0, 0);
 
 		
 		int result = dao.insert(vo);

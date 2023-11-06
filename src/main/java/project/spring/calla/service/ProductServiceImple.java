@@ -96,6 +96,12 @@ public class ProductServiceImple implements ProductService {
 		return dao.selectByInterest(interest);
 	}
 
+	@Override
+	public int createRecentlyView(int productId, String memberId) {
+		logger.info("createRecentlyView() »£√‚");
+		return dao.insertRecentlyView(productId, memberId);
+	}
+
 	
 
 }

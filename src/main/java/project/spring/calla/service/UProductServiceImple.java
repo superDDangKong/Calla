@@ -124,6 +124,10 @@ public class UProductServiceImple implements UProductService {
 		return dao.selectByInterest(interest);
 	}
 
-	
+	@Override
+	public int createRecentlyView(int uProductId, String memberId) {
+		logger.info("createRecentlyView() »£√‚");
+		return dao.insertRecentlyView(uProductId, memberId);
+	}
 
 }

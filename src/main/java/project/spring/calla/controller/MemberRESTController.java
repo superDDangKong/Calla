@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageMaker;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -177,6 +180,25 @@ public class MemberRESTController {
 
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
+	
+	@GetMapping("/recentlyView/{memberId}/{page}") 
+	public ResponseEntity<Map<String, Object>> recentlyViewGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
+		logger.info("recentlyViewGET() 호출 : memberId = " + memberId);
+		logger.info("recentlyViewGET() 호출 : page = " + page);
+		
+		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
+		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
+		
+		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
+		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
+		criteria.setPage(page);
+		pageMaker.setTotalCount(counts.get("productCount"));
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		logger.info(String.valueOf(pageMaker.isHasNext()));
+		lists.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	}
 }
 	
 	

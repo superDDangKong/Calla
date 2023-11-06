@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -196,7 +198,7 @@ public class UProductController {
 	} // end registerPOST()
 
 	@GetMapping("/detail")
-	public void detail(Model model, Integer uProductId, Integer page) {
+	public void detail(Model model, Integer uProductId, Integer page, HttpServletRequest request) {
 		logger.info("detail() 호출 : productId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
 		logger.info("호출 : prdocutVO = " + vo);
@@ -207,6 +209,14 @@ public class UProductController {
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		if(memberId != null) {
+			int recentlyViewInsert = uproductService.createRecentlyView(uProductId, memberId);
+			logger.info(String.valueOf(recentlyViewInsert));
+		}
 	} // end detail()
 
 	@GetMapping("/update")
