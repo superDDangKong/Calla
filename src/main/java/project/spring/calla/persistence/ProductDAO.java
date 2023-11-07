@@ -25,4 +25,6 @@ public interface ProductDAO {
 	int insertRecentlyView(int productId, String memberId);
 	List<ProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
 	int getTotalCountsByRecentlyView(String memberId);	
+	int deleteRecentlyView(int productRecentlyViewId);
+	
 }

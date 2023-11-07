@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productImagePath} = #{productImagePath}, ${productContent} = #{productContent}
 		where ${productId} = #{productId} 
 	</update>
+	
 	<delete id="delete">
 		delete from ${product}
 		where ${productId} = #{productId}
@@ -118,15 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{productId}, #{memberId})
 	</insert>
 	
-<!-- 	<select id="select_recently_view" resultType="ProductVO">
-		select p.*, pr.${productRecentlyViewId}
-		from ${product} p
-		join ${product_recently_view} pr on p.${productId} = pr.${productId}
-		where pr.${memberId} = #{memberId} order by ${productRecentlyViewDate} desc
-	</select> -->
-	
 	<select id="select_recently_view" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productRecentlyViewId}
+		select ${productId}, ${productName}, ${productPrice}, ${productImagePath}, ${productRecentlyViewId}
 		from(
 			select rownum rn, a.* from(
 				select p.*, pr.${productRecentlyViewId}
@@ -143,5 +137,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		join ${product_recently_view} pr on p.${productId} = pr.${productId}
 		where pr.${memberId} = #{memberId}
 	</select>
+	
+	<delete id="delete_recently_view">
+		delete from ${product_recently_view}
+		where ${productRecentlyViewId} = #{productRecentlyViewId}
+	</delete>
 	
 </mapper>

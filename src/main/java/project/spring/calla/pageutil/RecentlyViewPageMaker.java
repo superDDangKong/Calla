@@ -14,6 +14,7 @@ public class RecentlyViewPageMaker {
 	private int totalCount; // 전체 게시글 개수
 	private boolean hasPrev; // 화면에 보이는 시작 페이지 번호보다 작은 숫자의 페이지가 있는 지
 	private boolean hasNext; // 화면에 보이는 끝 페이지 번호보다 큰 숫자의 페이지가 있는 지
+	private int totalLinkNo;
 	
 	public RecentlyViewPageMaker() {
 	}
@@ -34,6 +35,13 @@ public class RecentlyViewPageMaker {
 		this.totalCount = totalCount;
 	}
 	
+	public int getTotalLinkNo() {
+		return totalLinkNo;
+	}
+	
+	public void setTotalLinkNo(int totalLinkNo) {
+		this.totalLinkNo = totalLinkNo;
+	}
 	
 	public boolean isHasPrev() {
 		return hasPrev;
@@ -49,6 +57,7 @@ public class RecentlyViewPageMaker {
 		logger.info("setPageData 호출");
 
 		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage());
+		setTotalLinkNo(totalLinkNo);
 		
 		if (criteria.getPage() == 1) {
 			hasPrev = false;

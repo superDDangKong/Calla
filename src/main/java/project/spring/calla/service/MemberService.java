@@ -28,4 +28,6 @@ public interface MemberService {
 	int updateAddress(String memberId, String memberAddress);
 	int updateLevel(String memberId, int amount);
 	int delete(String memberId);
+	int deleteRecentlyViewProduct(int productRecentlyViewId);
+	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);
 }

@@ -5,10 +5,15 @@
 <html>
 <head>
 <style type="text/css">
-#sidebar {
+.sidebar {
 	width: 250px;
 }
-
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0; /* 원하는 위치에 고정 */
+    z-index: 1020; /* 다른 요소 위에 표시할 수 있도록 z-index 설정 */
+}
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,38 +24,62 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:if test="${not empty memberNickname }">
-<input type="hidden" id="memberId" value=${memberId }>
-<input type="hidden" id="productPage" value=1>
-<input type="hidden" id="uProductPage" value=1>
-
-	<aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	    <div class="position-sticky">
-				 최근 본 상품
-			<div class="d-flex flex-row">
-				 <div id="recently_product"></div>
-				 <div id="recently_u_product"></div>
-			</div>
-	    </div>
-	</aside>
-</c:if>
+	<c:if test="${not empty memberNickname }">
+	<input type="hidden" id="memberId" value=${memberId }>
+	<input type="hidden" id="productPage" value=1>
+	<input type="hidden" id="uProductPage" value=1>
+	
+		<aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarRight">
+		    <div class="position-sticky sticky-top">
+					 최근 본 상품
+				<div class="d-flex flex-row">
+					 <div id="recently_product"></div>
+					 <div id="recently_u_product"></div>
+				</div>
+			    <button id="scrollToTop" class="btn btn-secondary btn-sm">↑</button>
+			    <br>
+				<button id="scrollToBottom" class="btn btn-secondary btn-sm">↓</button>
+		    </div>
+		</aside>
+	</c:if>
+	
 <script type="text/javascript">
 	$(document).ready(function(){
+		    var sidebar = $("#sidebarRight");
+		    var topDistance = sidebar.offset().top;
+	
+		    $(window).scroll(function() {
+		    	if ($(window).scrollTop() > topDistance) {
+		            sidebar.addClass("sticky-top");
+		        } else {
+		            sidebar.removeClass("sticky-top");
+		        }
+		    });
+
+		    var scrollToTopButton = $("#scrollToTop");
+		    var scrollToBottomButton = $("#scrollToBottom");
+
+		    scrollToTopButton.click(function() {
+		        $("html, body").animate({ scrollTop: 0 }, "slow");
+		    });
+
+		    scrollToBottomButton.click(function() {
+		        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+		    });
+		    
+		var memberId = $('#memberId').val();
 		getProductRecentlyView();
-		
+		getUProductRecentlyView();
 		
 		function getProductRecentlyView() {
-			var memberId = $('#memberId').val();
 			var productPage = $('#productPage').val();
 			$.ajax({
 				type : 'GET',
-				url : '/calla/member/recentlyView/' + memberId + '/' + productPage,
+				url : '/calla/member/recentlyView/product/' + memberId + '/' + productPage,
 				success : function(lists) {
 					var productHTML = "공용상품";
-					var uProductHTML = "중고상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
 					var hasNext = Boolean(lists.pageMaker.hasNext);
-					
 					
 					$(lists.productList).each(function() {
 						productHTML += '<a href="/calla/product/detail?productId=' + this.productId + '&memberId=' + memberId + '">'
@@ -66,8 +95,8 @@
 							  + '</span>'
 							  + '</div>'
 							  + '<div class="image-container" style="position: relative; display: inline-block;">'
-							  + '<img src="/calla/fBoard/display?fileName=' + this.productImagePath + '" width="80" height="80" style="display: block;">'
-							  + '<button class="btn btn-sm btn-outline btn-dark close-button" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
+							  + '<img src="/calla/fBoard/display?fileName=' + this.productImagePath + '" width="50" height="60" style="display: block;">'
+							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
 							  + '</div>'
 							  + '</div>'
 							  + '</div>'
@@ -75,6 +104,7 @@
 	
 					}); // end productList.each()
 					
+					productHTML +=  productPage + '/' + lists.pageMaker.totalLinkNo
 					if(hasPrev){
 						productHTML += '<button class="btn_prev_product">◀</button>'
 					}
@@ -87,34 +117,53 @@
 				} // end success()
 			}); // end ajax()
 		} // end getProductRecentlyView
-				
-			/* 	$(lists.uProductList).each(function() {
-					uProductHTML += '<a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">'
-					  + '<div class="recently_u_product_item">'
-					  + '<input type="hidden" class="uProductRecentlyViewId" value="' + this.uProductRecentlyViewId + '">'
-					  + '<div class="d-flex flex-row">'
-					  + '<div class="image-container" style="position: relative; display: inline-block;">'
-					  + '<img src="/calla/fBoard/display?fileName=' + this.uProductImagePath + '" width="80" height="80" style="display: block;">'
-					  + '<button class="btn btn-sm btn-outline btn-dark close-button" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
-					  + '</div>'
-					  + '<div class="info">'
-					  + '<span class="name" style="display: none;">'
-					  + this.uProductName
-					  + '</span>'
-					  + '<span class="price" style="display: none;">'
-					  + this.uProductPrice
-					  + '</span>'
-					  + '</div>'
-					  + '</div>'
-					  + '</div>'
-					  + '</a>';
-
-				}); // end productList.each()
-				uProductHTML += '<button class="btn-sm">◀</button>'
-					+ '<button class="btn-sm">▶</button>'
-				
-				$('#recently_u_product').html(uProductHTML);  */
-
+		
+		function getUProductRecentlyView() {
+			var uProductPage = $('#uProductPage').val();
+			$.ajax({
+				type : 'GET',
+				url : '/calla/member/recentlyView/uProduct/' + memberId + '/' + uProductPage,
+				success : function(lists) {
+					var uProductHTML = "중고상품";
+					var hasPrev = Boolean(lists.pageMaker.hasPrev);
+					var hasNext = Boolean(lists.pageMaker.hasNext);
+					
+					$(lists.uProductList).each(function() {
+						uProductHTML += '<a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">'
+							  + '<div class="recently_u_product_item">'
+							  + '<input type="hidden" class="uProductRecentlyViewId" value="' + this.uProductRecentlyViewId + '">'
+							  + '<div class="d-flex flex-row">'
+							  + '<div class="image-container" style="position: relative; display: inline-block;">'
+							  + '<img src="/calla/fBoard/display?fileName=' + this.uProductImagePath + '" width="50" height="60" style="display: block;">'
+							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_u_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
+							  + '</div>'
+							  + '<div class="info">'
+							  + '<span class="name" style="display: none;">'
+							  + this.uProductName
+							  + '</span>'
+							  + '<span class="price" style="display: none;">'
+							  + this.uProductPrice
+							  + '</span>'
+							  + '</div>'
+							  + '</div>'
+							  + '</div>'
+							  + '</a>';
+	
+					}); // end productList.each()
+					
+					uProductHTML +=  uProductPage + '/' + lists.pageMaker.totalLinkNo
+					if(hasPrev){
+						uProductHTML += '<button class="btn_prev_u_product">◀</button>'
+					}
+					if(hasNext){
+						uProductHTML += '<button class="btn_next_u_product">▶</button>'
+					}
+								
+					$('#recently_u_product').html(uProductHTML);
+					
+				} // end success()
+			}); // end ajax()
+		} // end getUProductRecentlyView
 
 		$(document).on('mouseenter', '.recently_product_item', function () {
 			  console.log('mouseenter 호출');
@@ -136,17 +185,7 @@
 			  $(this).removeClass('border');
 			});
 		
-		$(document).on('click', '.btn_prev_product', function () {
-			$('#productPage').val(+$('#productPage').val() - 1);
-			getProductRecentlyView();
-		})
-		
-		$(document).on('click', '.btn_next_product', function () {
-			$('#productPage').val(+$('#productPage').val() + 1);
-			getProductRecentlyView();
-		})
-		
-		/* $(document).on('mouseenter', '.recently_u_product_item', function () {
+		 $(document).on('mouseenter', '.recently_u_product_item', function () {
 			  console.log('mouseenter 호출');
 			  var name = $(this).find('.name');
 			  var price = $(this).find('.price');
@@ -164,8 +203,60 @@
 			  name.css('display', 'none');
 			  price.css('display', 'none');
 			  $(this).removeClass('border');
-			}); */
+			}); 
 		
+		$(document).on('click', '.btn_prev_product', function () {
+			$('#productPage').val(+$('#productPage').val() - 1);
+			getProductRecentlyView();
+		})
+		
+		$(document).on('click', '.btn_next_product', function () {
+			$('#productPage').val(+$('#productPage').val() + 1);
+			getProductRecentlyView();
+		})
+		
+		$(document).on('click', '.btn_prev_u_product', function () {
+			$('#uProductPage').val(+$('#uProductPage').val() - 1);
+			getUProductRecentlyView();
+		})
+		
+		$(document).on('click', '.btn_next_u_product', function () {
+			$('#uProductPage').val(+$('#uProductPage').val() + 1);
+			getUProductRecentlyView();
+		})
+		
+		$(document).on('click', '.btn_delete_recently_pro', function (){
+			var productRecentlyViewId = $(this).closest('.recently_product_item').find('.productRecentlyViewId').val();
+			$.ajax({
+				type : 'delete',
+				url : '/calla/member/recentlyView/product/' + productRecentlyViewId,
+				success : function(result) {
+						if(result==1) {
+							console.log("삭제성공")
+							getProductRecentlyView();
+						}
+				} // end success()
+			}); // end ajax()
+			return false;
+		})
+		
+		$(document).on('click', '.btn_delete_recently_u_pro', function (){
+			var uProductRecentlyViewId = $(this).closest('.recently_u_product_item').find('.uProductRecentlyViewId').val();
+			console.log($(this));
+			console.log($(this).closest('.recently_u_product_item'));
+			console.log($(this).closest('.recently_u_product_item').find('.uProductRecentlyViewId'));
+			$.ajax({
+				type : 'delete',
+				url : '/calla/member/recentlyView/uProduct/' + uProductRecentlyViewId,
+				success : function(result) {
+						if(result==1) {
+							console.log("삭제성공")
+							getUProductRecentlyView();
+						}
+				} // end success()
+			}); // end ajax()
+			return false;
+		})
 	 }) // end document.ready
 </script>
 </body>

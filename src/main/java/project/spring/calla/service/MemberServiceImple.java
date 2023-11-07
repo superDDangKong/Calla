@@ -191,13 +191,6 @@ public class MemberServiceImple implements MemberService {
 		return MemberDAO.updateAddress(memberId, memberAddress);
 	}
 
-	/*
-	 * @Override public Map<String, Object> readInfo(String memberNickname, String
-	 * memberLevel) { logger.info("readInfo() ȣ�� memberNickname : " + memberNickname
-	 * + " ," + "memberLevel : " + memberLevel); Map<String, Object> args = new
-	 * HashMap<String, Object>(); args.put("memberNickname",
-	 * MemberDAO.info(memberNickname, memberLevel)); return null; }
-	 */
 	
 	@Override
 	public int updateLevel(String memberId, int amount) {
@@ -215,6 +208,18 @@ public class MemberServiceImple implements MemberService {
 	public int delete(String memberId) {
 		logger.info("delete() 호출");
 		return MemberDAO.delete(memberId);
+	}
+
+	@Override
+	public int deleteRecentlyViewProduct(int productRecentlyViewId) {
+		logger.info("deleteRecentlyViewProduct() 호출");
+		return productDAO.deleteRecentlyView(productRecentlyViewId);
+	}
+
+	@Override
+	public int deleteRecentlyViewUProduct(int uProductRecentlyViewId) {
+		logger.info("deleteRecentlyViewUProduct() 호출");
+		return uProductDAO.deleteRecentlyView(uProductRecentlyViewId);
 	}
 
 

@@ -203,18 +203,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="select_recently_view" resultType="UProductVO">
-		select up.*, upr.${uProductRecentlyViewId}
-		from ${u_product} up
-		join ${u_product_recently_view} upr on up.${uProductId} = upr.${uProductId}
-		where upr.${memberId} = #{memberId} order by ${uProductRecentlyViewDate} desc
+		select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductImagePath}, ${uProductRecentlyViewId}
+		from(
+			select rownum rn, a.* from(
+				select up.*, upr.${uProductRecentlyViewId}
+				from ${u_product} up
+				join ${u_product_recently_view} upr on up.${uProductId} = upr.${uProductId}
+				where upr.${memberId} = #{memberId} order by ${uProductRecentlyViewDate} desc
+			)a
+		) where rn between #{start} and #{end}
 	</select>
-	
+
 	<select id="get_total_counts_by_recently_view" resultType="Integer">
 	  	select count(*) total_cnt
 		from ${u_product} up
 		join ${u_product_recently_view} upr on up.${uProductId} = upr.${uProductId}
 		where upr.${memberId} = #{memberId}
 	</select>
+	
+	<delete id="delete_recently_view">
+		delete from ${u_product_recently_view}
+		where ${uProductRecentlyViewId} = #{uProductRecentlyViewId}
+	</delete>
 </mapper>
 
 

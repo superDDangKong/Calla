@@ -17,20 +17,17 @@ li {
 <meta charset="UTF-8">
 <title>${vo.fBoardTitle }</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <%@ include file="../header.jspf"%>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
-			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
 					<br> <a href="list?page=${page }"><input type="button"
 						class="btn btn-secondary float-right" value="글 목록"></a> <br>
@@ -111,6 +108,7 @@ li {
 					</div>
 				</div>
 			</main>
+			<%@ include file="../sidebarRight.jspf"%>
 		</div>
 	</div>
 

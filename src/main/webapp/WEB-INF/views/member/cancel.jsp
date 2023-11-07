@@ -19,9 +19,10 @@
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
 			
-			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				취소 내역 페이지
 			</main>
+			<%@ include file="../sidebarRight.jspf"%>
 		</div>
 	</div>
 	<%@ include file="../footer.jspf"%>	

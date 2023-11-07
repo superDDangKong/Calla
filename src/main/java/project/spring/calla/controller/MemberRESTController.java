@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -181,23 +182,72 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
 	
-	@GetMapping("/recentlyView/{memberId}/{page}") 
-	public ResponseEntity<Map<String, Object>> recentlyViewGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
-		logger.info("recentlyViewGET() 호출 : memberId = " + memberId);
-		logger.info("recentlyViewGET() 호출 : page = " + page);
+	@GetMapping("/recentlyView/product/{memberId}/{page}") 
+	public ResponseEntity<Map<String, Object>> recentlyViewProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
+		logger.info("recentlyViewProductGET() 호출 : memberId = " + memberId);
+		logger.info("recentlyViewProductGET() 호출 : page = " + page);
 		
 		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
 		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
 		
-		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
-		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
 		criteria.setPage(page);
+		
+		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
 		pageMaker.setTotalCount(counts.get("productCount"));
 		pageMaker.setCriteria(criteria);
+		
 		pageMaker.setPageData();
+		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
 		logger.info(String.valueOf(pageMaker.isHasNext()));
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	}
+	
+	@GetMapping("/recentlyView/uProduct/{memberId}/{page}") 
+	public ResponseEntity<Map<String, Object>> recentlyViewUProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
+		logger.info("recentlyUProductViewGET() 호출 : memberId = " + memberId);
+		logger.info("recentlyUProductViewGET() 호출 : page = " + page);
+		
+		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
+		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
+		
+		criteria.setPage(page);
+		
+		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
+		pageMaker.setTotalCount(counts.get("uProductCount"));
+		pageMaker.setCriteria(criteria);
+		
+		pageMaker.setPageData();
+		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
+		logger.info(String.valueOf(pageMaker.isHasNext()));
+		lists.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/recentlyView/product/{productRecentlyViewId}")
+	public ResponseEntity<Integer> deleteRecentlyViewProduct(@PathVariable("productRecentlyViewId") int productRecentlyViewId) {
+		logger.info("productRecentlyViewId = " + productRecentlyViewId);
+
+		int result = 0;
+		try {
+			result = memberService.deleteRecentlyViewProduct(productRecentlyViewId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/recentlyView/uProduct/{uProductRecentlyViewId}")
+	public ResponseEntity<Integer> deleteRecentlyViewUProduct(@PathVariable("uProductRecentlyViewId") int uProductRecentlyViewId) {
+		logger.info("uProductRecentlyViewId = " + uProductRecentlyViewId);
+
+		int result = 0;
+		try {
+			result = memberService.deleteRecentlyViewUProduct(uProductRecentlyViewId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 }
 	

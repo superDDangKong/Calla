@@ -19,7 +19,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="sidebar2.jspf"%>
-			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<c:if test="${not empty memberNickname }">
 					<h5>${memberNickname }님 환영합니다!</h5>
 					<hr>
@@ -40,7 +40,7 @@
 										<div class="card-body p-4">
 											<div class="text-center">
 												<h5 class="fw-bolder">
-													<a href="detail?productId=${ProductVO.productId }">${ProductVO.productName }</a>
+													<a href="/product/detail?productId=${ProductVO.productId }&memberId=${memberId}">${ProductVO.productName }</a>
 												</h5>
 												<div>
 													<h6>${ProductVO.productCategori }</h6>
@@ -122,8 +122,8 @@
 						</div>
 					</div>
 				</section>
-
 			</main>
+			<%@ include file="sidebarRight.jspf"%>
 		</div>
 	</div>
 	<script type="text/javascript">

@@ -27,7 +27,7 @@ table, th, td {
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
 
-			<main class="container col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container mt-4">
 					<h2>회원 정보 수정</h2>
 					<input type="hidden" id="memberId" value='${vo.memberId}'>
@@ -199,6 +199,7 @@ table, th, td {
 					</c:if>
 				</div>
 			</main>
+			<%@ include file="../sidebarRight.jspf"%>
 		</div>
 	</div>
 	<script type="text/javascript">

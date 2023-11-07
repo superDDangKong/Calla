@@ -147,6 +147,8 @@ public class ProductDAOImple implements ProductDAO {
 	@Override
 	public List<ProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
 		logger.info("selectRecentlyView() : memberId = " + memberId);
+		logger.info("selectRecentlyView() : criteria = " + criteria.getPage());
+		logger.info("selectRecentlyView() : criteria = " + criteria.getStart());
 		Map<String, Object> args = new HashMap();
 		args.put("memberId", memberId);
 		args.put("start", criteria.getStart());
@@ -159,6 +161,13 @@ public class ProductDAOImple implements ProductDAO {
 		logger.info("getTotalCountsByRecentlyView() : memberId = " + memberId);
 		return sqlSession.selectOne(NAMESPACE + ".get_total_counts_by_recently_view", memberId);
 	}
+
+	@Override
+	public int deleteRecentlyView(int productRecentlyViewId) {
+		logger.info("deleteRecentlyView : productRecentlyViewId = " + productRecentlyViewId);
+		return sqlSession.delete(NAMESPACE + ".delete_recently_view", productRecentlyViewId);
+	}
+	
 	
 
 }

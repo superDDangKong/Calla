@@ -41,5 +41,5 @@ public interface UProductDAO {
 	int insertRecentlyView(int uProductId, String memberId);
 	List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
 	int getTotalCountsByRecentlyView(String memberId);
-	
+	int deleteRecentlyView(int uProductRecentlyViewId);
 }

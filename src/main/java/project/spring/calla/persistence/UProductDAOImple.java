@@ -195,4 +195,10 @@ public class UProductDAOImple implements UProductDAO {
 		logger.info("getTotalCountsByRecentlyView() : memberId = " + memberId);
 		return sqlSession.selectOne(NAMESPACE + ".get_total_counts_by_recently_view", memberId);
 	}
+
+	@Override
+	public int deleteRecentlyView(int uProductRecentlyViewId) {
+		logger.info("deleteRecentlyView : uProductRecentlyViewId = " + uProductRecentlyViewId);
+		return sqlSession.delete(NAMESPACE + ".delete_recently_view", uProductRecentlyViewId);
+	}
 }
