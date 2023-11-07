@@ -22,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.domain.UProductBuyVO;
-import project.spring.calla.domain.UProductCommentVO;
-import project.spring.calla.domain.UProductSellVO;
-import project.spring.calla.domain.UproductBuySellVO;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageMaker;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -39,15 +37,15 @@ public class MemberRESTController {
 	
 	@PostMapping("/join")
 	public ResponseEntity<Integer> createMember(@RequestBody MemberVO vo) {
-		logger.info("createMember() ȣ�� : vo = " + vo.toString());
+		logger.info("createMember() 호占쏙옙 : vo = " + vo.toString());
 		int result = 0;
 		result = memberService.create(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	} // end createMember
 	
-	@PostMapping("/checkId") // @RequestParam("member_Id")���� String id�� ����
+	@PostMapping("/checkId") // @RequestParam("member_Id")占쏙옙占쏙옙 String id占쏙옙 占쏙옙占쏙옙
 	public int checkId(@RequestParam("memberId") String id) {
-		logger.info("checkId() ȣ��");
+		logger.info("checkId() 호占쏙옙");
 		logger.info(id); // 
 			try {
 				id = URLDecoder.decode(id, "UTF-8");
@@ -62,7 +60,7 @@ public class MemberRESTController {
 	
 	@PostMapping("/checkNick")
 	public int checkNick(@RequestParam("memberNickname") String nick) {
-		logger.info("checkNick() ȣ��");
+		logger.info("checkNick() 호占쏙옙");
 		logger.info(nick);
 			try {
 				nick = URLDecoder.decode(nick,"UTF-8");
@@ -76,15 +74,15 @@ public class MemberRESTController {
 		return result;
 	} // end checkNick
 	
-//	@PutMapping("memberNickname/{memberNickname}") // PUT : ��� ����
+//	@PutMapping("memberNickname/{memberNickname}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 //	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberNickname") String memberNickname) {
 //		int result = memberService.update(memberNickname);
 //		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
 	
-	@PutMapping("/updatePw/{memberId}") // ��й�ȣ ����
+	@PutMapping("/updatePw/{memberId}") // 占쏙옙橘占싫� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args, HttpSession session) {
-		logger.info("updateMemberPw() ȣ��");
+		logger.info("updateMemberPw() 호占쏙옙");
 		logger.info("memberId = " + memberId);
 		logger.info(args.get("currentPw").toString());
 		logger.info(args.get("newPw").toString());
@@ -94,20 +92,20 @@ public class MemberRESTController {
 		String newPw = args.get("newPw").toString();
 		int result = 0;
 		if (memberPw.equals(args.get("currentPw"))) {
-			logger.info("pw ��ġ");
+			logger.info("pw 占쏙옙치");
 			result = memberService.updatePw(memberId, newPw);
 			
 		} else {
-			logger.info("pw ����ġ");
+			logger.info("pw 占쏙옙占쏙옙치");
 			
 		}
 			
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePw
 	
-	@PutMapping("/updateNickname/{memberId}") // PUT : ��� ����
+	@PutMapping("/updateNickname/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname, HttpSession session) {
-		logger.info("updateMemberNickname() ȣ��");
+		logger.info("updateMemberNickname() 호占쏙옙");
 		logger.info("newNickname = " + newNickname);
 		
 		int result = memberService.updateNickname(memberId, newNickname);
@@ -118,9 +116,9 @@ public class MemberRESTController {
 	}// end updateNickname
 	
 	
-	@PutMapping("/updatePhone/{memberId}") // PUT : ��� ����
+	@PutMapping("/updatePhone/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberPhone(@PathVariable("memberId") String memberId, @RequestBody String newPhone) {
-		logger.info("updateMemberPhone() ȣ��");
+		logger.info("updateMemberPhone() 호占쏙옙");
 		logger.info("newPhone = " + newPhone);
 		
 		int result = memberService.updatePhone(memberId, newPhone);
@@ -128,9 +126,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePhone
 	
-	@PutMapping("/updateEmail/{memberId}") // PUT : ��� ����
+	@PutMapping("/updateEmail/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
-		logger.info("updateMemberEmail() ȣ��");
+		logger.info("updateMemberEmail() 호占쏙옙");
 		logger.info("newEmail = " + newEmail);
 		
 		int result = memberService.updateEmail(memberId, newEmail);
@@ -138,9 +136,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateEmail
 	
-	@PutMapping("/updateInterest/{memberId}") // PUT : ��� ����
+	@PutMapping("/updateInterest/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
-		logger.info("updateMemberInterest() ȣ��");
+		logger.info("updateMemberInterest() 호占쏙옙");
 		logger.info("newInterest = " + newInterest);
 		
 		int result = memberService.updateInterest(memberId, newInterest);
@@ -148,9 +146,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateEmail
 	
-	@PutMapping("/updateAddress/{memberId}") // PUT : ��� ����
+	@PutMapping("/updateAddress/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
 	public ResponseEntity<Integer> updateMemberAddress(@PathVariable("memberId") String memberId, @RequestBody String newAddress) {
-		logger.info("updateMemberAddress() ȣ��");
+		logger.info("updateMemberAddress() 호占쏙옙");
 		logger.info("newAddress = " + newAddress);
 		
 		int result = memberService.updateAddress(memberId, newAddress);
@@ -158,10 +156,10 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateAddress
 	
-//	@GetMapping("/updateLevel/{memberId}") // GET : ��� ����(all)
+//	@GetMapping("/updateLevel/{memberId}") // GET : 占쏙옙占� 占쏙옙占쏙옙(all)
 //	public ResponseEntity<Integer> readReplies(@PathVariable("memberId") String memberId) {
-//		// @PathVariable("fBoardId") : /all/{fBboardId} ���� ������ ������ ����
-//		logger.info("updateLevelGET() ȣ�� : memberId = " + memberId);
+//		// @PathVariable("fBoardId") : /all/{fBboardId} 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+//		logger.info("updateLevelGET() 호占쏙옙 : memberId = " + memberId);
 //
 //		List<FBoardReplyVO> list = fBoardReplyService.read(fBoardCommentId);
 //		return new ResponseEntity<List<FBoardReplyVO>>(list, HttpStatus.OK);
@@ -169,7 +167,7 @@ public class MemberRESTController {
 	
 	@PutMapping("/updateLevel/{memberId}") 
 	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {
-		logger.info("updateMemberLevel() ȣ��");
+		logger.info("updateMemberLevel() 호占쏙옙");
 		int amount = 0;
 		if(Integer.parseInt(memberLevel) == 1) {
 			amount = 1;
@@ -186,8 +184,8 @@ public class MemberRESTController {
 	
 	@GetMapping("/recentlyView/product/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
-		logger.info("recentlyViewProductGET() ȣ�� : memberId = " + memberId);
-		logger.info("recentlyViewProductGET() ȣ�� : page = " + page);
+		logger.info("recentlyViewProductGET() 호占쏙옙 : memberId = " + memberId);
+		logger.info("recentlyViewProductGET() 호占쏙옙 : page = " + page);
 		
 		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
 		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
@@ -207,8 +205,8 @@ public class MemberRESTController {
 	
 	@GetMapping("/recentlyView/uProduct/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewUProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
-		logger.info("recentlyUProductViewGET() ȣ�� : memberId = " + memberId);
-		logger.info("recentlyUProductViewGET() ȣ�� : page = " + page);
+		logger.info("recentlyUProductViewGET() 호占쏙옙 : memberId = " + memberId);
+		logger.info("recentlyUProductViewGET() 호占쏙옙 : page = " + page);
 		
 		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
 		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();

@@ -236,4 +236,10 @@ public class UProductDAOImple implements UProductDAO {
 		logger.info("deleteRecentlyView : uProductRecentlyViewId = " + uProductRecentlyViewId);
 		return sqlSession.delete(NAMESPACE + ".delete_recently_view", uProductRecentlyViewId);
 	}
+
+	@Override
+	public List<UProductVO> selectLikes(String memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
