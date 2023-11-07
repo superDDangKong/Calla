@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,11 +66,11 @@ public class ProductController {
 	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() È£ï¿½ï¿½");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		List<ProductVO> list = null;
 		
-		//Paging Ã³¸®
+		//Paging Ã³ï¿½ï¿½
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -111,18 +113,18 @@ public class ProductController {
 	
 	@PostMapping("/register")
 	public String registerPost(ProductVO vo,  @RequestParam("productImage") MultipartFile file, RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() È£ï¿½ï¿½");
 		logger.info(vo.toString());		
-		logger.info("ÆÄÀÏ ÀÌ¸§ : " + file.getOriginalFilename());
-		logger.info("ÆÄÀÏ Å©±â : " + file.getSize());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ : " + file.getOriginalFilename());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ : " + file.getSize());
 		
 		try {
-			// ÆÄÀÏ ÀúÀå
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-			// ÀÌ¹ÌÁö °æ·Î ÀúÀå
+			// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			vo.setProductImagePath(savedFileName);
 			int result = productService.create(vo);
-			logger.info(result + "Çà »ðÀÔ");
+			logger.info(result + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			
 			if(result == 1) {
 				reAttr.addFlashAttribute("insert_result", "success");
@@ -153,21 +155,21 @@ public class ProductController {
 			}
 		}
 		
-		if(!cookieFound) { // ÄíÅ°°¡ Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì, Á¶È¸¼ö Áõ°¨ ¹× ÄíÅ° ¼³Á¤
-			int views = 1; // Ã¹¹øÂ° Á¶È¸
+		if(!cookieFound) { // ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½
+			int views = 1; // Ã¹ï¿½ï¿½Â° ï¿½ï¿½È¸
 			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
-			viewCookie.setMaxAge(180); // ÄíÅ° À¯È¿ ½Ã°£ 3ºÐ
+			viewCookie.setMaxAge(180); // ï¿½ï¿½Å° ï¿½ï¿½È¿ ï¿½Ã°ï¿½ 3ï¿½ï¿½
 			response.addCookie(viewCookie);
 			
 			int result = productService.updateViews(views, productId);
 			if(result == 1) {
-				logger.info("Á¶È¸¼ö Áõ°¡");
+				logger.info("ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			} else {
-				logger.info("½ÇÆÐ");
+				logger.info("ï¿½ï¿½ï¿½ï¿½");
 			}
 			
 		}
-		logger.info("deatil() È£Ãâ : productId = " + productId);
+		logger.info("deatil() È£ï¿½ï¿½ : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		ProductCommentVO commentVO = new ProductCommentVO();
 		PageMaker pageMaker = new PageMaker();
@@ -213,18 +215,18 @@ public class ProductController {
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, Integer productId, Integer page) {
-		logger.info("updateGET() È£Ãâ : productId = " + productId);
+		logger.info("updateGET() È£ï¿½ï¿½ : productId = " + productId);
 		ProductVO vo = productService.read(productId);
-		logger.info("updateGET() È£Ãâ : vo = " + vo.toString());
+		logger.info("updateGET() È£ï¿½ï¿½ : vo = " + vo.toString());
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);		
 	} // end updateGET()
 	
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page, @RequestParam("productImage") MultipartFile file) {
-		logger.info("updatePOST() È£Ãâ : vo = " + vo.toString());			
-		logger.info("ÆÄÀÏ ÀÌ¸§ : " + file.getOriginalFilename());
-		logger.info("ÆÄÀÏ Å©±â : " + file.getSize());
+		logger.info("updatePOST() È£ï¿½ï¿½ : vo = " + vo.toString());			
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ : " + file.getOriginalFilename());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ : " + file.getSize());
 		try {	
 			if(file != null && !file.isEmpty()) {
 				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
@@ -247,7 +249,7 @@ public class ProductController {
 	
 	@PostMapping("/delete")
 	public String delete(Integer productId) {
-		logger.info("delete() È£Ãâ : productId = " + productId);
+		logger.info("delete() È£ï¿½ï¿½ : productId = " + productId);
 		int result = productService.delete(productId);
 		
 		if(result == 1) {
@@ -259,7 +261,7 @@ public class ProductController {
 	
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName){
-		logger.info("display() È£Ãâ");
+		logger.info("display() È£ï¿½ï¿½");
 		
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -269,18 +271,18 @@ public class ProductController {
 		try {
 			in = new FileInputStream(filePath);
 			
-			// ÆÄÀÏ È®ÀåÀÚ
+			// ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½
 			String extension =
 					filePath.substring(filePath.lastIndexOf(".") + 1);
 			logger.info(extension);
 			
-			// ÀÀ´ä Çì´õ(response header)¿¡ Content-Type ¼³Á¤
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(response header)ï¿½ï¿½ Content-Type ï¿½ï¿½ï¿½ï¿½
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
-			// µ¥ÀÌÅÍ Àü¼Û
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			entity = new ResponseEntity<byte[]>(
-					IOUtils.toByteArray(in), // ÆÄÀÏ¿¡¼­ ÀÐÀº µ¥ÀÌÅÍ
-					httpHeaders, // ÀÀ´ä Çì´õ
+					IOUtils.toByteArray(in), // ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					httpHeaders, // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 					HttpStatus.OK
 					);
 		} catch (Exception e) {
@@ -291,8 +293,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/orderList")
-	public String orderList(Model model, String memberId, HttpServletRequest request, HttpServletResponse response) {
-		logger.info("orderList() È£Ãâ : memberId = " + memberId);
+	public String orderList(Model model, String memberId) {
+		logger.info("orderList() È£ï¿½ï¿½ : memberId = " + memberId);
 	    
 	    List<ProductVO> productList = productService.selectProductWithAmount(memberId);
 

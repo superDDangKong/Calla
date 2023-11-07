@@ -6,12 +6,12 @@ import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface ProductService {
-	int create(ProductVO vo); // »óÇ° »ý¼º
-	List<ProductVO> read(PageCriteria criteria); // »óÇ°¸ñ·Ï ÀÐ¾î¿À±â
-	ProductVO read(int productId); // »óÇ°IDÁ¤º¸ ÀÐ¾î¿À±â
-	int update(ProductVO vo); // »óÇ° Á¤º¸ ¼öÁ¤
-	int delete(int productId); // »óÇ° »èÁ¦
-	int getTotalCounts(); // »óÇ° ÀüÃ¼ °¹¼ö
+	int create(ProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	List<ProductVO> read(PageCriteria criteria); // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
+	ProductVO read(int productId); // ï¿½ï¿½Ç°IDï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
+	int update(ProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int delete(int productId); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	int getTotalCounts(); // ï¿½ï¿½Ç° ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	List<ProductVO> readByProductNameOrProductContent(PageCriteria criteria, String keyword);
 	int getTotalCountsByProductNameOrProductContent(String keyword);
 	int updateViews(int views, int productId);

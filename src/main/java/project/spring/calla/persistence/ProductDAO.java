@@ -27,4 +27,5 @@ public interface ProductDAO {
 	int getTotalCountsByRecentlyView(String memberId);	
 	int deleteRecentlyView(int productRecentlyViewId);
 	
+	
 }
