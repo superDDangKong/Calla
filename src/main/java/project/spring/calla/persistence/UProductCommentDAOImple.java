@@ -59,4 +59,10 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
 	}
 
+	@Override
+	public List<UProductCommentVO> selected(int uProductId) {
+		logger.info("select() »£√‚ : uProductId = " + uProductId);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname_distinct", uProductId);
+	}
+
 }

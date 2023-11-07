@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
@@ -50,14 +52,14 @@ public class UProductController {
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public void MainGET() throws Exception {
 
-		logger.info("¸ÞÀÎ Ãâ·Â");
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
 
 	}
 
 	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public void TestGET() throws Exception {
 
-		logger.info("¸ÞÀÎ Ãâ·Â");
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
 
 	}
 
@@ -65,7 +67,7 @@ public class UProductController {
 	public void TestMAP(Model model, Integer page, Integer numsPerPage, String Address, String keyword,
 			ModelMap models) 
 			throws Exception {
-		logger.info("¸Ê Ãâ·Â");
+		logger.info("ï¿½ï¿½ ï¿½ï¿½ï¿½");
 
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		List<UProductVO> list = null;
@@ -113,7 +115,7 @@ public class UProductController {
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String name, String keyword) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() È£ï¿½ï¿½");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		List<UProductVO> list = null;
 
@@ -170,20 +172,20 @@ public class UProductController {
 	@PostMapping("/register")
 	public String registerPost(UProductVO vo, @RequestParam("productImage") MultipartFile file,
 			RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() È£ï¿½ï¿½");
 		logger.info(vo.toString());
-		logger.info("ÆÄÀÏ ÀÌ¸§ : " + file.getOriginalFilename());
-		logger.info("ÆÄÀÏ Å©±â : " + file.getSize());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ : " + file.getOriginalFilename());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ : " + file.getSize());
 
 		try {
-			// ÆÄÀÏ ÀúÀå
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(),
 					file.getBytes());
-			// ÀÌ¹ÌÁö °æ·Î ÀúÀå
+			// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			vo.setuProductImagePath(savedFileName);
 			int result = uproductService.create(vo);
 			logger.info("result = " + result);
-			logger.info(result + "Çà »ðÀÔ");
+			logger.info(result + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
 			if (result == 1) {
 				reAttr.addFlashAttribute("insert_result", "success");
@@ -199,9 +201,9 @@ public class UProductController {
 
 	@GetMapping("/detail")
 	public void detail(Model model, Integer uProductId, Integer page, HttpServletRequest request) {
-		logger.info("detail() È£Ãâ : productId = " + uProductId);
+		logger.info("detail() È£ï¿½ï¿½ : productId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
-		logger.info("È£Ãâ : prdocutVO = " + vo);
+		logger.info("È£ï¿½ï¿½ : prdocutVO = " + vo);
 		
 		List<UProductVO> list = uproductService.readrecommend(vo.getuProductCategori(), uProductId);
 		
@@ -221,18 +223,18 @@ public class UProductController {
 
 	@GetMapping("/update")
 	public void updateGET(Model model, Integer uProductId, Integer page) {
-		logger.info("updateGET() È£Ãâ : productId = " + uProductId);
+		logger.info("updateGET() È£ï¿½ï¿½ : productId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
-		logger.info("updateGET() È£Ãâ : vo = " + vo.toString());
+		logger.info("updateGET() È£ï¿½ï¿½ : vo = " + vo.toString());
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 	} // end updateGET()
 
 	@PostMapping("/update")
 	public String updatePOST(UProductVO vo, Integer page, @RequestParam("productImage") MultipartFile file) {
-		logger.info("updatePOST() È£Ãâ : vo = " + vo.toString());
-		logger.info("ÆÄÀÏ ÀÌ¸§ : " + file.getOriginalFilename());
-		logger.info("ÆÄÀÏ Å©±â : " + file.getSize());
+		logger.info("updatePOST() È£ï¿½ï¿½ : vo = " + vo.toString());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ : " + file.getOriginalFilename());
+		logger.info("ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ : " + file.getSize());
 		try {
 			if (file != null && !file.isEmpty()) {
 				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(),
@@ -255,7 +257,7 @@ public class UProductController {
 
 	@PostMapping("/delete")
 	public String delete(Integer uProductId) {
-		logger.info("delete() È£Ãâ : uProductId = " + uProductId);
+		logger.info("delete() È£ï¿½ï¿½ : uProductId = " + uProductId);
 		int result = uproductService.delete(uProductId);
 
 		if (result == 1) {
@@ -267,7 +269,7 @@ public class UProductController {
 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName) {
-		logger.info("display() È£Ãâ");
+		logger.info("display() È£ï¿½ï¿½");
 
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -277,16 +279,16 @@ public class UProductController {
 		try {
 			in = new FileInputStream(filePath);
 
-			// ÆÄÀÏ È®ÀåÀÚ
+			// ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½
 			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
 			logger.info(extension);
 
-			// ÀÀ´ä Çì´õ(response header)¿¡ Content-Type ¼³Á¤
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(response header)ï¿½ï¿½ Content-Type ï¿½ï¿½ï¿½ï¿½
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
-			// µ¥ÀÌÅÍ Àü¼Û
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), // ÆÄÀÏ¿¡¼­ ÀÐÀº µ¥ÀÌÅÍ
-					httpHeaders, // ÀÀ´ä Çì´õ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), // ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					httpHeaders, // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 					HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -294,5 +296,65 @@ public class UProductController {
 
 		return entity;
 	}
+	
+	@GetMapping("/uproductbuy")
+	public void MainGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
+		logger.info("list() È£ï¿½ï¿½");
+		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
+
+		
+		String buyerNickname = (String) session.getAttribute("memberNickname");
+		
+		// Paging Ã³ï¿½ï¿½
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<UProductBuyVO> list = uproductService.readybuyuproduct(criteria, buyerNickname);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(uproductService.getTotalCountsbuyuproduct(buyerNickname));
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	}
+	
+	@GetMapping("/uproductsell")
+	public void sellGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
+		logger.info("list() È£ï¿½ï¿½");
+		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
+
+		
+		String memberNickname = (String) session.getAttribute("memberNickname");
+		
+		// Paging Ã³ï¿½ï¿½
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<UProductSellVO> list = uproductService.readyselluproduct(criteria, memberNickname);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(uproductService.getTotalCountsselluproduct(memberNickname));
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	}
+	
+	
 
 }

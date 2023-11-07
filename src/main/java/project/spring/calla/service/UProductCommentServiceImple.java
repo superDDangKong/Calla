@@ -83,4 +83,10 @@ public class UProductCommentServiceImple implements UProductCommentService {
 		return 1;
 	}
 
+	@Override
+	public List<UProductCommentVO> read(int uProductId) {
+		logger.info("read() »£√‚ : uProductId = " + uProductId);
+		return uProductCommentDAO.selected(uProductId);
+	}
+
 }

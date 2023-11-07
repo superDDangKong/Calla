@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
 public class MemberDAOImple implements MemberDAO{
@@ -25,10 +29,10 @@ public class MemberDAOImple implements MemberDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int checkId(String memberId) { // ���̵� �ߺ�üũ
+	public int checkId(String memberId) { // 占쏙옙占싱듸옙 占쌩븝옙체크
 		logger.info("select_by_id() ");
 		int result  = sqlSession.selectOne(NAMESPACE + ".select_by_id", memberId);
-		logger.info(result+"�ߺ�");
+		logger.info(result+"占쌩븝옙");
 		return result;
 	}
 
@@ -39,7 +43,7 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public int insert(MemberVO vo) { // ȸ������
+	public int insert(MemberVO vo) { // 회占쏙옙占쏙옙占쏙옙
 		logger.info("insert() : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
@@ -141,7 +145,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<MemberVO> select() {
-		logger.info("updateAddress() 호출");
+		logger.info("updateAddress() �샇異�");
 		return sqlSession.selectList(NAMESPACE + ".select");
 	}
 
@@ -159,6 +163,44 @@ public class MemberDAOImple implements MemberDAO{
 		logger.info("delete()");
 		return sqlSession.delete(NAMESPACE + ".delete", memberId);
 	}
+
+	@Override
+	public List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname) {
+		logger.info("selectByAddress() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("memberNickname", memberNickname);
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_my_u_product", args);
+	}
+
+	@Override
+	public int getTotalCountsBymyuproduct(String memberNickname) {
+		logger.info("getTotalCountsBymyuproduct()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_my_u_product", memberNickname);
+	}
+
+	@Override
+	public UProductVO select(int uProductId) {
+		logger.info("select() 호출 : uProductId = " + uProductId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", uProductId);
+	}
+
+	@Override
+	public int insertbuy(UProductBuyVO vo) {
+		logger.info("insertbuy() : vo = " + vo.toString());
+		return sqlSession.insert(NAMESPACE + ".buy_insert", vo);
+	}
+
+	@Override
+	public int insertsell(UProductSellVO svo) {
+		logger.info("insertsell() : vo = " + svo.toString());
+		return sqlSession.insert(NAMESPACE + ".sell_insert", svo);
+	}
+
+	
 
 	
 }

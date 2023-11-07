@@ -224,6 +224,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${u_product_recently_view}
 		where ${uProductRecentlyViewId} = #{uProductRecentlyViewId}
 	</delete>
+	 <select id="select_buy_all_by_memberNickname" resultType="UProductBuyVO">
+		select
+		${uProductBuyId}, ${uProductName}, ${uProductPrice},
+		${uProductCreatedDate}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress},
+		${buyerNickname}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product_buy}
+		where ${buyerNickname} = #{buyerNickname} 
+		)a
+		) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="total_count_by_u_product_buy"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product_buy}
+		where ${buyerNickname} = #{buyerNickname}
+	</select>
+	
+	<select id="select_sell_all_by_memberNickname" resultType="UProductSellVO">
+		select
+		${uProductSellId}, ${uProductName}, ${uProductPrice},
+		${uProductCreatedDate}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress},
+		${buyerNickname}, ${memberNickname}, ${uProductBuyId}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product_sell}
+		where ${memberNickname} = #{memberNickname} 
+		)a
+		) where rn between #{start} and #{end}
+	</select>
+	  
+	  <select id="total_count_by_u_product_sell"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product_sell}
+		where ${memberNickname} = #{memberNickname}
+	</select>
+	 	 
+	 	 
 </mapper>
 
 

@@ -12,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
@@ -223,6 +227,42 @@ public class MemberServiceImple implements MemberService {
 	}
 
 
+	public List<UProductVO> readmyuproduct(PageCriteria criteria,  String memberNickname) {
+		logger.info("readmyuproduct() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + memberNickname);
+		
+		return MemberDAO.selectmyuproduct(criteria, memberNickname);
+	}
+
+	@Override
+	public int getTotalCountsBymyuproduct(String memberNickname) {
+		logger.info("getTotalCountsBymyuproduct() 호출");
+		return MemberDAO.getTotalCountsBymyuproduct(memberNickname);	
+	}
+
+	@Override
+	public UProductVO read(int uProductId) {
+		logger.info("read() 호출 : boardId = " + uProductId);
+		return MemberDAO.select(uProductId);
+	}
+
+	@Transactional(value = "transactionManager")
+	@Override
+	public int buysellcreate(UProductBuyVO vo, UProductSellVO svo) {
+		int result = MemberDAO.insertbuy(vo);
+		int results = MemberDAO.insertsell(svo);
+		
+		if(result ==1 && results ==1) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+
+	
 
 
 

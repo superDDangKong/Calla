@@ -162,6 +162,30 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="recipientName" value="recipient_name"/>
 		<property name="memberAddress" value="member_address"/>
 		<property name="productOrderId" value="product_order_id"/>
+		<property name="u_product_buy" value="u_product_buy" />
+		<property name="uProductBuyId" value="u_product_buy_id" />
+		<property name="uProductName" value="u_product_name" />
+		<property name="uProductPrice" value="u_product_price" />
+		<property name="uProductCreatedDate" value="u_product_created_date" />
+		<property name="uProductCategori" value="u_product_categori" />
+		<property name="memberAddress" value="member_address" />
+		<property name="uProductContent" value="u_product_content" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name="uProductImagePath" value="u_product_image_path" />
+		
+		<property name="u_product_sell" value="u_product_sell" />
+		<property name="uProductSellId" value="u_product_sell_id" />
+		<property name="uProductName" value="u_product_name" />
+		<property name="uProductPrice" value="u_product_price" />
+		<property name="uProductCreatedDate" value="u_product_created_date" />
+		<property name="uProductCategori" value="u_product_categori" />
+		<property name="memberAddress" value="member_address" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="buyerNickname" value="buyer_nickname"/>
+		<property name="uProductContent" value="u_product_content" />
+		<property name="uProductImagePath" value="u_product_image_path" />
+		<property name="uProductBuyId" value="u_product_buy_id" />
+
 		
 	</properties>
 	

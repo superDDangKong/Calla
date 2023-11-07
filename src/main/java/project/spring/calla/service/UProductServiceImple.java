@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductDAO;
@@ -23,13 +25,13 @@ public class UProductServiceImple implements UProductService {
 	
 	@Override
 	public int create(UProductVO vo) {
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<UProductVO> read(PageCriteria criteria) {
-		logger.info("read() È£Ãâ");
+		logger.info("read() È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
@@ -37,31 +39,31 @@ public class UProductServiceImple implements UProductService {
 
 	@Override
 	public UProductVO read(int uProductId) {
-		logger.info("read() È£Ãâ : boardId = " + uProductId);
+		logger.info("read() È£ï¿½ï¿½ : boardId = " + uProductId);
 		return dao.select(uProductId);
 	}
 
 	@Override
 	public int update(UProductVO vo) {
-		logger.info("update() È£Ãâ : vo = " + vo.toString());
+		logger.info("update() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(int uProductId) {
-		logger.info("delete() È£Ãâ : uProductId = " + uProductId);
+		logger.info("delete() È£ï¿½ï¿½ : uProductId = " + uProductId);
 		return dao.delete(uProductId);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() È£Ãâ");
+		logger.info("getTotalCounts() È£ï¿½ï¿½");
 		return dao.getTotalCount();
 	}
 
 	@Override
 	public List<UProductVO> readByCategoriorName(PageCriteria criteria, String keyword) {
-		logger.info("readByTitleOrContent() È£Ãâ");
+		logger.info("readByTitleOrContent() È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		logger.info("keyword = " + keyword);
@@ -71,13 +73,13 @@ public class UProductServiceImple implements UProductService {
 
 	@Override
 	public int getTotalCountsByByCategoriorName(String keyword) {
-		logger.info("getTotalCountsByTitleContent() È£Ãâ");
+		logger.info("getTotalCountsByTitleContent() È£ï¿½ï¿½");
 		return dao.getTotalCountsByCategoriorName(keyword);
 	}
 
 	@Override
 	public List<UProductVO> readdate(PageCriteria criteria) {
-		logger.info("readdate() È£Ãâ");
+		logger.info("readdate() È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		
@@ -87,13 +89,13 @@ public class UProductServiceImple implements UProductService {
 
 	@Override
 	public int getTotalCountsBydate() {
-		logger.info("getTotalCountsBydate() È£Ãâ");
+		logger.info("getTotalCountsBydate() È£ï¿½ï¿½");
 		return dao.getTotalCountsByUproductCreatedDate();
 	}
 
 	@Override
 	public List<UProductVO> readByAddress(PageCriteria criteria, String keyword) {
-		logger.info("readByTitleOrContent() È£Ãâ");
+		logger.info("readByTitleOrContent() È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		logger.info("keyword = " + keyword);
@@ -102,32 +104,64 @@ public class UProductServiceImple implements UProductService {
 
 	@Override
 	public int getTotalCountsByAddress(String keyword) {
-		logger.info("getTotalCountsByTitleContent() È£Ãâ");
+		logger.info("getTotalCountsByTitleContent() È£ï¿½ï¿½");
 		return dao.getTotalCountsByAddress(keyword);
 	}
 
 	@Override
 	public List<UProductVO> readrecommend(String uProductCategori, int uProductId) {
-		logger.info("readrecommend() È£Ãâ");
+		logger.info("readrecommend() È£ï¿½ï¿½");
 		return dao.recommendCategori(uProductCategori, uProductId);
 	}
 
 	@Override
 	public List<UProductVO> read() {
-		logger.info("read() È£Ãâ");
+		logger.info("read() È£ï¿½ï¿½");
 		return dao.select();
 	}
 
 	@Override
 	public List<UProductVO> readByInterest(String interest) {
-		logger.info("readByInterest() È£Ãâ");
+		logger.info("readByInterest() È£ï¿½ï¿½");
 		return dao.selectByInterest(interest);
 	}
 
 	@Override
 	public int createRecentlyView(int uProductId, String memberId) {
-		logger.info("createRecentlyView() È£Ãâ");
+		logger.info("createRecentlyView() È£ï¿½ï¿½");
 		return dao.insertRecentlyView(uProductId, memberId);
 	}
+	public List<UProductBuyVO> readybuyuproduct(PageCriteria criteria, String buyerNickname) {
+		logger.info("readybuyuproduct() È£ï¿½ï¿½");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + buyerNickname);
+		
+		return dao.selectbuyuproduct(criteria, buyerNickname);
+	}
+
+	@Override
+	public int getTotalCountsbuyuproduct(String buyerNickname) {
+		logger.info("getTotalCountsbuyuproduct() È£ï¿½ï¿½");
+		return dao.getTotalCountsbuyuproduct(buyerNickname)	;
+	}
+
+	@Override
+	public List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname) {
+		logger.info("readybuyuproduct() È£ï¿½ï¿½");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + memberNickname);
+		
+		return dao.selectselluproduct(criteria, memberNickname);
+	}
+
+	@Override
+	public int getTotalCountsselluproduct(String memberNickname) {
+		logger.info("getTotalCountsbuyuproduct() È£ï¿½ï¿½");
+		return dao.getTotalCountsselluproduct(memberNickname);
+	}
+
+	
 
 }

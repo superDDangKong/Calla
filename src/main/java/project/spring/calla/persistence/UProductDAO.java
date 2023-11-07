@@ -5,16 +5,18 @@ import java.util.List;
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.QBoardVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 public interface UProductDAO {
-	int insert(UProductVO vo); // »óÇ° µî·Ï
-	List<UProductVO> select(); // »óÇ° ÀüÃ¼ °Ë»ö
-	UProductVO select(int uProductId); // »óÇ° °Ë»ö	
-	int update(UProductVO vo); // »óÇ° ¼öÁ¤
-	int delete(int uProductId); // »óÇ° »èÁ¦
+	int insert(UProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
+	List<UProductVO> select(); // ï¿½ï¿½Ç° ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
+	UProductVO select(int uProductId); // ï¿½ï¿½Ç° ï¿½Ë»ï¿½	
+	int update(UProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	int delete(int uProductId); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 	List<UProductVO> select(PageCriteria criteria);
 	int getTotalCount();
 	
@@ -22,15 +24,15 @@ public interface UProductDAO {
 	List<UProductVO> selectByName(String keyword);
 	
 	int updateUproductCommentCount(int amount, int uProductId);
-	List<UProductVO> selectAllByMemberNickname(String menberNickname);
+	List<UProductVO> selectAllByMemberNickname(String memberNickname);
 	
-	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // »óÇ° ÀÌ¸§¶Ç´Â Ä«Å×°í¸® °Ë»ö
+	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // ï¿½ï¿½Ç° ï¿½Ì¸ï¿½ï¿½Ç´ï¿½ Ä«ï¿½×°ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	int getTotalCountsByCategoriorName(String keyword);
 	
-	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria); // ½Å»óÇ° °Ë»ö
+	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria); // ï¿½Å»ï¿½Ç° ï¿½Ë»ï¿½
 	int getTotalCountsByUproductCreatedDate();
 	
-	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword); // »óÇ° ÁÖ¼Ò °Ë»ö
+	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword); // ï¿½ï¿½Ç° ï¿½Ö¼ï¿½ ï¿½Ë»ï¿½
 	int getTotalCountsByAddress(String keyword);
 	
 	List<UProductVO> recommendCategori(String uProductCategori, int uProductId);
@@ -42,4 +44,18 @@ public interface UProductDAO {
 	List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
 	int getTotalCountsByRecentlyView(String memberId);
 	int deleteRecentlyView(int uProductRecentlyViewId);
+	List<UProductBuyVO> selectbuyuproduct(PageCriteria criteria, String buyerNickname);
+	int getTotalCountsbuyuproduct(String buyerNickname);
+	
+	List<UProductSellVO> selectselluproduct(PageCriteria criteria, String memberNickname);
+	int getTotalCountsselluproduct(String memberNickname);
+	
+	
+	
 }
+
+
+
+
+
+

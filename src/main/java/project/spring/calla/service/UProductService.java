@@ -4,19 +4,21 @@ import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface UProductService {
-	int create(UProductVO vo) throws Exception; // »óÇ° »ý¼º
-	List<UProductVO> read(PageCriteria criteria); // »óÇ°¸ñ·Ï ÀÐ¾î¿À±â
-	UProductVO read(int uProductId); // »óÇ°ID ÀÐ¾î¿À±â
-	int update(UProductVO vo); // »óÇ° Á¤º¸ ¼öÁ¤
-	int delete(int uProductId); // »óÇ° »èÁ¦
-	int getTotalCounts(); // »óÇ° ÀüÃ¼ °¹¼ö
+	int create(UProductVO vo) throws Exception; // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	List<UProductVO> read(PageCriteria criteria); // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
+	UProductVO read(int uProductId); // ï¿½ï¿½Ç°ID ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
+	int update(UProductVO vo); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int delete(int uProductId); // ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	int getTotalCounts(); // ï¿½ï¿½Ç° ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	List<UProductVO> readByCategoriorName(PageCriteria criteria, String keyword);
 	int getTotalCountsByByCategoriorName(String keyword);
-	List<UProductVO> readdate(PageCriteria criteria); // »óÇ°¸ñ·Ï ÀÐ¾î¿À±â
+	List<UProductVO> readdate(PageCriteria criteria); // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
 	int getTotalCountsBydate();
 	List<UProductVO> readByAddress(PageCriteria criteria, String keyword);
 	int getTotalCountsByAddress(String keyword);
@@ -24,4 +26,11 @@ public interface UProductService {
 	List<UProductVO> read();
 	List<UProductVO> readByInterest(String interest);
 	int createRecentlyView(int uProductId, String memberId);
+	
+	List<UProductBuyVO> readybuyuproduct(PageCriteria criteria, String buyerNickname);
+	int getTotalCountsbuyuproduct(String buyerNickname);
+	
+	List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname);
+	int getTotalCountsselluproduct(String memberNickname);
+
 }

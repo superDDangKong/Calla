@@ -31,5 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_by_memberNickname" resultType="UproductCommentVO">
 	  	select * from ${u_product_comment} where ${memberNickname} = #{memberNickname}
 	</select>	
+	
+	<select id="select_by_memberNickname_distinct" resultType="UproductCommentVO">
+
+	  	select distinct ${memberNickname} from ${u_product_comment} where ${uProductId} = #{uProductId}
+	  	
+	</select>	
+	
+	
+	
+	
+	
 
 </mapper>

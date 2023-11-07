@@ -5,6 +5,10 @@ import java.util.Map;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 public interface MemberService {
 	int create(MemberVO vo);
@@ -30,4 +34,9 @@ public interface MemberService {
 	int delete(String memberId);
 	int deleteRecentlyViewProduct(int productRecentlyViewId);
 	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);
+	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // ��ǰ��� �о����
+	int getTotalCountsBymyuproduct(String memberNickname);
+	UProductVO read(int uProductId); // ��ǰID �о����
+	
+	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
 }
