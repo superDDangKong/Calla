@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductDAO;
@@ -110,6 +112,38 @@ public class UProductServiceImple implements UProductService {
 	public List<UProductVO> readrecommend(String uProductCategori, int uProductId) {
 		logger.info("readrecommend() 호출");
 		return dao.recommendCategori(uProductCategori, uProductId);
+	}
+
+	@Override
+	public List<UProductBuyVO> readybuyuproduct(PageCriteria criteria, String buyerNickname) {
+		logger.info("readybuyuproduct() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + buyerNickname);
+		
+		return dao.selectbuyuproduct(criteria, buyerNickname);
+	}
+
+	@Override
+	public int getTotalCountsbuyuproduct(String buyerNickname) {
+		logger.info("getTotalCountsbuyuproduct() 호출");
+		return dao.getTotalCountsbuyuproduct(buyerNickname)	;
+	}
+
+	@Override
+	public List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname) {
+		logger.info("readybuyuproduct() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + memberNickname);
+		
+		return dao.selectselluproduct(criteria, memberNickname);
+	}
+
+	@Override
+	public int getTotalCountsselluproduct(String memberNickname) {
+		logger.info("getTotalCountsbuyuproduct() 호출");
+		return dao.getTotalCountsselluproduct(memberNickname);
 	}
 
 	

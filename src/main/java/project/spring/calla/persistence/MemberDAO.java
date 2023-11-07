@@ -1,6 +1,11 @@
 package project.spring.calla.persistence;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
+
 import java.util.List;
 public interface MemberDAO {
 	
@@ -21,4 +26,12 @@ public interface MemberDAO {
 	int updateAddress(String memberId, String memberAddress);
 	int updateLevel(String memberId, int amount);
 	int delete(String memberId);
+	
+	List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname);
+	int getTotalCountsBymyuproduct(String memberNickname);
+	
+	UProductVO select(int uProductId); // 상품 검색
+	int insertbuy(UProductBuyVO vo);
+	int insertsell(UProductSellVO svo);
+	
 }

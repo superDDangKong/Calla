@@ -24,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import oracle.jdbc.driver.OracleDriver;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.persistence.UProductDAO;
+import project.spring.calla.service.MemberService;
 import project.spring.calla.service.UProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,7 +39,10 @@ public class UproductDAOTest {
 
 	@Autowired
 	private UProductDAO dao;
+	MemberDAO memberdao;
+	
 	UProductService service;
+	MemberService memberservice;
 	
 	@Transactional
 	@Test
@@ -49,7 +54,17 @@ public class UproductDAOTest {
 //		testUpdate();
 //		testDelete();
 //		testSelectPaging();
-		testSelectDate();
+//		testSelectDate();
+		testuproduct();
+	}
+
+private void testuproduct() {
+	PageCriteria criteria = new PageCriteria(1, 3);
+	List<UProductVO> list = memberdao.selectmyuproduct(criteria, "½´ÆÛ°ü¸®ÀÚ");
+	for(UProductVO vo : list) {
+		logger.info(vo.toString());
+	}
+		
 	}
 
 private void testRecommand() {
@@ -60,28 +75,13 @@ private void testRecommand() {
 		
 	}
 
-private void testSelectDate() {
-		// TODO Auto-generated method stub
-	PageCriteria criteria = new PageCriteria(1, 3);
-	List<UProductVO> list = dao.selectByUproductCreatedDate(criteria);
-	for(UProductVO vo : list) {
-		logger.info(vo.toString());
-	}
-		
-	}
-
-//	private void testSelectByBoardId() {
-//		UproductVO vo = dao.select(30);
-//		logger.info(vo.toString());
-//		
-//	}
-//
-//	private void testSelectAll() {
+//private void testSelectDate() {
 //		// TODO Auto-generated method stub
-//		List<UproductVO> list = dao.select();
-//		for(UproductVO vo : list) {
-//			logger.info(vo.toString());
-//		}
+//	PageCriteria criteria = new PageCriteria(1, 3);
+//	List<UProductVO> list = dao.selectByUproductCreatedDate(criteria);
+//	for(UProductVO vo : list) {
+//		logger.info(vo.toString());
+//	}
 //		
 //	}
 

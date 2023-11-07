@@ -4,6 +4,8 @@ import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
@@ -21,5 +23,11 @@ public interface UProductService {
 	List<UProductVO> readByAddress(PageCriteria criteria, String keyword);
 	int getTotalCountsByAddress(String keyword);
 	List<UProductVO> readrecommend(String uProductCategori, int uProductId); 
+	
+	List<UProductBuyVO> readybuyuproduct(PageCriteria criteria, String buyerNickname);
+	int getTotalCountsbuyuproduct(String buyerNickname);
+	
+	List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname);
+	int getTotalCountsselluproduct(String memberNickname);
 
 }

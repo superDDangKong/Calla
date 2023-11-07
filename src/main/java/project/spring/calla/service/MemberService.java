@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 public interface MemberService {
 	int create(MemberVO vo);
@@ -25,4 +29,9 @@ public interface MemberService {
 	int updateAddress(String memberId, String memberAddress);
 	int updateLevel(String memberId, int amount);
 	int delete(String memberId);
+	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // 상품목록 읽어오기
+	int getTotalCountsBymyuproduct(String memberNickname);
+	UProductVO read(int uProductId); // 상품ID 읽어오기
+	
+	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
 }

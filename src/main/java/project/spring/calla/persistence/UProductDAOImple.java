@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
@@ -156,6 +158,42 @@ public class UProductDAOImple implements UProductDAO {
 		args.put("uProductId", uProductId);
 		logger.info("args = " + args);
 		return sqlSession.selectList(NAMESPACE + ".recommend_by_u_product_categori", args);
+	}
+
+	@Override
+	public List<UProductBuyVO> selectbuyuproduct(PageCriteria criteria, String buyerNickname) {
+		logger.info("selectbuyuproduct() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("buyerNickname", buyerNickname);
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_buy_all_by_memberNickname", args);
+	}
+
+	@Override
+	public int getTotalCountsbuyuproduct(String buyerNickname) {
+		logger.info("getTotalCountsBymyuproduct()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_buy", buyerNickname);
+	}
+
+	@Override
+	public List<UProductSellVO> selectselluproduct(PageCriteria criteria, String memberNickname) {
+		logger.info("selectselluproduct() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("memberNickname", memberNickname);
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_sell_all_by_memberNickname", args);
+	}
+
+	@Override
+	public int getTotalCountsselluproduct(String memberNickname) {
+		logger.info("getTotalCountsBymyuproduct()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_sell", memberNickname);
 	}
 
 	

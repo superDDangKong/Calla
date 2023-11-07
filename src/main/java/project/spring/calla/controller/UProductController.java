@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.ProductVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
@@ -284,5 +287,65 @@ public class UProductController {
 
 		return entity;
 	}
+	
+	@GetMapping("/uproductbuy")
+	public void MainGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
+		logger.info("list() 龋免");
+		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
+
+		
+		String buyerNickname = (String) session.getAttribute("memberNickname");
+		
+		// Paging 贸府
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<UProductBuyVO> list = uproductService.readybuyuproduct(criteria, buyerNickname);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(uproductService.getTotalCountsbuyuproduct(buyerNickname));
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	}
+	
+	@GetMapping("/uproductsell")
+	public void sellGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
+		logger.info("list() 龋免");
+		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
+
+		
+		String memberNickname = (String) session.getAttribute("memberNickname");
+		
+		// Paging 贸府
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<UProductSellVO> list = uproductService.readyselluproduct(criteria, memberNickname);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(uproductService.getTotalCountsselluproduct(memberNickname));
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	}
+	
+	
 
 }

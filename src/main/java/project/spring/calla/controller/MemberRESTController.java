@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductCommentVO;
+import project.spring.calla.domain.UProductSellVO;
+import project.spring.calla.domain.UproductBuySellVO;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -177,6 +181,9 @@ public class MemberRESTController {
 
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
+	
+	
+	
 }
 	
 	

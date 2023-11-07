@@ -13,4 +13,7 @@ public interface UProductCommentDAO {
 	int update(int uProductCommentId, String uProductCommentContent);
 	int delete(int uProductCommentId);
 	List<UProductCommentVO> select(String memberNickname);
+	
+	List<UProductCommentVO> selected(int uProductId);
+	
 }

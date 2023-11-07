@@ -1,140 +1,229 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<html>
+<style type="text/css">
+body {
+  margin: 0;
+}
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+* {
+  box-sizing: border-box;
+}
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
-    <style>
-      * {
-        font-family: "Jua", sans-serif;
-      }
-      .product-img {
-        width: 500px;
-        height: 300px;
-        background-image: url("http://th3.tmon.kr/thumbs/image/a6d/d92/42a/ba9f7e411_700x700_95_FIT.jpg");
-        background-position: center;
-        background-size: cover;
-      }
-      .product-desc {
-        width: 500px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-      }
+p,
+span {
+  margin: 0;
+}
 
-      .price {
-        font-size: 20px;
-        font-style: italic;
-      }
+a {
+  color: black;
+}
 
-      .item-order {
-        width: 500px;
-      }
+img {
+  display: block;
+  width: 80%;
+  height: 80px;
+  margin: auto;
+}
 
-      .btn-order {
-        margin: auto;
-        width: 100px;
+.cart {
+  width: 80%;
+  margin: auto;
+  padding: 30px;
+}
 
-        display: block;
-      }
-      .wrap {
-        width: 500px;
-        padding-top: 50px;
-        margin: auto;
-      }
-    </style>
+.cart ul {
+  background-color: whitesmoke;
+  padding: 30px;
+  margin-bottom: 50px;
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 300;
+}
 
-    <script>
-      function order() {
-        alert("주문이 완료되었습니다!")
-      }
-    </script>
-    <title>1주차 숙제</title>
-  </head>
+.cart ul :first-child {
+  color: limegreen;
+}
 
-  <body>
-    <div class="wrap">
-      <div class="product-img"></div>
-      <div class="product-desc">
-        <h2>
-          이쁜 핸드폰 케이스 팝니다
-          <span class="price"> 가격:5,000</span>
-        </h2>
-        <p>모든 기종 판매하오니 관심제품은 상세페이지 참조</p>
-      </div>
-      <div class="item-order">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">주문자이름</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Default"
-            aria-describedby="inputGroup-sizing-default"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">수량</label>
-          </div>
-          <select class="custom-select" id="inputGroupSelect01">
-            <option selected>-- 수량을 선택하세요 --</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">주소</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Default"
-            aria-describedby="inputGroup-sizing-default"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">전화번호</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Default"
-            aria-describedby="inputGroup-sizing-default"
-          />
-        </div>
-        <button type="button" onclick="order()" class="btn btn-primary btn-order">
-          주문하기
-        </button>
-      </div>
-    </div>
-  </body>
+table {
+  border-top: solid 1.5px black;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+thead {
+  text-align: center;
+  font-weight: bold;
+}
+
+tbody {
+  font-size: 12px;
+}
+
+td {
+  padding: 15px 0px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.cart__list__detail :nth-child(3) {
+  vertical-align: top;
+}
+
+.cart__list__detail :nth-child(3) a {
+  font-size: 12px;
+}
+
+.cart__list__detail :nth-child(3) p {
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.cart__list__smartstore {
+  font-size: 12px;
+  color: gray;
+}
+
+.cart__list__option {
+  vertical-align: top;
+  padding: 20px;
+}
+
+.cart__list__option p {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.cart__list__option p::after {
+  content: "";
+  width: 90%;
+  height: 1px;
+  background-color: lightgrey;
+  left: 0px;
+  top: 25px;
+  position: absolute;
+}
+
+.cart__list__optionbtn {
+  background-color: white;
+  font-size: 10px;
+  border: lightgrey solid 1px;
+}
+
+.cart__list__detail :nth-child(4),
+.cart__list__detail :nth-child(5),
+.cart__list__detail :nth-child(6) {
+  border-left: 2px solid whitesmoke;
+}
+
+.cart__list__detail :nth-child(5),
+.cart__list__detail :nth-child(6) {
+  text-align: center;
+}
+
+.cart__list__detail :nth-child(5) button {
+  background-color: limegreen;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.cart__mainbtns {
+  width: 420px;
+  height: 200px;
+  padding-top: 40px;
+  display: block;
+  margin: auto;
+}
+
+.cart__bigorderbtn {
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.cart__bigorderbtn.left {
+  background-color: white;
+  border: 1px lightgray solid;
+}
+
+.cart__bigorderbtn.right {
+  background-color: limegreen;
+  color: white;
+  border: none;
+}
+</style>
+
+
+<head>
+<meta charset="UTF-8">
+<title>BZshop | cartList</title>
+
+
+</head>
+
+<body>
+	<section class="cart">
+		<div class="cart__information">
+			<ul>
+				<li>장바구니 상품은 최대 30일간 저장됩니다.</li>
+				<li>가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.</li>
+				<li>오늘출발 상품은 판매자 설정 시점에 따라 오늘출발 여부가 변경될 수 있으니 주문 시 꼭 다시 확인해 주시기
+					바랍니다.</li>
+			</ul>
+		</div>
+		<table class="cart__list">
+			<form>
+				<thead>
+					<tr>
+						<td></td>
+						<td colspan="2">상품정보</td>
+						<td>옵션</td>
+						<td>상품금액</td>
+						<td>배송비</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="cart__list__detail">
+						<td></td>
+						<td><img src="image/keyboard.jpg" alt="magic keyboard"></td>
+						<td><a href="#">애플 공식 브랜드스토어</a><span
+							class="cart__list__smartstore"> 스마트스토어</span>
+							<p>Apple 매직 키보드 - 한국어(MK2A3KH/A)</p> <sapn class="price">116,62원</sapn><span
+							style="text-decoration: line-through; color: lightgray;">119,000</span>
+						</td>
+						<td class="cart__list__option">
+							<p>모델명 : 키보드 - 한국어 MK2A3KH/A / 1개</p>
+						</td>
+						<td><span class="price">116,620원</span><br>
+							<button class="cart__list__orderbtn">주문하기</button></td>
+						<td>무료</td>
+					</tr>
+					
+				</tbody>
+				
+			</form>
+		</table>
+		<div class="cart__mainbtns">
+			<button class="cart__bigorderbtn left">쇼핑 계속하기</button>
+			<button class="cart__bigorderbtn right">물건 등록하기</button>
+		</div>
+	</section>
+</body>
+
+
+
 </html>

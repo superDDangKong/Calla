@@ -60,7 +60,7 @@ li {
 	<!-- header1 -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="/calla/uProduct/list">Goot mall</a>
+			<a class="navbar-brand" href="/calla/">Goot mall</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -122,9 +122,9 @@ li {
 		<div class="container px-4 px-lg-5 mt-5">
 			<div
 				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+				<input type="hidden" id="list" value="${list }">
 				<c:forEach var="vo" items="${list }">
-					<input type="hidden" name="memberAddress" value="${vo.memberAddress }">
+					<input type="hidden" name="memberAddress" class="memberAddress" value="${vo.memberAddress }">
 					<div class="col mb-5">
 						<div class="card h-100">
 							<!-- Product image-->
@@ -195,6 +195,7 @@ li {
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d1bf5eface4b1d2d29fa03fe32944641&libraries=services"></script>
 	<script>
+	
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -207,18 +208,14 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-// 주소-좌표 변환 객체를 생성합니다
-
-
-
-var geocoder = new kakao.maps.services.Geocoder();
+var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성합니다
 
 var memberAddresses = [];
 var places = [];
 
 <c:forEach var="vo" items="${list}">
   var address = "${vo.memberAddress}";
-  var place = "${vo.uProductName}"; 
+  var place =  "${vo.uProductName}"; 
   places.push(place); 
   memberAddresses.push(address);
 </c:forEach>

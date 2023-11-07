@@ -4,6 +4,8 @@ import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
+import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
@@ -20,7 +22,7 @@ public interface UProductDAO {
 	List<UProductVO> selectByName(String keyword);
 	
 	int updateUproductCommentCount(int amount, int uProductId);
-	List<UProductVO> selectAllByMemberNickname(String menberNickname);
+	List<UProductVO> selectAllByMemberNickname(String memberNickname);
 	
 	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // 상품 이름또는 카테고리 검색
 	int getTotalCountsByCategoriorName(String keyword);
@@ -33,4 +35,18 @@ public interface UProductDAO {
 	
 	List<UProductVO> recommendCategori(String uProductCategori, int uProductId);
 	
+	List<UProductBuyVO> selectbuyuproduct(PageCriteria criteria, String buyerNickname);
+	int getTotalCountsbuyuproduct(String buyerNickname);
+	
+	List<UProductSellVO> selectselluproduct(PageCriteria criteria, String memberNickname);
+	int getTotalCountsselluproduct(String memberNickname);
+	
+	
+	
 }
+
+
+
+
+
+

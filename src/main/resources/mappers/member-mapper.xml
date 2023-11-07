@@ -112,4 +112,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete">
 		delete from ${member} where ${memberId} = #{memberId}
 	</delete>
+	
+	<select id="select_by_my_u_product" resultType="UproductVO">
+		select
+		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress},
+		${memberNickname}, ${uProductCommentCount}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product}
+		where ${memberNickname} = #{memberNickname} 
+		)a
+		) where rn between #{start} and #{end}
+
+	</select>
+	
+	<select id="total_count_by_my_u_product"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product}
+		where ${memberNickname} = #{memberNickname}
+	</select>
+	
+	<select id="select_by_product_id" resultType="UproductVO">
+		select * from
+		${u_product} where ${uProductId} = #{uProductId}
+	</select>
+	
+	<insert id="buy_insert">
+		insert into ${u_product_buy}
+		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
+		${buyerNickname}, ${uProductImagePath})
+		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
+		#{uProductContent}, #{buyerNickname}, #{uProductImagePath})<!-- 
+			물음표 -->
+	</insert>
+	
+	
+		<insert id="sell_insert">
+		insert into ${u_product_sell}
+		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
+		${memberNickname}, ${uProductImagePath}, ${buyerNickname}, ${uProductBuyId})
+		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
+		#{uProductContent}, #{memberNickname}, #{uProductImagePath}, #{buyerNickname}, #{uProductBuyId})<!-- 
+			물음표 -->
+		</insert>
+	
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

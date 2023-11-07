@@ -25,6 +25,9 @@
 			<ul>
 				<li><a href="order">주문 목록</a></li>
 				<li><a href="cancel">취소/반품/교환/환불 내역</a></li>
+				<li><a href="myuproduct">내가 올린 상품</a></li>
+				<li><a href="/calla/uProduct/uproductsell">판매 목록(중고)</a></li>
+				<li><a href="/calla/uProduct/uproductbuy">구매 목록(중고)</a></li>
 			</ul>
 		<li>MY 활동</li>
 			<ul>
