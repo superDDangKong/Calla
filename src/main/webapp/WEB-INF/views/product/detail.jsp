@@ -597,7 +597,7 @@
 				if($(this).text() === '장바구니 넣기'){
 			        $.ajax({
 			        	type : 'POST',
-			        	url : 'orders',
+			        	url : 'orderLists',
 			        	headers: {
 		                    'Content-Type': 'application/json'
 		                },
@@ -613,7 +613,7 @@
 				} else{
 					$.ajax({
 						type : 'DELETE',
-						url : 'orders/' + productId + '/' + memberId,
+						url : 'orderLists/' + productId + '/' + memberId,
 						headers: {
 			                   'Content-Type': 'application/json'
 			               },

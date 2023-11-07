@@ -137,6 +137,19 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productId" value="product_id"/>
 		<property name="productAmount" value="product_amount"/>
 		
+		<property name="product_order" value="product_order"/>
+		<property name="memberId" value="member_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="productName" value="product_name"/>
+		<property name="productAmount" value="product_amount"/>
+		<property name="productPrice" value="product_price"/>
+		<property name="productOrderCreatedDate" value="product_order_created_date"/>
+		<property name="memberCard" value="member_card"/>
+		<property name="memberCardNumber" value="member_card_number"/>
+		<property name="memberEmail" value="member_email"/>
+		<property name="recipientName" value="recipient_name"/>
+		<property name="memberAddress" value="member_address"/>
+		<property name="productOrderId" value="product_order_id"/>
 		
 	</properties>
 	

@@ -54,8 +54,8 @@ li {
 	<input type="hidden" id="sessionLevel" value=${memberLevel }>
 	
 	
+	<button id="home"><a href="/calla/">홈</a></button>
 	<div id="register">
-		<button id="home"><a href="/calla/">홈</a></button>
 		<a href="register"><input type="button" value="상품 등록"></a>
 		<c:if test="${memberNickname != null}">
 			<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니"></a>

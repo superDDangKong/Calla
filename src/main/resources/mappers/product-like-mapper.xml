@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<delete id="delete">
 		delete from ${product_like}
-		where ${memberId} = #{memberId}
+		where ${memberId} = #{memberId} and ${productId} = #{productId}
 	</delete>
 	
 	<select id="total_count" resultType="Integer">

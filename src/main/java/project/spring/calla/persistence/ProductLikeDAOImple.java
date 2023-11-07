@@ -30,9 +30,12 @@ public class ProductLikeDAOImple implements ProductLikeDAO {
 	}
 
 	@Override
-	public int delete(String memberId) {
-		logger.info("delete() 호출 : memberId = " + memberId);
-		return sqlSession.delete(NAMESPACE + ".delete", memberId);
+	public int delete(int productId, String memberId) {
+		logger.info("delete() 호출 : productId = " + productId + ",memberId = " + memberId);
+		Map<String, Object> args = new HashMap();
+		args.put("productId", productId);
+		args.put("memberId", memberId);
+		return sqlSession.delete(NAMESPACE + ".delete", args);
 	}
 
 	@Override

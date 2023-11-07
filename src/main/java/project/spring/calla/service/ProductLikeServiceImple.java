@@ -36,7 +36,7 @@ public class ProductLikeServiceImple implements ProductLikeService {
 	@Override
 	public int delete(int productId, String memberId) throws Exception {
 		logger.info("delete() 호출 : productId = " + productId + ", memberId = " + memberId);
-		int resultDelete = productLikeDAO.delete(memberId);
+		int resultDelete = productLikeDAO.delete(productId, memberId);
 		logger.info(resultDelete + "성공");
 		int result = productDAO.updateLikeCount(-1, productId);
 		logger.info(result + "성공");

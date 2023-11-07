@@ -125,6 +125,8 @@ public class ProductDAOImple implements ProductDAO {
 	    return sqlSession.selectList(NAMESPACE + ".select_product_with_amount", memberId);
 	}
 
+	
+
 
 	
 
