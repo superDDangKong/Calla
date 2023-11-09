@@ -56,8 +56,8 @@
 	        <div class="nav justify-content-center">
 	            <a href="/calla/product/list" class="nav-link mx-2 text-white">공용상품</a>
 	            <a href="/calla/uProduct/list" class="nav-link mx-2 text-white">중고상품</a>
-	            <a href="/calla/qBoard/list" class="nav-link mx-2 text-white">문의게시판</a>
 	            <a href="/calla/fBoard/list" class="nav-link mx-2 text-white">자유게시판</a>
+	            <a href="/calla/qBoard/list" class="nav-link mx-2 text-white">문의게시판</a>
 	        </div>
 	    </div>
 	</div>

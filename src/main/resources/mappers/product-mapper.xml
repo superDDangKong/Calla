@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="select_likes" resultType="ProductVO">
-		select p.${productName}, p.${productPrice}, p.${productCategori}, p.${productContent}, pl.${productLikeId}, pl.${productId}
+		select p.*, pl.${productLikeId}, pl.${productId}
 		from ${product} p
 		join ${product_like} pl on p.${productId} = pl.${productId}
 		where pl.${memberId} = #{memberId} 
@@ -142,5 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${product_recently_view}
 		where ${productRecentlyViewId} = #{productRecentlyViewId}
 	</delete>
+	
+
 	
 </mapper>

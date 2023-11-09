@@ -120,44 +120,63 @@ li {
 	</div>
 
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							getAllComments();
-							$('#btnCommentAdd')
-									.click(
-											function() {
-												var fBoardId = $('#fBoardId')
-														.val(); // 게시판 번호 데이터
-												var memberNickname = $(
-														'#memberNickname')
-														.val(); // 작성자 데이터
-												var fBoardCommentContent = $(
-														'#fBoardCommentContent')
-														.val(); // 댓글 내용
-												var obj = {
-													'fBoardId' : fBoardId,
-													'memberNickname' : memberNickname,
-													'fBoardCommentContent' : fBoardCommentContent
-												};
-												console.log(obj);
-												$
-														.ajax({
-															type : 'POST',
-															url : 'comments',
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															data : JSON
-																	.stringify(obj), // JSON으로 변환
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('댓글 입력 성공');
-																	getAllComments();
-																}
+		$(document).ready(function() {
+			getAllComments();
+			$('#btnCommentAdd').click(function() {
+				var fBoardId = $('#fBoardId').val(); // 게시판 번호 데이터
+				var memberNickname = $('#memberNickname').val(); // 작성자 데이터
+				var fBoardCommentContent = $('#fBoardCommentContent').val(); // 댓글 내용
+				var obj = {
+							'fBoardId' : fBoardId,
+							'memberNickname' : memberNickname,
+							'fBoardCommentContent' : fBoardCommentContent
+							};
+				console.log(obj);
+				$.ajax({
+					type : 'POST',
+					url : 'comments',
+					headers : {
+							'Content-Type' : 'application/json'
+							},
+					data : JSON.stringify(obj), // JSON으로 변환
+					success : function(result) {
+										console.log(result);
+										if (result == 1) {
+											alert('댓글 입력 성공');
+											getAllComments();
+											}
+										}
+
+				}); // end ajax()
+			}); // end btnAdd.click()
+
+			// 게시판 댓글 전체 가져오기
+			function getAllComments() {
+				console.log("getAllComments() 호출");
+				var fBoardId = $('#fBoardId').val();
+				var commentPage = $('#pageMaker_commentPage').val();
+				var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
+				var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+					$.getJSON(
+							url,
+							function(data) {
+									var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
+									var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
+									$('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
+									$('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
+									var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
+									var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
+									var memberNickname = $('#memberNickname').val();
+									var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+									
+										$(data.list).each(function() {
+													console.log(this);
+													var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+													var disabled = 'disabled';
+													var readonly = 'readonly';
+															if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
+															disabled = '';
+															readonly = '';
 															}
 
 														}); // end ajax()
@@ -410,8 +429,7 @@ li {
 																		console
 																				.log(this);
 
-																		var fBoardReplyCreatedDate = new Date(
-																				this.fBoardReplyCreatedDate);
+																		var fBoardReplyCreatedDate = new Date(this.fBoardReplyCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 																		var disabled = 'disabled';
 																		var readonly = 'readonly';
 
@@ -500,8 +518,7 @@ li {
 															headers : {
 																'Content-Type' : 'application/json'
 															},
-															data : JSON
-																	.stringify(obj), // JSON으로 변환
+															data : JSON.stringify(obj), // JSON으로 변환
 															success : function(
 																	result) {
 																console

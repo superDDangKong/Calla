@@ -2,8 +2,10 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.UProductLikeVO;
@@ -16,6 +18,10 @@ public class UProductLikeDAOImple implements UProductLikeDAO{
 	
 	private static final String NAMESPACE = 
 			"project.spring.calla.UProductLikeMapper";
+	
+	@Autowired
+	private SqlSession sqlSession;
+	
 	@Override
 	public int insert(UProductLikeVO vo) {
 		// TODO Auto-generated method stub
@@ -32,6 +38,12 @@ public class UProductLikeDAOImple implements UProductLikeDAO{
 	public int delete(int uProductLikeId) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int deleteById(int uProductLikeId) {
+		logger.info("delete() »£√‚ : productLikeId = " + uProductLikeId);
+		return sqlSession.delete(NAMESPACE + ".delete_by_id", uProductLikeId);
 	}
 
 }

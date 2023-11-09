@@ -11,7 +11,10 @@ table, th, td {
 	border-width: 1px;
 	text-align: center;
 }
-
+table {
+    table-layout: auto; /* 자동 열 너비 조절을 위해 auto 사용 */
+    width: 100%; /* 테이블 너비를 컨테이너의 100%로 설정 */
+  }
 ul {
 	list-style-type: none;
 }

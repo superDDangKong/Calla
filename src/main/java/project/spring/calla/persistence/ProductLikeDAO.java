@@ -8,4 +8,5 @@ public interface ProductLikeDAO {
 	int getTotalCount(int productId);
 	int checkProductLike(int productId, String memberId);
 	ProductLikeVO select(int productId, String memberId);
+	int deleteById(int productLikeId);
 }

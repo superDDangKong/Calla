@@ -239,8 +239,8 @@ public class UProductDAOImple implements UProductDAO {
 
 	@Override
 	public List<UProductVO> selectLikes(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("selectLikes() : memberId = " + memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
 
 	@Override
@@ -251,7 +251,7 @@ public class UProductDAOImple implements UProductDAO {
 
 	@Override
 	public List<UProductVO> selectbynickname(PageCriteria criteria, String memberNickname) {
-		logger.info("selectbynickname() È£Ãâ");
+		logger.info("selectbynickname() È£ï¿½ï¿½");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
@@ -272,4 +272,12 @@ public class UProductDAOImple implements UProductDAO {
 		logger.info("select() È£ï¿½ï¿½ : memberNickname = " + memberNickname);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_membernickname", memberNickname);
 	}
+	public int updateLikeCount(int amount, int uProductId) {
+		logger.info("updateLikeCount() : uProductId = " + uProductId);
+		Map<String, Integer> args = new HashMap();
+		args.put("amount", amount);
+		args.put("uProductId", uProductId);
+		return sqlSession.update(NAMESPACE + ".update_like_count", args);
+	}
+	
 }

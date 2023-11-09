@@ -70,4 +70,10 @@ public class ProductLikeDAOImple implements ProductLikeDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_by_member_id", args);
 	}
 
+	@Override
+	public int deleteById(int productLikeId) {
+		logger.info("delete() »£√‚ : productLikeId = " + productLikeId);
+		return sqlSession.delete(NAMESPACE + ".delete_by_id", productLikeId);
+	}
+
 }

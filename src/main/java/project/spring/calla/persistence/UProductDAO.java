@@ -57,7 +57,7 @@ public interface UProductDAO {
 	
 	UProductVO selectnickname(String memberNickname); // 占쏙옙품 占싯삼옙
 	
-	
+	int updateLikeCount(int amount, int uProductId);
 	
 }
 

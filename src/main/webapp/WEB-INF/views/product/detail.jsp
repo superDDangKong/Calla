@@ -672,7 +672,6 @@
 		}); // end document
 		
 			
-		
 	
 		
 	</script>
