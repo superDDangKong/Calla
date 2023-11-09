@@ -147,19 +147,47 @@ public class UProductServiceImple implements UProductService {
 	}
 
 	@Override
-	public List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname) {
+	public List<UProductSellVO> readyselluproduct(PageCriteria criteria, String sellerNickname) {
+		logger.info("readybuyuproduct() ȣ��");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("memberNickname = " + sellerNickname);
+		
+		return dao.selectselluproduct(criteria, sellerNickname);
+	}
+
+	@Override
+	public int getTotalCountsselluproduct(String sellerNickname) {
+		logger.info("getTotalCountsbuyuproduct() ȣ��");
+		return dao.getTotalCountsselluproduct(sellerNickname);
+	}
+
+	@Override
+	public UProductBuyVO read(String sellerNickname) {
+		logger.info("read() ȣ�� : sellerNickname = " + sellerNickname);
+		return dao.selectseller(sellerNickname);
+	}
+
+	@Override
+	public List<UProductVO> readybyuproductnickname(PageCriteria criteria, String memberNickname) {
 		logger.info("readybuyuproduct() ȣ��");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		logger.info("memberNickname = " + memberNickname);
 		
-		return dao.selectselluproduct(criteria, memberNickname);
+		return dao.selectbynickname(criteria, memberNickname);
 	}
 
 	@Override
-	public int getTotalCountsselluproduct(String memberNickname) {
+	public int getTotalCountsbyuproductnickname(String memberNickname) {
 		logger.info("getTotalCountsbuyuproduct() ȣ��");
-		return dao.getTotalCountsselluproduct(memberNickname);
+		return dao.getTotalCountsbynickname(memberNickname);
+	}
+
+	@Override
+	public UProductVO readnickname(String memberNickname) {
+		logger.info("read() ȣ�� : sellerNickname = " + memberNickname);
+		return dao.selectnickname(memberNickname);
 	}
 
 	

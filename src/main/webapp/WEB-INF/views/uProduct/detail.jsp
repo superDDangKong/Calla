@@ -80,7 +80,7 @@
 
     <script>
       function order() {
-        alert("주문이 완료되었습니다!")
+        alert("찜하기가 완료되었습니다!")
       }
     </script>
     <title>${vo.uProductName }</title>
@@ -89,26 +89,40 @@
   <body>
     <div class="wrap">
       <div class="product-img">
-      <img src="display?fileName=${vo.uProductImagePath}" width="450px" height="300px">
+      <img src="display?fileName=${vo.uProductImagePath}" width="500px" height="300px">
       </div>
+      
+      <br>
+      <div>
+      
+      닉네임 : <a href="reviewboard?sellerNickname=${vo.memberNickname }&page=${pageMaker.criteria.page}">${vo.memberNickname}</a> 
+      <span style="float:right; color:green;">${sessionScope.memberManner }&deg;C</span>
+      <br>
+      <div style="float:right;">매너온도</div>
+       
+      </div>
+      
+      <br>
+      
+      
       <div class="product-desc">
-        <h2>
-          ${vo.uProductName}
-        </h2>
+		  
+        <hr style="border: solid 2px gray;">
+        
         <p>가격 문의는 비밀 댓글로 해주세요</p>
          <span class="price"> 가격 : ${vo.uProductPrice}</span>
       </div>
       <div class="item-order">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">작성자</span>
+            <span class="input-group-text">제목</span>
           </div>
           <input
             type="text"
             class="form-control"
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
-             value = ${vo.memberNickname }
+             value = "${vo.uProductName }"
             readonly
           />
         </div>
@@ -151,13 +165,13 @@
         </div>
         
         <div>
-		<textarea rows="10" cols="60" readonly>${vo.uProductContent }</textarea>
+		<textarea rows="10" cols="58" readonly>${vo.uProductContent }</textarea>
 		</div>
 		
 		  <br>
 		
         <button type="button" onclick="order()" class="btn btn-primary btn-order">
-          주문하기
+          찜하기
         </button>
       </div>
     </div>

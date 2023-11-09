@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.calla.UProductReviewMapper">
+
+	<insert id="insert">
+		insert into ${u_product_review}
+		(${memberNickname}, ${uProductReviewTitle}, ${uProductReviewContent}, ${sellerNickname})
+		values (#{memberNickname}, #{uProductReviewTitle}, #{uProductReviewContent}, #{sellerNickname})
+	</insert>
+	
+	<select id="select_all" resultType="UProductReviewVO">
+		select
+		${uProductReviewId}, ${memberNickname}, ${uProductReviewTitle}, ${uProductReviewCreatedDate},
+		${uProductReviewContent}, ${sellerNickname}
+		from(
+		select rownum rn, a.* from(
+		select * from
+		${u_product_review} order by ${uProductReviewId} desc
+		)a
+		) where rn between #{start}
+		and #{end}
+	</select>
+	
+	<select id="total_count" resultType="Integer">
+		select count(*) total_cnt
+		from ${u_product_review}
+	</select>
+	
+	<select id="select_sell_all_by_sellnickname" resultType="UProductReviewVO">
+		select
+		${uProductReviewId}, ${memberNickname}, ${uProductReviewTitle}, ${uProductReviewCreatedDate},
+		${uProductReviewContent}, ${sellerNickname}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product_review}
+		where ${sellerNickname} = #{sellerNickname} 
+		)a
+		) where rn between #{start} and #{end}
+	</select>
+
+		<select id="total_count_by_sellnickname" resultType="Integer">
+		select count(*) total_cnt from ${u_product_review}
+		where ${sellerNickname} = #{sellerNickname}
+		</select>
+		
+		<select id="select_by_sellernickname" resultType="UProductReviewVO">
+		select distinct ${sellerNickname} from
+		${u_product_review} where ${sellerNickname} = #{sellerNickname}
+		</select>
+	 	 	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

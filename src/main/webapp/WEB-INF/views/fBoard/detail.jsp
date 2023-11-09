@@ -17,10 +17,13 @@ li {
 <meta charset="UTF-8">
 <title>${vo.fBoardTitle }</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <%@ include file="../header.jspf"%>
 </head>
 <body>
@@ -90,7 +93,8 @@ li {
 						</c:if>
 						<c:if test="${memberNickname == null}">
 							<br> 
-							댓글 작성은 <a href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
+							댓글 작성은 <a
+								href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
 						</c:if>
 						<hr>
 						<br>
@@ -98,13 +102,16 @@ li {
 							<div id="comments"></div>
 						</div>
 
-						<input type="hidden" id="pageMaker_hasPrev"	value="${pageMaker.hasPrev}"> 
-						<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
-						<input type="hidden" id="pageMaker_startPageNo"	value="${pageMaker.startPageNo}"> 
-						<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-						<input type="hidden" id="pageMaker_commentPage"	value="${pageMaker.criteria.page}"> 
-						<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}"> 
-						<br>
+						<input type="hidden" id="pageMaker_hasPrev"
+							value="${pageMaker.hasPrev}"> <input type="hidden"
+							id="pageMaker_hasNext" value="${pageMaker.hasNext}"> <input
+							type="hidden" id="pageMaker_startPageNo"
+							value="${pageMaker.startPageNo}"> <input type="hidden"
+							id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+						<input type="hidden" id="pageMaker_commentPage"
+							value="${pageMaker.criteria.page}"> <input type="hidden"
+							id="pageMaker_commentNumsPerPage"
+							value="${pageMaker.criteria.numsPerPage}"> <br>
 					</div>
 				</div>
 			</main>
@@ -113,117 +120,167 @@ li {
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			getAllComments();
-			$('#btnCommentAdd').click(function() {
-				var fBoardId = $('#fBoardId').val(); // 게시판 번호 데이터
-				var memberNickname = $('#memberNickname').val(); // 작성자 데이터
-				var fBoardCommentContent = $('#fBoardCommentContent').val(); // 댓글 내용
-				var obj = {
-							'fBoardId' : fBoardId,
-							'memberNickname' : memberNickname,
-							'fBoardCommentContent' : fBoardCommentContent
-							};
-				console.log(obj);
-				$.ajax({
-					type : 'POST',
-					url : 'comments',
-					headers : {
-							'Content-Type' : 'application/json'
-							},
-					data : JSON.stringify(obj), // JSON으로 변환
-					success : function(result) {
-										console.log(result);
-										if (result == 1) {
-											alert('댓글 입력 성공');
-											getAllComments();
-											}
-										}
-
-				}); // end ajax()
-			}); // end btnAdd.click()
-
-			// 게시판 댓글 전체 가져오기
-			function getAllComments() {
-				console.log("getAllComments() 호출");
-				var fBoardId = $('#fBoardId').val();
-				var commentPage = $('#pageMaker_commentPage').val();
-				var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
-				var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
-					$.getJSON(
-							url,
-							function(data) {
-									var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
-									var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
-									$('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
-									$('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
-									var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
-									var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
-									var memberNickname = $('#memberNickname').val();
-									var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
-										$(data.list).each(function() {
-													console.log(this);
-													var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate);
-													var disabled = 'disabled';
-													var readonly = 'readonly';
-															if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
-															disabled = '';
-															readonly = '';
+		$(document)
+				.ready(
+						function() {
+							getAllComments();
+							$('#btnCommentAdd')
+									.click(
+											function() {
+												var fBoardId = $('#fBoardId')
+														.val(); // 게시판 번호 데이터
+												var memberNickname = $(
+														'#memberNickname')
+														.val(); // 작성자 데이터
+												var fBoardCommentContent = $(
+														'#fBoardCommentContent')
+														.val(); // 댓글 내용
+												var obj = {
+													'fBoardId' : fBoardId,
+													'memberNickname' : memberNickname,
+													'fBoardCommentContent' : fBoardCommentContent
+												};
+												console.log(obj);
+												$
+														.ajax({
+															type : 'POST',
+															url : 'comments',
+															headers : {
+																'Content-Type' : 'application/json'
+															},
+															data : JSON
+																	.stringify(obj), // JSON으로 변환
+															success : function(
+																	result) {
+																console
+																		.log(result);
+																if (result == 1) {
+																	alert('댓글 입력 성공');
+																	getAllComments();
+																}
 															}
-													list += '<div class="comment_item">'
-														+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
-														+ this.memberNickname
-														+ '<br>'
-														+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
-														+ this.fBoardCommentContent
-														+ '</textarea>'
-														+ fBoardCommentCreatedDate
-														+ '<br>'
-														+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
-														+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-														+ '<button class="btnReply">답글</button>'
-														+ '<br>'
-														+ '<hr>'
-														+ '</div>';
 
-										}); // end each()
-												list += '<div style="text-align: center;">'
-														+ '<ul id="comment_page">'
+														}); // end ajax()
+											}); // end btnAdd.click()
 
-												if (pageMaker_hasPrev) {
-													list += '<li><button class="btn_comment_prev">이전</button></li>'
-												}
+							// 게시판 댓글 전체 가져오기
+							function getAllComments() {
+								console.log("getAllComments() 호출");
+								var fBoardId = $('#fBoardId').val();
+								var commentPage = $('#pageMaker_commentPage')
+										.val();
+								var commentNumsPerPage = $(
+										'#pageMaker_commentNumsPerPage').val();
+								var url = 'comments/all/' + fBoardId + '/'
+										+ commentPage + '/'
+										+ commentNumsPerPage;
+								$
+										.getJSON(
+												url,
+												function(data) {
+													var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
+													var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
+													$('#pageMaker_startPageNo')
+															.val(
+																	data.pageMaker.startPageNo);
+													$('#pageMaker_endPageNo')
+															.val(
+																	data.pageMaker.endPageNo);
+													var pageMaker_startPageNo = +$(
+															'#pageMaker_startPageNo')
+															.val();
+													var pageMaker_endPageNo = +$(
+															'#pageMaker_endPageNo')
+															.val();
+													var memberNickname = $(
+															'#memberNickname')
+															.val();
+													var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+													$(data.list)
+															.each(
+																	function() {
+																		console
+																				.log(this);
+																		var fBoardCommentCreatedDate = new Date(
+																				this.fBoardCommentCreatedDate);
+																		var disabled = 'disabled';
+																		var readonly = 'readonly';
+																		if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
+																			disabled = '';
+																			readonly = '';
+																		}
+																		list += '<div class="comment_item">'
+																				+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
+																				+ this.memberNickname
+																				+ '<br>'
+																				+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
+																				+ this.fBoardCommentContent
+																				+ '</textarea>'
+																				+ fBoardCommentCreatedDate
+																				+ '<br>'
+																				+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
+																				+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
+																				+ '<button class="btnReply">답글</button>'
+																				+ '<br>'
+																				+ '<hr>'
+																				+ '</div>';
+
+																	}); // end each()
+													list += '<div style="text-align: center;">'
+															+ '<ul id="comment_page">'
+
+													if (pageMaker_hasPrev) {
+														list += '<li><button class="btn_comment_prev">이전</button></li>'
+													}
 													for (var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
-													list += '<li><button class="btn_comment_page" value='+num+'>'
-															+ num
-															+ '</button></li>'
+														list += '<li><button class="btn_comment_page" value='+num+'>'
+																+ num
+																+ '</button></li>'
 													}
 
-												if (pageMaker_hasNext) {
-													list += '<li><button class="btn_comment_next">이후</button></li>'
-												}
+													if (pageMaker_hasNext) {
+														list += '<li><button class="btn_comment_next">이후</button></li>'
+													}
 													list += '</ul>' + '</div>'
 													$('#comments').html(list);
-										}); // end getJSON()
+												}); // end getJSON()
 							} // end getAllReplies()
 							/* $('#comment_page').on('click', '.comment_page_num .btn_comment_page', function() { */
-							$(document).on('click', '.btn_comment_page', function() {
-										$('#pageMaker_commentPage').val($(this).val());
+							$(document).on(
+									'click',
+									'.btn_comment_page',
+									function() {
+										$('#pageMaker_commentPage').val(
+												$(this).val());
 										getAllComments();
 									})// end btn_comment_page.click()
 
-							$(document).on('click',	'.btn_comment_prev', function() {
-										$('#pageMaker_commentPage').val(+$('#pageMaker_startPageNo').val() - 1);
+							$(document).on(
+									'click',
+									'.btn_comment_prev',
+									function() {
+										$('#pageMaker_commentPage').val(
+												+$('#pageMaker_startPageNo')
+														.val() - 1);
 										getAllComments();
 									})// end btn_comment_prev.click()
 
-							$(document).on('click',	'.btn_comment_next', function() {
-										$('#pageMaker_commentPage').val(+$('#pageMaker_endPageNo').val() + 1);
+							$(document).on(
+									'click',
+									'.btn_comment_next',
+									function() {
+										$('#pageMaker_commentPage').val(
+												+$('#pageMaker_endPageNo')
+														.val() + 1);
 										getAllComments();
 									})// end btn_comment_prev.click()
 
 							// 수정 버튼을 클릭하면 선택된 댓글 수정
-							$('#comments').on('click', '.comment_item .btnCommentUpdate', function() {
+							$('#comments')
+									.on(
+											'click',
+											'.comment_item .btnCommentUpdate',
+											function() {
 												console.log(this);
 												// 선택된 댓글의 replyId, replyContent 값을 저장
 												// prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근

@@ -206,7 +206,7 @@ td {
 						<td>${uProductCreatedDate }</td>
 						<td><span class="price">${vo.uProductPrice }</span><br>
 						<td>			
-							 
+						<a href="review?sellerNickname=${vo.sellerNickname }&page=${pageMaker.criteria.page}">후기 남기기</a>	 
 						</td>
 					</tr>
 				</c:forEach>

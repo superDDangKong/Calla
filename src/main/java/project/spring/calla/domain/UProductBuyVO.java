@@ -13,12 +13,14 @@ public class UProductBuyVO {
 	private String uProductContent; //µî·Ï
 	private String buyerNickname;
 	private String uProductImagePath;
+	private int uProductId;
+	private String sellerNickname;
 	
 	public UProductBuyVO() {}
 
 	public UProductBuyVO(int uProductBuyId, String uProductName, String uProductPrice, Date uProductCreatedDate,
 			String uProductCategori, String memberAddress, String uProductContent, String buyerNickname,
-			String uProductImagePath) {
+			String uProductImagePath, int uProductId, String sellerNickname) {
 		super();
 		this.uProductBuyId = uProductBuyId;
 		this.uProductName = uProductName;
@@ -29,6 +31,8 @@ public class UProductBuyVO {
 		this.uProductContent = uProductContent;
 		this.buyerNickname = buyerNickname;
 		this.uProductImagePath = uProductImagePath;
+		this.uProductId = uProductId;
+		this.sellerNickname = sellerNickname;
 	}
 
 	public int getuProductBuyId() {
@@ -103,15 +107,33 @@ public class UProductBuyVO {
 		this.uProductImagePath = uProductImagePath;
 	}
 
+	public int getuProductId() {
+		return uProductId;
+	}
+
+	public void setuProductId(int uProductId) {
+		this.uProductId = uProductId;
+	}
+
+	public String getSellerNickname() {
+		return sellerNickname;
+	}
+
+	public void setSellerNickname(String sellerNickname) {
+		this.sellerNickname = sellerNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "UProductBuyVO [uProductBuyId=" + uProductBuyId + ", uProductName=" + uProductName + ", uProductPrice="
 				+ uProductPrice + ", uProductCreatedDate=" + uProductCreatedDate + ", uProductCategori="
 				+ uProductCategori + ", memberAddress=" + memberAddress + ", uProductContent=" + uProductContent
-				+ ", buyerNickname=" + buyerNickname + ", uProductImagePath=" + uProductImagePath + "]";
+				+ ", buyerNickname=" + buyerNickname + ", uProductImagePath=" + uProductImagePath + ", uProductId="
+				+ uProductId + ", sellerNickname=" + sellerNickname + "]";
 	}
 
 	
+
 
 	
 	

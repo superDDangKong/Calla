@@ -12,11 +12,11 @@ import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 
 public interface UProductDAO {
-	int insert(UProductVO vo); // ��ǰ ���
-	List<UProductVO> select(); // ��ǰ ��ü �˻�
-	UProductVO select(int uProductId); // ��ǰ �˻�	
-	int update(UProductVO vo); // ��ǰ ����
-	int delete(int uProductId); // ��ǰ ����
+	int insert(UProductVO vo); // 占쏙옙품 占쏙옙占�
+	List<UProductVO> select(); // 占쏙옙품 占쏙옙체 占싯삼옙
+	UProductVO select(int uProductId); // 占쏙옙품 占싯삼옙	
+	int update(UProductVO vo); // 占쏙옙품 占쏙옙占쏙옙
+	int delete(int uProductId); // 占쏙옙품 占쏙옙占쏙옙
 	List<UProductVO> select(PageCriteria criteria);
 	int getTotalCount();
 	
@@ -26,13 +26,13 @@ public interface UProductDAO {
 	int updateUproductCommentCount(int amount, int uProductId);
 	List<UProductVO> selectAllByMemberNickname(String memberNickname);
 	
-	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // ��ǰ �̸��Ǵ� ī�װ��� �˻�
+	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // 占쏙옙품 占싱몌옙占실댐옙 카占쌓곤옙占쏙옙 占싯삼옙
 	int getTotalCountsByCategoriorName(String keyword);
 	
-	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria); // �Ż�ǰ �˻�
+	List<UProductVO> selectByUproductCreatedDate(PageCriteria criteria); // 占신삼옙품 占싯삼옙
 	int getTotalCountsByUproductCreatedDate();
 	
-	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword); // ��ǰ �ּ� �˻�
+	List<UProductVO> selectByAddress(PageCriteria criteria, String keyword); // 占쏙옙품 占쌍쇽옙 占싯삼옙
 	int getTotalCountsByAddress(String keyword);
 	
 	List<UProductVO> recommendCategori(String uProductCategori, int uProductId);
@@ -47,8 +47,15 @@ public interface UProductDAO {
 	List<UProductBuyVO> selectbuyuproduct(PageCriteria criteria, String buyerNickname);
 	int getTotalCountsbuyuproduct(String buyerNickname);
 	
-	List<UProductSellVO> selectselluproduct(PageCriteria criteria, String memberNickname);
-	int getTotalCountsselluproduct(String memberNickname);
+	List<UProductSellVO> selectselluproduct(PageCriteria criteria, String sellerNickname);
+	int getTotalCountsselluproduct(String sellerNickname);
+	
+	UProductBuyVO selectseller(String sellerNickname); // 占쏙옙품 占싯삼옙
+	
+	List<UProductVO> selectbynickname(PageCriteria criteria, String memberNickname);
+	int getTotalCountsbynickname(String memberNickname);
+	
+	UProductVO selectnickname(String memberNickname); // 占쏙옙품 占싯삼옙
 	
 	
 	
