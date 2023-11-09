@@ -16,6 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${memberId} = #{memberId} and ${productId} = #{productId}
 	</delete>
 	
+	<delete id="delete_by_id">
+		delete from ${product_like}
+		where ${productLikeId} = #{productLikeId}
+	</delete>
+	
 	<select id="total_count" resultType="Integer">
 		select count(*) total_cnt from ${product_like} where ${productId} = #{productId}
 	</select>

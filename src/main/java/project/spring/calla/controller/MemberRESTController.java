@@ -2,8 +2,10 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -156,15 +158,6 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateAddress
 	
-//	@GetMapping("/updateLevel/{memberId}") // GET : 占쏙옙占� 占쏙옙占쏙옙(all)
-//	public ResponseEntity<Integer> readReplies(@PathVariable("memberId") String memberId) {
-//		// @PathVariable("fBoardId") : /all/{fBboardId} 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-//		logger.info("updateLevelGET() 호占쏙옙 : memberId = " + memberId);
-//
-//		List<FBoardReplyVO> list = fBoardReplyService.read(fBoardCommentId);
-//		return new ResponseEntity<List<FBoardReplyVO>>(list, HttpStatus.OK);
-//	}
-	
 	@PutMapping("/updateLevel/{memberId}") 
 	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {
 		logger.info("updateMemberLevel() 호占쏙옙");
@@ -182,6 +175,59 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
 	
+	@GetMapping("/boards/{memberNickname}")
+	public ResponseEntity<Map<String, Object>> readBoardsByOption(@PathVariable("memberNickname") String memberNickname) {
+		logger.info("readBoardsByOption()");
+
+		Map<String, Object> lists = memberService.readBoards(memberNickname);
+		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	}
+	
+	@GetMapping("/comments/{memberNickname}")
+	public ResponseEntity<Map<String, Object>> readCommentsByOption(@PathVariable("memberNickname") String memberNickname) {
+		logger.info("readCommentsByOption()");
+
+		Map<String, Object> lists = memberService.readComments(memberNickname);
+		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	}
+	
+	@GetMapping("/likes/{memberNickname}")
+	public ResponseEntity<Map<String, Object>> readLikesByOption(@PathVariable("memberNickname") String memberNickname, HttpServletRequest request) {
+		logger.info("readLikesByOption()");
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		Map<String, Object> lists = null;
+		if(memberId != null) {
+			lists = memberService.readLikes(memberId);
+		} 
+		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+	} // end likesGET()
+	
+	@DeleteMapping("/deleteLikes")
+	ResponseEntity<Integer> deleteLikes(@RequestBody Map<String, List<Integer>> args) {
+		logger.info("deleteLikes 호출");
+		int result = 0;
+		List<Integer> productIdList = args.get("productIdList");
+		List<Integer> productLikeIdList = args.get("productLikeIdList");
+		
+		List<Integer> uProductIdList = args.get("uProductIdList");
+		List<Integer> uProductLikeIdList = args.get("uProductLikeIdList");
+		int amount = -1;
+		if(productLikeIdList.size() != 0) {
+			for(int i = 0; i < productLikeIdList.size(); i++) {
+				memberService.deleteProductLike(productLikeIdList.get(i), amount, productIdList.get(i));
+			}
+		}
+		
+		if(uProductLikeIdList.size() != 0) {
+			for(int i = 0; i < uProductLikeIdList.size(); i++) {
+				memberService.deleteUProductLike(uProductLikeIdList.get(i), amount, uProductIdList.get(i));
+			}
+		}
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	} // end deleteLikes() 
+
 	@GetMapping("/recentlyView/product/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
 		logger.info("recentlyViewProductGET() 호占쏙옙 : memberId = " + memberId);
@@ -219,7 +265,7 @@ public class MemberRESTController {
 		
 		pageMaker.setPageData();
 		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
-		logger.info(String.valueOf(pageMaker.isHasNext()));
+		logger.info(lists.get("uProductList").toString());
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
 	}

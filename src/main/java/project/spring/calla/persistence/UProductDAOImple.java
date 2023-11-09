@@ -239,7 +239,17 @@ public class UProductDAOImple implements UProductDAO {
 
 	@Override
 	public List<UProductVO> selectLikes(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("selectLikes() : memberId = " + memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
+
+	@Override
+	public int updateLikeCount(int amount, int uProductId) {
+		logger.info("updateLikeCount() : uProductId = " + uProductId);
+		Map<String, Integer> args = new HashMap();
+		args.put("amount", amount);
+		args.put("uProductId", uProductId);
+		return sqlSession.update(NAMESPACE + ".update_like_count", args);
+	}
+	
 }

@@ -34,9 +34,11 @@ public interface MemberService {
 	int delete(String memberId);
 	int deleteRecentlyViewProduct(int productRecentlyViewId);
 	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);
-	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // ��ǰ��� �о����
+	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
 	int getTotalCountsBymyuproduct(String memberNickname);
-	UProductVO read(int uProductId); // ��ǰID �о����
-	
+	UProductVO read(int uProductId); // 占쏙옙품ID 占싻억옙占쏙옙占�
 	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
+	
+	int deleteProductLike(int productLikeId, int amount, int productId);
+	int deleteUProductLike(int uProductLikeId, int amount, int uProductId);
 }

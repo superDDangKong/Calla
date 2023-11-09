@@ -11,20 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.persistence.ProductCommentDAO;
 import project.spring.calla.persistence.ProductDAO;
+import project.spring.calla.persistence.ProductLikeDAO;
 import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
 import project.spring.calla.persistence.UProductCommentDAO;
 import project.spring.calla.persistence.UProductDAO;
+import project.spring.calla.persistence.UProductLikeDAO;
 
 
 @Service
@@ -60,6 +62,11 @@ public class MemberServiceImple implements MemberService {
 	@Autowired
 	private ProductDAO productDAO;
 	
+	@Autowired
+	private ProductLikeDAO productLikeDAO;
+	
+	@Autowired
+	private UProductLikeDAO uProductLikeDAO;
 	
 	@Override
 	public int create(MemberVO vo) { 
@@ -114,7 +121,7 @@ public class MemberServiceImple implements MemberService {
 	public Map<String, Object> readComments(String memberNickname) {
 		logger.info("readComments() 호출 memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
-		args.put("ProductCommentList", productCommentDAO.select(memberNickname));
+		args.put("productCommentList", productCommentDAO.select(memberNickname));
 		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
 		args.put("fBoardCommentList", fBoardCommentDAO.select(memberNickname));
 		args.put("qBoardCommentList", qBoardCommentDAO.select(memberNickname));
@@ -136,8 +143,8 @@ public class MemberServiceImple implements MemberService {
 	public Map<String, Object> readLikes(String memberId) {
 		logger.info("readLikes() 호출 memberId : " + memberId);
 		Map<String, Object> args = new HashMap();
-		args.put("productLikesList", productDAO.selectLikes(memberId));
-		args.put("uProductLikesList", uProductDAO.selectLikes(memberId));
+		args.put("productLikeList", productDAO.selectLikes(memberId));
+		args.put("uProductLikeList", uProductDAO.selectLikes(memberId));
 		return args;
 	}
 	
@@ -259,6 +266,24 @@ public class MemberServiceImple implements MemberService {
 		} else {
 			return 0;
 		}
+	}
+	
+	@Transactional(value = "transactionManager")
+	@Override
+	public int deleteProductLike(int productLikeId, int amount, int productId) {
+		logger.info("deleteProductLike() 호출");
+		productLikeDAO.deleteById(productLikeId);
+		productDAO.updateLikeCount(amount, productId);
+		return 1;
+	}
+	
+	@Transactional(value = "transactionManager")
+	@Override
+	public int deleteUProductLike(int uProductLikeId, int amount, int uProductId) {
+		logger.info("deleteUProductLike() 호출");
+		uProductLikeDAO.deleteById(uProductLikeId);
+		uProductDAO.updateLikeCount(amount, uProductId);
+		return 1;
 	}
 
 

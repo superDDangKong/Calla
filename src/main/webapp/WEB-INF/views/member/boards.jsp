@@ -5,6 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+    .btn-custom {
+        background-color: gray; /* 버튼 배경색: 회색 */
+        color: #000000; /* 버튼 텍스트 색상: 검정색 */
+        border: 5px solid #000000; /* 테두리: 1px 검정색 실선 */
+    }
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -15,90 +22,29 @@
 <title>작성 글</title>
 </head>
 <body>
+	<input type="hidden" id="memberNickname" value=${memberNickname }>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
-
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
-
-				<h1>중고상품</h1>
-				<table>
+				<div class="nav nav-pills nav-justified">
+				    <input type="hidden" id="option" value="a">
+				    <button class="nav-item nav-link btn-custom read_all">전체</button>
+				    <button class="nav-item nav-link btn-custom read_u_product">중고상품</button>
+				    <button class="nav-item nav-link btn-custom read_f_board">자유게시판</button>
+				    <button class="nav-item nav-link btn-custom read_q_board">문의게시판</button>
+				</div>
+				<table class="table">
 					<thead>
 						<tr>
-							<th style="width: 120px">상품명</th>
-							<th style="width: 700px">가격</th>
+							<th style="width: 150px">게시판</th>
+							<th style="width: 300px">제목</th>
 							<th style="width: 100px">작성일</th>
 							<th style="width: 100px">조회수</th>
 							<th style="width: 100px">댓글수</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="uProductVo" items="${lists.uProductList }">
-							<tr>
-								<td><a
-									href="/calla/uProduct/detail?uProductId=${uProductVo.uProductId}">${uProductVo.uProductName }</a></td>
-								<td>${uProductVo.uProductPrice }</td>
-								<fmt:formatDate value="${uProductVo.uProductCreatedDate }"
-									pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
-								<td>${uProductCreatedDate }</td>
-								<td>${uProductVo.uProductViews }</td>
-								<td>${uProductVo.uProductCommentCount }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-
-				<h1>자유게시판</h1>
-				<table>
-					<thead>
-						<tr>
-							<th style="width: 120px">제목</th>
-							<th style="width: 700px">내용</th>
-							<th style="width: 100px">작성일</th>
-							<th style="width: 100px">조회수</th>
-							<th style="width: 100px">댓글수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="fBoardVo" items="${lists.fBoardList }">
-							<tr>
-								<td><a
-									href="/calla/fBoard/detail?fBoardId=${fBoardVo.fBoardId}">${fBoardVo.fBoardTitle }</a></td>
-								<td>${fBoardVo.fBoardContent }</td>
-								<fmt:formatDate value="${fBoardVo.fBoardCreatedDate }"
-									pattern="yyyy-MM-dd HH:mm:ss" var="fBoardCreatedDate" />
-								<td>${fBoardCreatedDate }</td>
-								<td>${fBoardVo.fBoardViews }</td>
-								<td>${fBoardVo.fBoardCommentCount }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-
-				<h1>Q&A게시판</h1>
-				<table>
-					<thead>
-						<tr>
-							<th style="width: 120px">제목</th>
-							<th style="width: 700px">내용</th>
-							<th style="width: 100px">작성일</th>
-							<th style="width: 100px">조회수</th>
-							<th style="width: 100px">댓글수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="qBoardVo" items="${lists.qBoardList }">
-							<tr>
-								<td><a
-									href="/calla/qBoard/detail?qBoardId=${qBoardVo.qBoardId}">${qBoardVo.qBoardTitle }</a></td>
-								<td>${qBoardVo.qBoardContent }</td>
-								<fmt:formatDate value="${qBoardVo.qBoardCreatedDate }"
-									pattern="yyyy-MM-dd HH:mm:ss" var="qBoardCreatedDate" />
-								<td>${qBoardCreatedDate }</td>
-								<td>${qBoardVo.qBoardViews }</td>
-								<td>${qBoardVo.qBoardCommentCount }</td>
-							</tr>
-						</c:forEach>
 					</tbody>
 				</table>
 			</main>
@@ -106,5 +52,100 @@
 		</div>
 	</div>
 	<%@ include file="../footer.jspf"%>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			console.log("document ready 호출");
+			readBoard();
+			
+			function readBoard() {
+				console.log("readBoard 호출");
+				var uProductList = "";
+				var fBoardList = "";
+				var qBoardList = "";
+				var option = $('#option').val();
+				var memberNickname = $('#memberNickname').val();
+				$('.table tbody').empty(); // 이전 내용을 지웁니다.
+				$.ajax({
+					type : 'GET',
+					url : 'boards/' + memberNickname,
+					success : function(lists) {
+						console.log(lists)
+						$(lists.uProductList).each(function(){
+							var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+							uProductList += '<tr>'
+								+ '<td>&lt;중고상품&gt;</td>'
+								+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '">' + this.uProductName + '</a></td>'
+								+ '<td>' + uProductCreatedDate + '</td>'
+								+ '<td>' + this.uProductViews + '</td>'
+								+ '<td>' + this.uProductCommentCount + '</td>'
+							  	+ '</tr>'  							
+						}) // end uProductList.each
+						
+						$(lists.fBoardList).each(function(){
+							var fBoardCreatedDate = new Date(this.fBoardCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+							fBoardList += '<tr>'
+								+ '<td>&lt;자유게시판&gt;</td>'
+								+ '<td><a href="/calla/fBoard/detail?fBoardId=' + this.fBoardId + '">' + this.fBoardTitle + '</a></td>'
+								+ '<td>' + fBoardCreatedDate + '</td>'
+								+ '<td>' + this.fBoardViews + '</td>'
+								+ '<td>' + this.fBoardCommentCount + '</td>'
+							  	+ '</tr>'  							
+						}) // end fBoardList.each
+						
+						$(lists.qBoardList).each(function(){
+							var qBoardCreatedDate = new Date(this.qBoardCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+							qBoardList += '<tr>'
+								+ '<td>&lt;문의게시판&gt;</td>'
+								+ '<td><a href="/calla/qBoard/detail?qBoardId=' + this.qBoardId + '">' + this.qBoardTitle + '</a></td>'
+								+ '<td>' + qBoardCreatedDate + '</td>'
+								+ '<td>' + this.qBoardViews + '</td>'
+								+ '<td>' + this.qBoardCommentCount + '</td>'
+							  	+ '</tr>'  							
+						})
+						if(option == "a") {
+							$('.table tbody').append(uProductList);
+							$('.table tbody').append(fBoardList);
+							$('.table tbody').append(qBoardList);
+						} else if (option == "u") {
+							$('.table tbody').append(uProductList);
+						} else if (option == "f") {
+							$('.table tbody').append(fBoardList);
+						} else if (option == "q") {
+							$('.table tbody').append(qBoardList);
+						}
+					}// end success
+				}); // end ajax
+			} // end readBoard(option)	
+			
+			$('.read_all').click(function(){
+				$('#option').val("a");
+				console.log('read_all 호출')
+				readBoard();				
+			}) // end read_all.click
+			
+			$('.read_u_product').click(function(){
+				$('#option').val("u");
+				console.log('read_u 호출')
+				readBoard();	
+			}) // end read_u_product.click
+
+			$('.read_f_board').click(function(){
+				$('#option').val("f");
+				console.log('read_f 호출')
+				readBoard();				
+			}) // end read_f_board.click
+			
+			$('.read_q_board').click(function(){
+				$('#option').val("q");
+				console.log('read_q 호출')
+				readBoard();	
+			}) // end read_q_board.click
+		}) // end document.ready
+	
+	
+	</script>
+	
+	
 </body>
 </html>

@@ -40,7 +40,7 @@
 										<div class="card-body p-4">
 											<div class="text-center">
 												<h5 class="fw-bolder">
-													<a href="/product/detail?productId=${ProductVO.productId }&memberId=${memberId}">${ProductVO.productName }</a>
+													<a href="product/detail?productId=${ProductVO.productId }&memberId=${memberId}">${ProductVO.productName }</a>
 												</h5>
 												<div>
 													<h6>${ProductVO.productCategori }</h6>

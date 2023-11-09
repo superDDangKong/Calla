@@ -79,6 +79,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${uProductId} desc
 	</select>
 
+	<update id="update_like_count">
+		update ${u_product}
+		set ${uProductLikes} = ${uProductLikes} + #{amount}
+		where ${uProductId} = #{uProductId}
+	</update>
+
 	<update id="update_product_comment_count">
 		update ${u_product}
 		set ${uProductCommentCount} =
@@ -183,7 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 
 	 <select id="select_likes" resultType="UProductVO">
-		select up.${uProductName}, up.${uProductPrice}, up.${uProductCategori}, up.${uProductContent}, upl.${uProductLikeId}, upl.${uProductId}
+		select up.*, upl.${uProductLikeId}, upl.${uProductId}
 		from ${u_product} up
 		join ${u_product_like} upl on up.${uProductId} = upl.${uProductId}
 		where upl.${memberId} = #{memberId} 
@@ -224,6 +230,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${u_product_recently_view}
 		where ${uProductRecentlyViewId} = #{uProductRecentlyViewId}
 	</delete>
+	
+	<delete id="delete_u_product_like">
+		delete from ${u_product_recently_view}
+		where ${uProductRecentlyViewId} = #{uProductRecentlyViewId}
+	</delete>
+	
 	 <select id="select_buy_all_by_memberNickname" resultType="UProductBuyVO">
 		select
 		${uProductBuyId}, ${uProductName}, ${uProductPrice},
@@ -265,7 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) total_cnt from ${u_product_sell}
 		where ${memberNickname} = #{memberNickname}
 	</select>
-	 	 
+	 
 	 	 
 </mapper>
 

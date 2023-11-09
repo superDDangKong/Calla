@@ -161,9 +161,10 @@ li {
 									var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
 									var memberNickname = $('#memberNickname').val();
 									var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+									
 										$(data.list).each(function() {
 													console.log(this);
-													var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate);
+													var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 													var disabled = 'disabled';
 													var readonly = 'readonly';
 															if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
@@ -353,8 +354,7 @@ li {
 																		console
 																				.log(this);
 
-																		var fBoardReplyCreatedDate = new Date(
-																				this.fBoardReplyCreatedDate);
+																		var fBoardReplyCreatedDate = new Date(this.fBoardReplyCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 																		var disabled = 'disabled';
 																		var readonly = 'readonly';
 
@@ -443,8 +443,7 @@ li {
 															headers : {
 																'Content-Type' : 'application/json'
 															},
-															data : JSON
-																	.stringify(obj), // JSON으로 변환
+															data : JSON.stringify(obj), // JSON으로 변환
 															success : function(
 																	result) {
 																console

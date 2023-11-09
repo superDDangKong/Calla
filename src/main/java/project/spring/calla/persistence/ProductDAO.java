@@ -28,4 +28,5 @@ public interface ProductDAO {
 	int deleteRecentlyView(int productRecentlyViewId);
 	
 	
+	
 }

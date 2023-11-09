@@ -33,12 +33,14 @@
 		    <div class="position-sticky sticky-top">
 					 최근 본 상품
 				<div class="d-flex flex-row">
-					 <div id="recently_product"></div>
-					 <div id="recently_u_product"></div>
+					 <div id="recently_product" class="col-md-6" style="font-size:10px;"></div>
+					 <div id="recently_u_product" class="col-md-6" style="font-size:10px;"></div>
 				</div>
-			    <button id="scrollToTop" class="btn btn-secondary btn-sm">↑</button>
+				<div class="up_down">
+			    <button id="scrollToTop" class="btn btn-secondary btn-sm" style="display:none;">↑</button>
 			    <br>
-				<button id="scrollToBottom" class="btn btn-secondary btn-sm">↓</button>
+				<button id="scrollToBottom" class="btn btn-secondary btn-sm" style="display:none;">↓</button>
+				</div>
 		    </div>
 		</aside>
 	</c:if>
@@ -47,17 +49,22 @@
 	$(document).ready(function(){
 		    var sidebar = $("#sidebarRight");
 		    var topDistance = sidebar.offset().top;
-	
+		    var scrollToTopButton = $("#scrollToTop");
+		    var scrollToBottomButton = $("#scrollToBottom");
+		    
 		    $(window).scroll(function() {
 		    	if ($(window).scrollTop() > topDistance) {
 		            sidebar.addClass("sticky-top");
+		            scrollToTopButton.css('display', 'block');
+		            scrollToBottomButton.css('display', 'block');
 		        } else {
 		            sidebar.removeClass("sticky-top");
+		            scrollToTopButton.css('display', 'none');
+		            scrollToBottomButton.css('display', 'none');
 		        }
 		    });
 
-		    var scrollToTopButton = $("#scrollToTop");
-		    var scrollToBottomButton = $("#scrollToBottom");
+
 
 		    scrollToTopButton.click(function() {
 		        $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -80,12 +87,17 @@
 					var productHTML = "공용상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
 					var hasNext = Boolean(lists.pageMaker.hasNext);
-					
+					var totalCount = lists.pageMaker.totalCount
+					var totalLinkNo = lists.pageMaker.totalLinkNo
 					$(lists.productList).each(function() {
 						productHTML += '<a href="/calla/product/detail?productId=' + this.productId + '&memberId=' + memberId + '">'
 							  + '<div class="recently_product_item">'
 							  + '<input type="hidden" class="productRecentlyViewId" value="' + this.productRecentlyViewId + '">'
 							  + '<div class="d-flex flex-row">'
+							  + '<div class="image-container" style="position: relative; display: inline-block;">'
+							  + '<img src="/calla/fBoard/display?fileName=' + this.productImagePath + '" width="50" height="60" style="display: block;">'
+							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
+							  + '</div>'
 							  + '<div class="info">'
 							  + '<span class="name" style="display: none;">'
 							  + this.productName
@@ -94,17 +106,21 @@
 							  + this.productPrice + ' 원'
 							  + '</span>'
 							  + '</div>'
-							  + '<div class="image-container" style="position: relative; display: inline-block;">'
-							  + '<img src="/calla/fBoard/display?fileName=' + this.productImagePath + '" width="50" height="60" style="display: block;">'
-							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
-							  + '</div>'
 							  + '</div>'
 							  + '</div>'
 							  + '</a>';
 	
 					}); // end productList.each()
 					
+					if(totalLinkNo > 0) {
 					productHTML +=  productPage + '/' + lists.pageMaker.totalLinkNo
+					} else {
+						
+						productHTML +=
+							'<br>'
+							+ '최근(1개월 이내)에 본 공용상품이 없습니다.'
+					}
+					
 					if(hasPrev){
 						productHTML += '<button class="btn_prev_product">◀</button>'
 					}
@@ -127,7 +143,8 @@
 					var uProductHTML = "중고상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
 					var hasNext = Boolean(lists.pageMaker.hasNext);
-					
+					var totalCount = lists.pageMaker.totalCount
+					var totalLinkNo = lists.pageMaker.totalLinkNo
 					$(lists.uProductList).each(function() {
 						uProductHTML += '<a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">'
 							  + '<div class="recently_u_product_item">'
@@ -151,7 +168,14 @@
 	
 					}); // end productList.each()
 					
-					uProductHTML +=  uProductPage + '/' + lists.pageMaker.totalLinkNo
+					if(totalLinkNo > 0) {
+						uProductHTML +=  uProductPage + '/' + totalLinkNo
+					} else {
+						uProductHTML += 
+							'<br>'
+							+ '최근(1개월 이내)에 본 중고상품이 없습니다.'
+					}
+					
 					if(hasPrev){
 						uProductHTML += '<button class="btn_prev_u_product">◀</button>'
 					}

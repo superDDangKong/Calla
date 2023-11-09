@@ -162,22 +162,8 @@ public class MemberController {
 		}
 	} // end updatePOST()
 
-	@GetMapping("/fBoard")
-	public String fBoardGET() {
-		return "redirect:/fBoard/list";
-	} // end fBoardGET()
-
 	@GetMapping("/likes")
-	public void likesGET(Model model, HttpServletRequest request) {
-		logger.info("likes() 호출 ");
-		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("memberId");
-		if(memberId != null) {
-			Map<String, Object> args = memberService.readLikes(memberId);
-			model.addAttribute("lists", args);
-			logger.info(args.toString());
-		}
-	} // end likesGET()
+	public void likesGET() {} // end likesGET()
 
 	@GetMapping("/searchId")
 	public void searchIdGET() {
@@ -222,26 +208,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/comments")
-	public void commentsGET(Model model, HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		String memberNickname = (String) session.getAttribute("memberNickname");
-
-		Map<String, Object> args = memberService.readComments(memberNickname);
-		model.addAttribute("lists", args);
-
-	}
-
-	@GetMapping("/boards")
-	public void boardsGET(Model model, HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		String memberNickname = (String) session.getAttribute("memberNickname");
-
-		Map<String, Object> args = memberService.readBoards(memberNickname);
-		model.addAttribute("lists", args);
-
-	}
+	public void commentsGET() {}
 
 	@GetMapping("/manageMember")
 	public void manageMemberGET(Model model, HttpServletRequest request) {
@@ -249,9 +216,14 @@ public class MemberController {
 		model.addAttribute("list", list);
 	} // end manageMember
 
+	@GetMapping("/boards")
+	public void boardsGET() {} // end boardsGET
+	
 	@GetMapping("/delete")
-	public String deleteGET(String memberId) {
+	public String deleteGET(String memberId, HttpServletRequest request) {
 		memberService.delete(memberId);
+		HttpSession session = request.getSession();
+		session.invalidate();
 		return "redirect:/";
 	}
 
@@ -356,5 +328,6 @@ public class MemberController {
 		} 
 		
 	} // end registerPOST()
-
+	@GetMapping("/cancel")
+	public void cancelGET() {};
 }

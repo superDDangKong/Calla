@@ -113,7 +113,6 @@ public class ProductDAOImple implements ProductDAO {
 		args.put("amount", amount);
 		args.put("productId", productId);
 		return sqlSession.update(NAMESPACE + ".update_like_count", args);
-		
 	}
 
 	@Override
@@ -167,6 +166,7 @@ public class ProductDAOImple implements ProductDAO {
 		logger.info("deleteRecentlyView : productRecentlyViewId = " + productRecentlyViewId);
 		return sqlSession.delete(NAMESPACE + ".delete_recently_view", productRecentlyViewId);
 	}
+
 	
 	
 
