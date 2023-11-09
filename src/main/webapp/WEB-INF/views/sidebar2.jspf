@@ -33,6 +33,21 @@
 	                    취소/반품/<br>교환/환불 내역
 	                </a>
 	            </li>
+	             <li class="nav-item">
+	                <a class="nav-link active" href="/calla/member/myuproduct">
+	                    내가 올린 상품
+	                </a>
+	            </li>
+	             <li class="nav-item">
+	                <a class="nav-link active" href="/calla/uProduct/uproductsell">
+	                    판매 목록(중고)
+	                </a>
+	            </li>
+	             <li class="nav-item">
+	                <a class="nav-link active" href="/calla/uProduct/uproductbuy">
+	                    구매 목록(중고)
+	                </a>
+	            </li>
 	        </ul>
 	        <hr>
 	        <ul class="nav flex-column">

@@ -180,21 +180,21 @@ public class UProductDAOImple implements UProductDAO {
 	}
 
 	@Override
-	public List<UProductSellVO> selectselluproduct(PageCriteria criteria, String memberNickname) {
+	public List<UProductSellVO> selectselluproduct(PageCriteria criteria, String sellerNickname) {
 		logger.info("selectselluproduct() ȣ��");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
 		args.put("end", criteria.getEnd());
-		args.put("memberNickname", memberNickname);
+		args.put("sellerNickname", sellerNickname);
 		logger.info("args = " + args);
 		return sqlSession.selectList(NAMESPACE + ".select_sell_all_by_memberNickname", args);
 	}
 
 	@Override
-	public int getTotalCountsselluproduct(String memberNickname) {
+	public int getTotalCountsselluproduct(String sellerNickname) {
 		logger.info("getTotalCountsBymyuproduct()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_sell", memberNickname);
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_sell", sellerNickname);
 	}
 
 	
@@ -241,5 +241,35 @@ public class UProductDAOImple implements UProductDAO {
 	public List<UProductVO> selectLikes(String memberId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public UProductBuyVO selectseller(String sellerNickname) {
+		logger.info("select() ȣ�� : sellerNickname = " + sellerNickname);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_sellernickname", sellerNickname);
+	}
+
+	@Override
+	public List<UProductVO> selectbynickname(PageCriteria criteria, String memberNickname) {
+		logger.info("selectbynickname() ȣ��");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("memberNickname", memberNickname);
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_u_product_membernickname", args);
+	}
+
+	@Override
+	public int getTotalCountsbynickname(String memberNickname) {
+		logger.info("getTotalCountsbynickname()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_membernickname", memberNickname);
+	}
+
+	@Override
+	public UProductVO selectnickname(String memberNickname) {
+		logger.info("select() ȣ�� : memberNickname = " + memberNickname);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_membernickname", memberNickname);
 	}
 }

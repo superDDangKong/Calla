@@ -11,17 +11,17 @@ public class UProductSellVO {
 	private String uProductCategori; // 등록
 	private String memberAddress; // 등록
 	private String uProductContent; // 등록
-	private String memberNickname;
+	private String sellerNickname;
 	private String buyerNickname;
 	private String uProductImagePath;
-	private int uProductBuyId;
+	private int uProductId;
 
 	public UProductSellVO() {
 	}
 
 	public UProductSellVO(int uProductOrderId, String uProductName, String uProductPrice, Date uProductCreatedDate,
-			String uProductCategori, String memberAddress, String uProductContent, String memberNickname,
-			String buyerNickname, String uProductImagePath, int uProductBuyId) {
+			String uProductCategori, String memberAddress, String uProductContent, String sellerNickname,
+			String buyerNickname, String uProductImagePath, int uProductId) {
 		super();
 		this.uProductOrderId = uProductOrderId;
 		this.uProductName = uProductName;
@@ -30,10 +30,10 @@ public class UProductSellVO {
 		this.uProductCategori = uProductCategori;
 		this.memberAddress = memberAddress;
 		this.uProductContent = uProductContent;
-		this.memberNickname = memberNickname;
+		this.sellerNickname = sellerNickname;
 		this.buyerNickname = buyerNickname;
 		this.uProductImagePath = uProductImagePath;
-		this.uProductBuyId = uProductBuyId;
+		this.uProductId = uProductId;
 	}
 
 	public int getuProductOrderId() {
@@ -92,12 +92,12 @@ public class UProductSellVO {
 		this.uProductContent = uProductContent;
 	}
 
-	public String getMemberNickname() {
-		return memberNickname;
+	public String getSellerNickname() {
+		return sellerNickname;
 	}
 
-	public void setMemberNickname(String memberNickname) {
-		this.memberNickname = memberNickname;
+	public void setSellerNickname(String sellerNickname) {
+		this.sellerNickname = sellerNickname;
 	}
 
 	public String getBuyerNickname() {
@@ -116,12 +116,12 @@ public class UProductSellVO {
 		this.uProductImagePath = uProductImagePath;
 	}
 
-	public int getuProductBuyId() {
-		return uProductBuyId;
+	public int getuProductId() {
+		return uProductId;
 	}
 
-	public void setuProductBuyId(int uProductBuyId) {
-		this.uProductBuyId = uProductBuyId;
+	public void setuProductId(int uProductId) {
+		this.uProductId = uProductId;
 	}
 
 	@Override
@@ -129,12 +129,11 @@ public class UProductSellVO {
 		return "UProductSellVO [uProductOrderId=" + uProductOrderId + ", uProductName=" + uProductName
 				+ ", uProductPrice=" + uProductPrice + ", uProductCreatedDate=" + uProductCreatedDate
 				+ ", uProductCategori=" + uProductCategori + ", memberAddress=" + memberAddress + ", uProductContent="
-				+ uProductContent + ", memberNickname=" + memberNickname + ", buyerNickname=" + buyerNickname
-				+ ", uProductImagePath=" + uProductImagePath + ", uProductBuyId=" + uProductBuyId + "]";
+				+ uProductContent + ", sellerNickname=" + sellerNickname + ", buyerNickname=" + buyerNickname
+				+ ", uProductImagePath=" + uProductImagePath + ", uProductId=" + uProductId + "]";
 	}
 
 	
 
-	
 
 }

@@ -23,8 +23,8 @@
 			<input type="hidden" name="memberAddress" value="${vo.memberAddress }" readonly="readonly">
 			<input type="hidden" name="uProductContent" value="${vo.uProductContent }" readonly="readonly">
 			<input type="hidden" name="uProductImagePath" value="${vo.uProductImagePath }" readonly="readonly">
-			<input type="hidden" name="memberNickname" value="${sessionScope.memberNickname }" readonly="readonly">
-			<input type="hidden" name="uProductBuyId" value="${vo.uProductBuyId }" readonly="readonly">
+			<input type="hidden" name="sellerNickname" value="${sessionScope.memberNickname }" readonly="readonly">
+			<input type="hidden" name="uProductId" value="${vo.uProductId }" readonly="readonly">
 			
 			<table>
 				<thead>

@@ -143,9 +143,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="buy_insert">
 		insert into ${u_product_buy}
 		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
-		${buyerNickname}, ${uProductImagePath})
+		${buyerNickname}, ${uProductImagePath}, ${uProductId}, ${sellerNickname})
 		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
-		#{uProductContent}, #{buyerNickname}, #{uProductImagePath})<!-- 
+		#{uProductContent}, #{buyerNickname}, #{uProductImagePath}, #{uProductId}, #{sellerNickname})<!-- 
 			물음표 -->
 	</insert>
 	
@@ -153,9 +153,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<insert id="sell_insert">
 		insert into ${u_product_sell}
 		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
-		${memberNickname}, ${uProductImagePath}, ${buyerNickname}, ${uProductBuyId})
+		${sellerNickname}, ${uProductImagePath}, ${buyerNickname}, ${uProductId})
 		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
-		#{uProductContent}, #{memberNickname}, #{uProductImagePath}, #{buyerNickname}, #{uProductBuyId})<!-- 
+		#{uProductContent}, #{sellerNickname}, #{uProductImagePath}, #{buyerNickname}, #{uProductId})<!-- 
 			물음표 -->
 		</insert>
 	

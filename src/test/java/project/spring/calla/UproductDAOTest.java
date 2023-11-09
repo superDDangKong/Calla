@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
@@ -55,8 +56,14 @@ public class UproductDAOTest {
 //		testDelete();
 //		testSelectPaging();
 //		testSelectDate();
-		testuproduct();
+		/* testuproduct(); */
+//		testSelect();
 	}
+
+private void testSelect() {
+	UProductVO vo = dao.selectnickname("µ¿µ¿µ¿");
+	System.out.println(vo.toString());
+}
 
 private void testuproduct() {
 	PageCriteria criteria = new PageCriteria(1, 3);

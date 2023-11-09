@@ -229,7 +229,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductBuyId}, ${uProductName}, ${uProductPrice},
 		${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${buyerNickname}
+		${buyerNickname}, ${uProductId}, ${sellerNickname}
 		from(
 		select rownum rn, a.*
 		from(
@@ -250,12 +250,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductSellId}, ${uProductName}, ${uProductPrice},
 		${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${buyerNickname}, ${memberNickname}, ${uProductBuyId}
+		${buyerNickname}, ${sellerNickname}, ${uProductId}
 		from(
 		select rownum rn, a.*
 		from(
 		select * from ${u_product_sell}
-		where ${memberNickname} = #{memberNickname} 
+		where ${sellerNickname} = #{sellerNickname} 
 		)a
 		) where rn between #{start} and #{end}
 	</select>
@@ -263,8 +263,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  <select id="total_count_by_u_product_sell"
 		resultType="Integer">
 		select count(*) total_cnt from ${u_product_sell}
+		where ${sellerNickname} = #{sellerNickname}
+	</select>
+	
+	<select id="select_by_sellernickname" resultType="UProductBuyVO">
+		select * from
+		${u_product_buy} where ${sellerNickname} = #{sellerNickname}
+	</select>
+	
+	<select id="select_by_u_product_membernickname" resultType="UproductVO">
+		select
+		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
+		${uProductImagePath}, ${uProductContent}, ${memberAddress},
+		${memberNickname}, ${uProductCommentCount}
+		from(
+		select rownum rn, a.*
+		from(
+		select * from ${u_product}
+		where ${memberNickname} = #{memberNickname} 
+		)a
+		) where rn between #{start} and #{end}
+
+	</select>
+	
+	 <select id="total_count_by_u_product_membernickname"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product}
 		where ${memberNickname} = #{memberNickname}
 	</select>
+	
+	<select id="select_by_membernickname" resultType="UproductVO">
+		select distinct ${memberNickname} from
+		${u_product} where ${memberNickname} = #{memberNickname}
+	</select>
+	
+	
+	
 	 	 
 	 	 
 </mapper>

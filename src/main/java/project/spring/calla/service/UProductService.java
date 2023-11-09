@@ -10,15 +10,15 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface UProductService {
-	int create(UProductVO vo) throws Exception; // ��ǰ ����
-	List<UProductVO> read(PageCriteria criteria); // ��ǰ��� �о����
-	UProductVO read(int uProductId); // ��ǰID �о����
-	int update(UProductVO vo); // ��ǰ ���� ����
-	int delete(int uProductId); // ��ǰ ����
-	int getTotalCounts(); // ��ǰ ��ü ����
+	int create(UProductVO vo) throws Exception; // 占쏙옙품 占쏙옙占쏙옙
+	List<UProductVO> read(PageCriteria criteria); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
+	UProductVO read(int uProductId); // 占쏙옙품ID 占싻억옙占쏙옙占�
+	int update(UProductVO vo); // 占쏙옙품 占쏙옙占쏙옙 占쏙옙占쏙옙
+	int delete(int uProductId); // 占쏙옙품 占쏙옙占쏙옙
+	int getTotalCounts(); // 占쏙옙품 占쏙옙체 占쏙옙占쏙옙
 	List<UProductVO> readByCategoriorName(PageCriteria criteria, String keyword);
 	int getTotalCountsByByCategoriorName(String keyword);
-	List<UProductVO> readdate(PageCriteria criteria); // ��ǰ��� �о����
+	List<UProductVO> readdate(PageCriteria criteria); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
 	int getTotalCountsBydate();
 	List<UProductVO> readByAddress(PageCriteria criteria, String keyword);
 	int getTotalCountsByAddress(String keyword);
@@ -30,7 +30,14 @@ public interface UProductService {
 	List<UProductBuyVO> readybuyuproduct(PageCriteria criteria, String buyerNickname);
 	int getTotalCountsbuyuproduct(String buyerNickname);
 	
-	List<UProductSellVO> readyselluproduct(PageCriteria criteria, String memberNickname);
-	int getTotalCountsselluproduct(String memberNickname);
+	List<UProductSellVO> readyselluproduct(PageCriteria criteria, String sellerNickname);
+	int getTotalCountsselluproduct(String sellerNickname);
+	
+	UProductBuyVO read(String sellerNickname); // 占쏙옙품ID 占싻억옙占쏙옙占�
+	
+	List<UProductVO> readybyuproductnickname(PageCriteria criteria, String memberNickname);
+	int getTotalCountsbyuproductnickname(String memberNickname);
+	
+	UProductVO readnickname(String memberNickname); // 占쏙옙품ID 占싻억옙占쏙옙占�
 
 }

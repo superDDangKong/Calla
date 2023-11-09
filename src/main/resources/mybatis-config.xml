@@ -48,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name ="memberAddress" value="member_address"/>
 		<property name ="memberNickname" value="member_nickname"/>
 		<property name ="memberLevel" value="member_level"/>
+		<property name ="memberManner" value="member_manner"/>
 		
 
 		<property name="u_product" value="u_product" />
@@ -174,6 +175,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductContent" value="u_product_content" />
 		<property name ="memberNickname" value="member_nickname"/>
 		<property name="uProductImagePath" value="u_product_image_path" />
+		<property name ="sellerNickname" value="seller_nickname"/>
+		<property name ="buyerNickname" value="buyer_nickname"/>
 		
 		<property name="u_product_sell" value="u_product_sell" />
 		<property name="uProductSellId" value="u_product_sell_id" />
@@ -182,11 +185,18 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductCreatedDate" value="u_product_created_date" />
 		<property name="uProductCategori" value="u_product_categori" />
 		<property name="memberAddress" value="member_address" />
-		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="sellerNickname" value="seller_nickname"/>
 		<property name ="buyerNickname" value="buyer_nickname"/>
 		<property name="uProductContent" value="u_product_content" />
 		<property name="uProductImagePath" value="u_product_image_path" />
 		<property name="uProductBuyId" value="u_product_buy_id" />
+		
+		<property name="u_product_review" value="u_product_review" />
+		<property name="uProductReviewId" value="u_product_review_id" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name="uProductReviewTitle" value="u_product_review_title" />
+		<property name="uProductReviewCreatedDate" value="u_product_review_created_date" />
+		<property name="uProductReviewContent" value="u_product_review_content" />
 
 		
 	</properties>
