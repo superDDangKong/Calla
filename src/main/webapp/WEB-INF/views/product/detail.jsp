@@ -118,14 +118,27 @@
           	${vo.productName }
         	</h2>
         	<textarea class="productTextarea" rows="20" cols="120" readonly>${vo.productContent }</textarea>
-        	<p>상품 등록일 : ${vo.productCreatedDate }</p>
+        	<fmt:formatDate value="${vo.productCreatedDate }"
+								pattern="yyyy.MM.dd" var="productCreatedDate" />                            
+        	<p>상품 등록일 : ${productCreatedDate }</p>
 			<p>카테고리 : ${vo.productCategori }</p>
           	<span class="price"> 가격: ${vo.productPrice} </span>
       	</div>
-      	<div>
-    		<label for="productAmount">수량:</label>
-    		<input type="number" id="productAmount" name="productAmount" min="1" value="1" required>
-		</div>
+	    <c:if test="${memberNickname != null}">  	
+	      	<div>
+	    		<label for="productAmount">수량:</label>
+	    		<input type="number" id="productAmount" name="productAmount" min="1" value="1" required>
+	    		
+	    		<div style="display: inline-block">
+					<c:if test="${productOrderListId == 0 }">
+						<button id="orderListBtn">장바구니 넣기</button>		
+					</c:if>
+					<c:if test="${productOrderListId != 0 }">
+						<button id="orderListBtn">장바구니 삭제</button>				
+					</c:if>
+				</div>
+			</div>
+		</c:if>
 		<div style="display: inline-block">
     		<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
 			<c:if test="${memberLevel > 1}">
@@ -155,16 +168,12 @@
 				<span id="likeCnt">${vo.productLikes }</span> 
 				<input type="hidden" id="productLikeId" name="productLikeId" value="${productLikeId }">
 			</div>
-			
-			<div style="display: inline-block">
-				<c:if test="${productOrderListId == 0 }">
-					<button id="orderBtn">장바구니 넣기</button>		
-				</c:if>
-				<c:if test="${productOrderListId != 0 }">
-					<button id="orderBtn">장바구니 삭제</button>				
-				</c:if>
+			<div>
+				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니 이동"></a>
 			</div>
-		
+			<div>
+				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" id="orderBtn" value="바로 구매"></a>
+			</div>
 		</c:if>
 	</div>
 		
@@ -579,9 +588,40 @@
 		}); // end document 
 
 		$(document).ready(function(){
-			var orderBtn = $('#orderBtn');
+			var orderListBtn = $('#orderListBtn');
+			var orderBtn =$('#orderBtn');
 			
 			orderBtn.click(function(){
+				console.log('구매버튼 클릭');
+				console.log('클릭');
+				var productId = $('#productId').val();
+		        var memberId = $('#memberId').val();
+				var productPrice = $('#productPrice').val();
+				var productAmount = parseInt(document.getElementById('productAmount').value, 10);
+
+				
+				var obj = {
+						'productId' : productId, 
+						'memberId' : memberId,
+						'productAmount' : productAmount
+				};
+				$.ajax({
+		        	type : 'POST',
+		        	url : 'orderLists',
+		        	headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                data : JSON.stringify(obj),
+	                success : function(result){
+	                	console.log(result);
+	                	if(result == 1){
+	                		console.log('바로 구매');
+	                	}
+	                }
+		        }); // end ajax
+			}); // end orderBtn
+			
+			orderListBtn.click(function(){
 				console.log('클릭');
 				var productId = $('#productId').val();
 		        var memberId = $('#memberId').val();
@@ -606,7 +646,7 @@
 		                	console.log(result);
 		                	if(result == 1){
 		                		alert('장바구니 등록');
-		                		orderBtn.text('장바구니 삭제');
+		                		orderListBtn.text('장바구니 삭제');
 		                	}
 		                }
 			        }); // end ajax
@@ -621,7 +661,7 @@
 			                 console.log(result);
 			                 if (result == 1) {
 			                     alert('장바구니 삭제');
-			                     orderBtn.text('장바구니 넣기');
+			                     orderListBtn.text('장바구니 넣기');
 			                 }
 			             }  
 					}); // end ajax

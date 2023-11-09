@@ -7,14 +7,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="ProductOrderVO">
     insert into product_order
-    (${memberId}, ${productId}, ${productName}, ${productAmount}, ${productPrice}, ${memberCard}, ${memberCardNumber}, ${memberEmail}, ${recipientName}, ${memberAddress})
-    values (#{memberId}, #{selectedProduct.productId}, #{selectedProduct.productName}, #{selectedProduct.productAmount}, #{selectedProduct.productPrice}, #{memberCard}, #{memberCardNumber}, #{memberEmail}, #{recipientName}, #{memberAddress})
+    (${memberId}, ${productId}, ${productName}, ${productAmount}, ${productPrice}, ${memberCard}, ${memberCardNumber}, ${memberEmail}, ${recipientName}, ${memberAddress}, ${productImagePath})
+    values (#{memberId}, #{productId}, #{productName}, #{productAmount}, #{productPrice}, #{memberCard}, #{memberCardNumber}, #{memberEmail}, #{recipientName}, #{memberAddress}, #{productImagePath})
    </insert>
-
+	
+	<select id="select_by_productData" resultType="ProductOrderVO">
+		select * from ${product_order}
+		where ${memberId} = #{memberId}
+	</select>
 
 
 	
-	<select id="select_by_member_id" resultType="ProductOrderVO">
+	<select id="select_by_memberId" resultType="ProductOrderVO">
 		select * from ${product_order}
 		where ${memberId} = #{memberId}
 	</select>

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductOrderVO;
-import project.spring.calla.domain.ProductOrderVO.ProductData;
 
 @Repository
 public class ProductOrderDAOImple implements ProductOrderDAO {
@@ -53,16 +52,20 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 	}
 
 	@Override
-	public ProductOrderVO select(String memberId) {
+	public ProductOrderVO selectBy(String memberId) {
 		logger.info("select() 호출 : memberId = " + memberId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_memberId", memberId);
 	}
 
+	
+
 	@Override
-	public int insert(ProductData productData) {
-		logger.info("insert() 호출 ");
-		return sqlSession.insert(NAMESPACE + ".insert", productData);
+	public List<ProductOrderVO> select(String memberId) {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberId", memberId);
 	}
+
+	
 
 //	@Override
 //	public int insert(int productId, String productName, int productPrice, int productAmount, String memberId) {

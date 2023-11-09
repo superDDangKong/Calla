@@ -46,6 +46,7 @@ li {
 		<select id="option" name="option">
 			<option value="searchTitleOrContent">제목&내용</option>
 		</select> 
+		
 		<input type="text" name="keyword" value="${keyword }"> 
 		<input type="submit" value="검색">
 	</form>
@@ -59,6 +60,7 @@ li {
 		<a href="register"><input type="button" value="상품 등록"></a>
 		<c:if test="${memberNickname != null}">
 			<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니"></a>
+			<a href="order?memberId=${memberId}"><input type="button" value="구매내역"></a>
 		</c:if>
 	</div>
 	
@@ -69,7 +71,7 @@ li {
 			<c:forEach var="vo" items="${list }">
 				<div class="col mb-5">
 					<div class="card h-100">
-						<img class="card-img-top" src="display?fileName=${vo.productImagePath}" width="200px" height="150px" alt="..." />
+						<img class="card-img-top" src="display?fileName=${vo.productImagePath}" width="280px" height="150px" alt="..." />
 							<div class="card-body p-4">
 								<div class="text-center">
 									<h5 class="fw-bolder">

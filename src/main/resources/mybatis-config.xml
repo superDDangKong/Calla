@@ -163,6 +163,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="recipientName" value="recipient_name"/>
 		<property name="memberAddress" value="member_address"/>
 		<property name="productOrderId" value="product_order_id"/>
+		<property name="productImagePath" value="product_image_path"/>
 		
 		<property name="u_product_buy" value="u_product_buy" />
 		<property name="uProductBuyId" value="u_product_buy_id" />

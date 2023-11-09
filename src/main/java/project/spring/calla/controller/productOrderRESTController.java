@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,25 +39,30 @@ public class productOrderRESTController {
 
 	
 	@PostMapping()
-	 public ResponseEntity<Integer> createProductOrder(@RequestBody ProductOrderVO vo){
-	      // vo는 사용자가 입력한 카드정보 등등 + 선택한 상품데이터 리스트
-	      logger.info("createProductOrderList() 호출 : vo = " + vo.getSelectedProducts());
-	      logger.info("memberId 호출 :" + vo.getMemberId());
-	     // 현재 사용자가 선택한 상품데이터 리스트
-	      List<ProductOrderVO.ProductData> selectedProducts = vo.getSelectedProducts();
-	       int result = 0;
-
-	       // 선택한 상품데이터 리스트에서 값을 하나씩 빼옴
-	       for (ProductOrderVO.ProductData productData : selectedProducts) {
-	         // 선택상 상품데이터 리스트에서 뺀 데이터를 vo에 추가
-	           vo.setSelectedProduct(productData);
-
-	           // 선택한 상품데이터를 반복하여 넣으며 insert
-	           result += productOrderService.create(vo);
-	       }
+	 public ResponseEntity<Integer> createProductOrder(@RequestBody List<ProductOrderVO> productOrderList){
+	      logger.info("createProductOrderList() 호출 : productOrderList = " + productOrderList);
+	      
+	      int result = 0;
+	      
+	      try {
+			for (ProductOrderVO vo : productOrderList) {
+				int result1 = productOrderService.create(vo);
+				result += result1;
+				
+				int productId = vo.getProductId();
+				String memberId = vo.getMemberId();
+				
+				productOrderListService.delete(productId, memberId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	       
 
 	    return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	
 	
 	@PutMapping("/{productId}/{memberId}/{memberEmail}/{recipientName}/{memberAddress}")
 	public ResponseEntity<Integer> updateProductOrder(

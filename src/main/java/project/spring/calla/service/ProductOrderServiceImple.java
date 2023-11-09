@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.ProductOrderVO;
-import project.spring.calla.domain.ProductOrderVO.ProductData;
 import project.spring.calla.persistence.ProductOrderDAO;
 
 @Service
@@ -39,9 +38,9 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	}
 
 	@Override
-	public ProductOrderVO read(String memberId) {
+	public ProductOrderVO readBy(String memberId) {
 		logger.info("read() 호출 : memberId = " + memberId);
-		return dao.select(memberId);
+		return dao.selectBy(memberId);
 	}
 
 //	@Override
@@ -50,11 +49,13 @@ public class ProductOrderServiceImple implements ProductOrderService {
 //		return dao.insert(productId, productName, productPrice, productAmount, memberId);
 //	}
 
+
 	@Override
-	public int create(ProductData productData) {
-		logger.info("create() 호출 : ");
-		return dao.insert(productData);
+	public List<ProductOrderVO> read(String memberId) {
+		logger.info("read() 호출 : memberId = " + memberId);
+		return dao.select(memberId);
 	}
+
 
 //	@Override
 //	public List<ProductOrderVO> read() {

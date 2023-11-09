@@ -2,9 +2,7 @@ package project.spring.calla.controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -22,22 +20,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.ProductOrderListVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
 import project.spring.calla.service.ProductLikeService;
 import project.spring.calla.service.ProductOrderListService;
+import project.spring.calla.service.ProductOrderService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -61,16 +59,19 @@ public class ProductController {
 	@Autowired
 	private ProductOrderListService productOrderListService;
 	
+	@Autowired
+	private ProductOrderService productOrderService;
+	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
 	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
-		logger.info("list() ȣ��");
+		logger.info("list() 호占쏙옙");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		List<ProductVO> list = null;
 		
-		//Paging ó��
+		//Paging 처占쏙옙
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -113,18 +114,18 @@ public class ProductController {
 	
 	@PostMapping("/register")
 	public String registerPost(ProductVO vo,  @RequestParam("productImage") MultipartFile file, RedirectAttributes reAttr) {
-		logger.info("registerPOST() ȣ��");
+		logger.info("registerPOST() 호占쏙옙");
 		logger.info(vo.toString());		
-		logger.info("���� �̸� : " + file.getOriginalFilename());
-		logger.info("���� ũ�� : " + file.getSize());
+		logger.info("占쏙옙占쏙옙 占싱몌옙 : " + file.getOriginalFilename());
+		logger.info("占쏙옙占쏙옙 크占쏙옙 : " + file.getSize());
 		
 		try {
-			// ���� ����
+			// 占쏙옙占쏙옙 占쏙옙占쏙옙
 			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-			// �̹��� ��� ����
+			// 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙
 			vo.setProductImagePath(savedFileName);
 			int result = productService.create(vo);
-			logger.info(result + "�� ����");
+			logger.info(result + "占쏙옙 占쏙옙占쏙옙");
 			
 			if(result == 1) {
 				reAttr.addFlashAttribute("insert_result", "success");
@@ -155,21 +156,21 @@ public class ProductController {
 			}
 		}
 		
-		if(!cookieFound) { // ��Ű�� �������� �ʴ� ���, ��ȸ�� ���� �� ��Ű ����
-			int views = 1; // ù��° ��ȸ
+		if(!cookieFound) { // 占쏙옙키占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占십댐옙 占쏙옙占�, 占쏙옙회占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙키 占쏙옙占쏙옙
+			int views = 1; // 첫占쏙옙째 占쏙옙회
 			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
-			viewCookie.setMaxAge(180); // ��Ű ��ȿ �ð� 3��
+			viewCookie.setMaxAge(180); // 占쏙옙키 占쏙옙효 占시곤옙 3占쏙옙
 			response.addCookie(viewCookie);
 			
 			int result = productService.updateViews(views, productId);
 			if(result == 1) {
-				logger.info("��ȸ�� ����");
+				logger.info("占쏙옙회占쏙옙 占쏙옙占쏙옙");
 			} else {
-				logger.info("����");
+				logger.info("占쏙옙占쏙옙");
 			}
 			
 		}
-		logger.info("deatil() ȣ�� : productId = " + productId);
+		logger.info("deatil() 호占쏙옙 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		ProductCommentVO commentVO = new ProductCommentVO();
 		PageMaker pageMaker = new PageMaker();
@@ -215,18 +216,18 @@ public class ProductController {
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, Integer productId, Integer page) {
-		logger.info("updateGET() ȣ�� : productId = " + productId);
+		logger.info("updateGET() 호占쏙옙 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
-		logger.info("updateGET() ȣ�� : vo = " + vo.toString());
+		logger.info("updateGET() 호占쏙옙 : vo = " + vo.toString());
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);		
 	} // end updateGET()
 	
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page, @RequestParam("productImage") MultipartFile file) {
-		logger.info("updatePOST() ȣ�� : vo = " + vo.toString());			
-		logger.info("���� �̸� : " + file.getOriginalFilename());
-		logger.info("���� ũ�� : " + file.getSize());
+		logger.info("updatePOST() 호占쏙옙 : vo = " + vo.toString());			
+		logger.info("占쏙옙占쏙옙 占싱몌옙 : " + file.getOriginalFilename());
+		logger.info("占쏙옙占쏙옙 크占쏙옙 : " + file.getSize());
 		try {	
 			if(file != null && !file.isEmpty()) {
 				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
@@ -249,7 +250,7 @@ public class ProductController {
 	
 	@PostMapping("/delete")
 	public String delete(Integer productId) {
-		logger.info("delete() ȣ�� : productId = " + productId);
+		logger.info("delete() 호占쏙옙 : productId = " + productId);
 		int result = productService.delete(productId);
 		
 		if(result == 1) {
@@ -261,7 +262,7 @@ public class ProductController {
 	
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName){
-		logger.info("display() ȣ��");
+		logger.info("display() 호占쏙옙");
 		
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -271,18 +272,18 @@ public class ProductController {
 		try {
 			in = new FileInputStream(filePath);
 			
-			// ���� Ȯ����
+			// 占쏙옙占쏙옙 확占쏙옙占쏙옙
 			String extension =
 					filePath.substring(filePath.lastIndexOf(".") + 1);
 			logger.info(extension);
 			
-			// ���� ���(response header)�� Content-Type ����
+			// 占쏙옙占쏙옙 占쏙옙占�(response header)占쏙옙 Content-Type 占쏙옙占쏙옙
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
-			// ������ ����
+			// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 			entity = new ResponseEntity<byte[]>(
-					IOUtils.toByteArray(in), // ���Ͽ��� ���� ������
-					httpHeaders, // ���� ���
+					IOUtils.toByteArray(in), // 占쏙옙占싹울옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
+					httpHeaders, // 占쏙옙占쏙옙 占쏙옙占�
 					HttpStatus.OK
 					);
 		} catch (Exception e) {
@@ -294,7 +295,7 @@ public class ProductController {
 	
 	@GetMapping("/orderList")
 	public String orderList(Model model, String memberId) {
-		logger.info("orderList() ȣ�� : memberId = " + memberId);
+		logger.info("orderList() 호占쏙옙 : memberId = " + memberId);
 	    
 	    List<ProductVO> productList = productService.selectProductWithAmount(memberId);
 
@@ -311,5 +312,16 @@ public class ProductController {
 	    return "/product/orderList";
 	}
 	
-	
+	@GetMapping("/order")
+	public String order(Model model, String memberId) {
+	    logger.info("order() 호출 : memberId = " + memberId);
+	    
+	    List<ProductOrderVO> productOrderList = productOrderService.read(memberId);
+	    
+
+	    model.addAttribute("memberId", memberId);
+	    model.addAttribute("productOrderList", productOrderList);
+
+	    return "/product/order";
+	}
 } 

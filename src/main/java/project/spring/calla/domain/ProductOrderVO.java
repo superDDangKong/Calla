@@ -13,73 +13,32 @@ public class ProductOrderVO {
 	private String recipientName;
 	private String memberAddress;
 	private String productOrderId;
-	private List<ProductData> selectedProducts;
-	private ProductData selectedProduct;
+	private int productId;
+	private String productImagePath;
+    private String productName;
+    private int productPrice;
+    private int productAmount;
 	
-	public static class ProductData {
-	    private String memberId;
-		private int productId;
-	    private String productName;
-	    private int productPrice;
-	    private int productAmount;
-		
-	    public ProductData() {
-		}
-	    
-	    public String getMemberId() {
-	    	return memberId;
-	    }
-	    
-	    public void setMemberId(String memberId) {
-	    	this.memberId = memberId;
-	    }
-	    
-		public int getProductId() {
-			return productId;
-		}
-
-		public void setProductId(int productId) {
-			this.productId = productId;
-		}
-
-		public String getProductName() {
-			return productName;
-		}
-
-		public void setProductName(String productName) {
-			this.productName = productName;
-		}
-
-		public int getProductPrice() {
-			return productPrice;
-		}
-
-		public void setProductPrice(int productPrice) {
-			this.productPrice = productPrice;
-		}
-
-		public int getProductAmount() {
-			return productAmount;
-		}
-
-		public void setProductAmount(int productAmount) {
-			this.productAmount = productAmount;
-		}
-	    
-		@Override
-		public String toString() {
-
-		    return "ProductData [productId=" + productId +
-	                ", productName=" + productName +
-	                ", productPrice=" + productPrice +
-	                ", productAmount=" + productAmount + "]";
-		}
-	    
-	    
-	    
+    public ProductOrderVO() {
 	}
-
-	public ProductOrderVO() {
+    
+	public ProductOrderVO(String memberId, Date productOrderCreatedDate, String memberCard, String memberCardNumber,
+			String memberEmail, String recipientName, String memberAddress, String productOrderId, int productId,
+			String productImagePath, String productName, int productPrice, int productAmount) {
+		super();
+		this.memberId = memberId;
+		this.productOrderCreatedDate = productOrderCreatedDate;
+		this.memberCard = memberCard;
+		this.memberCardNumber = memberCardNumber;
+		this.memberEmail = memberEmail;
+		this.recipientName = recipientName;
+		this.memberAddress = memberAddress;
+		this.productOrderId = productOrderId;
+		this.productId = productId;
+		this.productImagePath = productImagePath;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productAmount = productAmount;
 	}
 
 	public String getMemberId() {
@@ -146,22 +105,44 @@ public class ProductOrderVO {
 		this.productOrderId = productOrderId;
 	}
 
-	public List<ProductData> getSelectedProducts() {
-		return selectedProducts;
+	public int getProductId() {
+		return productId;
 	}
 
-	public void setSelectedProducts(List<ProductData> selectedProducts) {
-		this.selectedProducts = selectedProducts;
-	}
-	
-	
-	
-	public ProductData getSelectedProduct() {
-		return selectedProduct;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
-	public void setSelectedProduct(ProductData selectedProduct) {
-		this.selectedProduct = selectedProduct;
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public int getProductAmount() {
+		return productAmount;
+	}
+
+	public void setProductAmount(int productAmount) {
+		this.productAmount = productAmount;
 	}
 
 	@Override
@@ -169,26 +150,11 @@ public class ProductOrderVO {
 		return "ProductOrderVO [memberId=" + memberId + ", productOrderCreatedDate=" + productOrderCreatedDate
 				+ ", memberCard=" + memberCard + ", memberCardNumber=" + memberCardNumber + ", memberEmail="
 				+ memberEmail + ", recipientName=" + recipientName + ", memberAddress=" + memberAddress
-				+ ", productOrderId=" + productOrderId + ", selectedProducts=" + selectedProducts + "]";
+				+ ", productOrderId=" + productOrderId + ", productId=" + productId + ", productImagePath=" + productImagePath
+				+ ", productName=" + productName + ", productPrice=" + productPrice + ", productAmount=" + productAmount
+				+ "]";
 	}
 	
-	
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
+    
+    
 }
