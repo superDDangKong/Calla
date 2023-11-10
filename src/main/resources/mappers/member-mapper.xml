@@ -150,15 +150,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
-		<insert id="sell_insert">
+	<insert id="sell_insert">
 		insert into ${u_product_sell}
 		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
 		${sellerNickname}, ${uProductImagePath}, ${buyerNickname}, ${uProductId})
 		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
 		#{uProductContent}, #{sellerNickname}, #{uProductImagePath}, #{buyerNickname}, #{uProductId})<!-- 
 			물음표 -->
-		</insert>
+	</insert>
+
 	
+	<select id="select_all_boards" resultType="AllBoardVO">
+		select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, category
+		from(
+		select rownum rn, a.*
+		from(
+		select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, 'u' as category
+		from ${u_product}
+		where ${memberNickname} = #{memberNickname}
+		
+		union all
+		
+		select ${fBoardId}, ${fBoardTitle}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}, 'f' as category
+		from ${f_board}
+		where ${memberNickname} = #{memberNickname}
+		
+		union all
+		
+		select ${qBoardId}, ${qBoardTitle}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}, 'q' as category
+		from ${q_board}
+		where ${memberNickname} = #{memberNickname}
+		
+		order by 3 desc
+		)a
+		) where rn between #{criteria.start} and #{criteria.end}
+	</select>
+	
+	<select id="total_count_all_boards" resultType="Integer">
+		select count(*) total_cnt 
+		from (
+		select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, 'u' as category
+		from ${u_product}
+		where ${memberNickname} = #{memberNickname}
+		
+		union all
+		
+		select ${fBoardId}, ${fBoardTitle}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}, 'f' as category
+		from ${f_board}
+		where ${memberNickname} = #{memberNickname}
+		
+		union all
+		
+		select ${qBoardId}, ${qBoardTitle}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}, 'q' as category
+		from ${q_board}
+		where ${memberNickname} = #{memberNickname})
+	</select>
 	
 </mapper>
 

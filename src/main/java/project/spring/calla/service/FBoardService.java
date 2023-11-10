@@ -10,12 +10,15 @@ public interface FBoardService {
 	int create(FBoardVO vo);
 	List<FBoardVO> read(PageCriteria criteria);
 	int getTotalCounts();
+	
 	List<FBoardVO> readByMemberNickname(PageCriteria criteria, String keyword);
-	int getTotalCountsByMemberNickname(String keyword);
+	int getTotalCountsLikeMemberNickname(String keyword);
 	List<FBoardVO> readByTitleOrContent(PageCriteria criteria, String keyword);
 	int getTotalCountsByTitleContent(String keyword);
+	
 	FBoardVO read(int fBoardId);
 	int update(FBoardVO vo);
 	int delete(int fBoardId);
 	int updateViews(int views, int fBoardId);
+	
 }

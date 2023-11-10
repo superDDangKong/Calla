@@ -2,6 +2,7 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageMaker;
+import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.pageutil.MyPageMaker;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -175,12 +177,48 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
 	
-	@GetMapping("/boards/{memberNickname}")
-	public ResponseEntity<Map<String, Object>> readBoardsByOption(@PathVariable("memberNickname") String memberNickname) {
+	@GetMapping("/allBoards/{memberNickname}/{page}")
+	public ResponseEntity<Map<String, Object>> readAllBoards(@PathVariable("memberNickname") String memberNickname, @PathVariable("page") int page) {
+		logger.info("readAllBoards()");
+		MyPageCriteria criteria = new MyPageCriteria();
+		MyPageMaker pageMaker = new MyPageMaker();
+		
+		criteria.setPage(page);
+		int totalCount = memberService.getTotalCountsAllBoards(memberNickname);
+		pageMaker.setTotalCount(totalCount);
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		List<AllBoardVO> allBoards = memberService.readAllBoards(criteria, memberNickname);
+		
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("allBoards", allBoards);
+		args.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
+	}
+	
+	@GetMapping("/boards/{memberNickname}/{page}/{option}")
+	public ResponseEntity<Map<String, Object>> readBoardsByOption(@PathVariable("memberNickname") String memberNickname, @PathVariable("page") int page, @PathVariable("option") String option) {
 		logger.info("readBoardsByOption()");
-
-		Map<String, Object> lists = memberService.readBoards(memberNickname);
-		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+		
+		Map<String, Integer> totalCountList = memberService.getTotalCountsByMemberNickname(memberNickname);
+		MyPageCriteria criteria = new MyPageCriteria();
+		MyPageMaker pageMaker = new MyPageMaker();
+		if(option.equals("u")) {
+			pageMaker.setTotalCount(totalCountList.get("uProductCount"));
+		} else if(option.equals("f")) {
+			pageMaker.setTotalCount(totalCountList.get("fBoardCount"));
+		} else if(option.equals("q")) {
+			pageMaker.setTotalCount(totalCountList.get("qBoardCount"));
+		}
+		criteria.setPage(page);
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		Map<String, Object> lists = memberService.readBoards(criteria, memberNickname);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("lists", lists);
+		args.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
 	}
 	
 	@GetMapping("/comments/{memberNickname}")
@@ -225,7 +263,7 @@ public class MemberRESTController {
 			}
 		}
 		
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	} // end deleteLikes() 
 
 	@GetMapping("/recentlyView/product/{memberId}/{page}") 
@@ -233,8 +271,8 @@ public class MemberRESTController {
 		logger.info("recentlyViewProductGET() 호占쏙옙 : memberId = " + memberId);
 		logger.info("recentlyViewProductGET() 호占쏙옙 : page = " + page);
 		
-		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
-		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
+		MyPageCriteria criteria = new MyPageCriteria();
+		MyPageMaker pageMaker = new MyPageMaker();
 		
 		criteria.setPage(page);
 		
@@ -254,8 +292,8 @@ public class MemberRESTController {
 		logger.info("recentlyUProductViewGET() 호占쏙옙 : memberId = " + memberId);
 		logger.info("recentlyUProductViewGET() 호占쏙옙 : page = " + page);
 		
-		RecentlyViewPageCriteria criteria = new RecentlyViewPageCriteria();
-		RecentlyViewPageMaker pageMaker = new RecentlyViewPageMaker();
+		MyPageCriteria criteria = new MyPageCriteria();
+		MyPageMaker pageMaker = new MyPageMaker();
 		
 		criteria.setPage(page);
 		

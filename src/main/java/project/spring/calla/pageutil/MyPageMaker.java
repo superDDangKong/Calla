@@ -6,24 +6,24 @@ import org.slf4j.LoggerFactory;
 import project.spring.calla.controller.FBoardController;
 
 // 페이지 번호들의 링크를 만들기 위한 유틸리티 클래스
-public class RecentlyViewPageMaker {
+public class MyPageMaker {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(RecentlyViewPageMaker.class);
+			LoggerFactory.getLogger(MyPageMaker.class);
 	
-	private RecentlyViewPageCriteria criteria;
+	private MyPageCriteria criteria;
 	private int totalCount; // 전체 게시글 개수
 	private boolean hasPrev; // 화면에 보이는 시작 페이지 번호보다 작은 숫자의 페이지가 있는 지
 	private boolean hasNext; // 화면에 보이는 끝 페이지 번호보다 큰 숫자의 페이지가 있는 지
 	private int totalLinkNo;
 	
-	public RecentlyViewPageMaker() {
+	public MyPageMaker() {
 	}
 	
-	public RecentlyViewPageCriteria getCriteria() {
+	public MyPageCriteria getCriteria() {
 		return criteria;
 	}
 	
-	public void setCriteria(RecentlyViewPageCriteria criteria) {
+	public void setCriteria(MyPageCriteria criteria) {
 		this.criteria = criteria;
 	}
 	
@@ -55,7 +55,8 @@ public class RecentlyViewPageMaker {
 	public void setPageData() {
 		
 		logger.info("setPageData 호출");
-
+		logger.info("totalcount" + totalCount);
+		logger.info("page" + criteria.getPage());
 		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage());
 		setTotalLinkNo(totalLinkNo);
 		

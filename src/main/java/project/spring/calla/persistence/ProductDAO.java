@@ -4,7 +4,7 @@ import java.util.List;
 
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 
 public interface ProductDAO {
 	int insert(ProductVO vo); 
@@ -23,7 +23,7 @@ public interface ProductDAO {
 	List<ProductVO> selectProductWithAmount(String memberId);
 	List<ProductVO> selectByInterest(String interest);
 	int insertRecentlyView(int productId, String memberId);
-	List<ProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
+	List<ProductVO> selectRecentlyView(MyPageCriteria criteria, String memberId);
 	int getTotalCountsByRecentlyView(String memberId);	
 	int deleteRecentlyView(int productRecentlyViewId);
 	

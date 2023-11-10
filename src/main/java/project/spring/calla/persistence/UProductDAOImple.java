@@ -16,7 +16,7 @@ import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 
 @Repository
 public class UProductDAOImple implements UProductDAO {
@@ -96,9 +96,18 @@ public class UProductDAOImple implements UProductDAO {
 	}
 
 	@Override
-	public List<UProductVO> selectAllByMemberNickname(String memberNickname) {
-		logger.info("selectAllByMemberNickname() È£ï¿½ï¿½ memberNickname = " + memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
+	public List<UProductVO> selectAllByMemberNickname(MyPageCriteria criteria, String memberNickname) {
+		logger.info("selectAllByMemberNickname() È£Ãâ memberNickname = " + memberNickname);
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", args);
+	}
+
+	@Override
+	public int getTotalCountsByMemberNickname(String memberNickname) {
+		logger.info("getTotalCountByMemberNickname()");
+		return sqlSession.selectOne(NAMESPACE + ".get_total_count_by_memberNickname", memberNickname);
 	}
 
 	@Override
@@ -217,7 +226,7 @@ public class UProductDAOImple implements UProductDAO {
 	}
 	
 	@Override
-	public List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+	public List<UProductVO> selectRecentlyView(MyPageCriteria criteria, String memberId) {
 		logger.info("selectRecentlyView() : memberId = " + memberId);
 		Map<String, Object> args = new HashMap();
 		args.put("memberId", memberId);

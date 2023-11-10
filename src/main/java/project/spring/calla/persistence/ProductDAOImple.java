@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 
 @Repository
 public class ProductDAOImple implements ProductDAO {
@@ -144,7 +144,7 @@ public class ProductDAOImple implements ProductDAO {
 	}
 
 	@Override
-	public List<ProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+	public List<ProductVO> selectRecentlyView(MyPageCriteria criteria, String memberId) {
 		logger.info("selectRecentlyView() : memberId = " + memberId);
 		logger.info("selectRecentlyView() : criteria = " + criteria.getPage());
 		logger.info("selectRecentlyView() : criteria = " + criteria.getStart());

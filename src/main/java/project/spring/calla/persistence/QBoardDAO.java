@@ -4,6 +4,7 @@ import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface QBoardDAO {
@@ -17,6 +18,7 @@ public interface QBoardDAO {
 	List<QBoardVO> select(String memberNickname); // 작성자 이름으로 검색
 	List<QBoardVO> selectByTitleOrContent(String keyword); // 게시글 제목 또는 내용으로 검색
 	int updateCommentCnt(int amount, int qBoardId);
-	List<QBoardVO> selectAllByMemberNickname(String menberNickname);
+	List<QBoardVO> selectAllByMemberNickname(MyPageCriteria criteria, String menberNickname);
+	int getTotalCountsByMemberNickname(String memberNickname);
 	int updateViews(int views, int qBoardId);
 }

@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
@@ -130,12 +131,22 @@ public class MemberServiceImple implements MemberService {
 	
 	@Transactional(value = "transactionManager")
 	@Override
-	public Map<String, Object> readBoards(String memberNickname) {
+	public Map<String, Object> readBoards(MyPageCriteria criteria, String memberNickname) {
 		logger.info("readBoards() 호출 memberNickname : " + memberNickname);
 		Map<String, Object> args = new HashMap();
-		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(memberNickname));
-		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(memberNickname));
-		args.put("uProductList", uProductDAO.selectAllByMemberNickname(memberNickname));
+		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(criteria, memberNickname));
+		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(criteria, memberNickname));
+		args.put("uProductList", uProductDAO.selectAllByMemberNickname(criteria, memberNickname));
+		return args;
+	}
+	
+	@Override
+	public Map<String, Integer> getTotalCountsByMemberNickname(String memberNickname) {
+		logger.info("getTotalCountsByMemberNickname : " + memberNickname);
+		Map<String, Integer> args = new HashMap();
+		args.put("fBoardCount", fBoardDAO.getTotalCountsByMemberNickname(memberNickname));
+		args.put("qBoardCount", qBoardDAO.getTotalCountsByMemberNickname(memberNickname));
+		args.put("uProductCount", uProductDAO.getTotalCountsByMemberNickname(memberNickname));
 		return args;
 	}
 	
@@ -149,7 +160,7 @@ public class MemberServiceImple implements MemberService {
 	}
 	
 	@Override
-	public Map<String, Object> readRecentlyView(RecentlyViewPageCriteria criteria, String memberId) {
+	public Map<String, Object> readRecentlyView(MyPageCriteria criteria, String memberId) {
 		logger.info("readRecentlyView() 호출 memberId : " + memberId);
 		logger.info("getTotalCountsByRecentlyView 호출 criteria : " + criteria.toString());
 		Map<String, Object> args = new HashMap();
@@ -271,10 +282,15 @@ public class MemberServiceImple implements MemberService {
 	@Transactional(value = "transactionManager")
 	@Override
 	public int deleteProductLike(int productLikeId, int amount, int productId) {
-		logger.info("deleteProductLike() 호출");
-		productLikeDAO.deleteById(productLikeId);
-		productDAO.updateLikeCount(amount, productId);
-		return 1;
+		try {
+	        logger.info("deleteUProductLike() 호출");
+	        productLikeDAO.deleteById(productLikeId);
+	        productDAO.updateLikeCount(amount, productId);
+	        return 1;
+	    } catch (Exception e) {
+	        // 롤백을 확인하기 위해 예외를 다시 던질 수도 있음
+	        throw new RuntimeException("트랜잭션 롤백 테스트", e);
+	    }
 	}
 	
 	@Transactional(value = "transactionManager")
@@ -286,9 +302,17 @@ public class MemberServiceImple implements MemberService {
 		return 1;
 	}
 
-
+	@Override
+	public List<AllBoardVO> readAllBoards(MyPageCriteria criteria, String memberNickname) {
+		logger.info("readAllBoard() 호출");
+		return MemberDAO.selectAllBoards(criteria, memberNickname);
+	}
 	
-
+	@Override
+	public int getTotalCountsAllBoards(String memberNickname) {
+		logger.info("getTotalCountsAllBoards() 호출");
+		return MemberDAO.getTotalCountsAllBoards(memberNickname);	
+	}
 
 
 }

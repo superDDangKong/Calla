@@ -187,7 +187,7 @@ li {
 																		console
 																				.log(this);
 																		var fBoardCommentCreatedDate = new Date(
-																				this.fBoardCommentCreatedDate);
+																				this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 																		var disabled = 'disabled';
 																		var readonly = 'readonly';
 																		if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때

@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
@@ -198,6 +200,21 @@ public class MemberDAOImple implements MemberDAO{
 	public int insertsell(UProductSellVO svo) {
 		logger.info("insertsell() : vo = " + svo.toString());
 		return sqlSession.insert(NAMESPACE + ".sell_insert", svo);
+	}
+
+	@Override
+	public List<AllBoardVO> selectAllBoards(MyPageCriteria criteria, String memberNickname) {
+		logger.info("selectAllBoards 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_boards", args);
+	}
+
+	@Override
+	public int getTotalCountsAllBoards(String memberNickname) {
+		logger.info("getTotalCountsAllBoards()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_all_boards", memberNickname);
 	}
 
 	

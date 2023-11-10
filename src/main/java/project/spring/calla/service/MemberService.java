@@ -3,12 +3,13 @@ package project.spring.calla.service;
 import java.util.List;
 import java.util.Map;
 
+import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 
 public interface MemberService {
 	int create(MemberVO vo);
@@ -20,9 +21,10 @@ public interface MemberService {
 	String searchId(String memberName, String memberEmail);
 	String searchPw(String memberId, String memberPhone);
 	Map<String, Object> readComments(String memberNickname);
-	Map<String, Object> readBoards(String memberNickname);
+	Map<String, Object> readBoards(MyPageCriteria criteria, String memberNickname);
+	Map<String, Integer> getTotalCountsByMemberNickname(String memberNickname);
 	Map<String, Object> readLikes(String memberId);
-	Map<String, Object> readRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
+	Map<String, Object> readRecentlyView(MyPageCriteria criteria, String memberId);
 	Map<String, Integer> getTotalCountsByRecentlyView(String memberId);
 	int updatePw(String memberId, String memberPw);
 	int updateNickname(String memberId, String memberNickname);
@@ -41,4 +43,7 @@ public interface MemberService {
 	
 	int deleteProductLike(int productLikeId, int amount, int productId);
 	int deleteUProductLike(int uProductLikeId, int amount, int uProductId);
+	
+	List<AllBoardVO> readAllBoards(MyPageCriteria criteria, String memberNickname);
+	int getTotalCountsAllBoards(String memberNickname);
 }

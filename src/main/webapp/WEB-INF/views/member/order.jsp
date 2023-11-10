@@ -33,57 +33,6 @@
 	<%@ include file="../footer.jspf"%>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#allOrderList').click(function() {
-				getAllOrderList();
-			}) // allOrderList.click
-
-			$('#productOrderList').click(function() {
-				getProductOrderList();
-			}) // productOrderList.click
-
-			$('#uProductOrderList').click(function() {
-				getuProductOrderList();
-			}) // uProductOrderList.click
-
-			function getAllOrderList() {
-				console.log("getAllOrderList() 호출");
-				var memberId = $('#memberId').val();
-				var memberNickname = $('#memberNickname').val();
-				var url = 'member/info/orderList/all/' + memberId;
-
-				$.getJSON(
-					url,
-					function(data) {
-						var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
-						$(data.list).each(function() {// this : 컬렉션의 각 인덱스 데이터를 의미
-							console.log(this);
-							list += '<div class="comment_item">'
-								+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
-								+ this.memberNickname
-								+ '<br>'
-								+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
-								+ this.fBoardCommentContent
-								+ '</textarea>'
-								+ fBoardCommentCreatedDate
-								+ '<br>'
-								+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
-								+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-								+ '<button class="btnReply">답글</button>'
-								+ '<br>'
-								+ '<hr>'
-								+ '</div>';
-						}); // end each()
-					$('#orerList').html(list);
-				}); // end getJSON()
-			} // end getAllOrderList
-
-			function getProductOrderList() {
-
-			} // end getProductOrderList()
-
-			function getUProductOrderList() {
-
-			} // end getUProductOrderList()
 		}) // end document.ready
 	</script>
 </body>
