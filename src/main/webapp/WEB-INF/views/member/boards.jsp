@@ -23,6 +23,10 @@
 </head>
 <body>
 	<input type="hidden" id="memberNickname" value=${memberNickname }>
+	<input type="hidden" id="allBoardsPage" value='1'>
+	<input type="hidden" id="fBoardPage" value='1'>
+	<input type="hidden" id="qBoardPage" value='1'>
+	<input type="hidden" id="uProductPage" value='1'>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
@@ -47,6 +51,8 @@
 					<tbody>
 					</tbody>
 				</table>
+				<div id="more" class="text-center"></div>
+				<div id="close" class="text-center"></div>
 			</main>
 			<%@ include file="../sidebarRight.jspf"%>
 		</div>
@@ -55,23 +61,38 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			console.log("document ready 호출");
-			readBoard();
+			readAllBoards();
 			
 			function readBoard() {
 				console.log("readBoard 호출");
+				$('#more').html("");
+				$('#close').html("");
+				$('#allBoardsPage').val('1');
 				var uProductList = "";
 				var fBoardList = "";
 				var qBoardList = "";
 				var option = $('#option').val();
+				var page = "";
+				if(option == "u"){
+					page = $('#uProductPage').val();
+					$('#fBoardPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "f") {
+					page = $('#fBoardPage').val();
+					$('#uProductPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "q") {
+					page = $('#qBoardPage').val();
+					$('#uProductPage').val('1');
+					$('#fBoardPage').val('1');
+				}
 				var memberNickname = $('#memberNickname').val();
-				$('.table tbody').empty(); // 이전 내용을 지웁니다.
+
 				$.ajax({
 					type : 'GET',
-					url : 'boards/' + memberNickname,
-					success : function(lists) {
-						console.log(lists)
-						$(lists.uProductList).each(function(){
+					url : 'boards/' + memberNickname + '/' + page + '/' + option,
+					success : function(args) {
+						$(args.lists.uProductList).each(function(){
 							var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 							uProductList += '<tr>'
 								+ '<td>&lt;중고상품&gt;</td>'
@@ -82,7 +103,7 @@
 							  	+ '</tr>'  							
 						}) // end uProductList.each
 						
-						$(lists.fBoardList).each(function(){
+						$(args.lists.fBoardList).each(function(){
 							var fBoardCreatedDate = new Date(this.fBoardCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 							fBoardList += '<tr>'
 								+ '<td>&lt;자유게시판&gt;</td>'
@@ -93,7 +114,7 @@
 							  	+ '</tr>'  							
 						}) // end fBoardList.each
 						
-						$(lists.qBoardList).each(function(){
+						$(args.lists.qBoardList).each(function(){
 							var qBoardCreatedDate = new Date(this.qBoardCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 							qBoardList += '<tr>'
 								+ '<td>&lt;문의게시판&gt;</td>'
@@ -102,47 +123,150 @@
 								+ '<td>' + this.qBoardViews + '</td>'
 								+ '<td>' + this.qBoardCommentCount + '</td>'
 							  	+ '</tr>'  							
-						})
-						if(option == "a") {
-							$('.table tbody').append(uProductList);
-							$('.table tbody').append(fBoardList);
-							$('.table tbody').append(qBoardList);
-						} else if (option == "u") {
+						}) // end qBoardList.each
+						if (option == "u") {
 							$('.table tbody').append(uProductList);
 						} else if (option == "f") {
 							$('.table tbody').append(fBoardList);
 						} else if (option == "q") {
 							$('.table tbody').append(qBoardList);
 						}
+						
+						if(args.pageMaker.hasNext) {
+							$('#more').html('<button id="btn_more" style="font-size:10px;">더보기<br>↓</button>');
+						} else {
+							$('#more').html('마지막 글 입니다.')
+						}
+						
+						if(args.pageMaker.hasPrev) {
+							$('#close').html('<button id="btn_close" style="font-size:10px;">접기<br>↑</button>');
+						} 
+						
 					}// end success
 				}); // end ajax
 			} // end readBoard(option)	
 			
+			
+			function readAllBoards() {
+				var list = "";
+				var memberNickname = $('#memberNickname').val();
+				var page = $('#allBoardsPage').val();
+				console.log(page)
+
+				$.ajax({
+					type : 'GET',
+					url : 'allBoards/' + memberNickname + '/' + page,
+					success : function(args) {
+						$(args.allBoards).each(function(){
+							if(this.category == 'f') {
+								var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+							list += '<tr>'
+								+ '<td>&lt;자유게시판&gt;</td>'
+								+ '<td><a href="/calla/fBoard/detail?fBoardId=' + this.uProductId + '">' + this.uProductName + '</a></td>'
+								+ '<td>' + uProductCreatedDate + '</td>'
+								+ '<td>' + this.uProductViews + '</td>'
+								+ '<td>' + this.uProductCommentCount + '</td>'
+							  	+ '</tr>'  							
+							} else if (this.category == 'u') {
+								var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+								list += '<tr>'
+									+ '<td>&lt;중고상품&gt;</td>'
+									+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '">' + this.uProductName + '</a></td>'
+									+ '<td>' + uProductCreatedDate + '</td>'
+									+ '<td>' + this.uProductViews + '</td>'
+									+ '<td>' + this.uProductCommentCount + '</td>'
+								  	+ '</tr>'  							
+							} else if (this.category == 'q') {
+								var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+								list += '<tr>'
+									+ '<td>&lt;문의게시판&gt;</td>'
+									+ '<td><a href="/calla/qBoard/detail?qBoardId=' + this.uProductId + '">' + this.uProductName + '</a></td>'
+									+ '<td>' + uProductCreatedDate + '</td>'
+									+ '<td>' + this.uProductViews + '</td>'
+									+ '<td>' + this.uProductCommentCount + '</td>'
+								  	+ '</tr>'  							
+							}
+						}) // end list.each
+						$('.table tbody').append(list);
+						if(args.pageMaker.hasNext) {
+							$('#more').html('<button id="btn_more" style="font-size:10px;">더보기<br>↓</button>');
+						} else {
+							$('#more').html('마지막 글 입니다.')
+							
+						}
+						if(args.pageMaker.hasPrev) {
+							$('#close').html('<button id="btn_close" style="font-size:10px;">↑<br>접기</button>');
+						} 
+					} // end success
+				})// end ajax
+			} // end readAllboards
+			$(document).on('click', '#btn_more', function(){
+				console.log("btn more 호출")
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allBoardsPage').val(+$('#allBoardsPage').val() + 1);
+					readAllBoards();
+				} else if (option == 'u') {
+					$('#uProductPage').val(+$('#uProductPage').val() + 1);
+					readBoard();
+				} else if (option == 'f') {
+					$('#fBoardPage').val(+$('#fBoardPage').val() + 1);
+					readBoard();
+				} else if (option == 'q') {
+					$('#qBoardPage').val(+$('#qBoardPage').val() + 1);
+					readBoard();
+				}
+				
+			})// end btn_more.click
+			
+			$(document).on('click', '#btn_close', function(){
+				console.log("btn close 호출")
+				$('.table tbody').empty();
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allBoardsPage').val('1');
+					readAllBoards();
+				} else if (option == 'u') {
+					$('#uProductPage').val('1');
+					readBoard();
+				} else if (option == 'f') {
+					$('#fBoardPage').val('1');
+					readBoard();
+				} else if (option == 'q') {
+					$('#qBoardPage').val('1');
+					readBoard();
+				}
+
+			})// end btn_more.click
+			
 			$('.read_all').click(function(){
 				$('#option').val("a");
+				$('.table tbody').empty();
 				console.log('read_all 호출')
-				readBoard();				
+				readAllBoards();				
 			}) // end read_all.click
 			
 			$('.read_u_product').click(function(){
 				$('#option').val("u");
+				$('.table tbody').empty();
 				console.log('read_u 호출')
 				readBoard();	
 			}) // end read_u_product.click
 
 			$('.read_f_board').click(function(){
 				$('#option').val("f");
+				$('.table tbody').empty();
 				console.log('read_f 호출')
 				readBoard();				
 			}) // end read_f_board.click
 			
 			$('.read_q_board').click(function(){
 				$('#option').val("q");
+				$('.table tbody').empty();
 				console.log('read_q 호출')
 				readBoard();	
 			}) // end read_q_board.click
 		}) // end document.ready
-	
 	
 	</script>
 	

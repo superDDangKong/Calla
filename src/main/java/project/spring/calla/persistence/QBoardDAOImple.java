@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 
 
@@ -95,9 +96,18 @@ public class QBoardDAOImple implements QBoardDAO {
 	}
 	
 	@Override
-	public List<QBoardVO> selectAllByMemberNickname(String memberNickname) {
+	public List<QBoardVO> selectAllByMemberNickname(MyPageCriteria criteria, String memberNickname) {
 		logger.info("selectAllByMemberNickname() »£√‚ memberNickname = " + memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", args);
+	}
+
+	@Override
+	public int getTotalCountsByMemberNickname(String memberNickname) {
+		logger.info("getTotalCountByMemberNickname()");
+		return sqlSession.selectOne(NAMESPACE + ".get_total_count_by_memberNickname", memberNickname);
 	}
 
 	@Override

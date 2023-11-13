@@ -166,13 +166,14 @@
 					},
 					data : JSON.stringify(obj),
 					success : function(result) {
+						console.log(result)
 						if(result == 1) {
 							console.log('좋아요 삭제 성공')
+							readLike();
 						}
 					}// end success
 				}); // end ajax
 				
-				readLike();
 			}) // end btn_delete
 		}) // end document.ready
 	

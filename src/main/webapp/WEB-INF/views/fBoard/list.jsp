@@ -105,15 +105,13 @@ li {
 					<form action="list" method="GET">
 						<div class="row">
 							<div class="col-md-4">
-								<select id="option" name="option"
-									class="form-control custom-select">
+								<select id="option" name="option" class="form-control custom-select">
 									<option value="searchMemberNickname" selected>작성자</option>
 									<option value="searchTitleOrContent">제목&내용</option>
 								</select>
 							</div>
 							<div class="col-md-4">
-								<input type="text" id="keyword" name="keyword"
-									class="form-control" value="${keyword}"
+								<input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}"
 									placeholder="검색어를 입력해주세요">
 							</div>
 							<div class="col-md-4">

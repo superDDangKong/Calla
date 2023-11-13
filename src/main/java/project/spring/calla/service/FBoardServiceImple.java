@@ -58,9 +58,9 @@ public class FBoardServiceImple implements FBoardService{
 	}
 
 	@Override
-	public int getTotalCountsByMemberNickname(String keyword) {
+	public int getTotalCountsLikeMemberNickname(String keyword) {
 		logger.info("getTotalCountsByMemberNickname() »£√‚");
-		return dao.getTotalCountsByMemberNickname(keyword);
+		return dao.getTotalCountsLikeMemberNickname(keyword);
 	}
 
 	@Override

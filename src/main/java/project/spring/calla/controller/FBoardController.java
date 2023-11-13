@@ -70,15 +70,12 @@ public class FBoardController {
 		PageMaker pageMaker = new PageMaker();
 		if (option != null) {
 			if (option.equals("searchMemberNickname")) {
-				logger.info("ifif");
 				list = fBoardService.readByMemberNickname(criteria, keyword);
-				pageMaker.setTotalCount(fBoardService.getTotalCountsByMemberNickname(keyword));
+				pageMaker.setTotalCount(fBoardService.getTotalCountsLikeMemberNickname(keyword));
 			} else if (option.equals("searchTitleOrContent")) {
-				logger.info("if elseif");
 				list = fBoardService.readByTitleOrContent(criteria, keyword);
 				pageMaker.setTotalCount(fBoardService.getTotalCountsByTitleContent(keyword));
 			} else {
-				logger.info("if else");
 				list = fBoardService.read(criteria);
 				pageMaker.setTotalCount(fBoardService.getTotalCounts());
 			}
@@ -136,18 +133,19 @@ public class FBoardController {
 		InputStream in = null;
 		logger.info("filename = " + fileName);
 		String filePath = uploadpath + fileName;
-		logger.info("filepath = " +filePath);
+		logger.info("filepath = " + filePath);
 		try {
 			in = new FileInputStream(filePath);
-			
+			logger.info("in = " + in);
 			// 파일 확장자
 			String extension =
 					filePath.substring(filePath.lastIndexOf(".") + 1);
-			logger.info(extension);
+			logger.info("extension = " + extension);
 			
 			// 응답 헤더(response header)에 Content-Type 설정
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
+			logger.info("contentType = " + httpHeaders.getContentType());
 			// 데이터 전송
 			entity = new ResponseEntity<byte[]>(
 					IOUtils.toByteArray(in), // 파일에서 읽은 데이터

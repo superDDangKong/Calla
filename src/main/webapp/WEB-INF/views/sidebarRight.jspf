@@ -43,7 +43,7 @@
 				</div>
 		    </div>
 		</aside>
-	</c:if>
+
 	
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -282,6 +282,8 @@
 			return false;
 		})
 	 }) // end document.ready
+	 
 </script>
+	</c:if>
 </body>
 </html>

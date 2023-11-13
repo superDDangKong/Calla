@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.FBoardCommentVO;
 import project.spring.calla.domain.FBoardVO;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository // @Component
@@ -92,9 +92,9 @@ public class FBoardDAOImple implements FBoardDAO {
 	}
 
 	@Override
-	public int getTotalCountsByMemberNickname(String keyword) {
+	public int getTotalCountsLikeMemberNickname(String keyword) {
 		logger.info("getTotalCountsByMemberNickname()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_by_membernickname", "%" + keyword + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_like_membernickname", "%" + keyword + "%");
 	}
 
 	@Override
@@ -134,9 +134,18 @@ public class FBoardDAOImple implements FBoardDAO {
 	}
 
 	@Override
-	public List<FBoardVO> selectAllByMemberNickname(String memberNickname) {
+	public List<FBoardVO> selectAllByMemberNickname(MyPageCriteria criteria, String memberNickname) {
 		logger.info("selectAllByMemberNickname() »£√‚ memberNickname = " + memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", memberNickname);
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_memberNickname", args);
+	}
+
+	@Override
+	public int getTotalCountsByMemberNickname(String memberNickname) {
+		logger.info("getTotalCountByMemberNickname()");
+		return sqlSession.selectOne(NAMESPACE + ".get_total_count_by_memberNickname", memberNickname);
 	}
 
 }

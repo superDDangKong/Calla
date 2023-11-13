@@ -13,9 +13,7 @@
 <%@ include file="header.jspf"%>
 <title>Calla</title>
 </head>
-
 <body>
-
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="sidebar2.jspf"%>
@@ -36,7 +34,7 @@
 							<c:forEach var="ProductVO" items="${lists.productList }">
 								<div class="col mb-5">
 									<div class="card h-100">
-										<%-- <img class="card-img-top" src="display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." /> --%>
+										<img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." />
 										<div class="card-body p-4">
 											<div class="text-center">
 												<h5 class="fw-bolder">
@@ -81,7 +79,7 @@
 									<div class="card h-100">
 										<!-- Product image-->
 										<img class="card-img-top"
-											src="display?fileName=${uProductVO.uProductImagePath}"
+											src="fBoard/display?fileName=${uProductVO.uProductImagePath}"
 											alt="..." />
 										<!-- Product details-->
 										<div class="card-body p-4">

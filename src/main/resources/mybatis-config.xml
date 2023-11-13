@@ -199,8 +199,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductReviewTitle" value="u_product_review_title" />
 		<property name="uProductReviewCreatedDate" value="u_product_review_created_date" />
 		<property name="uProductReviewContent" value="u_product_review_content" />
-
-		
 	</properties>
 	
 

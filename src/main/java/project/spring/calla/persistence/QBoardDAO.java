@@ -4,6 +4,7 @@ import java.util.List;
 
 import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
+import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 
 public interface QBoardDAO {
@@ -16,14 +17,16 @@ public interface QBoardDAO {
 	int getTotalCounts(); // 
 	
 	int updateCommentCnt(int amount, int qBoardId);
+	List<QBoardVO> selectAllByMemberNickname(MyPageCriteria criteria, String menberNickname);
+	int getTotalCountsByMemberNickname(String memberNickname);
 	int updateViews(int views, int qBoardId);
 	
 	List<QBoardVO> selectAllByMemberNickname(String menberNickname);
-	List<QBoardVO> select(String memberNickname); // ÀÛ¼ºÀÚ ÀÌ¸§À¸·Î °Ë»ö
+	List<QBoardVO> select(String memberNickname); // ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	
 	
 	List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword);
 	int getTotalCountsByMemberNickname(String keyword);
-	List<QBoardVO> selectByTitle(PageCriteria criteria, String keyword); // °Ô½Ã±Û Á¦¸ñ ¶Ç´Â ³»¿ëÀ¸·Î °Ë»ö
+	List<QBoardVO> selectByTitle(PageCriteria criteria, String keyword); // ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	int getTotalCountsByTitle(String keyword);
 }

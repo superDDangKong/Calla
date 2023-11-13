@@ -9,7 +9,7 @@ import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.RecentlyViewPageCriteria;
+import project.spring.calla.pageutil.MyPageCriteria;
 
 public interface UProductDAO {
 	int insert(UProductVO vo); // 占쏙옙품 占쏙옙占�
@@ -24,7 +24,9 @@ public interface UProductDAO {
 	List<UProductVO> selectByName(String keyword);
 	
 	int updateUproductCommentCount(int amount, int uProductId);
-	List<UProductVO> selectAllByMemberNickname(String memberNickname);
+	
+	List<UProductVO> selectAllByMemberNickname(MyPageCriteria criteria, String menberNickname);
+	int getTotalCountsByMemberNickname(String memberNickname);
 	
 	List<UProductVO> selectByCategoriorName(PageCriteria criteria, String keyword); // 占쏙옙품 占싱몌옙占실댐옙 카占쌓곤옙占쏙옙 占싯삼옙
 	int getTotalCountsByCategoriorName(String keyword);
@@ -41,7 +43,7 @@ public interface UProductDAO {
 	List<UProductVO> selectByInterest(String interest);
 	
 	int insertRecentlyView(int uProductId, String memberId);
-	List<UProductVO> selectRecentlyView(RecentlyViewPageCriteria criteria, String memberId);
+	List<UProductVO> selectRecentlyView(MyPageCriteria criteria, String memberId);
 	int getTotalCountsByRecentlyView(String memberId);
 	int deleteRecentlyView(int uProductRecentlyViewId);
 	List<UProductBuyVO> selectbuyuproduct(PageCriteria criteria, String buyerNickname);

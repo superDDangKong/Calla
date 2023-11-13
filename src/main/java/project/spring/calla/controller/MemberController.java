@@ -4,10 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
@@ -76,7 +73,6 @@ public class MemberController {
 //			return "redirect:/member/join";
 //		}
 //	}
-
 	@GetMapping("/login")
 	public void loginGET(String targetURL) {
 	}
