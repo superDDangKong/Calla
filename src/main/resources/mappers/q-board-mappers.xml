@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  </select>
 	  
 	  <select id="total_count_by_membernickname" resultType="Integer">
-	  	select count(*) total_cnt from ${f_board} where ${memberNickname} like #{keyword}
+	  	select count(*) total_cnt from ${q_board} where ${memberNickname} like #{keyword}
 	 </select>
 	 
 	 <select id="total_count_by_title" resultType="Integer">

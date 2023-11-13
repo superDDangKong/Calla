@@ -143,7 +143,7 @@ public class QBoardDAOImple implements QBoardDAO {
 	}
 
 	@Override
-	public int getTotalCountsByMemberNickname(String keyword) {
+	public int getTotalCountsLikeMemberNickname(String keyword) {
 		logger.info("getTotalCountsByMemberNickname()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_membernickname", "%" + keyword + "%");
 	}
@@ -152,6 +152,12 @@ public class QBoardDAOImple implements QBoardDAO {
 	public int getTotalCountsByTitle(String keyword) {
 		logger.info("getTotalTitleContent()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
+	}
+
+	@Override
+	public List<QBoardVO> selectAllByMemberNickname(String menberNickname) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

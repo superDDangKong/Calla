@@ -26,7 +26,7 @@ public interface QBoardDAO {
 	
 	
 	List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword);
-	int getTotalCountsByMemberNickname(String keyword);
+	int getTotalCountsLikeMemberNickname(String keyword);
 	List<QBoardVO> selectByTitle(PageCriteria criteria, String keyword); // �Խñ� ���� �Ǵ� �������� �˻�
 	int getTotalCountsByTitle(String keyword);
 }
