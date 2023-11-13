@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -160,7 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	
-	<select id="select_all_boards" resultType="AllBoardVO">
+	<select id="select_all_boards" resultType="UproductVO">
 		select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, category
 		from(
 		select rownum rn, a.*
@@ -206,6 +207,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${memberNickname} = #{memberNickname})
 	</select>
 	
+	<select id="select_all_products" resultMap="ProductVO">
+		select ${productId}, ${productName}, ${productPrice}, ${productCreatedDate}, ${productLikes}, ${productViews}, ${productCommentCount}, ${productImagePath}, ${productCategori}, category
+		from(
+		select rownum rn, a.*
+		from(
+		
+		select ${productId}, ${productName}, ${productPrice}, ${productCreatedDate}, ${productLikes}, ${productViews}, ${productCommentCount}, ${productImagePath}, ${productCategori} 'p' as category
+		from ${product}
+		where ${productCategori} like #{interest} and (${productName} like #{keyword} or ${productContent} like #{keyword})
+		
+		union all
+		
+		select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductCreatedDate}, ${uProductLikes}, ${uProductViews}, ${uProductCommentCount}, ${uProductImagePath}, ${uProductCategori} 'u' as category
+		from ${u_product}
+		where ${uProductCategori} like #{interest} and (${uProductName} like #{keyword} or ${uProductContent} like #{keyword})
+		
+		order by 4 desc
+		)a
+		) where rn between #{criteria.start} and #{criteria.end}
+	</select>
+	
+	<select id="total_count_all_products" resultType="Integer">
+		select count(*) 
+		fron (
+		select ${productId}, ${productName}, ${productPrice}, ${productCreatedDate}, ${productLikes}, ${productViews}, ${productCommentCount}, ${productImagePath}, ${productCategori} 'p' as category
+		from ${product}
+		where ${productCategori} like #{interest} 
+		
+		union all
+		
+		select ${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductCreatedDate}, ${uProductLikes}, ${uProductViews}, ${uProductCommentCount}, ${uProductImagePath}, ${uProductCategori} 'u' as category
+		from ${u_product}
+		where ${uProductCategori} like #{interest})
+	</select>
+		
 </mapper>
 
 

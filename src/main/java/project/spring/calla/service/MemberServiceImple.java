@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
@@ -303,7 +302,7 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public List<AllBoardVO> readAllBoards(MyPageCriteria criteria, String memberNickname) {
+	public List<UProductVO> readAllBoards(MyPageCriteria criteria, String memberNickname) {
 		logger.info("readAllBoard() 호출");
 		return MemberDAO.selectAllBoards(criteria, memberNickname);
 	}

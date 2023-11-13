@@ -44,6 +44,6 @@ public interface MemberService {
 	int deleteProductLike(int productLikeId, int amount, int productId);
 	int deleteUProductLike(int uProductLikeId, int amount, int uProductId);
 	
-	List<AllBoardVO> readAllBoards(MyPageCriteria criteria, String memberNickname);
+	List<UProductVO> readAllBoards(MyPageCriteria criteria, String memberNickname);
 	int getTotalCountsAllBoards(String memberNickname);
 }

@@ -36,6 +36,9 @@ public interface MemberDAO {
 	int insertbuy(UProductBuyVO vo);
 	int insertsell(UProductSellVO svo);
 	
-	List<AllBoardVO> selectAllBoards(MyPageCriteria criteria, String memberNickname);
+	List<UProductVO> selectAllBoards(MyPageCriteria criteria, String memberNickname);
 	int getTotalCountsAllBoards(String memberNickname);
+	
+//	List<ProductVO> selectAllProducts(PageCriteria criteria, String memberNickname);
+//	int getTotalCountsAllProducts(String memberNickname);
 }

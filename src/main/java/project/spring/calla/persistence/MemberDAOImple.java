@@ -203,7 +203,7 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public List<AllBoardVO> selectAllBoards(MyPageCriteria criteria, String memberNickname) {
+	public List<UProductVO> selectAllBoards(MyPageCriteria criteria, String memberNickname) {
 		logger.info("selectAllBoards 호출");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);

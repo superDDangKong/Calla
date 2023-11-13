@@ -42,14 +42,37 @@
 		</div>
 	</nav>
 	<header class="bg-dark py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<div class="text-center text-white">
-				<h1 class="display-4 fw-bolder">
-					없는거 빼고 다 있는<br>구트 쇼핑몰!
-				</h1>
-				<p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
-			</div>
-		</div>
+	    <div class="container px-4 px-lg-5 my-5">
+	        <div class="text-center text-white">
+	            <h1 class="display-4 fw-bolder">
+	                없는거 빼고 다 있는<br>구트 쇼핑몰!
+	            </h1>
+	            <p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
+	
+				<div class="input-group mt-4">
+				    <select id="searchOptions2" name="searchOptions2" class="form-control">
+				        <option value="" selected>전체 검색</option>
+				        <option value="option1">공용 상품</option>
+				        <option value="option2">중고 상품</option>
+				    </select>
+				
+				    <select id="searchOptions2" name="searchOptions2" class="form-control">
+				        <option value="" selected>전체 검색</option>
+				        <option value="option2">만화</option>
+				        <option value="option1">굿즈</option>
+				        <option value="option2">캐릭터</option>
+				    </select>
+				
+				    <input type="text" class="form-control" placeholder="상품을 검색하세요..." style="flex-grow: 2;">
+				
+				    <div class="input-group-append">
+				        <button class="btn btn-outline-light" type="button">
+				            <i class="bi bi-search"></i> 검색
+				        </button>
+				    </div>
+				</div>
+	        </div>
+	    </div>
 	</header>
 	<div id="navigator" class="text-center bg-success py-3">
 	    <div class="container">

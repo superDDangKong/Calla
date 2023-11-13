@@ -13,7 +13,6 @@
 <%@ include file="header.jspf"%>
 <title>Calla</title>
 </head>
-
 <body>
 	<div class="container-fluid">
 		<div class="row">

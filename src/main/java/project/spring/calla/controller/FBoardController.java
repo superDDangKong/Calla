@@ -70,15 +70,12 @@ public class FBoardController {
 		PageMaker pageMaker = new PageMaker();
 		if (option != null) {
 			if (option.equals("searchMemberNickname")) {
-				logger.info("ifif");
 				list = fBoardService.readByMemberNickname(criteria, keyword);
 				pageMaker.setTotalCount(fBoardService.getTotalCountsLikeMemberNickname(keyword));
 			} else if (option.equals("searchTitleOrContent")) {
-				logger.info("if elseif");
 				list = fBoardService.readByTitleOrContent(criteria, keyword);
 				pageMaker.setTotalCount(fBoardService.getTotalCountsByTitleContent(keyword));
 			} else {
-				logger.info("if else");
 				list = fBoardService.read(criteria);
 				pageMaker.setTotalCount(fBoardService.getTotalCounts());
 			}

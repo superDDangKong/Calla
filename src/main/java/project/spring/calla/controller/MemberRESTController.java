@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
 import project.spring.calla.service.MemberService;
@@ -189,7 +189,7 @@ public class MemberRESTController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		
-		List<AllBoardVO> allBoards = memberService.readAllBoards(criteria, memberNickname);
+		List<UProductVO> allBoards = memberService.readAllBoards(criteria, memberNickname);
 		
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("allBoards", allBoards);
