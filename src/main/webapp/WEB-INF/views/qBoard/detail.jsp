@@ -6,7 +6,12 @@
 <head>
 <style type="text/css">
 
-
+.content {
+	border: 1px solid black; /* 테두리 스타일 설정 (1픽셀 두께의 검은색 실선) */
+  	width: 900px; /* 너비 설정 */
+  	height: 400px; /* 높이 설정 */
+  	border-radius: 10px; /* 테두리 모서리를 10픽셀만큼 둥글게 설정 */
+}
 
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
@@ -30,18 +35,27 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	<div class="container">
 		<h2>글 보기</h2>
 		<div>
-			<p>글 번호 : ${vo.qBoardId }</p>
+			<p style="">글 번호 : ${vo.qBoardId }</p>
 		</div>
 		<div>
-			<p>제목 : </p>
-			<p>${vo.qBoardTitle }</p>
+			<p>제목 : ${vo.qBoardTitle }</p>
+			
 		</div>
 		<div>
 			<p>작성자 : ${vo.memberNickname }</p>
+			<label for="memberNickname">작성자: </label>
+			<input type="text" id="memberNickname" value="${vo.memberNickname }" readonly="readonly">
 			<p id="date">작성일 : ${vo.qBoardCreatedDate}</p>
 		</div>
-		<div>
-			<textarea rows="20" cols="120" readonly>${vo.qBoardContent }</textarea>
+		<div class="content">
+			<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">
+				<img src="display?fileName=${vo.qBoardImagePath }" id="img">
+			</c:if>
+			<div style="">
+				<p id="textContent">${vo.qBoardContent }</p>
+				
+			</div>
+			
 		</div>
 		
 		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
@@ -77,10 +91,12 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
+    	  var img = $('#img').val();
     	  var date = $('#date').val();
-    	  
-         getAllComments();
-         
+    	  var img = $('#img').val()
+    	  console.log(img);
+          getAllComments();
+          
          $('#btnCommentAdd').click(function(){ // 댓글작성 버튼 클릭 할 때 함수
             var qBoardId = $('#qBoardId').val(); // 게시판 번호 데이터
             var memberNickname = $('#memberNickname').val(); // 작성자 데이터

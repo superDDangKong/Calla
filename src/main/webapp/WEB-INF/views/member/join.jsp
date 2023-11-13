@@ -403,7 +403,7 @@
     		 phoneCheck = true;
     		 $('#error_phone_msg').text('');
     	 } else {
-    		 $('#error_phone_msg').text('사용 불가능한 이메일입니다.');
+    		 $('#error_phone_msg').text('사용 불가능한 연락처입니다.');
 			 $('#error_phone_msg').append("<br>");
 			 $('#error_phone_msg').css('color', 'red');
     	 }

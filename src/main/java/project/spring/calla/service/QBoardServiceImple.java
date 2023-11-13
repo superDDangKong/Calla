@@ -69,4 +69,28 @@ public class QBoardServiceImple implements QBoardService{
 		return dao.updateViews(views, qBoardId);
 	}
 
+	@Override
+	public List<QBoardVO> readBymemberNickname(PageCriteria criteria, String keyword) {
+		logger.info("readByMemberNickname() 호출");
+		return dao.selectByMemberNickname(criteria, keyword);
+	}
+
+	@Override
+	public int getTotalCountsByMeberNickname(String keyword) {
+		logger.info("getTotalCountsByMeberNickname() 호출" );
+		return dao.getTotalCountsByMemberNickname(keyword);
+	}
+
+	@Override
+	public List<QBoardVO> readByTitle(PageCriteria criteria, String keyword) {
+		logger.info("readByTitle() 호출");
+		return dao.selectByTitle(criteria, keyword);
+	}
+
+	@Override
+	public int getTotalCountsByTitle(String keyword) {
+		logger.info("getTotalCountsByTitle() 호출");
+		return dao.getTotalCountsByTitle(keyword);
+	}
+
 }

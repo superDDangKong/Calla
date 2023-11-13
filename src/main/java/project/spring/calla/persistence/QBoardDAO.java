@@ -14,9 +14,16 @@ public interface QBoardDAO {
 	int delete(int qBoardId);
 	List<QBoardVO> select(PageCriteria criteria);
 	int getTotalCounts(); // 
-	List<QBoardVO> select(String memberNickname); // 작성자 이름으로 검색
-	List<QBoardVO> selectByTitleOrContent(String keyword); // 게시글 제목 또는 내용으로 검색
+	
 	int updateCommentCnt(int amount, int qBoardId);
-	List<QBoardVO> selectAllByMemberNickname(String menberNickname);
 	int updateViews(int views, int qBoardId);
+	
+	List<QBoardVO> selectAllByMemberNickname(String menberNickname);
+	List<QBoardVO> select(String memberNickname); // 작성자 이름으로 검색
+	
+	
+	List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword);
+	int getTotalCountsByMemberNickname(String keyword);
+	List<QBoardVO> selectByTitle(PageCriteria criteria, String keyword); // 게시글 제목 또는 내용으로 검색
+	int getTotalCountsByTitle(String keyword);
 }

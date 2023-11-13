@@ -14,4 +14,8 @@ public interface QBoardService {
 	int delete(int boardId);
 	int getTotalCounts();
 	int updateViews(int views, int qBoardId);
+	List<QBoardVO> readBymemberNickname(PageCriteria criteria, String keyword);
+	int getTotalCountsByMeberNickname(String keyword);
+	List<QBoardVO> readByTitle(PageCriteria criteria, String keyword);
+	int getTotalCountsByTitle(String keyword);
 }

@@ -180,10 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	 
-	 <select id="total_count_by_u_product_Address" resultType="Integer">
-	  	select count(*) total_cnt from ${u_product} 
-	  	where ${memberAddress} like #{keyword}
-	 </select>
+
 	 
 	 <select id="select_all_by_memberNickname" resultType="UProductVO">
 	  	select * from ${u_product} where ${memberNickname} = #{memberNickname}

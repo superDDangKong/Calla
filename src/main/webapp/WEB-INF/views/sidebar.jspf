@@ -6,13 +6,18 @@
 <style type="text/css">
 #sidebar{
 	width : 250px;
+	float : left;
+}
+
+#sidebar {
+	boader : none;
 }
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<div>
+	<div style="margin-left: 100px";>
 		<table id="sidebar">
 			<thead>
 				<tr>
@@ -34,14 +39,14 @@
 				<tr>
 					<td>
 						<div class="link">
-							<a id="updateLink" href="http://localhost:8080/calla/member/update">회원정보 수정</a>
+							
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="link">
-							<a id="deleteLink">회원정보 탈퇴하기</a>
+							
 						</div>
 					</td>
 				</tr>
