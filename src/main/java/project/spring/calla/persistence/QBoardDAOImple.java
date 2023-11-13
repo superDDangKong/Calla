@@ -83,12 +83,7 @@ public class QBoardDAOImple implements QBoardDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", "%" + memberNickname + "%");
 	}
 
-	@Override
-	public List<QBoardVO> selectByTitleOrContent(String keyword) {
-		logger.info("selectByTitleOrContent() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", "%" + keyword + "%");
-		
-	}
+	
 
 	@Override
 	public int updateCommentCnt(int amount, int qBoardId) {
@@ -112,6 +107,41 @@ public class QBoardDAOImple implements QBoardDAO {
 		args.put("views", views);
 		args.put("qBoardId", qBoardId);
 		return sqlSession.update(NAMESPACE + ".update_views", args);
+	}
+
+	@Override
+	public List<QBoardVO> selectByTitle(PageCriteria criteria, String keyword) {
+		logger.info("selectByTitle() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_title", args);
+	}
+
+	@Override
+	public List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword) {
+		logger.info("selectByMemberNickname() 호출 : keyword = " + keyword);
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_by_membernickname", args);
+	}
+
+	@Override
+	public int getTotalCountsByMemberNickname(String keyword) {
+		logger.info("getTotalCountsByMemberNickname()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_membernickname", "%" + keyword + "%");
+	}
+
+	@Override
+	public int getTotalCountsByTitle(String keyword) {
+		logger.info("getTotalTitleContent()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
 	}
 
 }

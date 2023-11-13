@@ -57,12 +57,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	where ${memberNickname} like #{memberNickname}
 	  </select>
 	  
-	  <select id="select_by_title_content" resultType="QBoardVO">
-	  	select * from ${q_board}
-	  	where ${qBoardTitle} like #{keyword} or
-	  		${qBoardContent} like #{keyword}
-	  		order by ${qBoardId} desc
+	  <select id="select_by_title" resultType="QBoardVO">
+	  	select * 
+	  	from ${q_board}
+	  	where ${qBoardTitle} like #{keyword} 
+	  	order by ${qBoardId} desc
 	  </select>
+	  
+	  <select id="total_count_by_membernickname" resultType="Integer">
+	  	select count(*) total_cnt from ${f_board} where ${memberNickname} like #{keyword}
+	 </select>
+	 
+	 <select id="total_count_by_title" resultType="Integer">
+	  	select count(*) total_cnt from ${f_board} 
+	  	where ${fBoardTitle} like #{keyword}
+	 </select>
+	 
 	  
 	  <update id="update_comment_count">
 	  	update ${q_board}
