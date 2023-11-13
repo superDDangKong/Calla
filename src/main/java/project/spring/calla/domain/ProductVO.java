@@ -18,15 +18,16 @@ public class ProductVO {
 	private int productAmount;
 	private int productLikeId;
 	private int productRecentlyViewId;
+	private int productAverageRated; // 상품 별점 평균
+	
 	
 	
 	public ProductVO() {}
 
-
 	public ProductVO(int productId, String productName, int productPrice, int productViews, int productLikes,
 			Date productCreatedDate, String productCategori, String productImagePath, String productContent,
 			int productCommentCount, String memberNickname, int memberLevel, int productAmount, int productLikeId,
-			int productRecentlyViewId) {
+			int productRecentlyViewId, int productAverageRated) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -43,8 +44,8 @@ public class ProductVO {
 		this.productAmount = productAmount;
 		this.productLikeId = productLikeId;
 		this.productRecentlyViewId = productRecentlyViewId;
+		this.productAverageRated = productAverageRated;
 	}
-
 
 	public int getProductId() {
 		return productId;
@@ -195,6 +196,13 @@ public class ProductVO {
 		this.productRecentlyViewId = productRecentlyViewId;
 	}
 
+	public int getProductAverageRated() {
+		return productAverageRated;
+	}
+
+	public void setProductAverageRated(int productAverageRated) {
+		this.productAverageRated = productAverageRated;
+	}
 
 	@Override
 	public String toString() {
@@ -204,8 +212,15 @@ public class ProductVO {
 				+ ", productContent=" + productContent + ", productCommentCount=" + productCommentCount
 				+ ", memberNickname=" + memberNickname + ", memberLevel=" + memberLevel + ", productAmount="
 				+ productAmount + ", productLikeId=" + productLikeId + ", productRecentlyViewId="
-				+ productRecentlyViewId + "]";
+				+ productRecentlyViewId + ", productAverageRated=" + productAverageRated + "]";
 	}
+
+	
+
+	
+	
+
+	
 
 
 	

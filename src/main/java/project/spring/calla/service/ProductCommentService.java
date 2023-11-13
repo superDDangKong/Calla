@@ -12,4 +12,5 @@ public interface ProductCommentService {
 	int delete(int productCommentId, int productId) throws Exception; // ¥Ò±€ ªË¡¶
 	List<ProductCommentVO> read(PageCriteria criteria, int productId);
 	int getTotalCounts(int productId);
+	List<ProductCommentVO> read(int productId, int productRated);
 }

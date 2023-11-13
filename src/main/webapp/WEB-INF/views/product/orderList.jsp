@@ -28,7 +28,15 @@ ul {
 li {
 	display : inline-block;
 }
+.quantity-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.quantity-control button {
+    margin: 0 5px; /* 버튼 간격 조정 */
+}
 </style>
 <meta charset="UTF-8">
 <title>OrderList</title>
@@ -84,11 +92,13 @@ li {
                             <td>${vo.productCategori }</td>
                             <td>${vo.productPrice }</td>
                             <td>
-                            	<input type="hidden" name="productId" value="${vo.productId}">
-							    <span class="currentAmount">${vo.productAmount}</span>
-							    <button class="decreaseBtn" data-productId="${vo.productId}">-</button>
-							    <button class="increaseBtn" data-productId="${vo.productId}">+</button>
-                            </td>
+							    <div class="quantity-control">
+                            		<input type="hidden" name="productId" value="${vo.productId}">
+							        <button class="decreaseBtn" data-productId="${vo.productId}">-</button>
+							        <span class="currentAmount">${vo.productAmount}</span>
+							        <button class="increaseBtn" data-productId="${vo.productId}">+</button>
+							    </div>
+							</td>
                             <td>
                         		<input type="hidden" name="productId" value="${vo.productId}">
             					<button class="ordDelete" data-productId="${vo.productId}">삭제</button>

@@ -87,6 +87,40 @@
     	max-width: 100%; /* Maximum width */
     	resize: none; /* Disable resizing */
      }
+     
+     #comment_page {
+  		list-style-type: none;
+  		display: flex;
+  		justify-content: center; /* 가로 가운데 정렬 */
+  		align-items: center; /* 세로 가운데 정렬 */
+  		padding: 0; /* 기본 패딩 제거 */
+	}
+
+	#comment_page li {
+  		display: inline;
+	}
+	
+	/* 각 별들의 기본 설정 */
+	.starR{
+	  display: inline-block;
+	  width: 30px;
+	  height: 30px;
+	  color: transparent;
+	  text-shadow: 0 0 0 #f0f0f0;
+	  font-size: 1.8em;
+	  box-sizing: border-box;
+	  cursor: pointer;
+	}
+	
+	/* 별 이모지에 마우스 오버 시 */
+	.starR:hover {
+	  text-shadow: 0 0 0 #ccc;
+	}
+	
+	/* 별 이모지를 클릭 후 class="on"이 되었을 경우 */
+	.starR.on{
+	  text-shadow: 0 0 0 #ffbc00;
+	}
     </style>
 
 
@@ -184,6 +218,14 @@
 	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
 		${memberNickname}
+		<div class="productRated">
+			<span class="starR on">⭐</span>
+		    <span class="starR">⭐</span>
+		    <span class="starR">⭐</span>
+		    <span class="starR">⭐</span>
+		    <span class="starR">⭐</span>
+		    <input type="hidden" id="selectedRating" value="0" />
+		</div>
 		<input type="hidden" id="memberNickname" value=${memberNickname }>
 		<input type="text" id="productCommentContent" required>
 		<button id="btnCommentAdd">작성</button> 
@@ -214,14 +256,27 @@
 	
 		$(document).ready(function(){
 			getAllComments();
+			
+			$('.productRated span').click(function() {
+		        var selectedRating = $(this).index() + 1;
+		        $(this).parent().find('.selectedRating').val(selectedRating);
+
+			    $(this).parent().children('span').removeClass('on');
+			    $(this).addClass('on').prevAll('span').addClass('on');
+			    return false;
+			});
+			
+
 			$('#btnCommentAdd').click(function(){
 				var productId = $('#productId').val(); // 상품 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 닉네임 데이터
 				var productCommentContent = $('#productCommentContent').val(); // 댓글 내용
+				var productRated = $('.productRated span.on').length;
 				var obj = {
 						'productId' : productId,
 						'memberNickname' : memberNickname,
-						'productCommentContent' : productCommentContent
+						'productCommentContent' : productCommentContent,
+						'productRated' : productRated
 				}
 				console.log(obj);
 				
@@ -281,11 +336,23 @@
 									readonly = '';
 								}
 								
-								
+								function generateStars(rating) {
+								    let stars = '';
+								    for (let i = 1; i <= 5; i++) {
+								        if (i <= rating) {
+								            stars += '⭐'; 
+								        } else {
+								            stars += ''; 
+								        }
+								    }
+								    return stars;
+								}
 								
 								list += '<div class="comment_item">'
 									+ '<pre>'
 									+ '<input type="hidden" class="productCommentId" value="' + this.productCommentId + '">'
+									+ '별점 : ' + generateStars(this.productRated)
+									+ '&nbsp;&nbsp;' + '&nbsp;&nbsp;'
 									+ this.memberNickname
 									+ '&nbsp;&nbsp;' // 공백
 									+ '<input type="text" class="productCommentContent" value="' + this.productCommentContent + '" required>'	 
@@ -299,24 +366,22 @@
 									+ '</pre>'
 									+ '</div>';
 							}); // end each()
-							list += '<ul id="comment_page">'
-								
+							list += '<ul id="comment_page" style="list-style-type: none; display: flex;">' // 리스트 시작
 								if(pageMaker_hasPrev) {
-									list += '<li><button class="btn_comment_prev">이전</button></li>'
-									}
-									
+								    list += '<li style="display: inline;"><button class="btn_comment_prev">이전</button></li>'
+								}
+
 								for(var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
-									list += '<li><button class="btn_comment_page" value='+num+'>'+num+'</button></li>'
-									
-									}		
-								
+								    list += '<li style="display: inline;"><button class="btn_comment_page" value='+num+'>'+num+'</button></li>'
+								}
+
 								if(pageMaker_hasNext) {
-									list += '<li><button class="btn_comment_next">이후</button></li>'
-									}
-								
-								list += '</ul>'
-									
+								    list += '<li style="display: inline;"><button class="btn_comment_next">이후</button></li>'
+								}
+								list += '</ul>' // 리스트 닫기
 								$('#comments').html(list);
+								
+
 						}
 					); // end JSON()
 			} // end getAllproductComments
@@ -669,6 +734,8 @@
 			
 		        
 			}); // end click
+			
+			
 		}); // end document
 		
 			

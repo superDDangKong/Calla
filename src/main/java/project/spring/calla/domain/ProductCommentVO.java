@@ -8,18 +8,22 @@ public class ProductCommentVO {
 	private String memberNickname; // 회원 닉네임
 	private String productCommentContent; // 상품 댓글 내용
 	private Date productCommentCreatedDate; // 상품 댓글 등록 날짜
+	private int productRated; // 상품 별점
 	
 	public ProductCommentVO() {
 		
 	}
 
+
 	public ProductCommentVO(int productCommentId, int productId, String memberNickname, String productCommentContent,
-			Date productCommentCreatedDate) {
+			Date productCommentCreatedDate, int productRated) {
+		super();
 		this.productCommentId = productCommentId;
 		this.productId = productId;
 		this.memberNickname = memberNickname;
 		this.productCommentContent = productCommentContent;
 		this.productCommentCreatedDate = productCommentCreatedDate;
+		this.productRated = productRated;
 	}
 
 	public int getProductCommentId() {
@@ -62,12 +66,23 @@ public class ProductCommentVO {
 		this.productCommentCreatedDate = productCommentCreatedDate;
 	}
 
+	public int getProductRated() {
+		return productRated;
+	}
+	
+	public void setProductRated(int productRated) {
+		this.productRated = productRated;
+	}
+
+
 	@Override
 	public String toString() {
 		return "ProductCommentVO [productCommentId=" + productCommentId + ", productId=" + productId
 				+ ", memberNickname=" + memberNickname + ", productCommentContent=" + productCommentContent
-				+ ", productCommentCreatedDate=" + productCommentCreatedDate + "]";
+				+ ", productCommentCreatedDate=" + productCommentCreatedDate + ", productRated=" + productRated + "]";
 	}
+	
+	
 	
 	
 	

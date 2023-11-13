@@ -74,4 +74,12 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 		logger.info("select(memberNickname) ȣ�� memberNickname = " + memberNickname);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
 	}
+
+	@Override
+	public List<ProductCommentVO> select(int productId, int productRated) {
+		Map<String, Object> args = new HashMap();
+		args.put("productId", productId);
+		args.put("productRated", productRated);
+		return sqlSession.selectList(NAMESPACE + ".select_by_productRated", args);
+	}
 }

@@ -85,7 +85,7 @@ li {
 									<div class="d-flex justify-content-center small text-warning mb-2">
 										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews }
 									</div>
-									가격 : ${vo.productPrice }
+									가격 : ${vo.productPrice } 원
 								</div>
 							</div>
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

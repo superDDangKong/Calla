@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${product_comment}
-		(${productId}, ${memberNickname}, ${productCommentContent})
-		values(#{productId}, #{memberNickname}, #{productCommentContent})
+		(${productId}, ${memberNickname}, ${productCommentContent}, ${productRated})
+		values(#{productId}, #{memberNickname}, #{productCommentContent}, #{productRated})
 	</insert>
 	
 	<select id="select_all_by_product_id" resultType="ProductCommentVO">
@@ -46,4 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	select * from ${product_comment} where ${memberNickname} = #{memberNickname}
 	</select>
 	
+	<select id="select_by_productRated" resultType="ProductCommentVO">
+		select * from ${product_comment} where ${productId} = #{productId} and ${productRated} = #{productRated}	
+	</select>
 </mapper>

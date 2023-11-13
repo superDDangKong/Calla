@@ -74,5 +74,11 @@ public class ProductCommentServiceImple implements ProductCommentService {
 		return productCommentDAO.getTotalCount(productId);
 	}
 
+	@Override
+	public List<ProductCommentVO> read(int productId, int productRated) {
+		logger.info("read() »£√‚ : productId, productRated =" + productId, productRated);
+		return productCommentDAO.select(productId, productRated);
+	}
+
 
 }

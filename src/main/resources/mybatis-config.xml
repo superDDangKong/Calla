@@ -91,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberNickname" value="member_nickname"/>
 		<property name="productCommentContent" value="product_comment_content"/>
 		<property name="productCommentCreatedDate" value="product_comment_created_date"/>
+		<property name="productRated" value="product_rated"/>
 		
 		<property name="q_board" value="q_board"/>
 		<property name="qBoardId" value="q_board_id"/>
