@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="paging" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}, ${productRatedCount}
 		from(
 			select rownum rn, a.* from(
 				select * from ${product} order by ${productId} desc
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_by_product_name_or_product_content" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productImagePath}, ${productContent}, ${productCommentCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productImagePath}, ${productContent}, ${productCommentCount}, ${productRatedCount}
 		from(
 			select rownum rn, a.* from(
 	 			select * from ${product} 
@@ -143,6 +143,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productRecentlyViewId} = #{productRecentlyViewId}
 	</delete>
 	
+	<update id="update_rated_count">
+    	update ${product}
+    	set ${productRatedCount} = ${productRatedCount} + #{amount}
+    	where ${productId} = #{productId}
+	</update>
 
 	
 </mapper>

@@ -143,6 +143,7 @@
 	<c:set var="voMemberLevel" value="${vo.memberLevel }" />
 	<c:set var="productOrderId" value="${productOrderId }" />
 	
+	
 	<div class="wrap">
 		<div class="product-img">
       		<img src="display?fileName=${vo.productImagePath}" class="productImage">
@@ -236,8 +237,10 @@
 	</c:if>
 	
 	<hr>
+	
 	<div style="text-align: center;">
 		<div id="comments"></div>
+		
 	</div>
 	<hr>
 	
@@ -256,7 +259,6 @@
 	
 		$(document).ready(function(){
 			getAllComments();
-			
 			$('.productRated span').click(function() {
 		        var selectedRating = $(this).index() + 1;
 		        $(this).parent().find('.selectedRating').val(selectedRating);
@@ -265,7 +267,6 @@
 			    $(this).addClass('on').prevAll('span').addClass('on');
 			    return false;
 			});
-			
 
 			$('#btnCommentAdd').click(function(){
 				var productId = $('#productId').val(); // 상품 번호 데이터
@@ -308,7 +309,6 @@
 				console.log("page = " + commentPage);
 				var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
 				var url = 'comments/all/' + productId + '/' + commentPage + '/' + commentNumsPerPage;
-				
 				$.getJSON(
 						url,
 						function(data){
@@ -322,6 +322,7 @@
 							
 							var memberNickname = $('#memberNickname').val();
 							var list = '';
+							
 							
 							$(data.list).each(function(){
 								// this : 컬렉션의 각 인덱스 데이터를 의미
@@ -365,6 +366,7 @@
 									+ '<br>'
 									+ '</pre>'
 									+ '</div>';
+								 
 							}); // end each()
 							list += '<ul id="comment_page" style="list-style-type: none; display: flex;">' // 리스트 시작
 								if(pageMaker_hasPrev) {
@@ -381,7 +383,7 @@
 								list += '</ul>' // 리스트 닫기
 								$('#comments').html(list);
 								
-
+								
 						}
 					); // end JSON()
 			} // end getAllproductComments
@@ -731,15 +733,11 @@
 			             }  
 					}); // end ajax
 				}
-			
-		        
 			}); // end click
 			
-			
 		}); // end document
-		
-			
 	
+		
 		
 	</script>
 	

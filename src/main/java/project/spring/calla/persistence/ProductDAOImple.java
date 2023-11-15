@@ -167,6 +167,16 @@ public class ProductDAOImple implements ProductDAO {
 		return sqlSession.delete(NAMESPACE + ".delete_recently_view", productRecentlyViewId);
 	}
 
+	@Override
+	public int updateRatedCount(int amount, int productId) {
+		logger.info("updateRatedCount() : productId = " + productId);
+		Map<String, Integer> args = new HashMap();
+		args.put("amount", amount);
+		args.put("productId", productId);
+		return sqlSession.update(NAMESPACE + ".update_rated_count", args);
+	}
+
+	
 	
 	
 

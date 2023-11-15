@@ -7,6 +7,25 @@
 	crossorigin="anonymous"></script>
 <head>
 <style type="text/css">
+	.rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: center;
+        position: relative;
+    }
+
+    .rating>span {
+        display: inline-block;
+        position: relative;
+        width: 1.1em;
+        color: #ffc107; /* 노란색 */
+    }
+
+    .rating>span:before {
+        content: "\2605";
+        position: absolute;
+        color: #ffc107; /* 노란색 */
+    }
 table, th, td {
 	border-style : solid;
 	border-width : 1px;
@@ -41,6 +60,8 @@ li {
 
 </head>
 <body>
+	
+	
 	<h1>상품목록</h1>
 	<form action="list" method="GET">
 		<select id="option" name="option">
@@ -49,21 +70,20 @@ li {
 		
 		<input type="text" name="keyword" value="${keyword }"> 
 		<input type="submit" value="검색">
+		<button id="home"><a href="/calla/">HOME</a></button>
 	</form>
 	<input type="hidden" id="selectedOption" value=${option }>
 	<input type="hidden" id="sessionNickname" value=${memberNickname }>
 	<input type="hidden" id="sessionLevel" value=${memberLevel }>
 	
 	
-	<button id="home"><a href="/calla/">홈</a></button>
 	<div id="register">
-		<a href="register"><input type="button" value="상품 등록"></a>
+		<a href="register"><input type="button" value="상품등록"></a>
 		<c:if test="${memberNickname != null}">
 			<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니"></a>
 			<a href="order?memberId=${memberId}"><input type="button" value="구매내역"></a>
 		</c:if>
 	</div>
-	
 	<hr>
 	<section class="py-5">
 	<div class="container px-4 px-lg-5 mt-5">
@@ -82,10 +102,23 @@ li {
 												${vo.productCategori } 
 											</h6>
 										</div>
-									<div class="d-flex justify-content-center small text-warning mb-2">
-										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews }
+									
+									<div>
+										<p></p>
 									</div>
-									가격 : ${vo.productPrice } 원
+									<div class="d-flex justify-content-center small text-warning mb-2">
+										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews } 댓글수 : ${vo.productCommentCount } 
+									</div>
+									<div>
+										<c:set var="averageRated" value="${(vo.productCommentCount == 0) ? 0 : (1.0 * vo.productRatedCount) / vo.productCommentCount}"/>
+										 만족도:
+										    <c:forEach begin="1" end="${averageRated}" varStatus="loop">
+										        ⭐
+										    </c:forEach>
+									</div>
+				                    <div>
+										가격 : ${vo.productPrice } 원
+				                    </div>
 								</div>
 							</div>
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

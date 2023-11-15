@@ -69,9 +69,11 @@ public class ProductController {
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
 		logger.info("list() 호占쏙옙");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
+		
+		// 상품 list 초기화
 		List<ProductVO> list = null;
 		
-		//Paging 처占쏙옙
+		// Paging 처리
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -79,21 +81,29 @@ public class ProductController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
+		
+		// pagerMaker 초기화
 		PageMaker pageMaker = new PageMaker();
+		
+		// 상품 조회
 		if(option != null) {
 			if(option.equals("searchTitleOrContent")) {
-				logger.info("if");
+				logger.info("if문 실행");
 				list = productService.readByProductNameOrProductContent(criteria, keyword);
-				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));	
+				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));
+				
+				
 			} else {
-				logger.info("if else");
+				logger.info("if else문 실행");
 				list = productService.read(criteria);
 				pageMaker.setTotalCount(productService.getTotalCounts());
+				
 			}
 		}else {
 			logger.info("else");
 			list = productService.read(criteria);
 			pageMaker.setTotalCount(productService.getTotalCounts());
+			
 		}
 		logger.info("totalCount = " + pageMaker.getTotalCount());
 		

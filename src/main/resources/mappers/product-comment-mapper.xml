@@ -42,11 +42,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	select count(*) total_cnt from ${product_comment} where ${productId} = #{productId}
 	</select>
 	
+	<select id="rated_count" resultType="Integer">
+	  	select count(*) total_cnt from ${product_comment} where ${productId} = #{productId} and ${productRated} = #{productRated}
+	</select>
+	
 	<select id="select_by_memberNickname" resultType="ProductCommentVO">
 	  	select * from ${product_comment} where ${memberNickname} = #{memberNickname}
 	</select>
 	
 	<select id="select_by_productRated" resultType="ProductCommentVO">
 		select * from ${product_comment} where ${productId} = #{productId} and ${productRated} = #{productRated}	
+	</select>
+	
+	<select id="select_by_product_id" resultType="ProductCommentVO">
+		select * from ${product_comment} where ${productId} = #{productId}
+	</select>
+	
+	<select id="selectProductRatedByProductId" resultType="Double">
+	    SELECT AVG(productRated) AS productAverageRated
+	    FROM ${product_comment}
+	    WHERE ${productId} = #{productId}
+	</select>
+	
+	<select id="select_by_product_comment_id" resultType="productCommentVO">
+		select * from ${product_comment} where ${productCommentId} = #{productCommentId}
 	</select>
 </mapper>

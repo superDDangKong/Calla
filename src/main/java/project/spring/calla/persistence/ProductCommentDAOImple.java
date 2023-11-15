@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
@@ -82,4 +81,26 @@ public class ProductCommentDAOImple implements ProductCommentDAO {
 		args.put("productRated", productRated);
 		return sqlSession.selectList(NAMESPACE + ".select_by_productRated", args);
 	}
+
+	@Override
+	public List<ProductCommentVO> selectByProductId(int productId) {
+		 logger.info("selectByProductId() 호출 : productId = " + productId);
+		 return sqlSession.selectList(NAMESPACE + ".select_by_product_id", productId);
+	}
+
+	@Override
+	public int getRatedCounts(int productRated, int productId) {
+		logger.info("getRatedCounts()");
+		Map<String, Object> args = new HashMap();
+		args.put("productRated", productRated);
+		args.put("productId", productId);
+		return sqlSession.selectOne(NAMESPACE + ".rated_count", args);
+	}
+
+	@Override
+	public ProductCommentVO selectBy(int productCommentId) {
+		logger.info("selectByProductCommentId() 호출 : productCommentId = " + productCommentId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_comment_id", productCommentId);
+	}
+
 }
