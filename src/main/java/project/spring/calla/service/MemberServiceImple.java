@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -114,29 +115,6 @@ public class MemberServiceImple implements MemberService {
 		logger.info("searchPw() 호출 memberId : " + memberId);
 		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
 		return MemberDAO.searchPw(memberId, memberPhone);
-	}
-
-	@Transactional(value = "transactionManager")
-	@Override
-	public Map<String, Object> readComments(String memberNickname) {
-		logger.info("readComments() 호출 memberNickname : " + memberNickname);
-		Map<String, Object> args = new HashMap();
-		args.put("productCommentList", productCommentDAO.select(memberNickname));
-		args.put("uProductCommentList", uProductCommentDAO.select(memberNickname));
-		args.put("fBoardCommentList", fBoardCommentDAO.select(memberNickname));
-		args.put("qBoardCommentList", qBoardCommentDAO.select(memberNickname));
-		return args;
-	}
-	
-	@Transactional(value = "transactionManager")
-	@Override
-	public Map<String, Object> readBoards(MyPageCriteria criteria, String memberNickname) {
-		logger.info("readBoards() 호출 memberNickname : " + memberNickname);
-		Map<String, Object> args = new HashMap();
-		args.put("fBoardList", fBoardDAO.selectAllByMemberNickname(criteria, memberNickname));
-		args.put("qBoardList", qBoardDAO.selectAllByMemberNickname(criteria, memberNickname));
-		args.put("uProductList", uProductDAO.selectAllByMemberNickname(criteria, memberNickname));
-		return args;
 	}
 	
 	@Override
@@ -302,16 +280,51 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public List<UProductVO> readAllBoards(MyPageCriteria criteria, String memberNickname) {
-		logger.info("readAllBoard() 호출");
-		return MemberDAO.selectAllBoards(criteria, memberNickname);
+	public List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
+		logger.info("readProductsByOption() 호출");
+		return MemberDAO.selectProductsByOption(criteria, keyword, interest, option);
+	}
+
+	@Override
+	public int getTotalCountsProductsByOption(String keyword, String interest, String option) {
+		logger.info("getTotalCountsProductsByOption() 호출");
+		return MemberDAO.getTotalCountsProductsByOption(keyword, interest, option);	
+	}
+
+	@Override
+	public List<UProductVO> readBoards(String memberNickname, String option, MyPageCriteria criteria) {
+		logger.info("readBoards() 호출");
+		return MemberDAO.selectBoards(memberNickname, option, criteria);
+	}
+
+	@Override
+	public int getTotalCountsBoard(String memberNickname, String option) {
+		logger.info("getTotalCountsBoard 호출");
+		return MemberDAO.getTotalCountsBoard(memberNickname, option);	
 	}
 	
 	@Override
-	public int getTotalCountsAllBoards(String memberNickname) {
-		logger.info("getTotalCountsAllBoards() 호출");
-		return MemberDAO.getTotalCountsAllBoards(memberNickname);	
+	public List<UProductCommentVO> readComments(String memberNickname, String option, MyPageCriteria criteria) {
+		logger.info("readComments() 호출");
+		return MemberDAO.selectComments(memberNickname, option, criteria);
 	}
 
+	@Override
+	public int getTotalCountsComment(String memberNickname, String option) {
+		logger.info("getTotalCountsComment 호출");
+		return MemberDAO.getTotalCountsComment(memberNickname, option);	
+	}
+	
+	@Override
+	public List<UProductVO> readLikes(String memberId, String option, MyPageCriteria criteria) {
+		logger.info("readLikes() 호출");
+		return MemberDAO.selectLikes(memberId, option, criteria);
+	}
+
+	@Override
+	public int getTotalCountsLike(String memberId, String option) {
+		logger.info("getTotalCountsLike 호출");
+		return MemberDAO.getTotalCountsLike(memberId, option);	
+	}
 
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
@@ -177,74 +178,73 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
 	
-	@GetMapping("/allBoards/{memberNickname}/{page}")
-	public ResponseEntity<Map<String, Object>> readAllBoards(@PathVariable("memberNickname") String memberNickname, @PathVariable("page") int page) {
-		logger.info("readAllBoards()");
-		MyPageCriteria criteria = new MyPageCriteria();
-		MyPageMaker pageMaker = new MyPageMaker();
-		
-		criteria.setPage(page);
-		int totalCount = memberService.getTotalCountsAllBoards(memberNickname);
-		pageMaker.setTotalCount(totalCount);
-		pageMaker.setCriteria(criteria);
-		pageMaker.setPageData();
-		
-		List<UProductVO> allBoards = memberService.readAllBoards(criteria, memberNickname);
-		
-		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("allBoards", allBoards);
-		args.put("pageMaker", pageMaker);
-		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
-	}
-	
 	@GetMapping("/boards/{memberNickname}/{page}/{option}")
 	public ResponseEntity<Map<String, Object>> readBoardsByOption(@PathVariable("memberNickname") String memberNickname, @PathVariable("page") int page, @PathVariable("option") String option) {
 		logger.info("readBoardsByOption()");
 		
-		Map<String, Integer> totalCountList = memberService.getTotalCountsByMemberNickname(memberNickname);
 		MyPageCriteria criteria = new MyPageCriteria();
-		MyPageMaker pageMaker = new MyPageMaker();
-		if(option.equals("u")) {
-			pageMaker.setTotalCount(totalCountList.get("uProductCount"));
-		} else if(option.equals("f")) {
-			pageMaker.setTotalCount(totalCountList.get("fBoardCount"));
-		} else if(option.equals("q")) {
-			pageMaker.setTotalCount(totalCountList.get("qBoardCount"));
-		}
 		criteria.setPage(page);
+		MyPageMaker pageMaker = new MyPageMaker();
+		List<UProductVO> list = null;
+		
+		list = memberService.readBoards(memberNickname, option, criteria);
+		pageMaker.setTotalCount(memberService.getTotalCountsBoard(memberNickname, option));
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
-		Map<String, Object> lists = memberService.readBoards(criteria, memberNickname);
+		
 		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("lists", lists);
+		args.put("list", list);
 		args.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
 	}
 	
-	@GetMapping("/comments/{memberNickname}")
-	public ResponseEntity<Map<String, Object>> readCommentsByOption(@PathVariable("memberNickname") String memberNickname) {
+	@GetMapping("/comments/{memberNickname}/{option}/{page}")
+	public ResponseEntity<Map<String, Object>> readCommentsByOption(@PathVariable("memberNickname") String memberNickname, @PathVariable("option") String option, @PathVariable("page") int page) {
 		logger.info("readCommentsByOption()");
-
-		Map<String, Object> lists = memberService.readComments(memberNickname);
-		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+		MyPageCriteria criteria = new MyPageCriteria();
+		criteria.setPage(page);
+		MyPageMaker pageMaker = new MyPageMaker();
+		List<UProductCommentVO> list = null;
+		
+		list = memberService.readComments(memberNickname, option, criteria);
+		pageMaker.setTotalCount(memberService.getTotalCountsComment(memberNickname, option));
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("list", list);
+		args.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
 	}
 	
-	@GetMapping("/likes/{memberNickname}")
-	public ResponseEntity<Map<String, Object>> readLikesByOption(@PathVariable("memberNickname") String memberNickname, HttpServletRequest request) {
+	@GetMapping("/likes/{page}/{option}")
+	public ResponseEntity<Map<String, Object>> readLikesByOption(@PathVariable("page") int page, @PathVariable("option") String option, HttpServletRequest request) {
 		logger.info("readLikesByOption()");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
-		Map<String, Object> lists = null;
+		
+		MyPageCriteria criteria = new MyPageCriteria();
+		criteria.setPage(page);
+		MyPageMaker pageMaker = new MyPageMaker();
+		
+		List<UProductVO> list = null;
 		if(memberId != null) {
-			lists = memberService.readLikes(memberId);
+			list = memberService.readLikes(memberId, option, criteria);
+			pageMaker.setTotalCount(memberService.getTotalCountsLike(memberId, option));
 		} 
-		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("list", list);
+		args.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
 	} // end likesGET()
 	
 	@DeleteMapping("/deleteLikes")
 	ResponseEntity<Integer> deleteLikes(@RequestBody Map<String, List<Integer>> args) {
 		logger.info("deleteLikes 호출");
-		int result = 0;
+		int result = 1;
 		List<Integer> productIdList = args.get("productIdList");
 		List<Integer> productLikeIdList = args.get("productLikeIdList");
 		
@@ -263,18 +263,18 @@ public class MemberRESTController {
 			}
 		}
 		
-		return new ResponseEntity<Integer>(1, HttpStatus.OK);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	} // end deleteLikes() 
 
 	@GetMapping("/recentlyView/product/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
 		logger.info("recentlyViewProductGET() 호占쏙옙 : memberId = " + memberId);
-		logger.info("recentlyViewProductGET() 호占쏙옙 : page = " + page);
 		
 		MyPageCriteria criteria = new MyPageCriteria();
 		MyPageMaker pageMaker = new MyPageMaker();
 		
 		criteria.setPage(page);
+		criteria.setNumsPerPage(4);
 		
 		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
 		pageMaker.setTotalCount(counts.get("productCount"));
@@ -282,7 +282,6 @@ public class MemberRESTController {
 		
 		pageMaker.setPageData();
 		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
-		logger.info(String.valueOf(pageMaker.isHasNext()));
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
 	}
@@ -290,20 +289,19 @@ public class MemberRESTController {
 	@GetMapping("/recentlyView/uProduct/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewUProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
 		logger.info("recentlyUProductViewGET() 호占쏙옙 : memberId = " + memberId);
-		logger.info("recentlyUProductViewGET() 호占쏙옙 : page = " + page);
 		
 		MyPageCriteria criteria = new MyPageCriteria();
 		MyPageMaker pageMaker = new MyPageMaker();
 		
 		criteria.setPage(page);
-		
+		criteria.setNumsPerPage(4);
 		Map<String, Integer> counts = memberService.getTotalCountsByRecentlyView(memberId);
 		pageMaker.setTotalCount(counts.get("uProductCount"));
+		
 		pageMaker.setCriteria(criteria);
 		
 		pageMaker.setPageData();
 		Map<String, Object> lists = memberService.readRecentlyView(criteria, memberId);
-		logger.info(lists.get("uProductList").toString());
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
 	}

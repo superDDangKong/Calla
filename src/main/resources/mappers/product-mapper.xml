@@ -93,13 +93,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productId} = #{productId}
 	</update>
 	
-	<select id="select_likes" resultType="ProductVO">
-		select p.*, pl.${productLikeId}, pl.${productId}
-		from ${product} p
-		join ${product_like} pl on p.${productId} = pl.${productId}
-		where pl.${memberId} = #{memberId} 
-	</select>
-	
 	<select id="select_product_with_amount" resultType="ProductVO">
 		SELECT p.*, o.product_amount 
 		FROM product p 

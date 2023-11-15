@@ -9,7 +9,7 @@ public class MyPageCriteria {
 	
 	public MyPageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 4;
+		this.numsPerPage = 10;
 	}
 	
 	public MyPageCriteria(int page, int numsPerPage) {

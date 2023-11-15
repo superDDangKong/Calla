@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -202,22 +202,82 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.insert(NAMESPACE + ".sell_insert", svo);
 	}
 
+
 	@Override
-	public List<UProductVO> selectAllBoards(MyPageCriteria criteria, String memberNickname) {
+	public List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
 		logger.info("selectAllBoards 호출");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
-		args.put("memberNickname", memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_all_boards", args);
+		args.put("keyword", "%" + keyword + "%");
+		args.put("interest", "%" + interest + "%");
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_products_by_option", args);
 	}
 
 	@Override
-	public int getTotalCountsAllBoards(String memberNickname) {
-		logger.info("getTotalCountsAllBoards()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_all_boards", memberNickname);
+	public int getTotalCountsProductsByOption(String keyword, String interest, String option) {
+		Map<String, String> args = new HashMap();
+		args.put("keyword", "%" + keyword + "%");
+		args.put("interest", "%" + interest + "%");
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_products_by_option", args);
 	}
 
-	
+	@Override
+	public List<UProductVO> selectBoards(String memberNickname, String option, MyPageCriteria criteria) {
+		logger.info("selecBoards 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_boards", args);
+	}
 
+	@Override
+	public int getTotalCountsBoard(String memberNickname, String option) {
+		logger.info("getTotalCountsBoard 호출");
+		Map<String, String> args = new HashMap();
+		args.put("memberNickname", memberNickname);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_boards", args);
+	}
+	
+	@Override
+	public List<UProductCommentVO> selectComments(String memberNickname, String option, MyPageCriteria criteria) {
+		logger.info("selecComments 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberNickname", memberNickname);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_comments", args);
+	}
+
+	@Override
+	public int getTotalCountsComment(String memberNickname, String option) {
+		logger.info("getTotalCountsComment 호출");
+		Map<String, String> args = new HashMap();
+		args.put("memberNickname", memberNickname);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_comments", args);
+	}
+
+	@Override
+	public List<UProductVO> selectLikes(String memberId, String option, MyPageCriteria criteria) {
+		logger.info("selecLikes 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberId", memberId);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_likes", args);
+	}
+
+	@Override
+	public int getTotalCountsLike(String memberId, String option) {
+		logger.info("getTotalCountsLike 호출");
+		Map<String, String> args = new HashMap();
+		args.put("memberId", memberId);
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_likes", args);
+	}
 	
 }

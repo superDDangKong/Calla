@@ -197,13 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="get_total_count_by_memberNickname" resultType="Integer">
 	 	select count(*) from ${u_product} where ${memberNickname} = #{memberNickname}
 	 </select>
-	 
-	 <select id="select_likes" resultType="UProductVO">
-		select up.*, upl.${uProductLikeId}, upl.${uProductId}
-		from ${u_product} up
-		join ${u_product_like} upl on up.${uProductId} = upl.${uProductId}
-		where upl.${memberId} = #{memberId} 
-	</select>
+
 	
 	<select id="select_by_interest" resultType="UProductVO">
 		SELECT * 

@@ -17,6 +17,9 @@
 <body>
 	<input type="hidden" id="memberNickname" value=${memberNickname }>
 	<input type="hidden" id="memberId" value=${memberId }>
+	<input type="hidden" id="allPage" value='1'>
+	<input type="hidden" id="productPage" value='1'>
+	<input type="hidden" id="uProductPage" value='1'>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
@@ -43,6 +46,8 @@
 					<tbody>
 					</tbody>
 				</table>
+				<div id="more" class="text-center"></div>
+				<div id="close" class="text-center"></div>
 				<div class="deleteBtn"></div>
 			</main>
 			<%@ include file="../sidebarRight.jspf"%>
@@ -56,77 +61,124 @@
 			
 			function readLike() {
 				console.log("readLike 호출");
-				var productList = "";
-				var uProductList = "";
+				$('#more').html("");
+				$('#close').html("");
+				var list = "";
 				var option = $('#option').val();
-				var memberNickname = $('#memberNickname').val();
 				var memberId = $('#memberId').val();
-				$('.table tbody').empty();
-
+				var page = "";
+				
+				if (option == "a") {
+					page = $('#allPage').val();
+					$('#productPage').val('1');
+					$('#uProductPage').val('1');
+				} else if (option=="ap") {
+					page = $('#productPage').val();
+					$('#allPage').val('1');
+					$('#uProductPage').val('1');
+				} else if(option == "au"){
+					page = $('#uProductPage').val();
+					$('#allPage').val('1');
+					$('#productPage').val('1');
+				} 
 				$.ajax({
 					type : 'GET',
-					url : 'likes/' + memberNickname,
-					success : function(lists) {
-						$(lists.productLikeList).each(function(){
-							var productCreatedDate = new Date(this.productCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							productList +=  
-								 '<tr>'
-								+ '<td><input type="checkbox" class="check_box"></td>'
-								+ '<td>&lt;공용상품&gt;</td>'
-								+ '<td><a href="/calla/product/detail?productId=' + this.productId + '&memberId=' + memberId + '">' + this.productName + '</a></td>'
-								+ '<td>' + this.productPrice + '</td>'
-								+ '<td>' + productCreatedDate + '</td>'
-								+ '<td>' + this.productCategori + '</td>'
-								+ '<td>' + this.productViews + '</td>'
-								+ '<td>' + this.productLikes + '</td>'
-								+ '<input type="hidden" class="productId" value=' + this.productId + '>'
-								+ '<input type="hidden" class="productLikeId" value=' + this.productLikeId + '>'
-							  	+ '</tr>'  							
-						}) // end productList.each
-						
-						$(lists.uProductLikeList).each(function(){
+					url : 'likes/' + page + '/' + option,
+					success : function(args) {
+						$(args.list).each(function(){
 							var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							uProductList += 
-								 '<tr>'
-								+ '<td><input type="checkbox" class="check_box"></td>'
-								+ '<td>&lt;중고상품&gt;</td>'
-								+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
-								+ '<td>' + this.uProductPrice + '</td>'
-								+ '<td>' + uProductCreatedDate + '</td>'
-								+ '<td>' + this.uProductCategori + '</td>'
-								+ '<td>' + this.uProductViews + '</td>'
-								+ '<td>' + this.uProductLikes + '</td>'
-								+ '<input type="hidden" class="uProductId" value=' + this.uProductId + '>'
-								+ '<input type="hidden" class="uProductLikeId" value=' + this.uProductLikeId + '>'
-							  	+ '</tr>'  							
-						}) // end uProductList.each
+							if (this.category == 'ap') {
+								list += '<tr>'
+									+ '<td><input type="checkbox" class="check_box"></td>'
+									+ '<td>&lt;공용상품&gt;</td>'
+									+ '<td><a href="/calla/product/detail?productId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
+									+ '<td>' + this.uProductPrice + '</td>'
+									+ '<td>' + uProductCreatedDate + '</td>'
+									+ '<td>' + this.uProductCategori + '</td>'
+									+ '<td>' + this.uProductViews + '</td>'
+									+ '<td>' + this.uProductLikes + '</td>'
+									+ '<input type="hidden" class="productId" value=' + this.uProductId + '>'
+									+ '<input type="hidden" class="productLikeId" value=' + this.uProductLikeId + '>'
+								  	+ '</tr>'  							
+							} else if (this.category =='au') {
+								list += '<tr>'
+									+ '<td><input type="checkbox" class="check_box"></td>'
+									+ '<td>&lt;중고상품&gt;</td>'
+									+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
+									+ '<td>' + this.uProductPrice + '</td>'
+									+ '<td>' + uProductCreatedDate + '</td>'
+									+ '<td>' + this.uProductCategori + '</td>'
+									+ '<td>' + this.uProductViews + '</td>'
+									+ '<td>' + this.uProductLikes + '</td>'
+									+ '<input type="hidden" class="uProductId" value=' + this.uProductId + '>'
+									+ '<input type="hidden" class="uProductLikeId" value=' + this.uProductLikeId + '>'
+								  	+ '</tr>'  		
+							}
+							
+						}) // end productList.each
+						$('.table tbody').append(list);	
 						
+						if(args.pageMaker.hasNext) {
+							$('#more').html('<button id="btn_more" style="font-size:10px;">더보기<br>↓</button>');
+						} else {
+							$('#more').html('마지막 입니다.')
+						}
 						
-						if(option == "a") {
-							$('.table tbody').append(productList);
-							$('.table tbody').append(uProductList);
-						} else if (option == "p") {
-							$('.table tbody').append(productList);	
-						} else if (option == "u") {
-							$('.table tbody').append(uProductList);
+						if(args.pageMaker.hasPrev) {
+							$('#close').html('<button id="btn_close" style="font-size:10px;">접기<br>↑</button>');
 						} 
+						
 						$('.deleteBtn').html('<button id="btn_delete" style="font-size:10px; float: right;">좋아요 삭제</button>')
 					}// end success
 				}); // end ajax
 			} // end readLike(option)	
+			$(document).on('click', '#btn_more', function(){
+				console.log("btn more 호출")
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allPage').val(+$('#allPage').val() + 1);
+					readLike();
+				} else if (option =='ap') {
+					$('#productPage').val(+$('#productPage').val() + 1);
+					readLike();
+				} else if (option == 'au') {
+					$('#uProductPage').val(+$('#uProductPage').val() + 1);
+					readLike();
+				}				
+			})// end btn_more.click
+			
+			$(document).on('click', '#btn_close', function(){
+				console.log("btn close 호출")
+				$('.table tbody').empty();
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allPage').val('1');
+					readLike();
+				} else if (option =='ap') {
+					$('#productPage').val('1');
+					readLike();
+				} else if (option == 'au') {
+					$('#uProductPage').val('1');
+					readLike();
+				}			
+
+			})// end btn_more.click
 			
 			$('.read_all').click(function(){
 				$('#option').val("a");
+				$('.table tbody').empty();
 				readLike();				
 			}) // end read_all.click
 			
 			$('.read_product').click(function(){
-				$('#option').val("p");
+				$('#option').val("ap");
+				$('.table tbody').empty();
 				readLike();	
 			}) // end read_product.click
 			
 			$('.read_u_product').click(function(){
-				$('#option').val("u");
+				$('#option').val("au");
+				$('.table tbody').empty();
 				readLike();	
 			}) // end read_u_product.click
 			
@@ -169,6 +221,10 @@
 						console.log(result)
 						if(result == 1) {
 							console.log('좋아요 삭제 성공')
+							$('.table tbody').empty();
+							$('#allPage').val('1');
+							$('#productPage').val('1');
+							$('#uProductPage').val('1');
 							readLike();
 						}
 					}// end success
