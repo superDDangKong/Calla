@@ -32,6 +32,8 @@ public class ProductCommentServiceImple implements ProductCommentService {
 		logger.info(resultInsert + " 행 댓글 입력 성공");
 		int result = productDAO.updateCommentCount(1, vo.getProductId());
 		logger.info(result + " 행 수정 성공");
+		int resultUpdate = productDAO.updateRatedCount(vo.getProductRated(), vo.getProductId());
+		logger.info(resultUpdate + "별점 등록");
 		return 1;
 	}
 
@@ -51,11 +53,15 @@ public class ProductCommentServiceImple implements ProductCommentService {
 	@Transactional(value = "transactionManager")
 	@Override
 	public int delete(int productCommentId, int productId) throws Exception {
+		ProductCommentVO comment = productCommentDAO.selectBy(productCommentId); // 해당 댓글 정보 가져오기
+	    logger.info("delete() 호출 : productCommentId = " + productCommentId);
 		logger.info("delete() 호출 : productCommentId = " + productCommentId);
 		int resultDelete = productCommentDAO.delete(productCommentId);
 		logger.info(resultDelete + " 행 삭제 성공");
 		int result = productDAO.updateCommentCount(-1, productId);
 		logger.info(result + "행 수정 성공");
+		int resultRatedDelete = productDAO.updateRatedCount(-1*(comment.getProductRated()), productId);
+		logger.info(resultRatedDelete + "별점 삭제");
 		return 1;
 	}
 
@@ -78,6 +84,12 @@ public class ProductCommentServiceImple implements ProductCommentService {
 	public List<ProductCommentVO> read(int productId, int productRated) {
 		logger.info("read() 호출 : productId, productRated =" + productId, productRated);
 		return productCommentDAO.select(productId, productRated);
+	}
+
+	@Override
+	public int getRatedCounts(int productRated, int productId) {
+		logger.info("getRatedCounts() 호출");
+		return productCommentDAO.getRatedCounts(productRated, productId);
 	}
 
 

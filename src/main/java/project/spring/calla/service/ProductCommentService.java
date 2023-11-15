@@ -13,4 +13,5 @@ public interface ProductCommentService {
 	List<ProductCommentVO> read(PageCriteria criteria, int productId);
 	int getTotalCounts(int productId);
 	List<ProductCommentVO> read(int productId, int productRated);
+	int getRatedCounts(int productRated, int productId);
 }

@@ -1,6 +1,7 @@
 package project.spring.calla.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class ProductVO {
 	private int productId; // 상품 번호
@@ -18,16 +19,14 @@ public class ProductVO {
 	private int productAmount;
 	private int productLikeId;
 	private int productRecentlyViewId;
-	private int productAverageRated; // 상품 별점 평균
-	
-	
+	private int productRatedCount; // 상품 별점 갯수
 	
 	public ProductVO() {}
-
+	
 	public ProductVO(int productId, String productName, int productPrice, int productViews, int productLikes,
 			Date productCreatedDate, String productCategori, String productImagePath, String productContent,
 			int productCommentCount, String memberNickname, int memberLevel, int productAmount, int productLikeId,
-			int productRecentlyViewId, int productAverageRated) {
+			int productRecentlyViewId, int productRatedCount) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -44,8 +43,9 @@ public class ProductVO {
 		this.productAmount = productAmount;
 		this.productLikeId = productLikeId;
 		this.productRecentlyViewId = productRecentlyViewId;
-		this.productAverageRated = productAverageRated;
+		this.productRatedCount = productRatedCount;
 	}
+
 
 	public int getProductId() {
 		return productId;
@@ -196,12 +196,14 @@ public class ProductVO {
 		this.productRecentlyViewId = productRecentlyViewId;
 	}
 
-	public int getProductAverageRated() {
-		return productAverageRated;
+	
+	public int getProductRatedCount() {
+		return productRatedCount;
 	}
 
-	public void setProductAverageRated(int productAverageRated) {
-		this.productAverageRated = productAverageRated;
+
+	public void setProductRatedCount(int productRatedCount) {
+		this.productRatedCount = productRatedCount;
 	}
 
 	@Override
@@ -212,18 +214,7 @@ public class ProductVO {
 				+ ", productContent=" + productContent + ", productCommentCount=" + productCommentCount
 				+ ", memberNickname=" + memberNickname + ", memberLevel=" + memberLevel + ", productAmount="
 				+ productAmount + ", productLikeId=" + productLikeId + ", productRecentlyViewId="
-				+ productRecentlyViewId + ", productAverageRated=" + productAverageRated + "]";
+				+ productRecentlyViewId + ", productRatedCount=" + productRatedCount + "]";
 	}
 
-	
-
-	
-	
-
-	
-
-
-	
-	
-	
 }

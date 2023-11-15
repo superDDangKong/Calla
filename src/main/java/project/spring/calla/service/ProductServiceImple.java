@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.persistence.ProductCommentDAO;
 import project.spring.calla.persistence.ProductDAO;
 
 @Service
@@ -18,6 +20,9 @@ public class ProductServiceImple implements ProductService {
 	
 	@Autowired
 	private ProductDAO dao;
+	
+	@Autowired
+    private ProductCommentDAO productCommentDAO;
 	
 	@Override
 	public int create(ProductVO vo) {
@@ -102,6 +107,13 @@ public class ProductServiceImple implements ProductService {
 		return dao.insertRecentlyView(productId, memberId);
 	}
 
+	@Override
+	public List<ProductCommentVO> getCommentsByProductId(int productId) {
+		logger.info("getCommentsByProductId() »£√‚ : productId = " + productId);
+    	return productCommentDAO.selectByProductId(productId);
+	}
+
+	
 	
 
 

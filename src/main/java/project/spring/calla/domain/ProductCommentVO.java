@@ -15,6 +15,8 @@ public class ProductCommentVO {
 	}
 
 
+
+
 	public ProductCommentVO(int productCommentId, int productId, String memberNickname, String productCommentContent,
 			Date productCommentCreatedDate, int productRated) {
 		super();
@@ -25,6 +27,9 @@ public class ProductCommentVO {
 		this.productCommentCreatedDate = productCommentCreatedDate;
 		this.productRated = productRated;
 	}
+
+
+
 
 	public int getProductCommentId() {
 		return productCommentId;
@@ -75,15 +80,17 @@ public class ProductCommentVO {
 	}
 
 
+
+
 	@Override
 	public String toString() {
 		return "ProductCommentVO [productCommentId=" + productCommentId + ", productId=" + productId
 				+ ", memberNickname=" + memberNickname + ", productCommentContent=" + productCommentContent
 				+ ", productCommentCreatedDate=" + productCommentCreatedDate + ", productRated=" + productRated + "]";
 	}
+
 	
-	
-	
+
 	
 	
 }
