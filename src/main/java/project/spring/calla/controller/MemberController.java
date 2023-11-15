@@ -27,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
@@ -338,8 +337,8 @@ public class MemberController {
 		criteria.setPage(page);
 		PageMaker pageMaker = new PageMaker();
 		
-		list = memberService.readProductsByOption(criteria, keyword, category, productOption);
-		pageMaker.setTotalCount(memberService.getTotalCountsProductsByOption(keyword, category, productOption));
+//		list = memberService.readProductsByOption(criteria, keyword, category, productOption);
+//		pageMaker.setTotalCount(memberService.getTotalCountsProductsByOption(keyword, category, productOption));
 		
 		model.addAttribute("list", list);
 			
