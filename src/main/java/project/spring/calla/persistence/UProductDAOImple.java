@@ -279,5 +279,11 @@ public class UProductDAOImple implements UProductDAO {
 		args.put("uProductId", uProductId);
 		return sqlSession.update(NAMESPACE + ".update_like_count", args);
 	}
+
+	@Override
+	public String selectManner(String memberNickname) {
+		logger.info("selectManner() »£√‚ : memberNickname = " + memberNickname);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_membermanner", memberNickname);
+	}
 	
 }

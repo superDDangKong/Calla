@@ -37,7 +37,7 @@ li {
 				<div class="container">
 					<h4>
 						<br>
-						<a href="uproductnickname?memberNickname=${vo.sellerNickname }&page=${pageMaker.criteria.page}"> 
+						<a href="uproductnickname?memberNickname=${sellerNickname }&page=${pageMaker.criteria.page}"> 
 						판매물품 </a> &nbsp;&nbsp;
 						<a href="reviewboard?sellerNickname=${vo.sellerNickname }&page=${pageMaker.criteria.page}"> 
 						구매후기 </a>

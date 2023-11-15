@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductReviewVO;
+import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.UProductReviewDAO;
 
@@ -66,6 +68,30 @@ public class UProductReviewServiceImple implements UProductReviewService{
 		logger.info("read() ȣ�� : sellerNickname = " + sellerNickname);
 		return dao.select(sellerNickname);
 	}
+
+
+	@Override
+	public UProductVO readnickname(String sellerNickname) {
+		logger.info("read() ȣ�� : sellerNickname = " + sellerNickname);
+		return dao.selectnickname(sellerNickname);
+	}
+
+
+	@Override
+	public MemberVO readMembermanner(String memberNickname) {
+		logger.info("read() ȣ�� : memberNickname = " + memberNickname);
+		return dao.selectmemberManner(memberNickname);
+	}
+
+
+	@Override
+	public float updatememberManner(String memberNickname) {
+		logger.info("read() ȣ�� : memberNickname = " + memberNickname);
+		return dao.updatememberManner(memberNickname);
+	}
+
+
+	
 
 
 }

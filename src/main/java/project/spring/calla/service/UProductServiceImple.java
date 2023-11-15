@@ -190,6 +190,12 @@ public class UProductServiceImple implements UProductService {
 		return dao.selectnickname(memberNickname);
 	}
 
+	@Override
+	public String readmanner(String memberNickname) {
+		logger.info("readmanner() »£√‚ : memberNickname = " + memberNickname);
+		return dao.selectManner(memberNickname);
+	}
+
 	
 
 }

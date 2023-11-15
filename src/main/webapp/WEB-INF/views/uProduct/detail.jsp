@@ -11,6 +11,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <link href="https://fonts.googleapis.com/
+  		icon?family=Material+Icons rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link
@@ -95,9 +97,24 @@
       <br>
       <div>
       
-      닉네임 : <a href="reviewboard?sellerNickname=${vo.memberNickname }&page=${pageMaker.criteria.page}">${vo.memberNickname}</a> 
-      <span style="float:right; color:green;">${sessionScope.memberManner }&deg;C</span>
+      닉네임 : <a href="reviewboard?sellerNickname=${vo.memberNickname }&page=${pageMaker.criteria.page}">${vo.memberNickname}</a>
+     
+   
+   	 	<fmt:parseNumber value="${memberManner}"   var="memberManner"/>
+      	<c:if test="${(memberManner) >= 40}">
+   		 <span style="float:right; color:orange;">${memberManner}&deg;C</span>
+		</c:if>
+		
+		<c:if test="${(memberManner) >= 35 && (memberManner) < 40}">
+   		 <span style="float:right; color:green;">${memberManner}&deg;C</span>
+		</c:if>
+     
+     	
+     
+     
       <br>
+      
+      
       <div style="float:right;">매너온도</div>
        
       </div>

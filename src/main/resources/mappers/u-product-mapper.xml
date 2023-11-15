@@ -310,6 +310,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${u_product} where ${memberNickname} = #{memberNickname}
 	</select>
 	
+	<select id="select_by_membermanner" resultType="String">
+		select ${memberManner} from ${member} where ${memberNickname} = #{memberNickname}
+	</select>
+	
 	
 	
 	 	 
