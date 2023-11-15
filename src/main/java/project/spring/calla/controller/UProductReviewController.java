@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductReviewVO;
@@ -58,7 +60,9 @@ public class UProductReviewController {
 	public void reviewboard(Model model, String sellerNickname, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
 		logger.info("reviewboard() 호출");
 		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
-		UProductReviewVO vo = uproductreviewservice.read(sellerNickname);
+		
+		
+		// 슈퍼관리자
 		
 		
 		// Paging 처占쏙옙
@@ -73,7 +77,7 @@ public class UProductReviewController {
 
 		List<UProductReviewVO> list = uproductreviewservice.readysellNickname(criteria, sellerNickname);
 		model.addAttribute("list", list);
-		model.addAttribute("vo", vo);
+		model.addAttribute("sellerNickname", sellerNickname);
 		
 				
 
@@ -89,20 +93,26 @@ public class UProductReviewController {
 	@GetMapping("/review")
 	public void review(Model model, String sellerNickname, Integer page, HttpServletRequest request) {
 		logger.info("review() 호출 : sellerNickname = " + sellerNickname);
-		UProductBuyVO vo = uproductservice.read(sellerNickname);
-		logger.info("호출 : prdocutVO = " + vo);
 		
+		
+		MemberVO vo = uproductreviewservice.readMembermanner(sellerNickname);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("sellerNickname", sellerNickname);
 		model.addAttribute("page", page);
 		
 	
 	} // end review()
 
+	
+	@Transactional(value = "transactionManager")
 	@PostMapping("/review")
 	public String reviewPost(UProductReviewVO vo, RedirectAttributes reAttr) throws Exception {
 		// RedirectAttributes
 				// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
+		
+
+		
 				logger.info("reviewPOST() 호출");
 				logger.info(vo.toString());
 				int result = uproductreviewservice.create(vo);

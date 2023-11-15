@@ -51,6 +51,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select distinct ${sellerNickname} from
 		${u_product_review} where ${sellerNickname} = #{sellerNickname}
 		</select>
+		
+	<select id="select_by_membernickname" resultType="UproductVO">
+		select distinct ${memberNickname} from
+		${u_product} where ${memberNickname} = #{memberNickname}
+	</select>
+	
+	
+	<select id="select_by_memberManner" resultType="MemberVO">
+		select ${memberManner} from
+		${member} where ${memberNickname} = #{memberNickname}
+	</select>
+	
+	
+	
+	<update id="memberManner_update">
+		UPDATE ${member}
+		SET ${memberManner} = ${memberManner} + 0.2
+		WHERE ${memberNickname} = #{memberNickname}
+	</update>
+	
+	
+	
+	
 	 	 	 
 </mapper>
 

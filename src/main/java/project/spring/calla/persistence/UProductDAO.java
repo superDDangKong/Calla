@@ -61,6 +61,8 @@ public interface UProductDAO {
 	
 	int updateLikeCount(int amount, int uProductId);
 	
+	String selectManner(String memberNickname);
+	
 }
 
 

@@ -63,6 +63,13 @@ public class UProductController {
 		logger.info("占쏙옙占쏙옙 占쏙옙占�");
 
 	}
+	
+	@RequestMapping(value = "test2", method = RequestMethod.GET)
+	public void Test2GET() throws Exception {
+
+		logger.info("占쏙옙占쏙옙 占쏙옙占�");
+
+	}
 
 	@GetMapping("/map")
 	public void TestMAP(Model model, Integer page, Integer numsPerPage, String Address, String keyword,
@@ -206,12 +213,14 @@ public class UProductController {
 		UProductVO vo = uproductService.read(uProductId);
 		logger.info("호占쏙옙 : prdocutVO = " + vo);
 		
+		String memberManner = uproductService.readmanner(vo.getMemberNickname());
 		List<UProductVO> list = uproductService.readrecommend(vo.getuProductCategori(), uProductId);
 		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		model.addAttribute("memberManner", memberManner);
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
@@ -317,7 +326,9 @@ public class UProductController {
 		}
 
 		List<UProductBuyVO> list = uproductService.readybuyuproduct(criteria, buyerNickname);
+		
 		model.addAttribute("list", list);
+
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);

@@ -39,5 +39,7 @@ public interface UProductService {
 	int getTotalCountsbyuproductnickname(String memberNickname);
 	
 	UProductVO readnickname(String memberNickname); // 占쏙옙품ID 占싻억옙占쏙옙占�
+	
+	String readmanner(String memberNickname); // 占쏙옙품ID 占싻억옙占쏙옙占�
 
 }

@@ -41,6 +41,7 @@
 			</div>
 		</div>
 	</nav>
+	
 	<header class="bg-dark py-5">
 	    <div class="container px-4 px-lg-5 my-5">
 	        <div class="text-center text-white">
@@ -74,6 +75,7 @@
 	        </div>
 	    </div>
 	</header>
+	
 	<div id="navigator" class="text-center bg-success py-3">
 	    <div class="container">
 	        <div class="nav justify-content-center">

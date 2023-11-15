@@ -13,13 +13,13 @@ public class MemberVO {
 	private String memberAddress;
 	private String memberNickname;
 	private int memberLevel;
-	private String memberManner;
+	private float memberManner;
 	
 	public MemberVO() {}
 
 	public MemberVO(String memberId, String memberPw, String memberName, String memberEmail, String memberPhone,
 			Date memberJoinDate, String memberInterest, String memberAddress, String memberNickname, int memberLevel,
-			String memberManner) {
+			float memberManner) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -114,11 +114,11 @@ public class MemberVO {
 		this.memberLevel = memberLevel;
 	}
 
-	public String getMemberManner() {
+	public float getMemberManner() {
 		return memberManner;
 	}
 
-	public void setMemberManner(String memberManner) {
+	public void setMemberManner(float memberManner) {
 		this.memberManner = memberManner;
 	}
 
@@ -130,7 +130,10 @@ public class MemberVO {
 				+ memberNickname + ", memberLevel=" + memberLevel + ", memberManner=" + memberManner + "]";
 	}
 
-		
+	
+
+	
+
 	
 	
 }

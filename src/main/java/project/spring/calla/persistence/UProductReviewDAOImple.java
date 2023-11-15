@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductReviewVO;
+import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
@@ -67,6 +69,31 @@ public class UProductReviewDAOImple implements UProductReviewDAO{
 		logger.info("select() 호출 : sellerNickname = " + sellerNickname);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_sellernickname", sellerNickname);
 	}
+
+	@Override
+	public UProductVO selectnickname(String sellerNickname) {
+		logger.info("select() 호출 : sellerNickname = " + sellerNickname);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_membernickname", sellerNickname);
+	}
+	
+	@Override
+	public MemberVO selectmemberManner(String memberNickname) {
+		logger.info("select() 호출 : memberNickname = " + memberNickname);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_memberManner", memberNickname);
+	}
+
+	@Override
+	public float updatememberManner(String memberNickname) {
+		logger.info("select() 호출 : memberNickname = " + memberNickname);
+		return sqlSession.update(NAMESPACE + ".memberManner_update", memberNickname);
+	}
+
+	
+	
+
+	
+
+	
 
 
 }

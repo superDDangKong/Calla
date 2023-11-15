@@ -92,7 +92,7 @@ public class MemberController {
 			MemberVO vo = memberService.read(memberId);
 			String memberNickname = vo.getMemberNickname();
 			int memberLevel = vo.getMemberLevel();
-			String memberManner = vo.getMemberManner();
+			float memberManner = vo.getMemberManner();
 			reAttr.addFlashAttribute("login_result", "success");
 
 			HttpSession session = request.getSession();
