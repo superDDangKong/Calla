@@ -14,6 +14,9 @@ table, th, td {
 	text-align : center;
 }
 
+/* 추가된 CSS 스타일링 */
+
+
 /* .container {
 	display: flex;
     justify-content: center;
@@ -46,6 +49,7 @@ body {
 }
 </style>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <title>게시판 메인 페이지</title>
@@ -54,30 +58,46 @@ body {
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="../resources/css/styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <%@ include file="../header.jspf" %>
 </head>
 <body>
 	
 	
-	<h1>Q&A 게시판</h1>
+	<h1 class="text-center">
+		<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">
+			문의게시판 </a>
+	</h1>
+	
 	<a href="register"><input type="button" value="글 작성"></a>
 	<hr>
-	<form action="list" method="get">
-		<div class="row">
-			<div class="col-md-4">
-				<select id="option" name="option" class="form-control">
-					<option value="searchMemberNickname" selected>작성자</option>
-					<option value="searchTitle">제목</option>
-				</select>
-			</div>
-			<div class="col-md-4">
-				<input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요">
-			</div>
-			<div class="col-md-4">
-			        <button type="submit" class="btn btn-success form-control">검색</button>
-			    </div>
-		</div>
-	</form>
+	<div class="container mt-4">
+    <form action="list" method="GET">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="option"></label>
+                    <select id="option" name="option" class="form-control">
+                        <option value="searchMemberNickname" selected>작성자</option>
+                        <option value="searchTitle">제목</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="keyword"></label>
+                    <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary btn-block">검색</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 	<div>
 		
 		<div class="container" style="width : 1140px">
@@ -102,7 +122,7 @@ body {
 							pattern="yyyy-MM-dd" var="qBoardCreatedDate"/>
 							<td class="td">${qBoardCreatedDate }</td>
 							<td class="td">${vo.qBoardCommentCount }</td>
-							<td class="td" id="aa">${vo.qBoardViews }</td>
+							<td class="td">${vo.qBoardViews }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -132,6 +152,9 @@ body {
 		}
 
 	</script>
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<%@ include file="../footer.jspf"%>	
 </body>
 </html>

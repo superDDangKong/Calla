@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </delete>
 	 
 	 <select id="paging" resultType="QBoardVO"> 
-	 	select ${qBoardId}, ${qBoardTitle}, ${qBoardContent}, ${memberNickname}, ${qBoardCreatedDate}, ${qBoardCommentCount}
+	 	select ${qBoardId}, ${qBoardTitle}, ${qBoardContent}, ${memberNickname}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}
 	 	from(
 	 		select rownum rn, a.* from(
 	 			select * from ${q_board} order by ${qBoardId} desc
@@ -52,9 +52,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	select count(*) total_cnt from ${q_board}
 	  </select>
 	  
-	  <select id="select_by_memberNickname" resultType="QBoardVO">
-	  	select * from ${q_board}
+	 <!--  <select id="select_by_memberNickname" resultType="QBoardVO">
+	  	select * 
+	  	from ${q_board}
 	  	where ${memberNickname} like #{memberNickname}
+	  </select> -->
+	  
+	  <select id="select_by_memberNickname" resultType="QBoardVO">
+	  	select ${qBoardId}, ${qBoardTitle}, ${qBoardContent}, ${memberNickname}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${q_board} where ${memberNickname} like #{keyword}  
+	 			order by ${qBoardId} desc
+	 		)a
+	 	) where rn between #{start} and #{end}
 	  </select>
 	  
 	  <select id="select_by_title" resultType="QBoardVO">
@@ -65,12 +76,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  </select>
 	  
 	  <select id="total_count_by_membernickname" resultType="Integer">
-	  	select count(*) total_cnt from ${f_board} where ${memberNickname} like #{keyword}
+	  	select count(*) total_cnt from ${q_board} where ${memberNickname} like #{keyword}
 	 </select>
 	 
 	 <select id="total_count_by_title" resultType="Integer">
-	  	select count(*) total_cnt from ${f_board} 
-	  	where ${fBoardTitle} like #{keyword}
+	  	select count(*) total_cnt from ${q_board} 
+	  	where ${qBoardTitle} like #{keyword}
 	 </select>
 	 
 	  
