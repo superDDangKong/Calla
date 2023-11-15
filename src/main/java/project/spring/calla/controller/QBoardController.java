@@ -1,7 +1,6 @@
 package project.spring.calla.controller;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -53,6 +52,7 @@ public class QBoardController {
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+		List<QBoardVO> list = null;
 		
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
@@ -62,16 +62,13 @@ public class QBoardController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		
-		List<QBoardVO> list = qBoardService.read(criteria);
-		model.addAttribute("list", list);
-		
 		PageMaker pageMaker = new PageMaker();
 		if(option != null) {
 			if(option.equals("searchMemberNickname")) {
 				logger.info("ifif");
 				list = qBoardService.readBymemberNickname(criteria, keyword);
 				pageMaker.setTotalCount(qBoardService.getTotalCountsByMeberNickname(keyword));				
-			} else if (option.equals("searchMemberTitle")) {
+			} else if (option.equals("searchTitle")) {
 				logger.info("if elseif");
 				list = qBoardService.readByTitle(criteria, keyword);
 				pageMaker.setTotalCount(qBoardService.getTotalCountsByTitle(keyword));
@@ -139,6 +136,9 @@ public class QBoardController {
 		
 	} // end registerPOST
 	
+
+	
+	
 	@GetMapping("/detail")
 	public String detail(Model model, Integer qBoardId, Integer page,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -157,7 +157,7 @@ public class QBoardController {
 			// 쿠키가 존재하지 않는 경우, 조회수 증가 및 쿠키 설정
 			int views = 1; // 첫 번째 조회
 			Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
-			viewCookie.setMaxAge(1); // 쿠키 유효 시간 1초
+			viewCookie.setMaxAge(60); // 쿠키 유효 시간 1초
 			response.addCookie(viewCookie);
 			int result = qBoardService.updateViews(views, qBoardId);
 			if(result == 1) {

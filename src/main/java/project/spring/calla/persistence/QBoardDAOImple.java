@@ -8,9 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
-import project.spring.calla.domain.FBoardVO;
 import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
@@ -30,6 +31,8 @@ public class QBoardDAOImple implements QBoardDAO {
 	// 스프링 프레임워크가 생성한 bean을 주입(injection)받음
 	@Autowired
 	private SqlSession sqlSession;
+	
+	
 	
 	@Override
 	public int insert(QBoardVO vo) {
@@ -78,12 +81,14 @@ public class QBoardDAOImple implements QBoardDAO {
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
-	@Override
-	public List<QBoardVO> select(String memberNickname) {
-		logger.info("select() 호출 : memberId = " + memberNickname);
-		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", "%" + memberNickname + "%");
-	}
-
+	/*
+	 * @Override public List<QBoardVO> select(String memberNickname) {
+	 * logger.info("select() 호출 : memberId = " + memberNickname); return
+	 * sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", "%" +
+	 * memberNickname + "%"); }
+	 */
+// 문제가 public List<QBoardVO> select(String memberNickname) { 이거랑
+// public List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword) { 겹침
 	
 
 	@Override
@@ -135,11 +140,11 @@ public class QBoardDAOImple implements QBoardDAO {
 	public List<QBoardVO> selectByMemberNickname(PageCriteria criteria, String keyword) {
 		logger.info("selectByMemberNickname() 호출 : keyword = " + keyword);
 		Map<String, Object> args = new HashMap();
-		args.put("criteria", criteria);
+//		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
 		args.put("end", criteria.getEnd());
 		args.put("keyword", "%" + keyword + "%");
-		return sqlSession.selectList(NAMESPACE + ".select_by_membernickname", args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", args);
 	}
 
 	@Override
@@ -151,13 +156,8 @@ public class QBoardDAOImple implements QBoardDAO {
 	@Override
 	public int getTotalCountsByTitle(String keyword) {
 		logger.info("getTotalTitleContent()");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title_content", "%" + keyword + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_title", "%" + keyword + "%");
 	}
 
-	@Override
-	public List<QBoardVO> selectAllByMemberNickname(String menberNickname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

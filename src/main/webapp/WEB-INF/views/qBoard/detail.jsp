@@ -12,8 +12,63 @@
   	height: 400px; /* 높이 설정 */
   	border-radius: 10px; /* 테두리 모서리를 10픽셀만큼 둥글게 설정 */
 }
+ul {
+	list-style-type: none;
+}
 
+li {
+	display: inline-block;
+}
+
+.comment_item {
+    margin-bottom: 20px;
+}
+
+.comment-header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-date {
+    margin-left: 10px;
+    color: #777;
+}
+
+.comment-content {
+    margin-bottom: 10px;
+}
+
+.comment-content textarea {
+    width: 100%;
+    resize: none; /* Disable textarea resizing */
+}
+
+.comment-actions {
+    margin-top: 10px;
+}
+
+/* 버튼 스타일링 */
+.btn {
+    margin-right: 5px;
+}
+
+/* 항목 간 간격 추가 */
+hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.comment-buttons {
+    text-align: right; // 버튼을 오른쪽 정렬
+}
+
+.comment-buttons button {
+    margin-left: 5px; // 버튼 사이의 간격 조절
+}
 </style>
+
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
 integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
 </script>
@@ -23,6 +78,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link href="../resources/css/styles.css" rel="stylesheet" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -33,6 +89,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 <body>
 	<%@ include file="../header.jspf" %>
 	<div class="container">
+	<br><br><br><br><br>
 		<h2>글 보기</h2>
 		<div>
 			<p style="">글 번호 : ${vo.qBoardId }</p>
@@ -43,8 +100,6 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		</div>
 		<div>
 			<p>작성자 : ${vo.memberNickname }</p>
-			<label for="memberNickname">작성자: </label>
-			<input type="text" id="memberNickname" value="${vo.memberNickname }" readonly="readonly">
 			<p id="date">작성일 : ${vo.qBoardCreatedDate}</p>
 		</div>
 		<div class="content">
@@ -68,32 +123,37 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			</form>
 	
 			<c:if test="${memberNickname != null}">
-				<div style="text-align: center;">
-					${memberNickname}
-					<input type="hidden" id="memberNickname" value=${memberNickname }>
-					<input type="text" id="qBoardCommentContent" required>
-					<button id="btnCommentAdd">작성</button> 
+				<div>
+				<br><br>
+					<div class="border">
+						${memberNickname}<br><br> <input type="hidden" id="memberNickname" value=${memberNickname }>
+							<div class="form-group">
+								<textarea id="qBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+							</div>
+							<div style="text-align: right;">
+								<button id="btnCommentAdd" class="btn btn-dark">작성</button>
+							</div>
+					</div>
 				</div>
 			</c:if>
 			
 			<c:if test="${memberNickname == null}">
-				<br> 댓글을 작성하려면 로그인해 주세요.
+				<br> 
+				댓글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=${vo.qBoardId }">로그인</a>이 필요합니다.
 			</c:if>
 			<hr>
-		
+			<br>
 			<div style="text-align: center;">
 				<div id="comments"></div>
 			</div>
 		
-			<div>
-				<br><br><br><br><br><br><br><br><br><br>
-			</div>
+			
 	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
     	  var img = $('#img').val();
     	  var date = $('#date').val();
-    	  var img = $('#img').val()
+    	  
     	  console.log(img);
           getAllComments();
           
@@ -156,50 +216,54 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                      ('0' + qBoardCommentCreatedDate.getHours()).slice(-2) + ':' +
                      ('0' + qBoardCommentCreatedDate.getMinutes()).slice(-2) + ':' +
                      ('0' + qBoardCommentCreatedDate.getSeconds()).slice(-2);
-                     var disabled = 'disabled';
-                     var readonly = 'readonly';
-                     
-                     if(memberNickname == this.memberNickname) { // 로그인한 아이디 == 댓글작성한 아이디
-                        disabled = '';
-                        readonly = '';
-                     }
+               
                      
                      list += '<div class="comment_item">'
-                           + '<pre>'
                            + '<input type="hidden" class="qBoardCommentId" value="' + this.qBoardCommentId +'">'
-                           + this.memberNickname
-                           + '&nbsp;&nbsp;' // 공백
-                           + '<input type="text"  class="qBoardCommentContent" value="' + this.qBoardCommentContent + '">'
-                           + '&nbsp;&nbsp;' // 공백
-                           + formattedDate
-                           + '&nbsp;&nbsp;' // 공백
-                           + '<button class="btn_update" ' + disabled + ' >수정</button>'
-                           + '<button class="btn_delete" ' + disabled + ' >삭제</button>'
-                           + '<button class="btnReply">답글</button>'
-                           + '</pre>'
-                           + '</div>';
+                           + '<div class="comment-header">'
+                           + '<strong>' + this.memberNickname + '</strong>'
+                           + '<span class="comment-date">' + formattedDate + '</span>'
+                           + '</div>'
+                           + '<div class="comment-content">'
+                           + '<textarea class="form-control qBoardCommentContent" rows="2" style="border:none;">'
+						   + this.qBoardCommentContent
+						   + '</textarea>'
+						   + '</div>'
+						   + '<div class="comment-buttons">'
+                           
+						// 현재 댓글 작성자와 로그인한 사용자의 닉네임이 일치하는 경우에만 수정 및 삭제 버튼을 표시
+						   if (memberNickname === this.memberNickname) {
+						       list += '<button class="btn btn-sm btn_update">수정</button>'
+						           + '<button class="btn btn-sm btn_delete">삭제</button>';
+						   }
+
+						   list += '<button class="btn btn-sm btnReply">답글</button>'
+						       + '</div>'
+						       + '<hr>'
+						       + '</div>';
                   }); // end each()
-               
+                  
+                
                   $('#comments').html(list);
+                  console.log("456");
                   
                }
             ); // end getJSON()
             
             
          } // end getAllComment()
-         
-         
-         
+         console.log("123")
          // 수정 버튼을 클릭하면 선택된 댓글 수정
          $("#comments").on('click','.comment_item .btn_update', function(){
             console.log(this);
+            var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId').val();
+            var qBoardCommentContent = $(this).closest('.comment_item').find('.form-control.qBoardCommentContent').val();
+			
+            console.log('qBoardCommentId:', qBoardCommentId);
+            console.log('qBoardCommentContent:', qBoardCommentContent);
+          
             
-            // 선택된 댓글의 replyId, replyContent 값을 저장
-            // prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근
-            var qBoardCommentId = $(this).prevAll('#qBoardCommentId').val();
-            var qBoardCommentContent = $(this).prevAll('#qBoardCommentContent').val();
-            console.log("선택된 댓글 번호 : " + qBoardCommentId + ", 댓글 내용 : " + qBoardCommentContent);
-            
+           
             // ajax 요청
             $.ajax({
                type : 'PUT',
@@ -218,8 +282,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                
                
             }); // end ajax()
-            
-         }); // end relies.on()
+             
+         }); // end 수정
          
          
          // 삭제 버튼을 클릭하면 선택된 댓글 삭제
@@ -227,7 +291,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
             console.log(this);
             
             var qBoardId = $('#qBoardId').val();
-            var qBoardCommentId = $(this).prevAll('#qBoardCommentId').val();
+            var qBoardCommentId = $('.qBoardCommentId').val();
             console.log("선택된 댓글 번호 : " + qBoardCommentId);
             
             // ajax 요청
@@ -317,6 +381,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                            + '&nbsp;&nbsp;' // 공백
                            + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
                            + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
+                           + '<button class="btnReplyInsert">답글입력</button>'
                            + '<br>'
                            + '</pre>'
                            + '</div>';
