@@ -17,7 +17,13 @@
 <body>
 	<input type="hidden" id="memberNickname" value=${memberNickname }>
 	<input type="hidden" id="memberId" value=${memberId }>
-	<div class="container-fluid">
+	<input type="hidden" id="allPage" value='1'>
+	<input type="hidden" id="productPage" value='1'>
+	<input type="hidden" id="uProductPage" value='1'>
+	<input type="hidden" id="fBoardPage" value='1'>
+	<input type="hidden" id="qBoardPage" value='1'>
+	
+ 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
@@ -40,6 +46,8 @@
 					<tbody>
 					</tbody>
 				</table>
+				<div id="more" class="text-center"></div>
+				<div id="close" class="text-center"></div>
 			</main>
 			<%@ include file="../sidebarRight.jspf"%>
 		</div>
@@ -52,94 +60,156 @@
 			
 			function readComment() {
 				console.log("readComment 호출");
-				var productList = "";
-				var uProductList = "";
-				var fBoardList = "";
-				var qBoardList = "";
+				$('#more').html("");
+				$('#close').html("");
+				var list = "";
 				var option = $('#option').val();
 				var memberNickname = $('#memberNickname').val();
 				var memberId = $('#memberId').val();
-				$('.table tbody').empty(); // 이전 내용을 지웁니다.
+				var page = "";
+				if (option == "a") {
+					page = $('#allPage').val();
+					$('#productPage').val('1');
+					$('#uProductPage').val('1');
+					$('#fBoardPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "ap") {
+					page = $("#productPage").val();
+					$('#allPage').val('1');
+					$('#uProductPage').val('1');
+					$('#fBoardPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "au") {
+					page = $("#uProductPage").val();
+					$('#allPage').val('1');
+					$('#productPage').val('1');
+					$('#fBoardPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "af") {
+					page = $("#fBoardPage").val();
+					$('#allPage').val('1');
+					$('#productPage').val('1');
+					$('#uProductPage').val('1');
+					$('#qBoardPage').val('1');
+				} else if (option == "aq") {
+					page = $("#qBoardPage").val();
+					$('#allPage').val('1');
+					$('#productPage').val('1');
+					$('#uProductPage').val('1');
+					$('#fBoardPage').val('1');
+				}
+				
 				$.ajax({
 					type : 'GET',
-					url : 'comments/' + memberNickname,
-					success : function(lists) {
-						$(lists.productCommentList).each(function(){
-							var productCommentCreatedDate = new Date(this.productCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							productList += '<tr>'
-								+ '<td>&lt;공용상품&gt;</td>'
-								+ '<td><a href="/calla/product/detail?productId=' + this.productId + '&memberId=' + memberId + '">' + this.productCommentContent + '</a></td>'
-								+ '<td>' + productCommentCreatedDate + '</td>'
-							  	+ '</tr>'  							
-						}) // end productList.each
-						
-						$(lists.uProductCommentList).each(function(){
+					url : 'comments/' + memberNickname + '/' + option + '/' + page,
+					success : function(args) {
+						$(args.list).each(function(){
 							var uProductCommentCreatedDate = new Date(this.uProductCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							uProductList += '<tr>'
-								+ '<td>&lt;중고상품&gt;</td>'
-								+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '">' + this.uProductCommentContent + '</a></td>'
-								+ '<td>' + uProductCommentCreatedDate + '</td>'
+							list += '<tr>'
+								if (this.category == "ap") {
+									list += '<td>&lt;공용상품&gt;</td>'
+									+ '<td><a href="/calla/product/detail?productId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductCommentContent + '</a></td>'
+								} else if (this.category == "au") {
+									list += '<td>&lt;중고상품&gt;</td>'
+									+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductCommentContent + '</a></td>'
+								} else if (this.category == "af") {
+									list += '<td>&lt;자유게시판&gt;</td>'
+									+ '<td><a href="/calla/fBoard/detail?fBoardId=' + this.uProductId + '">' + this.uProductCommentContent + '</a></td>'
+								} else if (this.category == "aq") {
+									list += '<td>&lt;문의게시판&gt;</td>'
+									+ '<td><a href="/calla/qBoard/detail?qBoardId=' + this.uProductId + '">' + this.uProductCommentContent + '</a></td>'
+								}								
+								list += '<td>' + uProductCommentCreatedDate + '</td>'
 							  	+ '</tr>'  							
-						}) // end uProductList.each
+						}) // end list.each
+						$('.table tbody').append(list);	
 						
-						$(lists.fBoardCommentList).each(function(){
-							var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							fBoardList += '<tr>'
-								+ '<td>&lt;자유게시판&gt;</td>'
-								+ '<td><a href="/calla/fBoard/detail?fBoardId=' + this.fBoardId + '">' + this.fBoardCommentContent + '</a></td>'
-								+ '<td>' + fBoardCommentCreatedDate + '</td>'
-							  	+ '</tr>'  							
-						}) // end fBoardList.each
-						
-						$(lists.qBoardCommentList).each(function(){
-							var qBoardCommentCreatedDate = new Date(this.qBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-							qBoardList += '<tr>'
-								+ '<td>&lt;문의게시판&gt;</td>'
-								+ '<td><a href="/calla/qBoard/detail?qBoardId=' + this.qBoardId + '">' + this.qBoardCommentContent + '</a></td>'
-								+ '<td>' + qBoardCommentCreatedDate + '</td>'
-							  	+ '</tr>'  							
-						}) // end fBoardList.each
-						
-						if(option == "a") {
-							$('.table tbody').append(productList);
-							$('.table tbody').append(uProductList);
-							$('.table tbody').append(fBoardList);
-							$('.table tbody').append(qBoardList);
-						} else if (option == "p") {
-							$('.table tbody').append(productList);	
-						} else if (option == "u") {
-							$('.table tbody').append(uProductList);
-						} else if (option == "f") {
-							$('.table tbody').append(fBoardList);
-						} else if (option == "q") {
-							$('.table tbody').append(qBoardList);
+						if(args.pageMaker.hasNext) {
+							$('#more').html('<button id="btn_more" style="font-size:10px;">더보기<br>↓</button>');
+						} else {
+							$('#more').html('마지막 글 입니다.')
 						}
+						
+						if(args.pageMaker.hasPrev) {
+							$('#close').html('<button id="btn_close" style="font-size:10px;">접기<br>↑</button>');
+						} 
+						
 					}// end success
 				}); // end ajax
 			} // end readBoard(option)	
 			
+			$(document).on('click', '#btn_more', function(){
+				console.log("btn more 호출")
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allPage').val(+$('#allPage').val() + 1);
+					readComment();
+				} else if (option == 'au') {
+					$('#uProductPage').val(+$('#uProductPage').val() + 1);
+					readComment();
+				} else if (option == 'af') {
+					$('#fBoardPage').val(+$('#fBoardPage').val() + 1);
+					readComment();
+				} else if (option == 'aq') {
+					$('#qBoardPage').val(+$('#qBoardPage').val() + 1);
+					readComment();
+				} else if (option == 'ap') {
+					$('#productPage').val(+$('#productPage').val() + 1);
+					readComment();
+				}
+				
+			})// end btn_more.click
+			
+			$(document).on('click', '#btn_close', function(){
+				console.log("btn close 호출")
+				$('.table tbody').empty();
+				var option = $('#option').val();
+				if(option == 'a') {
+					$('#allPage').val('1');
+					readComment();
+				} else if (option == 'ap') {
+					$('#productPage').val('1');
+					readComment();
+				} else if (option == 'au') {
+					$('#uProductPage').val('1');
+					readComment();
+				} else if (option == 'af') {
+					$('#fBoardPage').val('1');
+					readComment();
+				} else if (option == 'aq') {
+					$('#qBoardPage').val('1');
+					readComment();
+				}
+
+			})// end btn_close.click
+			
 			$('.read_all').click(function(){
 				$('#option').val("a");
+				$('.table tbody').empty();
 				readComment();				
 			}) // end read_all.click
 			
 			$('.read_product').click(function(){
-				$('#option').val("p");
+				$('#option').val("ap");
+				$('.table tbody').empty();
 				readComment();	
 			}) // end read_product.click
 			
 			$('.read_u_product').click(function(){
-				$('#option').val("u");
+				$('#option').val("au");
+				$('.table tbody').empty();
 				readComment();	
 			}) // end read_u_product.click
 
 			$('.read_f_board').click(function(){
-				$('#option').val("f");
+				$('#option').val("af");
+				$('.table tbody').empty();
 				readComment();				
 			}) // end read_f_board.click
 			
 			$('.read_q_board').click(function(){
-				$('#option').val("q");
+				$('#option').val("aq");
+				$('.table tbody').empty();
 				readComment();	
 			}) // end read_q_board.click
 		}) // end document.ready

@@ -48,10 +48,10 @@ class UproductCommentDAOTest {
 		
 	}
 
-	private void testInsert() {
-		UProductCommentVO vo = new UProductCommentVO(0, 1, "test", "반가워요", null, "0");
-		int result = dao.insert(vo);
-		logger.info(result + "행 삽입");	
-	}
+//	private void testInsert() {
+//		UProductCommentVO vo = new UProductCommentVO(0, 1, "test", "반가워요", null, "0");
+//		int result = dao.insert(vo);
+//		logger.info(result + "행 삽입");	
+//	}
 
 }

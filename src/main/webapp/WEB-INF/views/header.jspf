@@ -49,27 +49,28 @@
 	            </h1>
 	            <p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
 	
-				<div class="input-group mt-4">
-				    <select id="searchOptions2" name="searchOptions2" class="form-control">
-				        <option value="" selected>전체 검색</option>
-				        <option value="option1">공용 상품</option>
-				        <option value="option2">중고 상품</option>
-				    </select>
+				<div class="container mt-4">
+				    <form action="/calla/member/searchByOption" method="get">
+				        <div class="input-group">
+				            <select id="productOption" name="productOption" class="form-select">
+				                <option value="" selected>전체 검색</option>
+				                <option value="p">공용 상품</option>
+				                <option value="u">중고 상품</option>
+				            </select>
 				
-				    <select id="searchOptions2" name="searchOptions2" class="form-control">
-				        <option value="" selected>전체 검색</option>
-				        <option value="option2">만화</option>
-				        <option value="option1">굿즈</option>
-				        <option value="option2">캐릭터</option>
-				    </select>
-				
-				    <input type="text" class="form-control" placeholder="상품을 검색하세요..." style="flex-grow: 2;">
-				
-				    <div class="input-group-append">
-				        <button class="btn btn-outline-light" type="button">
-				            <i class="bi bi-search"></i> 검색
-				        </button>
-				    </div>
+				            <select id="category" name="category" class="form-select">
+				                <option value="" selected>전체 검색</option>
+				                <option value="만화">만화</option>
+				                <option value="굿즈">굿즈</option>
+				                <option value="캐릭터">캐릭터</option>
+				            </select>
+							<input type="hidden" name="page" value=1>
+				            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="상품을 검색하세요...">
+				            <button type="submit" class="btn btn-primary">
+				                검색
+				            </button>
+				        </div>
+				    </form>
 				</div>
 	        </div>
 	    </div>

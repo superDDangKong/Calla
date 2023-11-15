@@ -18,31 +18,12 @@ public class UProductVO {
 	private int uProductCommentCount;
 	private int uProductLikeId;
 	private int uProductRecentlyViewId;
+	private String category;
 	
 	
 	public UProductVO() {}
 
 
-	public UProductVO(int uProductId, String uProductName, String uProductPrice, int uProductViews, int uProductLikes,
-			Date uProductCreatedDate, String uProductCategori, String memberAddress, String uProductContent,
-			String memberNickname, String uProductImagePath, int uProductCommentCount, int uProductLikeId,
-			int uProductRecentlyViewId) {
-		super();
-		this.uProductId = uProductId;
-		this.uProductName = uProductName;
-		this.uProductPrice = uProductPrice;
-		this.uProductViews = uProductViews;
-		this.uProductLikes = uProductLikes;
-		this.uProductCreatedDate = uProductCreatedDate;
-		this.uProductCategori = uProductCategori;
-		this.memberAddress = memberAddress;
-		this.uProductContent = uProductContent;
-		this.memberNickname = memberNickname;
-		this.uProductImagePath = uProductImagePath;
-		this.uProductCommentCount = uProductCommentCount;
-		this.uProductLikeId = uProductLikeId;
-		this.uProductRecentlyViewId = uProductRecentlyViewId;
-	}
 
 
 	public int getuProductId() {
@@ -185,6 +166,44 @@ public class UProductVO {
 	}
 
 
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public UProductVO(int uProductId, String uProductName, String uProductPrice, int uProductViews, int uProductLikes,
+			Date uProductCreatedDate, String uProductCategori, String memberAddress, String uProductContent,
+			String memberNickname, String uProductImagePath, int uProductCommentCount, int uProductLikeId,
+			int uProductRecentlyViewId, String category) {
+		super();
+		this.uProductId = uProductId;
+		this.uProductName = uProductName;
+		this.uProductPrice = uProductPrice;
+		this.uProductViews = uProductViews;
+		this.uProductLikes = uProductLikes;
+		this.uProductCreatedDate = uProductCreatedDate;
+		this.uProductCategori = uProductCategori;
+		this.memberAddress = memberAddress;
+		this.uProductContent = uProductContent;
+		this.memberNickname = memberNickname;
+		this.uProductImagePath = uProductImagePath;
+		this.uProductCommentCount = uProductCommentCount;
+		this.uProductLikeId = uProductLikeId;
+		this.uProductRecentlyViewId = uProductRecentlyViewId;
+		this.category = category;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "UProductVO [uProductId=" + uProductId + ", uProductName=" + uProductName + ", uProductPrice="
@@ -193,8 +212,13 @@ public class UProductVO {
 				+ ", memberAddress=" + memberAddress + ", uProductContent=" + uProductContent + ", memberNickname="
 				+ memberNickname + ", uProductImagePath=" + uProductImagePath + ", uProductCommentCount="
 				+ uProductCommentCount + ", uProductLikeId=" + uProductLikeId + ", uProductRecentlyViewId="
-				+ uProductRecentlyViewId + "]";
+				+ uProductRecentlyViewId + ", category=" + category + "]";
 	}
+
+
+
+
+
 	
 	
 

@@ -2,9 +2,9 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
-import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -36,9 +36,16 @@ public interface MemberDAO {
 	int insertbuy(UProductBuyVO vo);
 	int insertsell(UProductSellVO svo);
 	
-	List<UProductVO> selectAllBoards(MyPageCriteria criteria, String memberNickname);
-	int getTotalCountsAllBoards(String memberNickname);
+	List<UProductVO> selectBoards(String memberNickname, String option, MyPageCriteria criteria);
+	int getTotalCountsBoard(String memberNickname, String option);
 	
-//	List<ProductVO> selectAllProducts(PageCriteria criteria, String memberNickname);
-//	int getTotalCountsAllProducts(String memberNickname);
+	List<UProductCommentVO> selectComments(String memberNickname, String option, MyPageCriteria criteria);
+	int getTotalCountsComment(String memberNickname, String option);
+	
+	List<UProductVO> selectLikes(String memberId, String option, MyPageCriteria criteria);
+	int getTotalCountsLike(String memberId, String option);
+	
+	List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
+	int getTotalCountsProductsByOption(String keyword, String interest, String option);
+	
 }

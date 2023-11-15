@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import project.spring.calla.domain.AllBoardVO;
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
@@ -328,4 +328,27 @@ public class MemberController {
 	} // end registerPOST()
 	@GetMapping("/cancel")
 	public void cancelGET() {};
+	
+	@GetMapping("/searchByOption")
+	public void searchByOprionGet(Model model, String productOption, String category, String keyword, int page) {
+		logger.info("searchByOption 호출 option = " + productOption + " keyword = " + keyword + " category = " + category);
+		List<UProductVO> list = null; // union 써서 맨위 테이블 컬럼의 vo로 넣은거.... 다른방법 check
+	
+		PageCriteria criteria = new PageCriteria();
+		criteria.setPage(page);
+		PageMaker pageMaker = new PageMaker();
+		
+		list = memberService.readProductsByOption(criteria, keyword, category, productOption);
+		pageMaker.setTotalCount(memberService.getTotalCountsProductsByOption(keyword, category, productOption));
+		
+		model.addAttribute("list", list);
+			
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+ 		model.addAttribute("pageMaker", pageMaker);
+ 		model.addAttribute("option", productOption);
+ 		model.addAttribute("keyword", keyword);
+ 		model.addAttribute("category", category);
+	};
 }

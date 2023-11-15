@@ -109,22 +109,22 @@ private void testRecommand() {
 //	}
 
 	
-	private void testInsert() {
-		UProductVO vo = new UProductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0, 0, 0);
-
-		
-		int result = dao.insert(vo);
-		if (result == 1) {
-			logger.info("insert 성공");
-		} else {
-			logger.info("insert 실패");
-	
-		}
-		
-		System.out.println("등록된 VO : " + vo);
-		
-		
-	}
+//	private void testInsert() {
+//		UProductVO vo = new UProductVO(25, "당근", "2000원", 0, 0, null, "야채", "경기도", "안녕하세요", "ㅎㅎ", "ㅎㅎ", 0, 0, 0);
+//
+//		
+//		int result = dao.insert(vo);
+//		if (result == 1) {
+//			logger.info("insert 성공");
+//		} else {
+//			logger.info("insert 실패");
+//	
+//		}
+//		
+//		System.out.println("등록된 VO : " + vo);
+//		
+//		
+//	}
 	
 	
 
