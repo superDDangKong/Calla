@@ -2,10 +2,14 @@ package project.spring.calla.service;
 
 import java.util.List;
 
+import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.UProductLikeVO;
 
+
 public interface UProductLikeService {
-	int create(UProductLikeVO vo);  // 좋아요 등록
-	List<UProductLikeVO> read(String memberNickname); // 좋아요 검색
-	int delete(int uProductLikeId); // 좋아요 취소
+	int create(UProductLikeVO vo) throws Exception;
+	int delete(int uProductId, String memberId) throws Exception;
+	int getTotalCounts(int uProductId);
+	int checkProductLike(int uProductLikeId, String memberId);
+	UProductLikeVO read(int uProductId, String memberId);
 }

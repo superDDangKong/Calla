@@ -30,6 +30,7 @@ li {
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
+<script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
 <title>메인페이지</title>
 <!-- Bootstrap icons-->
 <link
@@ -37,7 +38,7 @@ li {
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="../resources/css/styles.css" rel="stylesheet" />
-<%@ include file="header.jsp"%>
+<%@ include file="../header.jspf" %> 
 </head>
 <body>
 
@@ -107,18 +108,25 @@ li {
 											href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
 
 									</h5>
-									<!-- Product reviews-->
-									<div
-										class="d-flex justify-content-center small text-warning mb-2">
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-									</div>
-									<!-- Product price-->
+									
+									<hr>
+									
+									<span style="color:red;">
+									<i class="fa-solid fa-heart fa-sm"></i>
+									</span>
+									
+									<span>
+									${vo.uProductLikes }
+									</span>
+									
+									<br>
+									<br>
+									
+									<div>
 									${vo.uProductPrice }
-
+									</div>						
+								
+									
 								</div>
 							</div>
 							<!-- Product actions-->

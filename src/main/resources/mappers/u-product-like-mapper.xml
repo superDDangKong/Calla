@@ -22,18 +22,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${u_product_like}
-		(${uProductId}, ${memberNickname})
-		values (#{uProductId}, #{memberNickname})
+		(${uProductId}, ${memberId})
+		values (#{uProductId}, #{memberId})
 	</insert>
 	
-	<select id="select_by_memberNickname" resultType="UProductLikeVO">
-		select * from ${u_product_like}
-		where ${memberNickname} = #{memberNickname}
-	</select>
+	<delete id="delete">
+		delete from ${u_product_like}
+		where ${memberId} = #{memberId} and ${uProductId} = #{uProductId}
+	</delete>
+	
 	
 	<delete id="delete_by_id">
 		delete from ${u_product_like}
 		where ${uProductLikeId} = #{uProductLikeId}
 	</delete>
 	
+	<select id="total_count" resultType="Integer">
+		select count(*) total_cnt from ${u_product_like} where ${uProductId} = #{uProductId}
+	</select>
+	
+	
+	<select id="select_by_member_id" resultType="UProductLikeVO">
+		select * from ${u_product_like} where ${uProductId} = #{uProductId} and ${memberId} = #{memberId}
+	</select>
+	
 </mapper>
+
+
+
+

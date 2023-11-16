@@ -87,7 +87,7 @@
     </script>
     <title>${vo.uProductName }</title>
   </head>
-<%@ include file="header.jsp"%>
+<%@ include file="../header.jspf" %> 
   <body>
     <div class="wrap">
       <div class="product-img">
@@ -190,6 +190,19 @@
         <button type="button" onclick="order()" class="btn btn-primary btn-order">
           찜하기
         </button>
+        
+        <input type="hidden" id="memberId" name="memberId" value="${sessionScope.memberId }">
+        
+        <c:if test="${uProductLikeId == 0 }">
+        <button id="likeBtn">좋아요</button>
+        </c:if>
+        <c:if test="${uProductLikeId != 0 }">
+        <button id="likeBtn">좋아요취소</button>		
+        </c:if>
+        
+        
+        
+        
       </div>
     </div>
     
@@ -437,6 +450,56 @@
 			
 			
 		}); // end document
+		
+		$(document).ready(function() {
+		    var likeBtn = $('#likeBtn');
+
+		    likeBtn.click(function() {
+		        var uProductId = $('#uProductId').val();
+		        var memberId = $('#memberId').val();
+		        console.log(uProductId);
+		        console.log(memberId);
+
+		        if ($(this).text() === '좋아요') { 
+		            $.ajax({
+		                type: 'POST',
+		                url: 'likes',
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                data: JSON.stringify({ uProductId: uProductId, memberId: memberId }),
+		                success: function(result) {
+		                    if (result.result == 1) {
+		                        alert('좋아요 등록');
+		                        likeBtn.text('좋아요 취소');
+		                        updateLikeCount(1);
+		                    }
+		                }
+		            });
+		        } else { // 좋아요 취소
+		            $.ajax({
+		                type: 'DELETE',
+		                url: 'likes/' + uProductId + '/' + memberId,
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                success: function(result) {
+		                    console.log(result);
+		                    if (result.result == 1) {
+		                        alert('좋아요 삭제');
+		                        likeBtn.text('좋아요');
+		                        updateLikeCount(-1);
+		                    }
+		                }
+		            });
+		        }
+		    });
+		    
+		    function updateLikeCount(change) {
+		        var currentCount = parseInt($('#likeCnt').text());
+		        $('#likeCnt').text(currentCount + change);
+		    }
+		}); // end document 
 		
 	</script>	
 	<%@ include file="footer.jsp"%>

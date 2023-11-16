@@ -26,14 +26,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
+import project.spring.calla.domain.UProductLikeVO;
 import project.spring.calla.domain.UProductReviewVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductService;
+import project.spring.calla.service.UProductLikeService;
 import project.spring.calla.service.UProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -46,6 +49,9 @@ public class UProductController {
 
 	@Autowired
 	private UProductService uproductService;
+	
+	@Autowired
+	private UProductLikeService uproductlikeService;
 
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -66,6 +72,13 @@ public class UProductController {
 	
 	@RequestMapping(value = "test2", method = RequestMethod.GET)
 	public void Test2GET() throws Exception {
+
+		logger.info("占쏙옙占쏙옙 占쏙옙占�");
+
+	}
+	
+	@RequestMapping(value = "test3", method = RequestMethod.GET)
+	public void Test3GET() throws Exception {
 
 		logger.info("占쏙옙占쏙옙 占쏙옙占�");
 
@@ -216,14 +229,21 @@ public class UProductController {
 		String memberManner = uproductService.readmanner(vo.getMemberNickname());
 		List<UProductVO> list = uproductService.readrecommend(vo.getuProductCategori(), uProductId);
 		
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		Integer uProductLikeId = 0;
+		UProductLikeVO uproductLikeVO = uproductlikeService.read(uProductId, memberId);
+			if (uproductLikeVO != null) {
+				uProductLikeId = uproductLikeVO.getuProductLikeId();
+			} 
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 		model.addAttribute("memberManner", memberManner);
-		
-		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("memberId");
+		model.addAttribute("uProductLikeId", uProductLikeId);
 		
 		if(memberId != null) {
 			int recentlyViewInsert = uproductService.createRecentlyView(uProductId, memberId);

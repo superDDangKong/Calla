@@ -2,11 +2,14 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
+import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.UProductLikeVO;
 
 public interface UProductLikeDAO {
-	int insert(UProductLikeVO vo);  // 좋아요 등록
-	List<UProductLikeVO> select(String memberNickname); // 좋아요 검색
-	int delete(int uProductLikeId); // 좋아요 취소
+	int insert(UProductLikeVO vo);
+	int delete(int uProductId, String memberId);
+	int getTotalCount(int uProductId);
+	int checkProductLike(int uProductId, String memberId);
+	UProductLikeVO select(int uProductId, String memberId);
 	int deleteById(int uProductLikeId);
 }
