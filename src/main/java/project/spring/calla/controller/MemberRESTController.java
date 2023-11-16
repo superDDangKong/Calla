@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -177,6 +178,29 @@ public class MemberRESTController {
 
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);
 	}// end updateAddress
+	@GetMapping("/orders/{page}")
+	public ResponseEntity<Map<String, Object>> readOrderList(@PathVariable("page") int page, HttpServletRequest request) {
+		logger.info("readOrders 호출");
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		MyPageCriteria criteria = new MyPageCriteria();
+		criteria.setPage(page);
+		MyPageMaker pageMaker = new MyPageMaker();
+		
+		List<ProductOrderVO> list = null;
+		
+		list = memberService.readOrders(memberId, criteria);
+		pageMaker.setTotalCount(memberService.getTotalCountsOrders(memberId));
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		
+		
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("list", list);
+		args.put("pageMaker", pageMaker);
+		return new ResponseEntity<Map<String, Object>>(args, HttpStatus.OK);
+	}
 	
 	@GetMapping("/boards/{memberNickname}/{page}/{option}")
 	public ResponseEntity<Map<String, Object>> readBoardsByOption(@PathVariable("memberNickname") String memberNickname, @PathVariable("page") int page, @PathVariable("option") String option) {

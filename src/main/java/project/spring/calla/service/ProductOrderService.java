@@ -9,7 +9,8 @@ public interface ProductOrderService {
 	int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress);
 	int delete(int productId, String memberId);
 	ProductOrderVO readBy(String memberId);
-//	List<ProductOrderVO> read();
+	List<ProductOrderVO> read();
 //	int create(int productId, String productName, int productPrice, int productAmount, String memberId);
 	List<ProductOrderVO> read(String memberId);
+	int updateDeliveryStatus(int productId, String memberId, String deliveryStatus);
 }

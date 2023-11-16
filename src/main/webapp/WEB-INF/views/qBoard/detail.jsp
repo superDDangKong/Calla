@@ -67,6 +67,11 @@ hr {
 .comment-buttons button {
     margin-left: 5px; // 버튼 사이의 간격 조절
 }
+
+
+.comment_item {
+    border-bottom: 1px solid #000;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
@@ -128,7 +133,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 					<div class="border">
 						${memberNickname}<br><br> <input type="hidden" id="memberNickname" value=${memberNickname }>
 							<div class="form-group">
-								<textarea id="qBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+								<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
 							</div>
 							<div style="text-align: right;">
 								<button id="btnCommentAdd" class="btn btn-dark">작성</button>
@@ -317,10 +322,10 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
          
          // btnReply 답글들 불러오기, btnReplyAdd 답글작성버튼
 		$('#comments').on('click', '.comment_item .btnReply', function(){ // 대댓글 입력
-			if($('#memberNickname').val() == null) { // 로그인 확인
+			/* if($('#memberNickname').val() == null) { // 로그인 확인
 				alert('답글을 작성하려면 로그인 해 주세요')
 				return;
-			}
+			} */
 			console.log(this); // this 멤버닉네임?
 			var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
 			console.log(qBoardCommentId);
@@ -370,23 +375,36 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                         readonly = '';
                      }
                      
-                     list += '<div class="reply_item">'
+                     list += '<div class="reply_item" style="border: 1px solid">'
                            + '<pre>'
                            + '<input type="hidden" class="qBoardReplyId" value="' + this.qBoardReplyId +'">'
-                           + this.memberNickname
-                           + '&nbsp;&nbsp;' // 공백
-                           + '<input type="text"  class="qBoardReplyContent" value="' + this.qBoardReplyContent + '">'
-                           + '&nbsp;&nbsp;' // 공백
-                           + formattedDate
-                           + '&nbsp;&nbsp;' // 공백
-                           + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
+                           + '<div class="reply-header">'
+                           + '<strong>' + this.memberNickname + '</strong>'
+                           + '<span class="reply-date">' + formattedDate + '</span>'
+						   + '</div>'
+						   + '<div class="reply-content">'
+						   + '<textarea class="form-control qBoardReplyContent" rows="2" style="border:none;">'
+						   + this.qBoardReplyContent
+						   + '</textarea>'
+						   + '</div>'
+						   + '<div class="reply-buttons">'
+						   + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
                            + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
-                           + '<button class="btnReplyInsert">답글입력</button>'
                            + '<br>'
                            + '</pre>'
+                           + '</div>'
                            + '</div>';
+						   /* if(memberNickname === this.memberNickname){
+							   list += '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
+	                           + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
+	                           + '<br>'
+	                           + '</pre>'
+	                           + '</div>'
+	                           + '</div>';
+						   } */
+                           
                   }); // end each()
-               
+               		
                   list += '<div style="text-align: center;">'
 					  + memberNickname
 					  + '&nbsp;&nbsp;'

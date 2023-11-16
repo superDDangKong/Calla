@@ -56,11 +56,17 @@ public class ProductOrderServiceImple implements ProductOrderService {
 		return dao.select(memberId);
 	}
 
+	@Override
+	public int updateDeliveryStatus(int productId, String memberId, String deliveryStatus) {
+		logger.info("updateDeliveryStatus() 호출 ");
+		return dao.updateDeliveryStatus(productId, memberId, deliveryStatus);
+	}
 
-//	@Override
-//	public List<ProductOrderVO> read() {
-//		logger.info("read() 호출  ");
-//		return dao.select();
-//	}
+
+	@Override
+	public List<ProductOrderVO> read() {
+		logger.info("read() 호출  ");
+		return dao.select();
+	}
 
 }

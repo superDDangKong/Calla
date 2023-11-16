@@ -2,12 +2,14 @@ package project.spring.calla.controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -323,13 +325,21 @@ public class ProductController {
 	}
 	
 	@GetMapping("/order")
-	public String order(Model model, String memberId) {
-	    logger.info("order() 호출 : memberId = " + memberId);
-	    
-	    List<ProductOrderVO> productOrderList = productOrderService.read(memberId);
+	public String order(Model model, HttpServletRequest request) {
+	    logger.info("order() 호출 : memberId = " );
+	    HttpSession session = request.getSession();
+	    int memberLevel = (int) session.getAttribute("memberLevel");
+	    String memberId = (String) session.getAttribute("memberId");
+	    List<ProductOrderVO> productOrderList = null;
+	    if(memberLevel >=2) {
+	    	productOrderList = productOrderService.read();
+	    	
+	    } else {
+	    	productOrderList = productOrderService.read(memberId);
+	    	
+	    }
 	    
 
-	    model.addAttribute("memberId", memberId);
 	    model.addAttribute("productOrderList", productOrderList);
 
 	    return "/product/order";
