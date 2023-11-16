@@ -76,6 +76,15 @@ public class productOrderRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
+	@PutMapping("/{productId}/{memberId}/{deliveryStatus}")
+	public ResponseEntity<Integer> updateDeliveryStatus(
+			@PathVariable("productId") int productId,
+			@PathVariable("memberId") String memberId,
+			@PathVariable("deliveryStatus") String deliveryStatus){
+		int result = productOrderService.updateDeliveryStatus(productId, memberId, deliveryStatus);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{productId}/{memberId}")
 	public ResponseEntity<Integer> deleteProductOrder(
 			@PathVariable("productId") int productId,

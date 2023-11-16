@@ -14,20 +14,25 @@
 <h1>주문내역</h1>
 <body>
 	<c:set var="memberId" value="${memberId}" />
+	<c:set var="memberLevel" value="${memberLevel}" />
 	<input type="hidden" id="memberId" value="${memberId}" />	
+	<input type="hidden" id="memberLevel" value="${memberLevel}" />	
+	
 	<div id="productOrder">
 	
 	 <table>
         <thead>
             <tr>
                 <th style="width: 100px">주문 날짜</th>
+                <th style="width: 100px">주문자</th>
                 <th style="width: 150px">상품 이름</th>
                 <th style="width: 60px">이미지</th>
                 <th style="width: 80px">수량</th>
                 <th style="width: 80px">가격</th>
                 <th style="width: 80px">총 가격</th>
-                <th style="width: 150px">배송지</th>
+                <th style="width: 300px">배송지</th>
                 <th style="width: 80px">수령인</th>
+                <th style="width: 100px">배송상황</th>
                                
             </tr>
         </thead>
@@ -48,6 +53,7 @@
 								pattern="yyyy.MM.dd" var="productOrderCreatedDate" />                            
                             	${productOrderCreatedDate }
                             </td>
+                            <td>${vo.memberId }</td>
                             <td><a href="detail?productId=${vo.productId }&memberId=${vo.memberId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
                             <td>
                             	<div>
@@ -62,6 +68,27 @@
                             </td>
                             <td>${vo.memberAddress }</td>
                             <td>${vo.recipientName }</td>
+                            <c:choose>
+                            	<c:when test="${memberLevel >= 2}">
+                            		<td>
+                            			<div>
+                            				<label for="deliveryStatus"> </label>
+												<select id="deliveryStatus" name="deliveryStatus">
+													<option value="출고준비">출고준비</option>
+													<option value="출고완료">출고완료</option>
+													<option value="배송중">배송중</option>
+													<option value="배송완료">배송완료</option>
+												</select>
+                            			</div>
+                            		</td>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<td>
+                            			${vo.deliveryStatus }
+                            		</td>
+                            	</c:otherwise>
+                            </c:choose>
+                            	
                             <td>
                             	<input type="hidden" name="productId" value="${vo.productId}">
                             </td>
@@ -73,7 +100,33 @@
         </c:choose>
     </table>
 	</div>
-
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('select[name="deliveryStatus"]').change(function(){
+				var memberId = $('#memberId').val();
+				var productId = $(this).closest('tr').find('input[name="productId"]').val();
+				var deliveryStatus = $(this).val();
+				
+				$.ajax({
+					type: 'PUT',
+					url: 'orders/' + productId + '/' + memberId + '/' + deliveryStatus,
+					headers: {
+	                    'Content-Type': 'application/json'
+	                },
+					data: {
+						memberId : memberId,
+						productId : productId,
+						deliveryStatus : deliveryStatus
+					},
+					success: function(result){
+						console.log('배송정보 수정 완료');
+					}
+				}); // end ajax
+			}); // end select.change
+			
+		}); // end document
+	</script>
 	
 </body>
 </html>

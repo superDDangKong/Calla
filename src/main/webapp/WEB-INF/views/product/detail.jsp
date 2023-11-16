@@ -228,7 +228,7 @@
 		    <input type="hidden" id="selectedRating" value="0" />
 		</div>
 		<input type="hidden" id="memberNickname" value=${memberNickname }>
-		<input type="text" id="productCommentContent" required>
+		<textarea rows="3" cols="120" id="productCommentContent" required></textarea>
 		<button id="btnCommentAdd">작성</button> 
 	</div>
 	</c:if>
