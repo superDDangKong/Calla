@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
@@ -278,6 +279,23 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		args.put("option", "%" + option + "%");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_likes", args);
+	}
+
+	@Override
+	public List<ProductOrderVO> selectOrders(String memberId, MyPageCriteria criteria) {
+		logger.info("selecOrders 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("memberId", memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_orders", args);
+	}
+
+	@Override
+	public int getTotalCountsOrders(String memberId) {
+		logger.info("getTotalCountsOrders 호출");
+		Map<String, String> args = new HashMap();
+		args.put("memberId", memberId);
+		return sqlSession.selectOne(NAMESPACE + ".total_count_orders", memberId);
 	}
 	
 }

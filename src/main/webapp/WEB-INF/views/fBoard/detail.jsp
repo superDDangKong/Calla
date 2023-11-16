@@ -152,63 +152,44 @@ li {
 							function getAllComments() {
 								console.log("getAllComments() 호출");
 								var fBoardId = $('#fBoardId').val();
-								var commentPage = $('#pageMaker_commentPage')
-										.val();
-								var commentNumsPerPage = $(
-										'#pageMaker_commentNumsPerPage').val();
-								var url = 'comments/all/' + fBoardId + '/'
-										+ commentPage + '/'
-										+ commentNumsPerPage;
-								$
-										.getJSON(
-												url,
-												function(data) {
-													var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
-													var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
-													$('#pageMaker_startPageNo')
-															.val(
-																	data.pageMaker.startPageNo);
-													$('#pageMaker_endPageNo')
-															.val(
-																	data.pageMaker.endPageNo);
-													var pageMaker_startPageNo = +$(
-															'#pageMaker_startPageNo')
-															.val();
-													var pageMaker_endPageNo = +$(
-															'#pageMaker_endPageNo')
-															.val();
-													var memberNickname = $(
-															'#memberNickname')
-															.val();
-													var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
-													$(data.list)
-															.each(
-																	function() {
-																		console
-																				.log(this);
-																		var fBoardCommentCreatedDate = new Date(
-																				this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-																		var disabled = 'disabled';
-																		var readonly = 'readonly';
-																		if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
-																			disabled = '';
-																			readonly = '';
-																		}
-																		list += '<div class="comment_item">'
-																				+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
-																				+ this.memberNickname
-																				+ '<br>'
-																				+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
-																				+ this.fBoardCommentContent
-																				+ '</textarea>'
-																				+ fBoardCommentCreatedDate
-																				+ '<br>'
-																				+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
-																				+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-																				+ '<button class="btnReply">답글</button>'
-																				+ '<br>'
-																				+ '<hr>'
-																				+ '</div>';
+								var commentPage = $('#pageMaker_commentPage').val();
+								var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
+								var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+								$.getJSON(
+										url,
+										function(data) {
+											var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
+											var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
+											$('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
+											$('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
+											var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
+											var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
+											var memberNickname = $('#memberNickname').val();
+											var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+													$(data.list).each(function() {
+														console.log(this);
+														var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+														var disabled = 'disabled';
+														var readonly = 'readonly';
+														if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
+																	disabled = '';
+																	readonly = '';
+																}
+																	list += '<div class="comment_item">'
+																			+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
+																			+ this.memberNickname
+																			+ '<br>'
+																			+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
+																			+ this.fBoardCommentContent
+																			+ '</textarea>'
+																			+ fBoardCommentCreatedDate
+																			+ '<br>'
+																			+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
+																			+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
+																			+ '<button class="btnReply">답글</button>'
+																			+ '<br>'
+																			+ '<hr>'
+																			+ '</div>';
 
 																	}); // end each()
 													list += '<div style="text-align: center;">'
@@ -447,11 +428,7 @@ li {
 												}); // end getJSON()
 							} // end getAllReplies()
 
-							$(document)
-									.on(
-											'click',
-											'.btnReplyAdd',
-											function() {
+							$(document).on('click', '.btnReplyAdd',	function() {
 												console.log(this);
 												var commentItem = $(this)
 														.closest(

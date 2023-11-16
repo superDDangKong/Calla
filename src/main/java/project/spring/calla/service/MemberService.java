@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
@@ -52,6 +53,9 @@ public interface MemberService {
 	
 	List<UProductVO> readLikes(String memberId, String option, MyPageCriteria criteria);
 	int getTotalCountsLike(String memberId, String option);
+	
+	List<ProductOrderVO> readOrders(String memberId, MyPageCriteria criteria);
+	int getTotalCountsOrders(String memberId);
 	
 	List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
 	int getTotalCountsProductsByOption(String keyword, String interest, String option);

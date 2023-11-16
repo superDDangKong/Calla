@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
@@ -325,6 +326,18 @@ public class MemberServiceImple implements MemberService {
 	public int getTotalCountsLike(String memberId, String option) {
 		logger.info("getTotalCountsLike 호출");
 		return MemberDAO.getTotalCountsLike(memberId, option);	
+	}
+
+	@Override
+	public List<ProductOrderVO> readOrders(String memberId, MyPageCriteria criteria) {
+		logger.info("readOrders() 호출");
+		return MemberDAO.selectOrders(memberId, criteria);
+	}
+
+	@Override
+	public int getTotalCountsOrders(String memberId) {
+		logger.info("getTotalCountsOrderList 호출");
+		return MemberDAO.getTotalCountsOrders(memberId);	
 	}
 
 }

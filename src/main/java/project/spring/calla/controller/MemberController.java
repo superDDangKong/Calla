@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingListener;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -161,6 +162,9 @@ public class MemberController {
 
 	@GetMapping("/likes")
 	public void likesGET() {} // end likesGET()
+
+	@GetMapping("/orders")
+	public void ordersGET() {} // end likesGET()
 
 	@GetMapping("/searchId")
 	public void searchIdGET() {
@@ -337,8 +341,8 @@ public class MemberController {
 		criteria.setPage(page);
 		PageMaker pageMaker = new PageMaker();
 		
-//		list = memberService.readProductsByOption(criteria, keyword, category, productOption);
-//		pageMaker.setTotalCount(memberService.getTotalCountsProductsByOption(keyword, category, productOption));
+		list = memberService.readProductsByOption(criteria, keyword, category, productOption);
+		pageMaker.setTotalCount(memberService.getTotalCountsProductsByOption(keyword, category, productOption));
 		
 		model.addAttribute("list", list);
 			
