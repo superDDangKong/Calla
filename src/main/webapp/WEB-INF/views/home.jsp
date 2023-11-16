@@ -140,6 +140,7 @@
 													${ProductVO.productViews }</div>
 												가격 : ${ProductVO.productPrice }
 											</div>
+											
 										</div>
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 											<div class="text-center">

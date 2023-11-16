@@ -6,7 +6,7 @@
 <head>
 <style type="text/css">
 #sidebar {
-	width: 250px;
+	width: 100px;
 }
 </style>
 <meta charset="UTF-8">

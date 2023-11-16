@@ -6,16 +6,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="project.spring.calla.ProductOrderMapper">
 
 	<insert id="insert" parameterType="ProductOrderVO">
-    insert into product_order
-    (${memberId}, ${productId}, ${productName}, ${productAmount}, ${productPrice}, ${memberCard}, ${memberCardNumber}, ${memberEmail}, ${recipientName}, ${memberAddress}, ${productImagePath})
-    values (#{memberId}, #{productId}, #{productName}, #{productAmount}, #{productPrice}, #{memberCard}, #{memberCardNumber}, #{memberEmail}, #{recipientName}, #{memberAddress}, #{productImagePath})
-   </insert>
+	    insert into product_order
+	    (${memberId}, ${productId}, ${productName}, ${productAmount}, ${productPrice}, ${memberCard}, ${memberCardNumber}, ${memberEmail}, ${recipientName}, ${memberAddress}, ${productImagePath}, ${deliveryStatus})
+	    values (#{memberId}, #{productId}, #{productName}, #{productAmount}, #{productPrice}, #{memberCard}, #{memberCardNumber}, #{memberEmail}, #{recipientName}, #{memberAddress}, #{productImagePath}, COALESCE(#{deliveryStatus, jdbcType=VARCHAR}, '출고준비중'))
+   	</insert>
 	
 	<select id="select_by_productData" resultType="ProductOrderVO">
 		select * from ${product_order}
 		where ${memberId} = #{memberId}
 	</select>
-
+	
+	<select id="select_all" resultType="ProductOrderVO">
+		select * from ${product_order}
+		order by ${productOrderId} desc
+	</select>
 
 	
 	<select id="select_by_memberId" resultType="ProductOrderVO">
@@ -26,6 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update">
 		update ${product_order}
 		set ${memberEmail} = #{memberEmail}, ${recipientName} = #{recipientName}, ${memberAddress} = #{memberAddress}
+		where ${memberId} = #{memberId} and ${productId} = #{productId}
+	</update>
+	
+	<update id="updateDeliveryStatus">
+		update ${product_order}
+		set ${deliveryStatus} = #{deliveryStatus}
 		where ${memberId} = #{memberId} and ${productId} = #{productId}
 	</update>
 	

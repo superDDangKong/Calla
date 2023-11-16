@@ -10,7 +10,7 @@ public class ProductOrderVO {
 	private String memberCard;
 	private String memberCardNumber;
 	private String memberEmail;
-	private String recipientName;
+	private String recipientName; // 수령인
 	private String memberAddress;
 	private String productOrderId;
 	private int productId;
@@ -18,13 +18,15 @@ public class ProductOrderVO {
     private String productName;
     private int productPrice;
     private int productAmount;
+    private String deliveryStatus; //배송현황
+	private MemberVO member;
 	
     public ProductOrderVO() {
 	}
-    
+
 	public ProductOrderVO(String memberId, Date productOrderCreatedDate, String memberCard, String memberCardNumber,
 			String memberEmail, String recipientName, String memberAddress, String productOrderId, int productId,
-			String productImagePath, String productName, int productPrice, int productAmount) {
+			String productImagePath, String productName, int productPrice, int productAmount, String deliveryStatus) {
 		super();
 		this.memberId = memberId;
 		this.productOrderCreatedDate = productOrderCreatedDate;
@@ -39,6 +41,7 @@ public class ProductOrderVO {
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.productAmount = productAmount;
+		this.deliveryStatus = deliveryStatus;
 	}
 
 	public String getMemberId() {
@@ -145,15 +148,33 @@ public class ProductOrderVO {
 		this.productAmount = productAmount;
 	}
 
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
+	
+	 public MemberVO getMember() {
+	    return member;
+	}
+
+	public void setMember(MemberVO member) {
+	    this.member = member;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductOrderVO [memberId=" + memberId + ", productOrderCreatedDate=" + productOrderCreatedDate
 				+ ", memberCard=" + memberCard + ", memberCardNumber=" + memberCardNumber + ", memberEmail="
 				+ memberEmail + ", recipientName=" + recipientName + ", memberAddress=" + memberAddress
-				+ ", productOrderId=" + productOrderId + ", productId=" + productId + ", productImagePath=" + productImagePath
-				+ ", productName=" + productName + ", productPrice=" + productPrice + ", productAmount=" + productAmount
-				+ "]";
+				+ ", productOrderId=" + productOrderId + ", productId=" + productId + ", productImagePath="
+				+ productImagePath + ", productName=" + productName + ", productPrice=" + productPrice
+				+ ", productAmount=" + productAmount + ", deliveryStatus=" + deliveryStatus + "]";
 	}
+
+	
 	
     
     

@@ -85,6 +85,11 @@ li {
 		</c:if>
 	</div>
 	<hr>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="productSidebar.jspf"%>
+			<main class="container col-md-8 ms-sm-auto col-lg-8 px-md-4" >
+	
 	<section class="py-5">
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -132,6 +137,11 @@ li {
 			</c:forEach>
 		</div>
 	</div>
+	</section>
+	</main>
+			
+		</div>
+</div>
 	
 	<ul>
 		<c:if test="${pageMaker.hasPrev }">

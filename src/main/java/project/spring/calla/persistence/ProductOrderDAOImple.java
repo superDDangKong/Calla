@@ -65,6 +65,16 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberId", memberId);
 	}
 
+	@Override
+	public int updateDeliveryStatus(int productId, String memberId, String deliveryStatus) {
+		logger.info("updateDeliveryStatus() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("productId", productId);
+		args.put("memberId", memberId);
+		args.put("deliveryStatus", deliveryStatus);
+		return sqlSession.update(NAMESPACE + ".updateDeliveryStatus", args);
+	}
+
 	
 
 //	@Override
@@ -79,10 +89,10 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 //		return sqlSession.insert(NAMESPACE + ".insert", args);
 //	}
 
-//	@Override
-//	public List<ProductOrderVO> select() {
-//		logger.info("select() 호출");
-//		return sqlSession.selectList(NAMESPACE + ".select_all");
-//	}
+	@Override
+	public List<ProductOrderVO> select() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_all");
+	}
 
 }
