@@ -422,9 +422,7 @@ li {
 															+ '<br>'
 
 													comment_item
-															.append('<div class="replies bg-light">'
-																	+ list
-																	+ '</div>');
+															.append('<div class="replies bg-light">' + list + '</div>');
 												}); // end getJSON()
 							} // end getAllReplies()
 

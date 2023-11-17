@@ -22,6 +22,7 @@ li {
 
 .comment_item {
     margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .comment-header {
@@ -45,10 +46,6 @@ li {
     resize: none; /* Disable textarea resizing */
 }
 
-.comment-actions {
-    margin-top: 10px;
-}
-
 /* 버튼 스타일링 */
 .btn {
     margin-right: 5px;
@@ -61,17 +58,47 @@ hr {
 }
 
 .comment-buttons {
-    text-align: right; // 버튼을 오른쪽 정렬
+    text-align: right; 
 }
 
 .comment-buttons button {
-    margin-left: 5px; // 버튼 사이의 간격 조절
+    margin-left: 5px; 
 }
 
+.reply_item {
+	margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
-.comment_item {
-    border-bottom: 1px solid #000;
-    }
+.reply-header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reply-date {
+	margin-left: 10px;
+    color: #777;
+}
+
+.reply-content {
+	margin-bottom: 10px;
+}
+
+.reply-content textarea {
+	width: 100%;
+    resize: none; /* Disable textarea resizing */
+}
+
+.reply-buttons {
+    text-align: right; 
+}
+
+.reply-buttons button {
+    margin-left: 5px; 
+}
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
@@ -96,16 +123,18 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	<div class="container">
 	<br><br><br><br><br>
 		<h2>글 보기</h2>
-		<div>
+		<%-- <div>
 			<p style="">글 번호 : ${vo.qBoardId }</p>
-		</div>
+		</div> --%>
 		<div>
 			<p>제목 : ${vo.qBoardTitle }</p>
 			
 		</div>
 		<div>
-			<p>작성자 : ${vo.memberNickname }</p>
-			<p id="date">작성일 : ${vo.qBoardCreatedDate}</p>
+			<p>${vo.memberNickname }</p>
+			<fmt:formatDate value="${vo.qBoardCreatedDate }"
+				pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
+			<p id="date">${vo.qBoardCreatedDate }</p>
 		</div>
 		<div class="content">
 			<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">
@@ -335,8 +364,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
       // 게시판 대댓글 전체 가져오기
          function getAllReplies(qBoardCommentId){
   
-
             $('.replies').html('');
+            
             console.log("getAllReplies() 호출");
             console.log("getAllReplies() 호출" + qBoardCommentId.val());
             
@@ -374,6 +403,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                         disabled = '';
                         readonly = '';
                      }
+                     var qBoardReplyId = $(this).closest('.reply_item').find('.qBoardReplyId').val();
+                     console.log("After setting qBoardReplyId:", qBoardReplyId);
                      
                      list += '<div class="reply_item" style="border: 1px solid">'
                            + '<pre>'
@@ -388,11 +419,11 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 						   + '</textarea>'
 						   + '</div>'
 						   + '<div class="reply-buttons">'
-						   + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
-                           + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
+						   /* + '<button class="btn btn-sm btnReplyUpdate">수정</button>'
+                           + '<button class="btn btn-sm btnReplyDelete">삭제</button>' */
                            + '<br>'
-                           + '</pre>'
                            + '</div>'
+                           + '</pre>'
                            + '</div>';
 						   /* if(memberNickname === this.memberNickname){
 							   list += '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'

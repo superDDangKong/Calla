@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductOrderVO;
@@ -41,17 +42,25 @@ public class MemberRESTController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	/*
+	 * @PostMapping("/login") public String login(String memberId, String memberPw,
+	 * String targetURL, HttpServletRequest request) {
+	 * 
+	 * }
+	 */
+	
 	@PostMapping("/join")
 	public ResponseEntity<Integer> createMember(@RequestBody MemberVO vo) {
-		logger.info("createMember() 호占쏙옙 : vo = " + vo.toString());
+		logger.info("createMember() : vo = " + vo.toString());
 		int result = 0;
 		result = memberService.create(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	} // end createMember
 	
-	@PostMapping("/checkId") // @RequestParam("member_Id")占쏙옙占쏙옙 String id占쏙옙 占쏙옙占쏙옙
+	@PostMapping("/checkId") // @RequestParam("member_Id")
 	public int checkId(@RequestParam("memberId") String id) {
-		logger.info("checkId() 호占쏙옙");
+		logger.info("checkId()");
 		logger.info(id); // 
 			try {
 				id = URLDecoder.decode(id, "UTF-8");
@@ -66,7 +75,7 @@ public class MemberRESTController {
 	
 	@PostMapping("/checkNick")
 	public int checkNick(@RequestParam("memberNickname") String nick) {
-		logger.info("checkNick() 호占쏙옙");
+		logger.info("checkNick() ");
 		logger.info(nick);
 			try {
 				nick = URLDecoder.decode(nick,"UTF-8");
@@ -80,15 +89,15 @@ public class MemberRESTController {
 		return result;
 	} // end checkNick
 	
-//	@PutMapping("memberNickname/{memberNickname}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+//	@PutMapping("memberNickname/{memberNickname}") // PUT : 
 //	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberNickname") String memberNickname) {
 //		int result = memberService.update(memberNickname);
 //		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
 	
-	@PutMapping("/updatePw/{memberId}") // 占쏙옙橘占싫� 占쏙옙占쏙옙
+	@PutMapping("/updatePw/{memberId}") // 
 	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args, HttpSession session) {
-		logger.info("updateMemberPw() 호占쏙옙");
+		logger.info("updateMemberPw() ");
 		logger.info("memberId = " + memberId);
 		logger.info(args.get("currentPw").toString());
 		logger.info(args.get("newPw").toString());
@@ -98,20 +107,20 @@ public class MemberRESTController {
 		String newPw = args.get("newPw").toString();
 		int result = 0;
 		if (memberPw.equals(args.get("currentPw"))) {
-			logger.info("pw 占쏙옙치");
+			logger.info("pw ");
 			result = memberService.updatePw(memberId, newPw);
 			
 		} else {
-			logger.info("pw 占쏙옙占쏙옙치");
+			logger.info("pw ");
 			
 		}
 			
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePw
 	
-	@PutMapping("/updateNickname/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+	@PutMapping("/updateNickname/{memberId}") // PUT :
 	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname, HttpSession session) {
-		logger.info("updateMemberNickname() 호占쏙옙");
+		logger.info("updateMemberNickname() ");
 		logger.info("newNickname = " + newNickname);
 		
 		int result = memberService.updateNickname(memberId, newNickname);
@@ -122,9 +131,9 @@ public class MemberRESTController {
 	}// end updateNickname
 	
 	
-	@PutMapping("/updatePhone/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+	@PutMapping("/updatePhone/{memberId}") // PUT :
 	public ResponseEntity<Integer> updateMemberPhone(@PathVariable("memberId") String memberId, @RequestBody String newPhone) {
-		logger.info("updateMemberPhone() 호占쏙옙");
+		logger.info("updateMemberPhone()");
 		logger.info("newPhone = " + newPhone);
 		
 		int result = memberService.updatePhone(memberId, newPhone);
@@ -132,9 +141,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePhone
 	
-	@PutMapping("/updateEmail/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+	@PutMapping("/updateEmail/{memberId}") // PUT : 
 	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
-		logger.info("updateMemberEmail() 호占쏙옙");
+		logger.info("updateMemberEmail() ");
 		logger.info("newEmail = " + newEmail);
 		
 		int result = memberService.updateEmail(memberId, newEmail);
@@ -142,9 +151,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateEmail
 	
-	@PutMapping("/updateInterest/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+	@PutMapping("/updateInterest/{memberId}") // PUT : 
 	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
-		logger.info("updateMemberInterest() 호占쏙옙");
+		logger.info("updateMemberInterest() ");
 		logger.info("newInterest = " + newInterest);
 		
 		int result = memberService.updateInterest(memberId, newInterest);
@@ -152,9 +161,9 @@ public class MemberRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updateEmail
 	
-	@PutMapping("/updateAddress/{memberId}") // PUT : 占쏙옙占� 占쏙옙占쏙옙
+	@PutMapping("/updateAddress/{memberId}") // PUT : 
 	public ResponseEntity<Integer> updateMemberAddress(@PathVariable("memberId") String memberId, @RequestBody String newAddress) {
-		logger.info("updateMemberAddress() 호占쏙옙");
+		logger.info("updateMemberAddress() ");
 		logger.info("newAddress = " + newAddress);
 		
 		int result = memberService.updateAddress(memberId, newAddress);
@@ -164,7 +173,7 @@ public class MemberRESTController {
 	
 	@PutMapping("/updateLevel/{memberId}") 
 	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {
-		logger.info("updateMemberLevel() 호占쏙옙");
+		logger.info("updateMemberLevel() ");
 		int amount = 0;
 		if(Integer.parseInt(memberLevel) == 1) {
 			amount = 1;
@@ -180,7 +189,7 @@ public class MemberRESTController {
 	}// end updateAddress
 	@GetMapping("/orders/{page}")
 	public ResponseEntity<Map<String, Object>> readOrderList(@PathVariable("page") int page, HttpServletRequest request) {
-		logger.info("readOrders 호출");
+		logger.info("readOrders ");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		
@@ -267,7 +276,7 @@ public class MemberRESTController {
 	
 	@DeleteMapping("/deleteLikes")
 	ResponseEntity<Integer> deleteLikes(@RequestBody Map<String, List<Integer>> args) {
-		logger.info("deleteLikes 호출");
+		logger.info("deleteLikes ");
 		int result = 1;
 		List<Integer> productIdList = args.get("productIdList");
 		List<Integer> productLikeIdList = args.get("productLikeIdList");
@@ -292,7 +301,7 @@ public class MemberRESTController {
 
 	@GetMapping("/recentlyView/product/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
-		logger.info("recentlyViewProductGET() 호占쏙옙 : memberId = " + memberId);
+		logger.info("recentlyViewProductGET()  : memberId = " + memberId);
 		
 		MyPageCriteria criteria = new MyPageCriteria();
 		MyPageMaker pageMaker = new MyPageMaker();
@@ -312,7 +321,7 @@ public class MemberRESTController {
 	
 	@GetMapping("/recentlyView/uProduct/{memberId}/{page}") 
 	public ResponseEntity<Map<String, Object>> recentlyViewUProductGET(@PathVariable("memberId") String memberId, @PathVariable("page") int page) {
-		logger.info("recentlyUProductViewGET() 호占쏙옙 : memberId = " + memberId);
+		logger.info("recentlyUProductViewGET()  : memberId = " + memberId);
 		
 		MyPageCriteria criteria = new MyPageCriteria();
 		MyPageMaker pageMaker = new MyPageMaker();

@@ -31,6 +31,57 @@
 .error_msg{
 	font-size: 14px;
 }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        form {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .member__form {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            width: 100px;
+        }
+
+        #domain-list {
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        #join_button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .final_email_ck,
+        .final_interest_ck,
+        .final_add_ck {
+            color: red;
+        }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
