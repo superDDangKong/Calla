@@ -4,12 +4,13 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionBindingListener;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ import project.spring.calla.util.MediaUtil;
 public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	private static Map<String, HttpSession> loginSessions = new HashMap<>();
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -84,9 +87,14 @@ public class MemberController {
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr,
 			HttpServletRequest request) {
-		// RedirectAttributes
-		//
-		logger.info("loginPOST() ");
+
+		logger.info("loginPOST() " + loginSessions.toString());
+		HttpSession existedSession = loginSessions.get(memberId);
+		logger.info("기존 세션 = " + existedSession);
+		if (existedSession != null) {
+			existedSession.invalidate();
+		}
+
 		String result = memberDAO.login(memberId, memberPw);
 		if (result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -101,7 +109,8 @@ public class MemberController {
 			session.setAttribute("memberLevel", memberLevel);
 			session.setAttribute("memberManner", memberManner);
 			session.setMaxInactiveInterval(60 * 60);
-
+			
+			loginSessions.put(memberId, session);
 			if (targetURL != null) {
 				return "redirect:" + targetURL;
 			} else {
@@ -121,12 +130,15 @@ public class MemberController {
 				return "redirect:/member/login";
 			}
 		}
+
 	} // end loginPOST()
 
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-
+		logger.info("logoutGET() " + loginSessions.toString());
 		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		loginSessions.remove(memberId);
 		session.invalidate();
 		return "redirect:/";
 	} // end logoutGET()

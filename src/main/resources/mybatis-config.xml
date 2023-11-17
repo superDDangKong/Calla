@@ -201,6 +201,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductReviewTitle" value="u_product_review_title" />
 		<property name="uProductReviewCreatedDate" value="u_product_review_created_date" />
 		<property name="uProductReviewContent" value="u_product_review_content" />
+		
+		<property name="alarm" value="alarm" />
+		<property name="memberNickname" value="member_nickname" />
+		<property name="alarmCode" value="alarm_code"/>
+		<property name="alarmChecked" value="alarm_checked" />
+		<property name="alarmCreatedDate" value="alarm_created_date" />
+		<property name="alarmPrefix" value="alarm_prefix" />
+		<property name="content" value="content" />
+		<property name="sendNickname" value="send_nickname" />
+		<property name="title" value="title" />
+		<property name="boardId" value="board_id" />
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->

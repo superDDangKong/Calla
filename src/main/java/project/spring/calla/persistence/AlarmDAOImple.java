@@ -1,5 +1,6 @@
 package project.spring.calla.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -23,9 +24,21 @@ public class AlarmDAOImple implements AlarmDAO {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<AlarmVO> select(String hsid) {
-		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select", hsid);
+	public List<AlarmVO> select(String memberNickname) {
+		logger.info("select() 호출 hsid = " + memberNickname);
+		return sqlSession.selectList(NAMESPACE + ".select", memberNickname);
+	}
+
+	@Override
+	public int insert(AlarmVO vo) {
+		logger.info("select() 호출 vo = " + vo.toString());
+		return sqlSession.insert(NAMESPACE + ".insert", vo);
+	}
+
+	@Override
+	public int update(int alarmId) {
+		logger.info("update() 호출 alarmId = " + alarmId);
+		return sqlSession.update(NAMESPACE + ".update", alarmId);
 	}
 	
 	

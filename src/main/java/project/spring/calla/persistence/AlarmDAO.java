@@ -6,5 +6,7 @@ import project.spring.calla.domain.AlarmVO;
 
 public interface AlarmDAO {
 	
-	List<AlarmVO> select(String hsid);
+	List<AlarmVO> select(String memberNickname);
+	int insert(AlarmVO vo);
+	int update(int alarmId);
 }

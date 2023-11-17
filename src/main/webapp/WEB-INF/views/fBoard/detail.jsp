@@ -37,6 +37,8 @@ li {
 					<div class="post-detail">
 						<br>
 						<h2>${vo.fBoardTitle }</h2>
+						<input type="hidden" id="fBoardTitle" value="${vo.fBoardTitle}">
+						<input type="hidden" id="registerNick" value="${vo.memberNickname}">
 
 						<p>${vo.memberNickname }</p>
 						<fmt:formatDate value="${vo.fBoardCreatedDate }"
@@ -50,8 +52,7 @@ li {
 							<img src="display?fileName=${vo.fBoardImagePath }">
 						</div>
 
-						<input type="hidden" id="fBoardId" name="fBoardId"
-							value="${vo.fBoardId }">
+						<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
 
 
 						<c:set var="memberNickname" value="${memberNickname }" />
@@ -140,12 +141,18 @@ li {
 							},
 					data : JSON.stringify(obj), // JSON으로 변환
 					success : function(result) {
-										console.log(result);
-										if (result == 1) {
-											alert('댓글 입력 성공');
-											getAllComments();
-											}
-										}
+							console.log(result);
+							if (result == 1) {
+								alert('댓글 입력 성공');
+								console.log($('#fBaordTitle').val())
+								// memberNickname, alarmCode, alarmPrefix, content, sendNickname, title, boardId
+								socket.send(
+										$('#registerNick').val() + "," + "새 댓글" + "," + "자유게시판" + "," + fBoardCommentContent + "," + 
+										memberNickname + "," + $('#fBoardTitle').val() + "," + fBoardId
+										)
+								getAllComments();
+								}
+							}
 
 				}); // end ajax()
 			}); // end btnAdd.click()
@@ -325,11 +332,7 @@ li {
 														}) // end ajax()
 											}); // end comments.on()
 
-							$('#comments')
-									.on(
-											'click',
-											'.comment_item .btnReply',
-											function() {
+							$('#comments').on('click', '.comment_item .btnReply', function() {
 												if ($('#memberNickname').val() == null) {
 													alert('답글을 작성하려면 로그인 해 주세요')
 													return;

@@ -7,12 +7,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select" resultType="AlarmVO">
 		select *
 		from ${alarm}
-		where ${memberId} = #{hsid}
+		where ${memberNickname} = #{memberNickname}
+		order by ${alarmChecked} desc, ${alarmCreatedDate} desc
 	</select>
 	  
+	<insert id="insert">
+	 	insert into ${alarm}
+	 	(${memberNickname}, ${alarmCode}, ${alarmPrefix}, ${content}, ${sendNickname}, ${title}, ${boardId}) 
+	 	values 
+	 	(#{memberNickname}, #{alarmCode}, #{alarmPrefix}, #{content}, #{sendNickname}, #{title}, #{boardId})
+	</insert>  
+	
+	<update id="update">
+		update ${alarm}
+		set ${alarmChecked} = 'o'
+		where ${alarmId} = #{alarmId}
+	</update>
 </mapper>
-
-
-
-
 

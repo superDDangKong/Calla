@@ -4,64 +4,119 @@ import java.util.Date;
 
 public class AlarmVO {
 	int alarmId;
-	String memberId;
-	String code;
-	Boolean check;
-	Date createdDate;
-	String prefix;
+	String memberNickname;
+	String alarmCode;
+	String alarmChecked;
+	Date alarmCreatedDate;
+	String alarmPrefix;
+	String content;
+	String sendNickname;
+	String title;
+	int boardId;
 	
-	public AlarmVO(int alarmId, String memberId, String code, Boolean check, Date createdDate, String prefix) {
+	public AlarmVO() {}
+
+	public AlarmVO(int alarmId, String memberNickname, String alarmCode, String alarmChecked, Date alarmCreatedDate,
+			String alarmPrefix, String sendNickname, int boardId, String content, String title) {
 		super();
 		this.alarmId = alarmId;
-		this.memberId = memberId;
-		this.code = code;
-		this.check = check;
-		this.createdDate = createdDate;
-		this.prefix = prefix;
+		this.memberNickname = memberNickname;
+		this.alarmCode = alarmCode;
+		this.alarmChecked = alarmChecked;
+		this.alarmCreatedDate = alarmCreatedDate;
+		this.alarmPrefix = alarmPrefix;
+		this.sendNickname = sendNickname;
+		this.boardId = boardId;
+		this.content = content;
+		this.title = title;
 	}
-	public AlarmVO() {
-		super();
-	}
+
 	public int getAlarmId() {
 		return alarmId;
 	}
+
 	public void setAlarmId(int alarmId) {
 		this.alarmId = alarmId;
 	}
-	public String getMemberId() {
-		return memberId;
+
+	public String getMemberNickname() {
+		return memberNickname;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
-	public String getCode() {
-		return code;
+
+	public String getAlarmCode() {
+		return alarmCode;
 	}
-	public void setCode(String code) {
-		this.code = code;
+
+	public void setAlarmCode(String alarmCode) {
+		this.alarmCode = alarmCode;
 	}
-	public Boolean getCheck() {
-		return check;
+
+	public String getAlarmChecked() {
+		return alarmChecked;
 	}
-	public void setCheck(Boolean check) {
-		this.check = check;
+
+	public void setAlarmChecked(String alarmChecked) {
+		this.alarmChecked = alarmChecked;
 	}
-	public Date getCreatedDate() {
-		return createdDate;
+
+	public Date getAlarmCreatedDate() {
+		return alarmCreatedDate;
 	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+
+	public void setAlarmCreatedDate(Date alarmCreatedDate) {
+		this.alarmCreatedDate = alarmCreatedDate;
 	}
-	public String getPrefix() {
-		return prefix;
+
+	public String getAlarmPrefix() {
+		return alarmPrefix;
 	}
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
+
+	public void setAlarmPrefix(String alarmPrefix) {
+		this.alarmPrefix = alarmPrefix;
 	}
+
+	public String getSendNickname() {
+		return sendNickname;
+	}
+
+	public void setSendNickname(String sendNickname) {
+		this.sendNickname = sendNickname;
+	}
+
+	public int getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
-		return "AlarmVO [alarmId=" + alarmId + ", memberId=" + memberId + ", code=" + code + ", check=" + check
-				+ ", createdDate=" + createdDate + ", prefix=" + prefix + "]";
+		return "AlarmVO [alarmId=" + alarmId + ", memberNickname=" + memberNickname + ", alarmCode=" + alarmCode
+				+ ", alarmChecked=" + alarmChecked + ", alarmCreatedDate=" + alarmCreatedDate + ", alarmPrefix="
+				+ alarmPrefix + ", sendNickname=" + sendNickname + ", boardId=" + boardId + ", content=" + content
+				+ ", title=" + title + "]";
 	}
 	
 	
