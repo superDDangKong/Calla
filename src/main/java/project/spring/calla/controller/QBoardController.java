@@ -140,7 +140,7 @@ public class QBoardController {
 	
 	
 	@GetMapping("/detail")
-	public String detail(Model model, Integer qBoardId, Integer page,
+	public String detail(Model model, Integer qBoardId, Integer page, String qBoardStatus,
 			HttpServletRequest request, HttpServletResponse response) {
 		String cookieName = "qBoard_" + qBoardId;
 		Cookie[] cookies = request.getCookies();

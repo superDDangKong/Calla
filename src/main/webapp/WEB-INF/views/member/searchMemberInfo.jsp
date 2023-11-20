@@ -112,7 +112,15 @@ input {
 .Button__StyledButton-sc-1cxc4dz-0.active2 {
 	background-color: #297fb8 !important;
 }
-
+.active1 {
+	background-color: '#3498db';
+	color: '#fff';
+	padding: '10px 20px';
+	font-size: '16px';
+	border: 'none';
+	border-radius: '5px';
+	cursor: 'pointer';
+} 
 
 </style>
 </head>
@@ -129,12 +137,12 @@ input {
 				<button class="active1">아이디 찾기</button>
 				<button class="active2">비밀번호 찾기</button>
 			</div>
-			<form action="searchId" method="post">
+			<form id="myForm" action="searchId" method="post">
 				<div class="style__FormController-sc-sshr17-2 iZjoOv">
 					<div class="Input__InputWrap-sc-tapcpf-1 kjWnKT">
 						<label id="condition">이름</label>
 						<span class="Input__InputStateWrap-sc-tapcpf-0 bSpIrI">
-							<input type="text" name="memberName" placeholder="이름 입력">
+							<input type="text" id="searchCondition" name="memberName" placeholder="이름 입력">
 							<i class="icon-font icon-font-warning"></i>
 						</span>
 					</div>
@@ -143,7 +151,7 @@ input {
 					<div class="Input__InputWrap-sc-tapcpf-1 kjWnKT">
 						<label id="condition1">이메일</label>
 						<span class="Input__InputStateWrap-sc-tapcpf-0 bSpIrI">
-							<input type="email" name="memberEmail" placeholder="이메일 입력">
+							<input type="text" id="searchCondition1" name="memberEmail" placeholder="이메일 입력">
 							<i class="icon-font icon-font-warning"></i>
 						</span>
 					</div>
@@ -165,27 +173,75 @@ input {
 		}
 
 		$(document).ready(function() {
+			var searchCondition = $('#searchCondition');
+			var searchCondition1 = $('#searchCondition1');
+			var idBtn = $('.active1');
+			var pwBtn = $('.active2');
 			$('.active1').click(function(){
 				console.log("아이디 찾기");
 				$('#condition').text("이름");
-				$('input[name="memberName"]').attr('placeholder', '이름 입력');
+				searchCondition.attr('placeholder', '이름 입력');
+				searchCondition.attr('name', 'memberName');
 				$('#condition1').text("이메일");
-				$('input[name="memberEmail"]').attr('placeholder', '이메일 입력');
-				$('input[name="memberEmail"]').attr('type', 'email');
+				searchCondition1.attr('placeholder', '이메일 입력');
+				searchCondition1.attr('type', 'text'); // 나중에 email로 변경
+				searchCondition1.attr('name', 'memberEmail');
 				$('.Button__StyledButton-sc-1cxc4dz-0').text('아이디 찾기');
-
+				$('#myForm').attr('action', 'searchId');
+				idBtn.css({
+					'background-color': '#3498db',
+			        'color': '#fff',
+			        'padding': '10px 20px',
+			        'font-size': '16px',
+			        'border': 'none',
+			        'border-radius': '5px',
+			        'cursor': 'pointer'
+				})
+				
+				pwBtn.css({
+					'background-color': '',
+			        'color': '',
+			        'padding': '10px 20px',
+			        'font-size': '16px',
+			        'border': 'none',
+			        'border-radius': '5px',
+			        'cursor': 'pointer'
+				})
+				
 			})
 			
 			$('.active2').click(function(){
 				console.log("비밀번호 찾기");
 				$('#condition').text("아이디");
-				$('input[name="memberName"]').attr('placeholder', '아이디 입력');
+				searchCondition.attr('placeholder', '아이디 입력');
+				searchCondition.attr('name', 'memberId');
 				$('#condition1').text("전화번호");
-				$('input[name="memberEmail"]').attr('placeholder', '전화번호 입력');
-				$('input[name="memberEmail"]').attr('type', 'tel');
+				searchCondition1.attr('placeholder', '전화번호 입력');
+				searchCondition1.attr('type', 'tel');
+				searchCondition1.attr('name', 'memberPhone');
 				$('.Button__StyledButton-sc-1cxc4dz-0').text('비밀번호 찾기');
-
+				$('#myForm').attr('action', 'searchPw'); 
+				pwBtn.css({
+					'background-color': '#3498db',
+			        'color': '#fff',
+			        'padding': '10px 20px',
+			        'font-size': '16px',
+			        'border': 'none',
+			        'border-radius': '5px',
+			        'cursor': 'pointer'
+				})
+				
+				idBtn.css({
+					'background-color': '',
+			        'color': '',
+			        'padding': '10px 20px',
+			        'font-size': '16px',
+			        'border': 'none',
+			        'border-radius': '5px',
+			        'cursor': 'pointer'
+				})
 			})
+			
 			
 		});
 		

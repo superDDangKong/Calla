@@ -162,10 +162,9 @@ public class MemberController {
 	public void searchMemberInfoGET() {
 	} // end searchIdGET()
 
-	@GetMapping("/searchPw")
-	public void searchPwGET() {
-	} // end searchPwGET()
-
+	/*
+	 * @GetMapping("/searchPw") public void searchPwGET() { } // end searchPwGET()
+	 */
 	@PostMapping("/searchId")
 	public String searchIdPOST(String memberName, String memberEmail, RedirectAttributes reAttr) {
 
@@ -185,6 +184,7 @@ public class MemberController {
 	@PostMapping("/searchPw")
 	public String searchPwPOST(Model model, String memberId, String memberPhone, RedirectAttributes reAttr) {
 		String result = memberService.searchPw(memberId, memberPhone);
+		logger.info("memberId: " + memberId + ", memberPhone: " + memberPhone);
 		if (result != null) {
 			reAttr.addFlashAttribute("searchResult", "pwSearch");
 			reAttr.addFlashAttribute("searchPw", result);

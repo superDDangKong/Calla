@@ -131,7 +131,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			
 		</div>
 		<div>
-			<p>${vo.memberNickname }</p>
+			<p id="Writer" >${vo.memberNickname }</p>
 			<fmt:formatDate value="${vo.qBoardCreatedDate }"
 				pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
 			<p id="date">${vo.qBoardCreatedDate }</p>
@@ -148,29 +148,38 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		</div>
 		
 		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
-		
-		
-			<a href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
-			<form action="delete" method="POST">
-				<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }">
-				<input type="submit" value="글 삭제"> 
-			</form>
-	
-			<c:if test="${memberNickname != null}">
-				<div>
-				<br><br>
-					<div class="border">
-						${memberNickname}<br><br> <input type="hidden" id="memberNickname" value=${memberNickname }>
-							<div class="form-group">
-								<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
-							</div>
-							<div style="text-align: right;">
-								<button id="btnCommentAdd" class="btn btn-dark">작성</button>
-							</div>
+		<c:set var="memberNickname" value="${memberNickname }" />
+		<c:set var="voMemberNickname" value="${vo.memberNickname }" />
+		<c:if test="${memberNickname == voMemberNickname}">
+			<div class="d-flex">
+				<div class="p-2">
+					<a id="boardUpdate" href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+				</div>
+				<div class="p-2">
+					<form action="delete" method="POST">
+						<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
+						<input id="boardDelete" type="submit" value="글 삭제"> 
+					</form>
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${memberNickname != null}">
+			<div>
+			<br><br>
+				<div class="border">
+					${memberNickname}<br><br> 
+					<input type="hidden" id="memberNickname" value=${memberNickname }>
+					<div class="form-group">
+						<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+					</div>
+					<div style="text-align: right;">
+					<button id="btnCommentAdd" class="btn btn-dark">작성</button>
 					</div>
 				</div>
-			</c:if>
+			</div>
+		</c:if>
 			
+		
 			<c:if test="${memberNickname == null}">
 				<br> 
 				댓글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=${vo.qBoardId }">로그인</a>이 필요합니다.
@@ -185,6 +194,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
+    	
     	  var img = $('#img').val();
     	  var date = $('#date').val();
     	  
