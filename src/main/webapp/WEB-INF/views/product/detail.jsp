@@ -206,9 +206,11 @@
 			<div>
 				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" value="장바구니 이동"></a>
 			</div>
+			 <c:if test="${productOrderListId == 0 }">
 			<div>
 				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" id="orderBtn" value="바로 구매"></a>
 			</div>
+			</c:if>
 		</c:if>
 	</div>
 		
@@ -218,8 +220,8 @@
 	<p></p>
 	<c:if test="${memberNickname != null}">
 	<div style="text-align: center;">
-		${memberNickname}
 		<div class="productRated">
+			${memberNickname}
 			<span class="starR on">⭐</span>
 		    <span class="starR">⭐</span>
 		    <span class="starR">⭐</span>
@@ -239,8 +241,7 @@
 	<hr>
 	
 	<div style="text-align: center;">
-		<div id="comments"></div>
-		
+		<div id="comments" style="display: inline-block; text-align: left;"></div>
 	</div>
 	<hr>
 	
@@ -352,14 +353,15 @@
 								list += '<div class="comment_item">'
 									+ '<pre>'
 									+ '<input type="hidden" class="productCommentId" value="' + this.productCommentId + '">'
-									+ '별점 : ' + generateStars(this.productRated)
-									+ '&nbsp;&nbsp;' + '&nbsp;&nbsp;'
-									+ this.memberNickname
-									+ '&nbsp;&nbsp;' // 공백
-									+ '<input type="text" class="productCommentContent" value="' + this.productCommentContent + '" required>'	 
-									+ '&nbsp;&nbsp;' // 공백
-									+ productCommentCreatedDate
-									+ '&nbsp;&nbsp;' // 공백
+									+ '<div class="comment-header">'
+									+ '별점 : ' + generateStars(this.productRated) + '&nbsp;&nbsp;' + '<strong>' + this.memberNickname + '</strong>'
+									+ '&nbsp;&nbsp;' + '<span class="comment-date">' + productCommentCreatedDate + '</span>'
+									+ '</div>'
+									+ '<div class="productCommentContent">'
+									+ '<textarea class="commentContent" rows="3" cols="120" style="border:none;" required>'
+									+ this.productCommentContent
+									+ '</textarea>'
+									+ '</div>'
 									+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
 									+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
 									+ '<button class="btnReply">답글</button>'
@@ -714,6 +716,7 @@
 		                	if(result == 1){
 		                		alert('장바구니 등록');
 		                		orderListBtn.text('장바구니 삭제');
+		                		window.location.reload();
 		                	}
 		                }
 			        }); // end ajax
@@ -729,6 +732,7 @@
 			                 if (result == 1) {
 			                     alert('장바구니 삭제');
 			                     orderListBtn.text('장바구니 넣기');
+			                     window.location.reload();
 			                 }
 			             }  
 					}); // end ajax
@@ -736,7 +740,8 @@
 			}); // end click
 			
 		}); // end document
-	
+		
+		
 		
 		
 	</script>

@@ -18,20 +18,22 @@
 	<input type="hidden" id="memberId" value="${memberId}" />	
 	<input type="hidden" id="memberLevel" value="${memberLevel}" />	
 	
+	
 	<div id="productOrder">
 	
 	 <table>
         <thead>
             <tr>
+                <th style="width: 100px"></th>
                 <th style="width: 100px">주문 날짜</th>
                 <th style="width: 100px">주문자</th>
                 <th style="width: 150px">상품 이름</th>
-                <th style="width: 60px">이미지</th>
-                <th style="width: 80px">수량</th>
-                <th style="width: 80px">가격</th>
-                <th style="width: 80px">총 가격</th>
+                <th style="width: 150px">이미지</th>
+                <th style="width: 100px">수량</th>
+                <th style="width: 100px">가격</th>
+                <th style="width: 100px">총 가격</th>
                 <th style="width: 300px">배송지</th>
-                <th style="width: 80px">수령인</th>
+                <th style="width: 100px">수령인</th>
                 <th style="width: 100px">배송상황</th>
                                
             </tr>
@@ -40,6 +42,7 @@
             <c:when test="${empty productOrderList}">
                 <tbody>
                     <tr>
+                    	<td></td>
                         <td colspan="5">등록된 상품이 없습니다.</td>
                     </tr>
                 </tbody>
@@ -48,6 +51,9 @@
                 <tbody>
                     <c:forEach var="vo" items="${productOrderList}">
                         <tr>
+                        	<td>
+	                    		<input type="hidden" class="productOrderId" value="${vo.productOrderId}" />	
+                        	</td>
                             <td>
 	                        	<fmt:formatDate value="${vo.productOrderCreatedDate }"
 								pattern="yyyy.MM.dd" var="productOrderCreatedDate" />                            
@@ -74,7 +80,8 @@
                             			<div>
                             				<label for="deliveryStatus"> </label>
 												<select id="deliveryStatus" name="deliveryStatus">
-													<option value="출고준비">출고준비</option>
+													<option value="현재상태">${vo.deliveryStatus }</option>
+													<option value="출고준비중">출고준비중</option>
 													<option value="출고완료">출고완료</option>
 													<option value="배송중">배송중</option>
 													<option value="배송완료">배송완료</option>
@@ -85,6 +92,9 @@
                             	<c:otherwise>
                             		<td>
                             			${vo.deliveryStatus }
+											<c:if test="${vo.deliveryStatus == '출고준비중'}">
+								            	<button class="cancelOrderBtn">주문 취소</button>
+								            </c:if>
                             		</td>
                             	</c:otherwise>
                             </c:choose>
@@ -104,26 +114,51 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('select[name="deliveryStatus"]').change(function(){
-				var memberId = $('#memberId').val();
-				var productId = $(this).closest('tr').find('input[name="productId"]').val();
+				var productOrderId = $(this).closest('tr').find('.productOrderId').val();
 				var deliveryStatus = $(this).val();
 				
 				$.ajax({
 					type: 'PUT',
-					url: 'orders/' + productId + '/' + memberId + '/' + deliveryStatus,
+					url: 'orders/' + productOrderId + '/' + deliveryStatus,
 					headers: {
 	                    'Content-Type': 'application/json'
 	                },
 					data: {
-						memberId : memberId,
-						productId : productId,
+						productOrderId : productOrderId,
 						deliveryStatus : deliveryStatus
 					},
 					success: function(result){
-						console.log('배송정보 수정 완료');
+						console.log(productOrderId);
+						console.log(result);
+		            	   if(result == 1){
+		            		   alert('배송정보수정완료');
+		            		   
+						}
 					}
 				}); // end ajax
+				
 			}); // end select.change
+				$('.cancelOrderBtn').click(function(){
+					var productOrderId = $(this).closest('tr').find('.productOrderId').val();
+					console.log('주문취소클릭');
+					var currentRow = $(this).closest('tr'); // 현재 행
+		            $.ajax({
+		                type: 'DELETE', // 주문을 취소하기 위해 DELETE 메서드 사용
+		                url: 'orders/' + productOrderId,
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                success: function(result){
+		                	console.log(productOrderId);
+		                    if(result == 1){
+		                        alert('주문이 취소되었습니다.');
+		                        currentRow.remove(); // 행 삭제
+		                        window.location.reload();
+		                    } 
+		                }
+		                
+		            }); // end ajax
+		        }); // end cancleOrderBtn
 			
 		}); // end document
 	</script>

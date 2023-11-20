@@ -40,8 +40,8 @@ li {
 </style>
 <meta charset="UTF-8">
 <title>OrderList</title>
-	<h1>List</h1>
 	<%@ include file="../header.jspf" %> 	
+	<h1>orderList</h1>
 	<h1>장바구니</h1>
 	<button id="home"><a href="/calla/">홈</a></button>
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
@@ -59,12 +59,12 @@ li {
         <thead>
             <tr>
                 <th style="width: 60px"></th>
-                <th style="width: 60px">상품번호</th>
-                <th style="width: 60px">이미지</th>
-                <th style="width: 60px">이름</th>
-                <th style="width: 60px">카테고리</th>
-                <th style="width: 60px">가격</th>
-                <th style="width: 60px">수량</th>
+                <th style="width: 100px">상품번호</th>
+                <th style="width: 100px">이미지</th>
+                <th style="width: 100px">이름</th>
+                <th style="width: 100px">카테고리</th>
+                <th style="width: 100px">가격</th>
+                <th style="width: 100px">수량</th>
             </tr>
         </thead>
         <c:choose>
@@ -166,10 +166,10 @@ li {
 	          </div>
 	          <div>
 	            <label for="message-text" class="col-form-label">주소:</label>
-	            <input type="text" id="sample4_postcode" placeholder="우편번호">
+	            <input type="text" id="sample4_postcode" placeholder="우편번호" required>
 				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-				<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+				<input type="text" id="sample4_roadAddress" placeholder="도로명주소" required>
+				<input type="text" id="sample4_jibunAddress" placeholder="지번주소" required>
 				<span id="guide" style="color:#999;display:none"></span>
 				<input type="text" id="sample4_detailAddress" placeholder="상세주소">
 				<input type="text" id="sample4_extraAddress" placeholder="참고항목">
@@ -254,6 +254,7 @@ li {
 	                data: JSON.stringify(data),
 	                success: function (result) {
 	                    console.log('수량 업데이트 완료');
+	                    alert('수량 업데이트 완료');
 	                    updateTotalPrice();
 	                }
 	        	
@@ -351,7 +352,8 @@ li {
 	        	
 	            console.log(result);
 	            if(result > '0'){
-	            	window.location.href = 'list';
+	            	alert('결제완료');
+	            	window.location.href = 'order';
 	            }
 	        }
 	    });

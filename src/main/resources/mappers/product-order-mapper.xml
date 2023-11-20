@@ -36,12 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateDeliveryStatus">
 		update ${product_order}
 		set ${deliveryStatus} = #{deliveryStatus}
-		where ${memberId} = #{memberId} and ${productId} = #{productId}
+		where ${productOrderId} = #{productOrderId}
 	</update>
 	
 	<delete id="delete">
 		delete from ${product_order}
-		where ${productId} = #{productId} and ${memberId} = #{memberId}
+		where ${productOrderId} = #{productOrderId}
 	</delete>
 	
 	

@@ -331,10 +331,10 @@ public class ProductController {
 	    int memberLevel = (int) session.getAttribute("memberLevel");
 	    String memberId = (String) session.getAttribute("memberId");
 	    List<ProductOrderVO> productOrderList = null;
-	    if(memberLevel >=2) {
+	    if(memberLevel >=2) { // memberLevel이 2이상인 경우 모든 정보 읽기
 	    	productOrderList = productOrderService.read();
 	    	
-	    } else {
+	    } else { // 아닌경우 memberId의 정보만 읽기
 	    	productOrderList = productOrderService.read(memberId);
 	    	
 	    }

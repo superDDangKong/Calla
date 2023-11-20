@@ -112,7 +112,8 @@ li {
 										<p></p>
 									</div>
 									<div class="d-flex justify-content-center small text-warning mb-2">
-										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews } 댓글수 : ${vo.productCommentCount } 
+										좋아요 : ${vo.productLikes } 조회수 : ${vo.productViews } <br> 
+										댓글수 : ${vo.productCommentCount } 
 									</div>
 									<div>
 										<c:set var="averageRated" value="${(vo.productCommentCount == 0) ? 0 : (1.0 * vo.productRatedCount) / vo.productCommentCount}"/>
@@ -121,6 +122,7 @@ li {
 										        ⭐
 										    </c:forEach>
 									</div>
+									<br>
 				                    <div>
 										가격 : ${vo.productPrice } 원
 				                    </div>

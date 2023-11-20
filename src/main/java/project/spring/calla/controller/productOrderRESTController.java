@@ -76,24 +76,22 @@ public class productOrderRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{productId}/{memberId}/{deliveryStatus}")
+	@PutMapping("/{productOrderId}/{deliveryStatus}")
 	public ResponseEntity<Integer> updateDeliveryStatus(
-			@PathVariable("productId") int productId,
-			@PathVariable("memberId") String memberId,
+			@PathVariable("productOrderId") int productOrderId,
 			@PathVariable("deliveryStatus") String deliveryStatus){
-		int result = productOrderService.updateDeliveryStatus(productId, memberId, deliveryStatus);
+		int result = productOrderService.updateDeliveryStatus(productOrderId, deliveryStatus);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{productId}/{memberId}")
+	@DeleteMapping("/{productOrderId}")
 	public ResponseEntity<Integer> deleteProductOrder(
-			@PathVariable("productId") int productId,
-			@PathVariable("memberId") String memberId){
-		logger.info("memberId = " + memberId + "productId = " + productId);
+			@PathVariable("productOrderId") int productOrderId){
+		logger.info("productOrderId = " + productOrderId);
 		
 		int result = 0;
 		try {
-			result = productOrderService.delete(productId, memberId);
+			result = productOrderService.delete(productOrderId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

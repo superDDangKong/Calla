@@ -32,9 +32,9 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	}
 
 	@Override
-	public int delete(int productId, String memberId) {
-		logger.info("delete() 호출 : productId = " + memberId);
-		return dao.delete(productId, memberId);
+	public int delete(int productOrderId) {
+		logger.info("delete() 호출 : productOrderId = " + productOrderId);
+		return dao.delete(productOrderId);
 	}
 
 	@Override
@@ -57,9 +57,9 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	}
 
 	@Override
-	public int updateDeliveryStatus(int productId, String memberId, String deliveryStatus) {
+	public int updateDeliveryStatus(int productOrderId, String deliveryStatus) {
 		logger.info("updateDeliveryStatus() 호출 ");
-		return dao.updateDeliveryStatus(productId, memberId, deliveryStatus);
+		return dao.updateDeliveryStatus(productOrderId, deliveryStatus);
 	}
 
 

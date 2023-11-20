@@ -43,12 +43,9 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 	}
 
 	@Override
-	public int delete(int productId, String memberId) {
+	public int delete(int productOrderId) {
 		logger.info("delete() 호출");
-		Map<String, Object> args = new HashMap();
-		args.put("productId", productId);
-		args.put("memberId", memberId);
-		return sqlSession.delete(NAMESPACE + ".delete", args);
+		return sqlSession.delete(NAMESPACE + ".delete", productOrderId);
 	}
 
 	@Override
@@ -66,11 +63,10 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 	}
 
 	@Override
-	public int updateDeliveryStatus(int productId, String memberId, String deliveryStatus) {
+	public int updateDeliveryStatus(int productOrderId, String deliveryStatus) {
 		logger.info("updateDeliveryStatus() 호출");
 		Map<String, Object> args = new HashMap();
-		args.put("productId", productId);
-		args.put("memberId", memberId);
+		args.put("productOrderId", productOrderId);
 		args.put("deliveryStatus", deliveryStatus);
 		return sqlSession.update(NAMESPACE + ".updateDeliveryStatus", args);
 	}
