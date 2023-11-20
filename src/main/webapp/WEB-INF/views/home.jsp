@@ -10,101 +10,10 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <%@ include file="header.jspf"%>
 <title>Calla</title>
 </head>
 <body>
-
-<!-- 소켓 -->
-<ul id="alarmUL">ul</ul>
-<i id="alarmI">i</i>
-<div id="alarmDiv">div</div>
-<input type="hidden" id="socketuserId" value=${memberId }>
-<script type="text/javascript">
-	const alarmUL = document.querySelector("#alarmUL");
-	const alarmI = document.querySelector("#alarmI");
-	const alarmDiv = document.querySelector("#alarmDiv");
-	var sock = null;
-	
-	$(document).ready(function(){
-		connectWs();
-	
-	});
-	
-	//소켓
-	function connectWs(){
-		var ws = new SockJS("http://localhost:8080/calla/echo");
-		sock = ws;
-	
-		ws.onopen = function() {
-			console.log("연결완료");
-	 		ws.send($('#socketuserID').val());
-		};
-	
-		ws.onmessage = function(event) {
-			/* 받을 알람이 있을 때 */
-			console.log(event.data);
-			if(event.data.length>0){
-				let newAlarm = '';
-				newAlarm += '<li scope="col">' + event.data + "</li>"
-				$('#alarmUL').append(newAlarm);
-				alarmDiv.style.visibility = "visible";
-			}
-		};
-	
-		ws.onclose = function(event) {
-		    console.log('WebSocket 연결이 닫혔습니다.');
-		    console.log('코드: ' + event.code + ', 이유: ' + event.reason);
-		};
-	
-	};
-	
-	/* 알람창 추가 */
-	
-	alarmI.addEventListener('click', function(){
-		alarmUL.classList.toggle('visible');
-		$(this).stop(false, false);
-	});
-	
-	alarmUL.addEventListener('click', function(e){
-		var endIdx = e.target.textContent.indexOf(")");
-		var idx = e.target.textContent.substr(1, endIdx-1);
-	
-		$.ajax({
-			url : '/alarmDel',
-			data : {"idx" : idx},
-			type : 'post',
-			success : function(data){
-				console.log(data);
-				alert("성공");
-			}
-		})
-		
-		$(e.target).remove();
-		if(alarmUL.children.length == 0){
-			alarmDiv.style.visibility = "hidden";
-		}
-		
-	})
-
-</script>
-
-<!-- 소켓 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="sidebar2.jspf"%>
@@ -125,7 +34,7 @@
 							<c:forEach var="ProductVO" items="${lists.productList }">
 								<div class="col mb-5">
 									<div class="card h-100">
-										<%-- <img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." /> --%>
+										<img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." />
 										<div class="card-body p-4">
 											<div class="text-center">
 												<h5 class="fw-bolder">
@@ -170,9 +79,7 @@
 								<div class="col mb-5">
 									<div class="card h-100">
 										<!-- Product image-->
-										<img class="card-img-top"
-											<%-- src="fBoard/display?fileName=${uProductVO.uProductImagePath}" --%>
-											alt="..." />
+										<img class="card-img-top" src="fBoard/display?fileName=${uProductVO.uProductImagePath}"	alt="..." />
 										<!-- Product details-->
 										<div class="card-body p-4">
 											<div class="text-center">
@@ -213,7 +120,7 @@
 					</div>
 				</section>
 			</main>
-			<%-- <%@ include file="sidebarRight.jspf"%> --%>
+			<%@ include file="sidebarRight.jspf"%>
 		</div>
 	</div>
 	<script type="text/javascript">

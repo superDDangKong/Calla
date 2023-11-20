@@ -45,14 +45,12 @@
 	</beans:bean>
 	
 	<!-- 웹소켓 -->
-	<beans:bean id="echoHandler" class="project.spring.calla.util.EchoHandler" />        
 	
 	<websocket:handlers>
 	    <websocket:mapping handler="echoHandler" path="/echo"/>
 	    <websocket:handshake-interceptors>
 	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 	    </websocket:handshake-interceptors>
-	    <websocket:sockjs />
 	</websocket:handlers>
 	
 	<!-- Interceptor가 가로챌 URL 매핑 설정 -->

@@ -89,6 +89,7 @@
   </head>
 <%@ include file="../header.jspf" %> 
   <body>
+
     <div class="wrap">
       <div class="product-img">
       <img src="display?fileName=${vo.uProductImagePath}" width="500px" height="300px">
@@ -98,7 +99,8 @@
       <div>
       
       닉네임 : <a href="reviewboard?sellerNickname=${vo.memberNickname }&page=${pageMaker.criteria.page}">${vo.memberNickname}</a>
-     
+      <input type="hidden" id="registerNick" value="${vo.memberNickname}">
+      <input type="hidden" id="uProductTitle" value="${vo.uProductName}">
    
    	 	<fmt:parseNumber value="${memberManner}"   var="memberManner"/>
       	<c:if test="${(memberManner) >= 40}">
@@ -352,6 +354,11 @@
 						console.log(result);
 						if(result == 1){
 							alert('댓글 입력 성공');
+	                        socket.send(
+	                                $('#registerNick').val() + "," + "새 댓글" + "," + "중고상품" + "," +
+	                                uProductCommentContent + "," +
+	                                memberNickname + "," + $('#uProductTitle').val() + "," + uProductId
+	                            );
 							getAllUProductComments();
 						}
 					}

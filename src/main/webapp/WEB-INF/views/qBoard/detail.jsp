@@ -128,6 +128,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		</div> --%>
 		<div>
 			<p>제목 : ${vo.qBoardTitle }</p>
+			<input type="hidden" id="qBoardTitle" value="${vo.qBoardTitle}">
+			<input type="hidden" id="registerNick" value="${vo.memberNickname}">
 			
 		</div>
 		<div>
@@ -224,6 +226,11 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                   console.log(result);
                   if(result == 1) {
                      console.log('댓글 입력 성공');
+                     socket.send(
+	                     $('#registerNick').val() + "," + "새 댓글" + "," + "문의게시판" + "," +
+	                     qBoardCommentContent + "," +
+	                     memberNickname + "," + $('#qBoardTitle').val() + "," + qBoardId
+	                	 );
                      getAllComments();
                   }
                }
@@ -266,6 +273,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                            + '<input type="hidden" class="qBoardCommentId" value="' + this.qBoardCommentId +'">'
                            + '<div class="comment-header">'
                            + '<strong>' + this.memberNickname + '</strong>'
+                           + '<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
                            + '<span class="comment-date">' + formattedDate + '</span>'
                            + '</div>'
                            + '<div class="comment-content">'
@@ -449,7 +457,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                   list += '<div style="text-align: center;">'
 					  + memberNickname
 					  + '&nbsp;&nbsp;'
-					  + '<input type="text" class="qBoardReplyContent" required>'
+					  + '<input type="text" class="qBoardReplyContentReg" required>'
 					  + '&nbsp;&nbsp;'
 					  + '<button class="btnReplyAdd">작성</button>' 
 					  + '</div>'
@@ -466,10 +474,14 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
  			var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');
  			var qBoardCommentIdVal = $(this).closest('.comment_item').find('.qBoardCommentId').val();
  		    var memberNickname = $('#memberNickname').val();
- 		    var qBoardReplyContent = $(this).prevAll('.qBoardReplyContent').val(); 
+ 		    var qBoardReplyContent = $(this).closest('.comment_item').find('.qBoardReplyContentReg').val(); 
  		    console.log(memberNickname);
  		    console.log(qBoardCommentIdVal);
  		    console.log(qBoardReplyContent);
+ 		    
+            var commentRegisterNick = commentItem.find('.commentRegisterNickname').val();
+            var commentContent = commentItem.find('.qBoardCommentContent').val();
+            var qBoardId = $('#qBoardId').val();
  		    var obj = {
  					'qBoardCommentId' : qBoardCommentIdVal, 
  					'memberNickname' : memberNickname,
@@ -489,6 +501,11 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
  					console.log(result);
  					if(result == 1){
  						alert('답글 입력 성공');
+                        socket.send(
+                                commentRegisterNick + "," + "새 답글" + "," + "문의게시판" + "," +
+                                qBoardReplyContent + "," +
+                                memberNickname + "," + commentContent + "," + qBoardId
+                            );
  						getAllReplies(qBoardCommentId);
  					} // end if
  				} // end success
