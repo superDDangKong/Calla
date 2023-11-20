@@ -120,454 +120,325 @@ li {
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			getAllComments();
-			$('#btnCommentAdd').click(function() {
-				var fBoardId = $('#fBoardId').val(); // 게시판 번호 데이터
-				var memberNickname = $('#memberNickname').val(); // 작성자 데이터
-				var fBoardCommentContent = $('#fBoardCommentContent').val(); // 댓글 내용
-				var obj = {
-							'fBoardId' : fBoardId,
-							'memberNickname' : memberNickname,
-							'fBoardCommentContent' : fBoardCommentContent
-							};
-				console.log(obj);
-				$.ajax({
-					type : 'POST',
-					url : 'comments',
-					headers : {
-							'Content-Type' : 'application/json'
-							},
-					data : JSON.stringify(obj), // JSON으로 변환
-					success : function(result) {
-							console.log(result);
-							if (result == 1) {
-								alert('댓글 입력 성공');
-								console.log($('#fBaordTitle').val())
-								// memberNickname, alarmCode, alarmPrefix, content, sendNickname, title, boardId
-								socket.send(
-										$('#registerNick').val() + "," + "새 댓글" + "," + "자유게시판" + "," + fBoardCommentContent + "," + 
-										memberNickname + "," + $('#fBoardTitle').val() + "," + fBoardId
-										)
-								getAllComments();
-								}
-							}
+<script type="text/javascript">
+    $(document).ready(function () {
+        getAllComments();
 
-				}); // end ajax()
-			}); // end btnAdd.click()
-							function getAllComments() {
-								console.log("getAllComments() 호출");
-								var fBoardId = $('#fBoardId').val();
-								var commentPage = $('#pageMaker_commentPage').val();
-								var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
-								var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
-								$.getJSON(
-										url,
-										function(data) {
-											var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
-											var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
-											$('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
-											$('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
-											var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
-											var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
-											var memberNickname = $('#memberNickname').val();
-											var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
-													$(data.list).each(function() {
-														console.log(this);
-														var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-														var disabled = 'disabled';
-														var readonly = 'readonly';
-														if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
-																	disabled = '';
-																	readonly = '';
-																}
-																	list += '<div class="comment_item">'
-																			+ '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
-																			+ this.memberNickname
-																			+ '<br>'
-																			+ '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
-																			+ this.fBoardCommentContent
-																			+ '</textarea>'
-																			+ fBoardCommentCreatedDate
-																			+ '<br>'
-																			+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
-																			+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-																			+ '<button class="btnReply">답글</button>'
-																			+ '<br>'
-																			+ '<hr>'
-																			+ '</div>';
+        $('#btnCommentAdd').click(function () {
+            var fBoardId = $('#fBoardId').val();
+            var memberNickname = $('#memberNickname').val();
+            var fBoardCommentContent = $('#fBoardCommentContent').val();
+            var obj = {
+                'fBoardId': fBoardId,
+                'memberNickname': memberNickname,
+                'fBoardCommentContent': fBoardCommentContent
+            };
+            console.log(obj);
 
-																	}); // end each()
-													list += '<div style="text-align: center;">'
-															+ '<ul id="comment_page">'
+            $.ajax({
+                type: 'POST',
+                url: 'comments',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('댓글 입력 성공');
+                        socket.send(
+                            $('#registerNick').val() + "," + "새 댓글" + "," + "자유게시판" + "," +
+                            fBoardCommentContent + "," +
+                            memberNickname + "," + $('#fBoardTitle').val() + "," + fBoardId
+                        );
+                        getAllComments();
+                    }
+                }
+            });
+        });
+        function getAllComments() {
+            console.log("getAllComments() 호출");
+            var fBoardId = $('#fBoardId').val();
+            var commentPage = $('#pageMaker_commentPage').val();
+            var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
+            var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+            $.getJSON(url, function (data) {
+                var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
+                var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
+                $('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
+                $('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
+                var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
+                var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
+                var memberNickname = $('#memberNickname').val();
+                var list = '';
 
-													if (pageMaker_hasPrev) {
-														list += '<li><button class="btn_comment_prev">이전</button></li>'
-													}
-													for (var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
-														list += '<li><button class="btn_comment_page" value='+num+'>'
-																+ num
-																+ '</button></li>'
-													}
+                $(data.list).each(function () {
+                    var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                    var disabled = 'disabled';
+                    var readonly = 'readonly';
 
-													if (pageMaker_hasNext) {
-														list += '<li><button class="btn_comment_next">이후</button></li>'
-													}
-													list += '</ul>' + '</div>'
-													$('#comments').html(list);
-												}); // end getJSON()
-							} // end getAllReplies()
-							/* $('#comment_page').on('click', '.comment_page_num .btn_comment_page', function() { */
-							$(document).on(
-									'click',
-									'.btn_comment_page',
-									function() {
-										$('#pageMaker_commentPage').val(
-												$(this).val());
-										getAllComments();
-									})// end btn_comment_page.click()
+                    if (memberNickname == this.memberNickname) {
+                        disabled = '';
+                        readonly = '';
+                    }
 
-							$(document).on(
-									'click',
-									'.btn_comment_prev',
-									function() {
-										$('#pageMaker_commentPage').val(
-												+$('#pageMaker_startPageNo')
-														.val() - 1);
-										getAllComments();
-									})// end btn_comment_prev.click()
+                    list += '<div class="comment_item">'
+                        + '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
+                        + '<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
+                        + this.memberNickname
+                        + '<br>'
+                        + '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
+                        + this.fBoardCommentContent
+                        + '</textarea>'
+                        + fBoardCommentCreatedDate
+                        + '<br>'
+                        + '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
+                        + '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
+                        + '<button class="btnReply">답글</button>'
+                        + '<br>'
+                        + '<hr>'
+                        + '</div>';
+                });
 
-							$(document).on(
-									'click',
-									'.btn_comment_next',
-									function() {
-										$('#pageMaker_commentPage').val(
-												+$('#pageMaker_endPageNo')
-														.val() + 1);
-										getAllComments();
-									})// end btn_comment_prev.click()
+                list += '<div style="text-align: center;">'
+                    + '<ul id="comment_page">';
 
-							// 수정 버튼을 클릭하면 선택된 댓글 수정
-							$('#comments')
-									.on(
-											'click',
-											'.comment_item .btnCommentUpdate',
-											function() {
-												console.log(this);
-												// 선택된 댓글의 replyId, replyContent 값을 저장
-												// prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근
-												var fBoardCommentId = $(this)
-														.prevAll(
-																'.fBoardCommentId')
-														.val();
-												var fBoardCommentContent = $(
-														this)
-														.prevAll(
-																'.fBoardCommentContent')
-														.val();
-												console.log("선택된 댓글 번호 : "
-														+ fBoardCommentId
-														+ ", 댓글 내용 : "
-														+ fBoardCommentContent);
+                if (pageMaker_hasPrev) {
+                    list += '<li><button class="btn_comment_prev">이전</button></li>';
+                }
 
-												// ajax 요청
-												$
-														.ajax({
-															type : 'PUT',
-															url : 'comments/'
-																	+ fBoardCommentId,
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															data : fBoardCommentContent,
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('댓글 수정 성공!');
-																	getAllComments();
-																}
-															}
-														}) // end ajax()
-											}); // end comments.on()
+                for (var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
+                    list += '<li><button class="btn_comment_page" value=' + num + '>'
+                        + num
+                        + '</button></li>';
+                }
 
-							// 삭제 버튼을 클릭하면 선택된 댓글 삭제
-							$('#comments')
-									.on(
-											'click',
-											'.comment_item .btnCommentDelete',
-											function() {
-												console.log(this);
+                if (pageMaker_hasNext) {
+                    list += '<li><button class="btn_comment_next">이후</button></li>';
+                }
 
-												var fBoardId = $('#fBoardId')
-														.val();
-												var fBoardCommentId = $(this)
-														.prevAll(
-																'.fBoardCommentId')
-														.val();
-												console.log("선택된 댓글 번호 : "
-														+ fBoardCommentId);
+                list += '</ul>' + '</div>'
+                    + '</div>';
 
-												// ajax 요청
-												$
-														.ajax({
-															type : 'DELETE',
-															url : 'comments/'
-																	+ fBoardCommentId,
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															data : fBoardId,
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('댓글 삭제 성공!');
-																	getAllComments();
-																}
-															}
-														}) // end ajax()
-											}); // end comments.on()
+                $('#comments').html(list);
+            });
+        }
 
-							$('#comments').on('click', '.comment_item .btnReply', function() {
-												if ($('#memberNickname').val() == null) {
-													alert('답글을 작성하려면 로그인 해 주세요')
-													return;
-												}
-												console.log(this);
-												var fBoardCommentId = $(this)
-														.closest(
-																'.comment_item')
-														.find(
-																'.fBoardCommentId');
-												console.log(fBoardCommentId);
-												getAllReplies(fBoardCommentId);
+        $(document).on('click', '.btn_comment_page', function () {
+            $('#pageMaker_commentPage').val($(this).val());
+            getAllComments();
+        });
 
-											}); // end btnReply.click()
+        $(document).on('click', '.btn_comment_prev', function () {
+            $('#pageMaker_commentPage').val(+$('#pageMaker_startPageNo').val() - 1);
+            getAllComments();
+        });
 
-							function getAllReplies(fBoardCommentId) {
-								$('.replies').html('');
-								console.log("getAllReplies() 호출");
-								console.log("getAllReplies() 호출"
-										+ fBoardCommentId.val());
-								var url = 'replies/all/'
-										+ fBoardCommentId.val();
-								var comment_item = fBoardCommentId
-										.closest('.comment_item');
-								$
-										.getJSON(
-												url,
-												function(data) {
-													// data : 서버에서 전송받은 list 데이터가 저장되어 있음.
-													// getJSON()에서 json 데이터는
-													// javascript object로 자동 parsing됨.
-													console.log(data);
+        $(document).on('click', '.btn_comment_next', function () {
+            $('#pageMaker_commentPage').val(+$('#pageMaker_endPageNo').val() + 1);
+            getAllComments();
+        });
 
-													var memberNickname = $(
-															'#memberNickname')
-															.val();
-													var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+        $(document).on('click', '.comment_item .btnCommentUpdate', function () {
+            var fBoardCommentId = $(this).prevAll('.fBoardCommentId').val();
+            var fBoardCommentContent = $(this).prevAll('.fBoardCommentContent').val();
 
-													// $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수
-													$(data)
-															.each(
-																	function() {
-																		// this : 컬렉션의 각 인덱스 데이터를 의미
-																		console
-																				.log(this);
+            $.ajax({
+                type: 'PUT',
+                url: 'comments/' + fBoardCommentId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: fBoardCommentContent,
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('댓글 수정 성공!');
+                        getAllComments();
+                    }
+                }
+            });
+        });
 
-																		var fBoardReplyCreatedDate = new Date(this.fBoardReplyCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-																		var disabled = 'disabled';
-																		var readonly = 'readonly';
+        $(document).on('click', '.comment_item .btnCommentDelete', function () {
+            var fBoardId = $('#fBoardId').val();
+            var fBoardCommentId = $(this).prevAll('.fBoardCommentId').val();
 
-																		if (memberNickname == this.memberNickname) { // 댓글 작성자랑 로그인한 id가 같을때
-																			console
-																					.log("nickname 일치")
-																			disabled = '';
-																			readonly = '';
-																		}
+            $.ajax({
+                type: 'DELETE',
+                url: 'comments/' + fBoardCommentId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: fBoardId,
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('댓글 삭제 성공!');
+                        getAllComments();
+                    }
+                }
+            });
+        });
 
-																		list += '<div class="reply_item bg-light border">'
-																				+ '<pre>'
-																				+ '<input type="hidden" class="fBoardReplyId" value="' + this.fBoardReplyId + '">'
-																				+ 'ㄴ  '
-																				+ this.memberNickname
-																				+ '<br>'
-																				+ '&nbsp&nbsp'
-																				+ '<textarea class="fBoardReplyContent form-control bg-light" rows="1" style="border:none;">'
-																				+ '&nbsp&nbsp'
-																				+ this.fBoardReplyContent
-																				+ '</textarea>'
-																				+ '<br>'
-																				+ '&nbsp&nbsp&nbsp&nbsp'
-																				+ fBoardReplyCreatedDate
-																				+ '<br>'
-																				+ '&nbsp&nbsp&nbsp&nbsp'
-																				+ '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
-																				+ '&nbsp'
-																				+ '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
-																				+ '<br>'
-																				+ '</pre>'
-																				+ '</div>';
-																	}); // end each()
+        $('#comments').on('click', '.comment_item .btnReply', function () {
+            if ($('#memberNickname').val() == null) {
+                alert('답글을 작성하려면 로그인 해 주세요');
+                return;
+            }
 
-													list += memberNickname
-															+ '<br>'
-															+ '<div class="form-group bg-transparent border">'
-															+ '<textarea class="fBoardReplyContent form-control" rows="1" placeholder="답글 내용을 입력해 주세요." style="border:none;" required>'
-															+ '</textarea> </div>'
-															+ '<div style="text-align:right;">'
-															+ '<button class="btnReplyAdd btn btn-dark">작성</button>'
-															+ '</div>' + '<hr>'
-															+ '<br>'
+            var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
+            getAllReplies(fBoardCommentId);
+        });
 
-													comment_item
-															.append('<div class="replies bg-light">'
-																	+ list
-																	+ '</div>');
-												}); // end getJSON()
-							} // end getAllReplies()
+        function getAllReplies(fBoardCommentId) {
+            $('.replies').html('');
+            var url = 'replies/all/' + fBoardCommentId.val();
+            var comment_item = fBoardCommentId.closest('.comment_item');
 
-							$(document).on('click', '.btnReplyAdd',	function() {
-												console.log(this);
-												var commentItem = $(this)
-														.closest(
-																'.comment_item');
-												var fBoardCommentId = commentItem
-														.find('.fBoardCommentId');
-												var fBoardCommentIdVal = fBoardCommentId
-														.val();
-												var memberNickname = $(
-														'#memberNickname')
-														.val();
-												var fBoardReplyContent = commentItem
-														.find(
-																'.fBoardReplyContent')
-														.val();
-												console.log(fBoardReplyContent);
+            $.getJSON(url, function (data) {
+                console.log(data);
+                var memberNickname = $('#memberNickname').val();
+                var list = '';
 
-												var obj = {
-													'fBoardCommentId' : fBoardCommentIdVal,
-													'memberNickname' : memberNickname,
-													'fBoardReplyContent' : fBoardReplyContent
-												};
-												console.log(obj);
+                $(data).each(function () {
 
-												// $.ajax로 송수신
-												$
-														.ajax({
-															type : 'POST',
-															url : 'replies',
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															data : JSON.stringify(obj), // JSON으로 변환
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('답글 입력 성공');
-																	getAllReplies(fBoardCommentId);
-																}
-															}
-														}); // end ajax()
-											}); // end btnReplyAdd.click()
+                    var fBoardReplyCreatedDate = new Date(this.fBoardReplyCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric',                     month: '2-digit', day: '2-digit' });
+                    var disabled = 'disabled';
+                    var readonly = 'readonly';
 
-							$(document)
-									.on(
-											'click',
-											'.btnReplyUpdate',
-											function() {
-												console.log(this);
-												var commentItem = $(this)
-														.parent()
-														.closest(
-																'.comment_item');
-												var fBoardCommentId = commentItem
-														.find('.fBoardCommentId');
-												var fBoardReplyId = $(this)
-														.prevAll(
-																'.fBoardReplyId')
-														.val();
-												var fBoardReplyContent = $(this)
-														.prevAll(
-																'.fBoardReplyContent')
-														.val();
-												console.log("선택된 답글 번호 : "
-														+ fBoardReplyId
-														+ ", 답글 내용 : "
-														+ fBoardReplyContent);
+                    if (memberNickname == this.memberNickname) {
+                        console.log("nickname 일치")
+                        disabled = '';
+                        readonly = '';
+                    }
 
-												// ajax 요청
-												$
-														.ajax({
-															type : 'PUT',
-															url : 'replies/'
-																	+ fBoardReplyId,
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															data : fBoardReplyContent,
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('답글 수정 성공!');
-																	getAllReplies(fBoardCommentId);
-																}
-															}
-														}) // end ajax()
-											}); // end btnReplyUpdate.on()
+                    list += '<div class="reply_item bg-light border">'
+                        + '<pre>'
+                        + '<input type="hidden" class="fBoardReplyId" value="' + this.fBoardReplyId + '">'
+                        + 'ㄴ  '
+                        + this.memberNickname
+                        + '<br>'
+                        + '&nbsp&nbsp'
+                        + '<textarea class="fBoardReplyContent form-control bg-light" rows="1" style="border:none;">'
+                        + '&nbsp&nbsp'
+                        + this.fBoardReplyContent
+                        + '</textarea>'
+                        + '<br>'
+                        + '&nbsp&nbsp&nbsp&nbsp'
+                        + fBoardReplyCreatedDate
+                        + '<br>'
+                        + '&nbsp&nbsp&nbsp&nbsp'
+                        + '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
+                        + '&nbsp'
+                        + '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
+                        + '<br>'
+                        + '</pre>'
+                        + '</div>';
+                });
 
-							$(document)
-									.on(
-											'click',
-											'.btnReplyDelete',
-											function() {
-												console.log(this);
-												var commentItem = $(this)
-														.closest(
-																'.comment_item');
-												var fBoardCommentId = $(this)
-														.closest(
-																'.comment_item')
-														.find(
-																'.fBoardCommentId');
-												var fBoardReplyId = $(this)
-														.prevAll(
-																'.fBoardReplyId')
-														.val();
+                list += memberNickname
+                    + '<br>'
+                    + '<div class="form-group bg-transparent border">'
+                    + '<textarea class="fBoardReplyContentReg form-control" rows="1" placeholder="답글 내용을 입력해 주세요." style="border:none;" required>'
+                    + '</textarea> </div>'
+                    + '<div style="text-align:right;">'
+                    + '<button class="btnReplyAdd btn btn-dark">작성</button>'
+                    + '</div>' + '<hr>'
+                    + '<br>'
 
-												console.log("선택된 댓글 번호 : "
-														+ fBoardReplyId);
+                comment_item.append('<div class="replies bg-light">'
+                    + list
+                    + '</div>');
+            });
+        }
 
-												// ajax 요청
-												$
-														.ajax({
-															type : 'DELETE',
-															url : 'replies/'
-																	+ fBoardReplyId,
-															headers : {
-																'Content-Type' : 'application/json'
-															},
-															success : function(
-																	result) {
-																console
-																		.log(result);
-																if (result == 1) {
-																	alert('답글 삭제 성공!');
-																	getAllReplies(fBoardCommentId);
-																}
-															}
-														}) // end ajax()
-											}); // end btnReplyDelete.on()
-						}); // end document
-	</script>
+        $(document).on('click', '.btnReplyAdd', function () {
+            var commentItem = $(this).closest('.comment_item');
+            var fBoardCommentId = commentItem.find('.fBoardCommentId');
+            var fBoardCommentIdVal = fBoardCommentId.val();
+            var memberNickname = $('#memberNickname').val();
+            var fBoardReplyContent = commentItem.find('.fBoardReplyContentReg').val();
+
+            var commentRegisterNick = commentItem.find('.commentRegisterNickname').val();
+            var commentContent = commentItem.find('.fBoardCommentContent').val();
+            var fBoardId = $('#fBoardId').val();
+            var obj = {
+                'fBoardCommentId': fBoardCommentIdVal,
+                'memberNickname': memberNickname,
+                'fBoardReplyContent': fBoardReplyContent
+            };
+            console.log(obj);
+
+            $.ajax({
+                type: 'POST',
+                url: 'replies',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('답글 입력 성공');
+                        socket.send(
+                                commentRegisterNick + "," + "새 답글" + "," + "자유게시판" + "," +
+                                fBoardReplyContent + "," +
+                                memberNickname + "," + commentContent + "," + fBoardId
+                            );
+                        getAllReplies(fBoardCommentId);
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '.btnReplyUpdate', function () {
+            var commentItem = $(this).parent().closest('.comment_item');
+            var fBoardCommentId = commentItem.find('.fBoardCommentId');
+            var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
+            var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
+            console.log("선택된 답글 번호 : " + fBoardReplyId + ", 답글 내용 : " + fBoardReplyContent);
+
+            $.ajax({
+                type: 'PUT',
+                url: 'replies/' + fBoardReplyId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: fBoardReplyContent,
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('답글 수정 성공!');
+                        getAllReplies(fBoardCommentId);
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '.btnReplyDelete', function () {
+            var commentItem = $(this).closest('.comment_item');
+            var fBoardCommentId = commentItem.find('.fBoardCommentId');
+            var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
+            console.log("선택된 댓글 번호 : " + fBoardReplyId);
+
+            $.ajax({
+                type: 'DELETE',
+                url: 'replies/' + fBoardReplyId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result == 1) {
+                        alert('답글 삭제 성공!');
+                        getAllReplies(fBoardCommentId);
+                    }
+                }
+            });
+        });
+    });
+</script>
 	<%@ include file="../footer.jspf"%>
 </body>
 </html>

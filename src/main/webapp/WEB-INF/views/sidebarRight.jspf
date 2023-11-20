@@ -190,7 +190,6 @@
 		} // end getUProductRecentlyView
 
 		$(document).on('mouseenter', '.recently_product_item', function () {
-			  console.log('mouseenter 호출');
 			  var name = $(this).find('.name');
 			  var price = $(this).find('.price');
 
@@ -200,7 +199,6 @@
 			});
 
 		$(document).on('mouseleave', '.recently_product_item', function () {
-			  console.log('mouseleave 호출');
 			  var name = $(this).find('.name');
 			  var price = $(this).find('.price');
 
@@ -210,7 +208,6 @@
 			});
 		
 		 $(document).on('mouseenter', '.recently_u_product_item', function () {
-			  console.log('mouseenter 호출');
 			  var name = $(this).find('.name');
 			  var price = $(this).find('.price');
 
@@ -220,7 +217,6 @@
 			});
 
 		$(document).on('mouseleave', '.recently_u_product_item', function () {
-			  console.log('mouseleave 호출');
 			  var name = $(this).find('.name');
 			  var price = $(this).find('.price');
 
@@ -280,7 +276,7 @@
 				} // end success()
 			}); // end ajax()
 			return false;
-		})
+		}) // end btn_delete_recently_u_pro
 	 }) // end document.ready
 	 
 </script>

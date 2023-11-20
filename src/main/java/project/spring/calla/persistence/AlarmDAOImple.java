@@ -40,6 +40,18 @@ public class AlarmDAOImple implements AlarmDAO {
 		logger.info("update() 호출 alarmId = " + alarmId);
 		return sqlSession.update(NAMESPACE + ".update", alarmId);
 	}
+
+	@Override
+	public int check(String memberNickname) {
+		logger.info("check() 호출 memberNickname = " + memberNickname);
+		return sqlSession.selectOne(NAMESPACE + ".check", memberNickname);
+	}
+
+	@Override
+	public int delete(int alarmId) {
+		logger.info("delete() 호출 alarmId = " + alarmId);
+		return sqlSession.delete(NAMESPACE + ".delete", alarmId);
+	}
 	
 	
 	

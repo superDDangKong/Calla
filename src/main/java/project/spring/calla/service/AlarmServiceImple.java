@@ -37,6 +37,18 @@ public class AlarmServiceImple implements AlarmService {
 			return alarmDAO.update(alarmId);
 		}
 
+		@Override
+		public int check(String memberNickname) {
+			logger.info("check() 호출 : memberNickname = " + memberNickname);
+			return alarmDAO.check(memberNickname);
+		}
+
+		@Override
+		public int delete(int alarmId) {
+			logger.info("delete() 호출 : alarmId = " + alarmId);
+			return alarmDAO.delete(alarmId);
+		}
+
     
 
 }

@@ -35,10 +35,9 @@
 					${memberNickname }&nbsp;님&nbsp;&nbsp;
 					<input type="hidden" id="memberNickname" value="${memberNickname }">
 					<button type="button" class="btn position-relative" id="btn_notice">
+					    <div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white;  overflow-y: scroll;"></div>
 					    <i class="fas fa-bell"></i>
 					    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger dotIcon" style="width: 10px; height: 10px; display:none;"> </span>
-					    <div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white;  overflow-y: scroll;">
-					    </div>
 					</button>
 	                &nbsp;&nbsp;
 					<form action="/calla/member/logout" method="get">
@@ -99,158 +98,190 @@
 	    </div>
 	</div>
 <script type="text/javascript">
-	var socket = null;
-	if($('#memberId').val() != "") {
-		connect();
-	}
-	
-	function connect() {
-		console.log("connect() 실행");
-		var ws = new WebSocket("ws://localhost:8080/calla/echo");
-		socket = ws;
-		
-		//이벤트 헨들러
-		ws.onopen = function() {
-			console.log('Info: connection opened.');
-		};
-		
-		//소켓에 메시지를 보냈을 때(sess.sendMessage) 여기서 받아짐 
-		ws.onmessage = function (event) {
-			console.log("ReceiveMessage:" + event.data+'\n');
-			var realTimeAlarm = $('#realTimeAlarm');
-			realTimeAlarm.html(event.data);
-			realTimeAlarm.show()
-			
-			setTimeout(function() {
-				realTimeAlarm.hide();
-			    }, 5000)
-			
-			$('.dotIcon').css("display", "block");	    
-		};
-		
-		ws.onclose = function (event) { 
-			console.log('Info: connection closed'); 
-			console.log('코드: ' + event.code + ', 이유: ' + event.reason);
-			//setTimeout( function() {connect(); }, 1000); // retry connection!!
-		};
-		
-		ws.onerror = function (err) { console.log('Error:', err); };
-	}
-	
-	/* 
-	alarmDiv.style.visibility = "visible"; 
-		알람창 추가
-	
-	alarmI.addEventListener('click', function(){
-		alarmUL.classList.toggle('visible');
-		$(this).stop(false, false);
-	});
-	
-	alarmUL.addEventListener('click', function(e){
-		var endIdx = e.target.textContent.indexOf(")");
-		var idx = e.target.textContent.substr(1, endIdx-1);
-	
-		$.ajax({
-			url : '/alarmDel',
-			data : {"idx" : idx},
-			type : 'post',
-			success : function(data){
-				console.log(data);
-				alert("성공");
-			}
-		})
-		
-		$(e.target).remove();
-		if(alarmUL.children.length == 0){
-			alarmDiv.style.visibility = "hidden";
+
+		var socket = null;
+		if($('#memberId').val() != "") {
+			connect();
 		}
 		
-	})
-*/
-	$(document).ready(function() {
-		$('#btnSend').on('click', function(evt) {
-			var receiveId = $('#receiveId').val();
-			var msg = $('#msg').val();
-			var sendId=$('#sendId').val();
-			evt.preventDefault();
-			if (socket.readyState !== 1 ) return;
-			socket.send(sendId + "," + receiveId + "," + msg);
-		});
-		
-		$('#wsClose').on('click', function(e) {
-			socket.onclose();
-		});
-		
-		$('#btn_notice').on('click', function() {
-			if ($('#alarm_div').children().length === 0) {
-		        readAlarm();
-		    } else {
-		        // 이미 생성되어 있다면 접게 하는 로직을 추가하세요.
-		        $('#alarm_div').html("");
-		        $('#alarm_div').hide();
-		    }
-		}) // end btn_notice.click
-		
-		function readAlarm() {
-			var memberNickname = $('#memberNickname').val();
-			var memberId = $('#memberId').val();
-			var list = "";
-			var bgColor="gray";
-			var prefix="";
-			$.ajax({
-				type : 'GET',
-				url : '/calla/alarm/all/' + memberNickname,
-				success : function(lists) {
-					$(lists).each(function(){
-						if(this.alarmChecked == 'o'){
-							bgColor="white";
-						}
-						
-						if(this.alarmPrefix=="자유게시판") {
-							prefix="fBoard";
-						} else if(this.alarmPrefix=="문의게시판") {
-						 	prefix="qBoard";
-						} else if(this.alarmPrefix=="중고상품") {
-							prefix="uProduct";
-						} else if(this.alarmPrefix=="공용상품") {
-							prefix="product";
-						}
-						
-						list += '<a class="go_url" href="/calla/' + prefix + '/detail?' + prefix +'Id='+ this.boardId + '&memberId=' + memberId + '">'    
-							+ '<div class="alarm_list" style="background-color:' + bgColor + ';">'
-							+ '<input type="hidden" class="alarmId" value="' + this.alarmId + '">'
-							+ '<input type="hidden" class="alarmChecked" value="' + this.alarmChecked + '">'
-							+ '<h3>' + this.sendNickname + '님의 ' + this.alarmCode + '</h3>'
-							+ '<h4>' + this.content + '</h4>'
-							+ '<h5>' + this.title + '</h5>'
-							+ '<h5><' + this.alarmPrefix + '></h5>'
-							+ '</div>'
-							+ '</a>' 
-							+ '<hr>'
-					})// end list.each
-					$('#alarm_div').html(list);	
-					$('#alarm_div').css("display","block");
-				}// end success
-			}); // end ajax
-		}// end readAlarm
-		$(document).on('click', '.go_url', function(){
-			console.log('go_url 호출');
-			alarmChecked = $(this).find('.alarmChecked').val();
-			alarmId = $(this).find('.alarmId').val();
+		function connect() {
+			console.log("connect() 실행");
+			var ws = new WebSocket("ws://localhost:8080/calla/echo");
+			socket = ws;
 			
-			if (alarmChecked != 'o') { // 안 읽었을때
+			//이벤트 헨들러
+			ws.onopen = function() {
+				console.log('Info: connection opened.');
+				check();
+			};
+			
+			//소켓에 메시지를 보냈을 때(sess.sendMessage) 여기서 받아짐 
+			ws.onmessage = function (event) {
+				console.log("ReceiveMessage:" + event.data+'\n');
+				readAlarm();
+				check();			
+				var realTimeAlarm = $('#realTimeAlarm');
+				realTimeAlarm.html(event.data);
+				realTimeAlarm.show()
+					
+				setTimeout(function() {
+					realTimeAlarm.hide();
+				    }, 5000)
+					
+			};
+			
+			ws.onclose = function (event) { 
+				console.log('Info: connection closed'); 
+				console.log('코드: ' + event.code + ', 이유: ' + event.reason);
+				//setTimeout( function() {connect(); }, 1000); // retry connection!!
+			};
+			
+			ws.onerror = function (err) { console.log('Error:', err); };
+		}
+		
+		/* 
+		alarmDiv.style.visibility = "visible"; 
+			알람창 추가
+		
+		alarmI.addEventListener('click', function(){
+			alarmUL.classList.toggle('visible');
+			$(this).stop(false, false);
+		});
+		
+		alarmUL.addEventListener('click', function(e){
+			var endIdx = e.target.textContent.indexOf(")");
+			var idx = e.target.textContent.substr(1, endIdx-1);
+		
+			$.ajax({
+				url : '/alarmDel',
+				data : {"idx" : idx},
+				type : 'post',
+				success : function(data){
+					console.log(data);
+					alert("성공");
+				}
+			})
+			
+			$(e.target).remove();
+			if(alarmUL.children.length == 0){
+				alarmDiv.style.visibility = "hidden";
+			}
+			
+		})
+	*/
+			$('#btn_notice').on('click', function() {
+				if ($('#alarm_div').children().length === 0) {
+			        readAlarm();
+			        $('#alarm_div').css("display","block");
+			    } else {
+			        // 이미 생성되어 있다면 접게 하는 로직을 추가하세요.
+			        $('#alarm_div').html("");
+			        $('#alarm_div').hide();
+			    }
+			}) // end btn_notice.click
+			
+			function readAlarm() {
+				var memberNickname = $('#memberNickname').val();
+				var memberId = $('#memberId').val();
+				var list = "";
+				var bgColor="gray";
+				var prefix="";
 				$.ajax({
-					type : 'PUT',
-					url : '/calla/alarm/' + alarmId,
+					type : 'GET',
+					url : '/calla/alarm/all/' + memberNickname,
+					success : function(lists) {
+						$(lists).each(function(){
+							if(this.alarmChecked == 'o'){
+								bgColor="white";
+							} else {
+								$('.dotIcon').css("display", "block");	  
+							}
+							
+							if(this.alarmPrefix=="자유게시판") {
+								prefix="fBoard";
+							} else if(this.alarmPrefix=="문의게시판") {
+							 	prefix="qBoard";
+							} else if(this.alarmPrefix=="중고상품") {
+								prefix="uProduct";
+							} else if(this.alarmPrefix=="공용상품") {
+								prefix="product";
+							}
+							
+							list += 
+								 '<div class="alarm_list" style="position: relative; background-color:' + bgColor + ';">'
+								+ '<input type="hidden" class="go_url" value="/calla/' + prefix + '/detail?' + prefix +'Id='+ this.boardId + '&memberId=' + memberId + '">'
+								+ '<input type="hidden" class="alarmId" value="' + this.alarmId + '">'
+								+ '<input type="hidden" class="alarmChecked" value="' + this.alarmChecked + '">'
+								+ '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete" style="position: absolute; top: 0; right: 0; z-index: 2;">x</button>'
+								+ '<h3>' + this.sendNickname + '님의 ' + this.alarmCode + '</h3>'
+								+ '<h4>' + this.content + '</h4>'
+								+ '<h5>' + this.title + '</h5>'
+								+ '<h5><' + this.alarmPrefix + '></h5>'
+								+ '</div>'
+								+ '<hr>'
+						})// end list.each
+						if (list.length != 0) {
+							$('#alarm_div').html(list);	
+						} else {
+							$('#alarm_div').html("<div>새 소식이 없습니다.</div>")
+						}
+						
+						$('.btn_delete').click(function(){
+							console.log("delete 클릭");
+							var alarmId = $(this).closest('.alarm_list').find('.alarmId').val();
+							console.log(alarmId);
+							$.ajax({
+								type : 'delete',
+								url : '/calla/alarm/' + alarmId,
+								success : function(result) {
+										if(result==1) {
+											console.log("삭제성공")
+											check();
+											readAlarm();
+										}
+								} // end success()
+							}); // end ajax()
+							return false;
+						}) // end btn_delete
+					}// end success
+				}); // end ajax
+			}// end readAlarm
+			
+			function check() { 
+				var memberNickname = $('#memberNickname').val();
+				$.ajax({
+					type : 'GET',
+					url : '/calla/alarm/check/' + memberNickname,
 					success : function(result) {
-							if(result==1) {
-								console.log("업데이트 성공 x -> o")
-								}
+						if(result != 0) {
+							$('.dotIcon').css("display", "block");
+						} else {
+							$('.dotIcon').css("display", "none");	 
+						}
 					}// end success
 				}); // end ajax
 			}
-		}) // end go_url
-	}); // end document.ready()
+			
+			$(document).on('click', '.alarm_list', function(){
+				console.log('go_url 호출');
+				var alarmChecked = $(this).find('.alarmChecked').val();
+				var alarmId = $(this).find('.alarmId').val();
+				var url = $(this).find('.go_url').val();
+				if (alarmChecked != 'o') { // 안 읽었을때
+					$.ajax({
+						type : 'PUT',
+						url : '/calla/alarm/' + alarmId,
+						success : function(result) {
+								if(result==1) {
+									console.log("업데이트 성공 x -> o")
+									window.location.href = url;
+									}
+						}// end success
+					}); // end ajax
+				} else {
+					window.location.href = url;
+				}
+			}) // end go_url
 </script>
 
 </body>

@@ -1,25 +1,20 @@
 package project.spring.calla.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.AlarmVO;
-import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.AlarmService;
 
 @RestController
@@ -40,9 +35,28 @@ public class AlarmRESTController {
 		return new ResponseEntity<List<AlarmVO>>(lists, HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("check/{memberNickname}")
+	public ResponseEntity<Integer> checkAlarm(@PathVariable String memberNickname) {
+		logger.info("readAlarm 호출 memberNicknmae = " + memberNickname);
+		int result = 0;
+		result = alarmService.check(memberNickname);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		
+	}
 	@PutMapping("/{alarmId}") // PUT : 댓글 수정
-	public ResponseEntity<Integer> updateComment(@PathVariable String memberNickname, @PathVariable int alarmId) {
+	public ResponseEntity<Integer> updateAlarm(@PathVariable int alarmId) {
+		logger.info("upadateAlarm 호출 alarmId = " + alarmId);
 		int result = alarmService.update(alarmId);
+		logger.info("result = " + result);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{alarmId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> deleteAlarm(@PathVariable int alarmId) {
+		logger.info("deleteAlarm 호출 alarmId = " + alarmId);
+		int result = alarmService.delete(alarmId);
+		logger.info("result = " + result);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 

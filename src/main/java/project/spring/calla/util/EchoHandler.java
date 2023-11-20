@@ -89,16 +89,18 @@ public class EchoHandler extends TextWebSocketHandler{
 				vo.setTitle(title);
 				vo.setBoardId(boardId);
 				
-				int insertResult = alarmService.create(vo);
-				logger.info(insertResult+"행 알람 삽입");
+				if(!registerNick.equals(sendNick)) {
+					int insertResult = alarmService.create(vo);
+					logger.info(insertResult+"행 알람 삽입");
 				
-				WebSocketSession responseIdSession = userSessions.get(registerNick);
-				if (responseIdSession != null) {
-					TextMessage tmpMsg = new TextMessage(title + "에 새 댓글" + "<br>" + sendNick + ": " + content);
-					responseIdSession.sendMessage(tmpMsg);
+					WebSocketSession responseIdSession = userSessions.get(registerNick);
+					if (responseIdSession != null) {
+						TextMessage tmpMsg = new TextMessage(title + "에 " + alarmCode + "<br>" + sendNick + ": " + content);
+						responseIdSession.sendMessage(tmpMsg);
+					}
 				}
 			}
-		}
+		} 
 //		for(WebSocketSession single : sessions) {
 //			대댓글 때 사용
 //			String msg = message.getPayload();

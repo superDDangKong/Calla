@@ -23,5 +23,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${alarmChecked} = 'o'
 		where ${alarmId} = #{alarmId}
 	</update>
+	
+	<select id="check" resultType="Integer">
+		select count(*)
+		from ${alarm}
+		where ${memberNickname} = #{memberNickname} and ${alarmChecked} = 'x'
+	</select>
+	
+	<delete id="delete">
+		delete from ${alarm}
+		where ${alarmId} = #{alarmId}
+	</delete>
 </mapper>
 

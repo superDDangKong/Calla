@@ -131,21 +131,16 @@ public class FBoardController {
 		
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
-		logger.info("filename = " + fileName);
 		String filePath = uploadpath + fileName;
-		logger.info("filepath = " + filePath);
 		try {
 			in = new FileInputStream(filePath);
-			logger.info("in = " + in);
 			// 파일 확장자
 			String extension =
 					filePath.substring(filePath.lastIndexOf(".") + 1);
-			logger.info("extension = " + extension);
 			
 			// 응답 헤더(response header)에 Content-Type 설정
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
-			logger.info("contentType = " + httpHeaders.getContentType());
 			// 데이터 전송
 			entity = new ResponseEntity<byte[]>(
 					IOUtils.toByteArray(in), // 파일에서 읽은 데이터

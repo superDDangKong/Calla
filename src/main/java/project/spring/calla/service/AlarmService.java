@@ -17,4 +17,6 @@ public interface AlarmService {
 	List<AlarmVO> read(String memberNickname);
 	int create(AlarmVO vo);
 	int update(int alarmId);
+	int check(String memberNickname);
+	int delete(int alarmId);
 }

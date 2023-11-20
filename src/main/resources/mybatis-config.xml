@@ -203,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductReviewContent" value="u_product_review_content" />
 		
 		<property name="alarm" value="alarm" />
+		<property name="alarmId" value="alarm_id" />
 		<property name="memberNickname" value="member_nickname" />
 		<property name="alarmCode" value="alarm_code"/>
 		<property name="alarmChecked" value="alarm_checked" />

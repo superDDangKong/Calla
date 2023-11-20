@@ -34,7 +34,7 @@
 							<c:forEach var="ProductVO" items="${lists.productList }">
 								<div class="col mb-5">
 									<div class="card h-100">
-										<%-- <img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." /> --%>
+										<img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." />
 										<div class="card-body p-4">
 											<div class="text-center">
 												<h5 class="fw-bolder">
@@ -79,9 +79,7 @@
 								<div class="col mb-5">
 									<div class="card h-100">
 										<!-- Product image-->
-										<img class="card-img-top"
-											<%-- src="fBoard/display?fileName=${uProductVO.uProductImagePath}" --%>
-											alt="..." />
+										<img class="card-img-top" src="fBoard/display?fileName=${uProductVO.uProductImagePath}"	alt="..." />
 										<!-- Product details-->
 										<div class="card-body p-4">
 											<div class="text-center">
@@ -122,7 +120,7 @@
 					</div>
 				</section>
 			</main>
-			<%-- <%@ include file="sidebarRight.jspf"%> --%>
+			<%@ include file="sidebarRight.jspf"%>
 		</div>
 	</div>
 	<script type="text/javascript">

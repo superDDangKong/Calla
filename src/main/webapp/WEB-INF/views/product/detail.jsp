@@ -355,6 +355,7 @@
 									+ '별점 : ' + generateStars(this.productRated)
 									+ '&nbsp;&nbsp;' + '&nbsp;&nbsp;'
 									+ this.memberNickname
+									+ '<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
 									+ '&nbsp;&nbsp;' // 공백
 									+ '<input type="text" class="productCommentContent" value="' + this.productCommentContent + '" required>'	 
 									+ '&nbsp;&nbsp;' // 공백
@@ -531,7 +532,10 @@
 		    var memberNickname = $('#memberNickname').val();
 		    var productReplyContent = $(this).prevAll('.productReplyContent').val();
 
-
+            var commentRegisterNick = commentItem.find('.commentRegisterNickname').val();
+            var commentContent = commentItem.find('.productCommentContent').val();
+            var productId = $('#productId').val();
+		    
 			var obj = {
 					'productCommentId' : productCommentIdVal, 
 					'memberNickname' : memberNickname,
@@ -551,6 +555,11 @@
 					console.log(result);
 					if(result == 1) {
 						alert('답글 입력 성공');
+						socket.send(
+                                commentRegisterNick + "," + "새 답글" + "," + "공용상품" + "," +
+                                productReplyContent + "," +
+                                memberNickname + "," + commentContent + "," + productId
+                            );
 						getAllReplies(productCommentId);
 					}
 				}
