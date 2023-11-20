@@ -82,10 +82,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr,
-			HttpServletRequest request) {
-		// RedirectAttributes
-		//
+	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		logger.info("loginPOST() ");
 		String result = memberDAO.login(memberId, memberPw);
 		if (result != null) {
@@ -94,22 +91,18 @@ public class MemberController {
 			int memberLevel = vo.getMemberLevel();
 			float memberManner = vo.getMemberManner();
 			reAttr.addFlashAttribute("login_result", "success");
-
 			HttpSession session = request.getSession();
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
 			session.setAttribute("memberManner", memberManner);
 			session.setMaxInactiveInterval(60 * 60);
-
 			if (targetURL != null) {
 				return "redirect:" + targetURL;
 			} else {
 				return "redirect:/";
 			}
-
 		} else {
-
 			if (targetURL != null) {
 				try {
 					targetURL = URLEncoder.encode(targetURL, "UTF-8");
@@ -122,7 +115,6 @@ public class MemberController {
 			}
 		}
 	} // end loginPOST()
-
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
 
@@ -166,14 +158,13 @@ public class MemberController {
 	@GetMapping("/orders")
 	public void ordersGET() {} // end likesGET()
 
-	@GetMapping("/searchId")
-	public void searchIdGET() {
+	@GetMapping("/searchMemberInfo")
+	public void searchMemberInfoGET() {
 	} // end searchIdGET()
 
-	@GetMapping("/searchPw")
-	public void searchPwGET() {
-	} // end searchPwGET()
-
+	/*
+	 * @GetMapping("/searchPw") public void searchPwGET() { } // end searchPwGET()
+	 */
 	@PostMapping("/searchId")
 	public String searchIdPOST(String memberName, String memberEmail, RedirectAttributes reAttr) {
 
@@ -193,6 +184,7 @@ public class MemberController {
 	@PostMapping("/searchPw")
 	public String searchPwPOST(Model model, String memberId, String memberPhone, RedirectAttributes reAttr) {
 		String result = memberService.searchPw(memberId, memberPhone);
+		logger.info("memberId: " + memberId + ", memberPhone: " + memberPhone);
 		if (result != null) {
 			reAttr.addFlashAttribute("searchResult", "pwSearch");
 			reAttr.addFlashAttribute("searchPw", result);
@@ -242,13 +234,13 @@ public class MemberController {
 
 	@GetMapping("/myuproduct")
 	public void MainGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
-		logger.info("list() 호출");
+		logger.info("list() ");
 		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
 
 		
 		String memberNickname = (String) session.getAttribute("memberNickname");
 		
-		// Paging 처리
+		// Paging 
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
 			criteria.setPage(page);
@@ -271,7 +263,7 @@ public class MemberController {
 	
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName) {
-		logger.info("display() 호출");
+		logger.info("display() ");
 
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -281,16 +273,16 @@ public class MemberController {
 		try {
 			in = new FileInputStream(filePath);
 
-			// 파일 확장자
+			
 			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
 			logger.info(extension);
 
-			// 응답 헤더(response header)에 Content-Type 설정
+
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
-			// 데이터 전송
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), // 파일에서 읽은 데이터
-					httpHeaders, // 응답 헤더
+
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), 
+					httpHeaders, 
 					HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -302,9 +294,9 @@ public class MemberController {
 	@Transactional(value = "transactionManager")
 	@GetMapping("/choosenickname")
 	public void ChooseGET(Model model, Integer uProductId, Integer page, HttpSession session) throws Exception {
-		logger.info("choosenickname() 호출 : uProductId = " + uProductId);
+		logger.info("choosenickname()  : uProductId = " + uProductId);
 		UProductVO vo = memberService.read(uProductId);
-		logger.info("호출 : prdocutVO = " + vo);
+		logger.info(" : prdocutVO = " + vo);
 		List<UProductCommentVO> list = uProductCommentService.read(uProductId);
 		
 		model.addAttribute("list", list);
@@ -316,16 +308,16 @@ public class MemberController {
 	@PostMapping("/choosenickname")
 	public void choosenicknamePOST(UProductBuyVO vo, RedirectAttributes reAttr, UProductSellVO svo) throws Exception {
 		// RedirectAttributes
-		// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
-		logger.info("choosenicknamePOST() 호출");
+		
+		logger.info("choosenicknamePOST() ");
 		logger.info(vo.toString());
 		logger.info(svo.toString());
 		int result = memberService.buysellcreate(vo, svo);
 		logger.info("result = " + result);
-		logger.info(result + "행 삽입");
+		
 		
 		if(result == 1) {
-			logger.info("창 종료");
+			logger.info("�����̰�");
 		} 
 		
 	} // end registerPOST()
@@ -334,8 +326,8 @@ public class MemberController {
 	
 	@GetMapping("/searchByOption")
 	public void searchByOprionGet(Model model, String productOption, String category, String keyword, int page) {
-		logger.info("searchByOption 호출 option = " + productOption + " keyword = " + keyword + " category = " + category);
-		List<UProductVO> list = null; // union 써서 맨위 테이블 컬럼의 vo로 넣은거.... 다른방법 check
+		logger.info("searchByOption option = " + productOption + " keyword = " + keyword + " category = " + category);
+		List<UProductVO> list = null;
 	
 		PageCriteria criteria = new PageCriteria();
 		criteria.setPage(page);

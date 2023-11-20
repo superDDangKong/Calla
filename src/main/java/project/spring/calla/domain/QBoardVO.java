@@ -11,11 +11,15 @@ public class QBoardVO {
 	private int qBoardViews;
 	private int qBoardCommentCount;
 	private String qBoardImagePath;
+	private String qBoardStatus;
+	
 	
 	public QBoardVO() {}
-	
+
+
 	public QBoardVO(int qBoardId, String memberNickname, String qBoardTitle, String qBoardContent,
-			Date qBoardCreatedDate, int qBoardViews, int qBoardCommentCount, String qBoardImagePath) {
+			Date qBoardCreatedDate, int qBoardViews, int qBoardCommentCount, String qBoardImagePath,
+			String qBoardStatus) {
 		super();
 		this.qBoardId = qBoardId;
 		this.memberNickname = memberNickname;
@@ -25,79 +29,109 @@ public class QBoardVO {
 		this.qBoardViews = qBoardViews;
 		this.qBoardCommentCount = qBoardCommentCount;
 		this.qBoardImagePath = qBoardImagePath;
+		this.qBoardStatus = qBoardStatus;
 	}
+
 
 	public int getqBoardId() {
 		return qBoardId;
 	}
 
+
 	public void setqBoardId(int qBoardId) {
 		this.qBoardId = qBoardId;
 	}
+
 
 	public String getMemberNickname() {
 		return memberNickname;
 	}
 
+
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
 	}
+
 
 	public String getqBoardTitle() {
 		return qBoardTitle;
 	}
 
+
 	public void setqBoardTitle(String qBoardTitle) {
 		this.qBoardTitle = qBoardTitle;
 	}
+
 
 	public String getqBoardContent() {
 		return qBoardContent;
 	}
 
+
 	public void setqBoardContent(String qBoardContent) {
 		this.qBoardContent = qBoardContent;
 	}
+
 
 	public Date getqBoardCreatedDate() {
 		return qBoardCreatedDate;
 	}
 
+
 	public void setqBoardCreatedDate(Date qBoardCreatedDate) {
 		this.qBoardCreatedDate = qBoardCreatedDate;
 	}
+
 
 	public int getqBoardViews() {
 		return qBoardViews;
 	}
 
+
 	public void setqBoardViews(int qBoardViews) {
 		this.qBoardViews = qBoardViews;
 	}
+
 
 	public int getqBoardCommentCount() {
 		return qBoardCommentCount;
 	}
 
+
 	public void setqBoardCommentCount(int qBoardCommentCount) {
 		this.qBoardCommentCount = qBoardCommentCount;
 	}
+
 
 	public String getqBoardImagePath() {
 		return qBoardImagePath;
 	}
 
+
 	public void setqBoardImagePath(String qBoardImagePath) {
 		this.qBoardImagePath = qBoardImagePath;
 	}
+
+
+	public String getqBoardStatus() {
+		return qBoardStatus;
+	}
+
+
+	public void setqBoardStatus(String qBoardStatus) {
+		this.qBoardStatus = qBoardStatus;
+	}
+
 
 	@Override
 	public String toString() {
 		return "QBoardVO [qBoardId=" + qBoardId + ", memberNickname=" + memberNickname + ", qBoardTitle=" + qBoardTitle
 				+ ", qBoardContent=" + qBoardContent + ", qBoardCreatedDate=" + qBoardCreatedDate + ", qBoardViews="
 				+ qBoardViews + ", qBoardCommentCount=" + qBoardCommentCount + ", qBoardImagePath=" + qBoardImagePath
-				+ "]";
+				+ ", qBoardStatus=" + qBoardStatus + "]";
 	}
+	
+	
 
 	
 	

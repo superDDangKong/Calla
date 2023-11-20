@@ -33,6 +33,58 @@ textarea {
 #imgDelete {
 	display : none;
 }
+
+.styled-checkbox {
+        display: inline-block;
+    }
+
+    .styled-checkbox input {
+        display: none;
+    }
+
+    .styled-checkbox label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 20px; /* Adjust line height for vertical centering */
+    }
+
+    .styled-checkbox label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%; /* Center the checkbox vertically */
+        transform: translateY(-50%); /* Adjust for vertical centering */
+        width: 20px;
+        height: 20px;
+        border: 2px solid #3498db; /* Border color */ 
+        background-color: #fff; /* Background color */
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .styled-checkbox input:checked + label:before {
+        background-color: #3498db; /* Change background color when checked */
+        border: 2px solid #3498db; /* Change border color when checked */
+    }
+
+    .styled-checkbox label:after {
+        content: '';
+        position: absolute;
+        left: 7px;
+        top: 7px;
+        width: 6px;
+        height: 12px;
+        border: 2px solid #fff; /* Checkmark color */
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        display: none;
+    }
+
+    .styled-checkbox input:checked + label:after {
+        display: block;
+    }
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -51,6 +103,12 @@ textarea {
 		<form action="register" method="post" enctype="multipart/form-data">
 			<div>
 				<input type="text" name="qBoardTitle" placeholder="제목 입력" required> <!-- 데이터를 입력할 땐 쿼리 기준 물음표 갯수로 -->
+				 <div class="styled-checkbox">
+        			<input type="radio" id="public" class="radio" name="qBoardStatus" value="공개" checked>
+    				<label for="public">공개</label>
+				    <input type="radio" id="private" class="radio" name="qBoardStatus" value="비공개">
+				    <label for="private">비공개</label>
+   				 </div>
 			</div>
 			<div>
 				<input type="text" name="memberNickname" value="${memberNickname }" readonly="readonly"> <!-- 태그네임과 vo 이름과 같아야 한다 안그럼 에러나 -->
@@ -75,6 +133,16 @@ textarea {
 	</div>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$('.radio').change(function(){
+			var checkValue = $('.radio:checked').attr('id');
+			
+			if(checkValue === 'public'){
+				console.log("공개");
+			} else {
+				console.log("비공개");
+			}
+		})
+		
 	      $('#customFile').change(function(event) {
 	        const file = event.target.files[0];
 	        const imageDisplay = $('#imgDisplay'); // 이미지 태그

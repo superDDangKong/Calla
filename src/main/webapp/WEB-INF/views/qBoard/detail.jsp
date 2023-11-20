@@ -22,6 +22,7 @@ li {
 
 .comment_item {
     margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .comment-header {
@@ -45,10 +46,6 @@ li {
     resize: none; /* Disable textarea resizing */
 }
 
-.comment-actions {
-    margin-top: 10px;
-}
-
 /* 버튼 스타일링 */
 .btn {
     margin-right: 5px;
@@ -61,17 +58,47 @@ hr {
 }
 
 .comment-buttons {
-    text-align: right; // 버튼을 오른쪽 정렬
+    text-align: right; 
 }
 
 .comment-buttons button {
-    margin-left: 5px; // 버튼 사이의 간격 조절
+    margin-left: 5px; 
 }
 
+.reply_item {
+	margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
-.comment_item {
-    border-bottom: 1px solid #000;
-    }
+.reply-header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reply-date {
+	margin-left: 10px;
+    color: #777;
+}
+
+.reply-content {
+	margin-bottom: 10px;
+}
+
+.reply-content textarea {
+	width: 100%;
+    resize: none; /* Disable textarea resizing */
+}
+
+.reply-buttons {
+    text-align: right; 
+}
+
+.reply-buttons button {
+    margin-left: 5px; 
+}
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" 
@@ -96,16 +123,18 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	<div class="container">
 	<br><br><br><br><br>
 		<h2>글 보기</h2>
-		<div>
+		<%-- <div>
 			<p style="">글 번호 : ${vo.qBoardId }</p>
-		</div>
+		</div> --%>
 		<div>
 			<p>제목 : ${vo.qBoardTitle }</p>
 			
 		</div>
 		<div>
-			<p>작성자 : ${vo.memberNickname }</p>
-			<p id="date">작성일 : ${vo.qBoardCreatedDate}</p>
+			<p id="Writer" >${vo.memberNickname }</p>
+			<fmt:formatDate value="${vo.qBoardCreatedDate }"
+				pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
+			<p id="date">${vo.qBoardCreatedDate }</p>
 		</div>
 		<div class="content">
 			<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">
@@ -119,29 +148,38 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		</div>
 		
 		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
-		
-		
-			<a href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
-			<form action="delete" method="POST">
-				<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }">
-				<input type="submit" value="글 삭제"> 
-			</form>
-	
-			<c:if test="${memberNickname != null}">
-				<div>
-				<br><br>
-					<div class="border">
-						${memberNickname}<br><br> <input type="hidden" id="memberNickname" value=${memberNickname }>
-							<div class="form-group">
-								<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
-							</div>
-							<div style="text-align: right;">
-								<button id="btnCommentAdd" class="btn btn-dark">작성</button>
-							</div>
+		<c:set var="memberNickname" value="${memberNickname }" />
+		<c:set var="voMemberNickname" value="${vo.memberNickname }" />
+		<c:if test="${memberNickname == voMemberNickname}">
+			<div class="d-flex">
+				<div class="p-2">
+					<a id="boardUpdate" href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+				</div>
+				<div class="p-2">
+					<form action="delete" method="POST">
+						<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
+						<input id="boardDelete" type="submit" value="글 삭제"> 
+					</form>
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${memberNickname != null}">
+			<div>
+			<br><br>
+				<div class="border">
+					${memberNickname}<br><br> 
+					<input type="hidden" id="memberNickname" value=${memberNickname }>
+					<div class="form-group">
+						<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+					</div>
+					<div style="text-align: right;">
+					<button id="btnCommentAdd" class="btn btn-dark">작성</button>
 					</div>
 				</div>
-			</c:if>
+			</div>
+		</c:if>
 			
+		
 			<c:if test="${memberNickname == null}">
 				<br> 
 				댓글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=${vo.qBoardId }">로그인</a>이 필요합니다.
@@ -156,6 +194,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
+    	
     	  var img = $('#img').val();
     	  var date = $('#date').val();
     	  
@@ -335,8 +374,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
       // 게시판 대댓글 전체 가져오기
          function getAllReplies(qBoardCommentId){
   
-
             $('.replies').html('');
+            
             console.log("getAllReplies() 호출");
             console.log("getAllReplies() 호출" + qBoardCommentId.val());
             
@@ -374,6 +413,8 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
                         disabled = '';
                         readonly = '';
                      }
+                     var qBoardReplyId = $(this).closest('.reply_item').find('.qBoardReplyId').val();
+                     console.log("After setting qBoardReplyId:", qBoardReplyId);
                      
                      list += '<div class="reply_item" style="border: 1px solid">'
                            + '<pre>'
@@ -388,11 +429,11 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 						   + '</textarea>'
 						   + '</div>'
 						   + '<div class="reply-buttons">'
-						   + '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'
-                           + '<button class="btnReplyDelete" ' + disabled + ' >삭제</button>'
+						   /* + '<button class="btn btn-sm btnReplyUpdate">수정</button>'
+                           + '<button class="btn btn-sm btnReplyDelete">삭제</button>' */
                            + '<br>'
-                           + '</pre>'
                            + '</div>'
+                           + '</pre>'
                            + '</div>';
 						   /* if(memberNickname === this.memberNickname){
 							   list += '<button class="btnReplyUpdate" ' + disabled + ' >수정</button>'

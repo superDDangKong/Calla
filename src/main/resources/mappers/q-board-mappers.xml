@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <insert id="insert">
 	 insert into ${q_board}
-	 (${memberNickname}, ${qBoardTitle}, ${qBoardContent}, ${qBoardViews}, ${qBoardImagePath})
-	 values (#{memberNickname}, #{qBoardTitle}, #{qBoardContent}, #{qBoardViews}, #{qBoardImagePath})
+	 (${memberNickname}, ${qBoardTitle}, ${qBoardContent}, ${qBoardViews}, ${qBoardImagePath}, ${qBoardStatus})
+	 values (#{memberNickname}, #{qBoardTitle}, #{qBoardContent}, #{qBoardViews}, #{qBoardImagePath}, #{qBoardStatus})
 	 </insert>
 	 <!-- property의 name과 vo의 변수 이름이 같아야함 -->
 	 
