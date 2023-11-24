@@ -29,5 +29,4 @@ public interface ProductDAO {
 	int updateRatedCount(int amount, int productId);
 	
 	
-	
 }

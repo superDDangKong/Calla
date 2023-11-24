@@ -146,28 +146,6 @@ public class MemberController {
 		model.addAttribute("vo", vo);
 	} // end myPageGET()
 
-	@GetMapping("/update")
-	public void updateGET(Model model, HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("memberId");
-		if (memberId != null) {
-			MemberVO vo = memberService.read(memberId);
-			model.addAttribute("vo", vo);
-		}
-	} // end updateGET()
-
-	@PostMapping("/update")
-	public String updatePOST(MemberVO vo) {
-		int result = memberService.update(vo);
-		String memberId = vo.getMemberId();
-		if (result == 1) {
-			return "redirect:/member/myPage?memberId=" + memberId;
-		} else {
-			return "redirect:/member/update";
-		}
-	} // end updatePOST()
-
 	@GetMapping("/likes")
 	public void likesGET() {} // end likesGET()
 
@@ -228,14 +206,6 @@ public class MemberController {
 	@GetMapping("/boards")
 	public void boardsGET() {} // end boardsGET
 	
-	@GetMapping("/delete")
-	public String deleteGET(String memberId, HttpServletRequest request) {
-		memberService.delete(memberId);
-		HttpSession session = request.getSession();
-		session.invalidate();
-		return "redirect:/";
-	}
-
 	@GetMapping("/info")
 	public ModelAndView InfoGET(HttpServletRequest request) {
 		HttpSession session = request.getSession();

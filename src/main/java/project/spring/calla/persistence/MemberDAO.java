@@ -21,14 +21,6 @@ public interface MemberDAO {
 	String login(String memberId, String memberPw);
 	String searchId(String memberName, String memberEmail);
 	String searchPw(String memberId, String memberPhone);
-	int updatePw(String memberId, String memberPw);
-	int updateNickname(String memberId, String memberNickname);
-	int updatePhone(String memberId, String memberPhone);
-	int updateEmail(String memberId, String memberEmail);
-	int updateInterest(String memberId, String memberInterest);
-	int updateAddress(String memberId, String memberAddress);
-	int updateLevel(String memberId, int amount);
-	int delete(String memberId);
 	
 	List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname);
 	int getTotalCountsBymyuproduct(String memberNickname);

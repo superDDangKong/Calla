@@ -55,89 +55,43 @@
 	</div>
 	<%@ include file="../footer.jspf"%>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('.btnUpOrDown')
-									.on(
-											'click',
-											function() {
-												$('.manageOption').html("");
-												console.log(this)
-												var memberLevel = $(this)
-														.closest('td')
-														.siblings(
-																'.memberLevel');
-												if (memberLevel.text() == '1') {
-													$(this)
-															.closest('td')
-															.siblings(
-																	'.manageOption')
-															.html(
-																	"<button class='btnUpdateLevel'>등급올리기</button>");
-												} else if (memberLevel.text() == '2') {
-													$(this)
-															.closest('td')
-															.siblings(
-																	'.manageOption')
-															.html(
-																	"<button class='btnUpdateLevel'>등급내리기</button>");
-												}
-											}) // end btnUpdateLevel.click
+	$(document).ready(function () {
+	    $('.btnUpOrDown').on('click', function () {
+	        $('.manageOption').html("");
+	        console.log(this);
+	        var memberLevel = $(this).closest('td').siblings('.memberLevel');
 
-							$('.manageOption')
-									.on(
-											'click',
-											'.btnUpdateLevel',
-											function() {
-												console
-														.log('btnUpdate.click 호출');
-												var memberId = $(this).closest(
-														'td').siblings(
-														'.memberId');
-												var memberLevel = $(this)
-														.closest('td')
-														.siblings(
-																'.memberLevel');
-												$
-														.ajax({
-															type : 'PUT',
-															url : 'updateLevel/'
-																	+ memberId
-																			.text(),
-															data : memberLevel
-																	.text(),
-															success : function(
-																	newMemberLevel) {
-																console
-																		.log(newMemberLevel);
-																if (newMemberLevel == 1) {
-																	alert('등급 다운 성공');
-																	memberLevel
-																			.text("1");
-																	$(memberId)
-																			.closest(
-																					'td')
-																			.siblings(
-																					'.manageOption')
-																			.html(
-																					"");
-																} else {
-																	alert('등급 업 성공')
-																	memberLevel
-																			.text("2");
-																	$(memberId)
-																			.closest(
-																					'td')
-																			.siblings(
-																					'.manageOption')
-																			.html(
-																					"");
-																}
-															}
-														}); // end ajax()
-											}); // end btnLevelUp.click
-						}) // end document.ready
+	        if (memberLevel.text() == '1') {
+	            $(this).closest('td').siblings('.manageOption').html("<button class='btnUpdateLevel'>등급올리기</button>");
+	        } else if (memberLevel.text() == '2') {
+	            $(this).closest('td').siblings('.manageOption').html("<button class='btnUpdateLevel'>등급내리기</button>");
+	        }
+	    });
+
+	    $('.manageOption').on('click', '.btnUpdateLevel', function () {
+	        console.log('btnUpdate.click 호출');
+	        var memberId = $(this).closest('td').siblings('.memberId');
+	        var memberLevel = $(this).closest('td').siblings('.memberLevel');
+
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/level/' + memberId.text(),
+	            data: memberLevel.text(),
+	            success: function (newMemberLevel) {
+	                console.log(newMemberLevel);
+	                if (newMemberLevel == 1) {
+	                    alert('등급 다운 성공');
+	                    memberLevel.text("1");
+	                    $(memberId).closest('td').siblings('.manageOption').html("");
+	                } else {
+	                    alert('등급 업 성공')
+	                    memberLevel.text("2");
+	                    $(memberId).closest('td').siblings('.manageOption').html("");
+	                }
+	            }
+	        });
+	    });
+	});
 	</script>
 </body>
 </html>

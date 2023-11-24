@@ -158,57 +158,11 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public int updatePw(String memberId, String memberPw) {
-		logger.info("update() �샇異� memberPw : " + memberPw);
-		return MemberDAO.updatePw(memberId, memberPw);
-	}
-	
-	@Transactional(value = "transactionManager")
-	@Override
-	public int updateNickname(String memberId, String memberNickname) {
-		logger.info("updateNickname 호출");
-		return MemberDAO.updateNickname(memberId, memberNickname);
-	}
-
-	@Override
-	public int updatePhone(String memberId, String memberPhone) {
-		return MemberDAO.updatePhone(memberId, memberPhone);
-	}
-
-	@Override
-	public int updateEmail(String memberId, String memberEmail) {
-		return MemberDAO.updateEmail(memberId, memberEmail);
-	}
-
-	@Override
-	public int updateInterest(String memberId, String memberInterest) {
-		return MemberDAO.updateInterest(memberId, memberInterest);
-	}
-	
-	@Transactional(value = "transactionManager")
-	@Override
-	public int updateAddress(String memberId, String memberAddress) {
-		return MemberDAO.updateAddress(memberId, memberAddress);
-	}
-
-	
-	@Override
-	public int updateLevel(String memberId, int amount) {
-		return MemberDAO.updateLevel(memberId, amount);
-	}
-	
-	@Override
 	public List<MemberVO> read() {
 		logger.info("read() 호출");
 		return MemberDAO.select();
 	}
 	
-	@Transactional(value = "transactionManager")
-	@Override
-	public int delete(String memberId) {
-		logger.info("delete() 호출");
-		return MemberDAO.delete(memberId);
-	}
 
 	@Override
 	public int deleteRecentlyViewProduct(int productRecentlyViewId) {

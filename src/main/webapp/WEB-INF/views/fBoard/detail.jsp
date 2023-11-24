@@ -61,8 +61,7 @@ li {
 						<c:if test="${memberNickname == voMemberNickname}">
 							<div class="d-flex">
 								<div class="p-2">
-									<a href="update?fBoardId=${vo.fBoardId}&page=${page}"
-										class="btn btn-primary">글 수정</a>
+									<a href="update?fBoardId=${vo.fBoardId}" class="btn btn-primary">글 수정</a>
 								</div>
 								<div class="p-2">
 									<form action="delete" method="POST">
@@ -99,20 +98,18 @@ li {
 						</c:if>
 						<hr>
 						<br>
+						
 						<div>
 							<div id="comments"></div>
 						</div>
 
-						<input type="hidden" id="pageMaker_hasPrev"
-							value="${pageMaker.hasPrev}"> <input type="hidden"
-							id="pageMaker_hasNext" value="${pageMaker.hasNext}"> <input
-							type="hidden" id="pageMaker_startPageNo"
-							value="${pageMaker.startPageNo}"> <input type="hidden"
-							id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-						<input type="hidden" id="pageMaker_commentPage"
-							value="${pageMaker.criteria.page}"> <input type="hidden"
-							id="pageMaker_commentNumsPerPage"
-							value="${pageMaker.criteria.numsPerPage}"> <br>
+						<input type="hidden" id="pageMaker_hasPrev"	value="${pageMaker.hasPrev}"> 
+						<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
+						<input type="hidden" id="pageMaker_startPageNo" value="${pageMaker.startPageNo}">
+						<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+						<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}"> 
+						<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}"> 
+						<br>
 					</div>
 				</div>
 			</main>
@@ -122,8 +119,12 @@ li {
 
 <script type="text/javascript">
     $(document).ready(function () {
+    	window.addEventListener('hashchange', function() {
+    		console.log("hashchange 호출")
+	    	getAllComments();
+    	});
         getAllComments();
-
+		
         $('#btnCommentAdd').click(function () {
             var fBoardId = $('#fBoardId').val();
             var memberNickname = $('#memberNickname').val();
@@ -162,6 +163,7 @@ li {
             var commentPage = $('#pageMaker_commentPage').val();
             var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
             var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+           
             $.getJSON(url, function (data) {
                 var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
                 var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
@@ -221,8 +223,32 @@ li {
                     + '</div>';
 
                 $('#comments').html(list);
+                
+        		var fragment = window.location.hash;
+    	        if (fragment) {
+    	        	
+    	        	fragment = fragment.replace('#', '');
+    	        	fragmentList = fragment.split(',');
+    	        	
+    	        	var targetCommentElement = $('.fBoardCommentId').filter('[value="' + fragmentList[0] + '"]');
+	    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
+		    	           var target = targetCommentElement[0].parentElement;
+		    	           target.style.backgroundColor = 'lightgray'; 
+		    	           target.style.border = '2px solid';   
+		    	           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			    	        
+		    	           setTimeout(function() {
+			    	           target.style.backgroundColor = '';
+			    	           target.style.border = '';
+		    	           }, 2000);  // 2초 후에 스타일 초기화
+	    	           
+	    	   		     } else if (fragmentList[1] > 0) {
+	    	        	   getAllReplies(targetCommentElement);
+	    	    	       }
+    	       	
+    	        } // if(fragment)
             });
-        }
+        } // end getAllComents
 
         $(document).on('click', '.btn_comment_page', function () {
             $('#pageMaker_commentPage').val($(this).val());
@@ -291,17 +317,13 @@ li {
             getAllReplies(fBoardCommentId);
         });
 
-													comment_item
-															.append('<div class="replies bg-light">' + list + '</div>');
-												}); // end getJSON()
-							} // end getAllReplies()
+							
         function getAllReplies(fBoardCommentId) {
             $('.replies').html('');
             var url = 'replies/all/' + fBoardCommentId.val();
             var comment_item = fBoardCommentId.closest('.comment_item');
 
             $.getJSON(url, function (data) {
-                console.log(data);
                 var memberNickname = $('#memberNickname').val();
                 var list = '';
 
@@ -339,7 +361,7 @@ li {
                         + '<br>'
                         + '</pre>'
                         + '</div>';
-                });
+                }); // end each
 
                 list += memberNickname
                     + '<br>'
@@ -354,8 +376,26 @@ li {
                 comment_item.append('<div class="replies bg-light">'
                     + list
                     + '</div>');
-            });
-        }
+              var fragment = window.location.hash;
+        	   if (fragment) {
+        	        	
+        	       fragment = fragment.replace('#', '');
+        	       fragmentList = fragment.split(',');
+        	       
+	        	   if (fragmentList[1] > 0) {
+
+
+	        		   setTimeout(function() {
+	        		   var targetReplyElement = $('.fBoardReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
+	        		   
+		        		   targetReplyElement.style.backgroundColor = 'lightgray';
+		        		   targetReplyElement.style.border = '2px solid';
+	        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	        		   }, 100);
+	        	   }
+        	   }
+            }); // end getJson
+        } // end getAllReplies
 
         $(document).on('click', '.btnReplyAdd', function () {
             var commentItem = $(this).closest('.comment_item');

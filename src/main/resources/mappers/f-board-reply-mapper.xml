@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_all_by_board_comment_id" resultType="FBoardReplyVO">
 		select * from ${f_board_reply}
 		where ${fBoardCommentId} = #{fBoardCommentId}
-		order by ${fBoardReplyId}
+		order by ${fBoardReplyCreatedDate} desc
 	</select>
 
 	<update id="update">

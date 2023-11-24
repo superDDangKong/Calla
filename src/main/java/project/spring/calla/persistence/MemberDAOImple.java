@@ -91,60 +91,6 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.selectOne(NAMESPACE + ".search_pw", args);
 	}
 
-	@Override
-	public int updatePw(String memberId, String memberPw) {
-		logger.info("updatePw()  memberPw : " + memberPw);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberPw", memberPw);
-		return sqlSession.update(NAMESPACE + ".updatePw", args);
-	}
-
-	@Override
-	public int updateNickname(String memberId, String memberNickname) {
-		logger.info("updateNickname() memberNickname : " + memberNickname);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberNickname", memberNickname);
-		return sqlSession.update(NAMESPACE + ".updateNickname", args);
-	}
-
-	@Override
-	public int updatePhone(String memberId, String memberPhone) {
-		logger.info("updatePhone()  memberPhone : " + memberPhone);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberPhone", memberPhone);
-		return sqlSession.update(NAMESPACE + ".updatePhone", args);
-	}
-
-	@Override
-	public int updateEmail(String memberId, String memberEmail) {
-		logger.info("updateEmail()  memberEmail : " + memberEmail);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberEmail", memberEmail);
-		return sqlSession.update(NAMESPACE + ".updateEmail", args);
-	}
-
-	@Override
-	public int updateInterest(String memberId, String memberInterest) {
-		logger.info("updateInterest()  memberInterest : " + memberInterest);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberInterest", memberInterest);
-		return sqlSession.update(NAMESPACE + ".updateInterest", args);
-
-	}
-
-	@Override
-	public int updateAddress(String memberId, String memberAddress) {
-		logger.info("updateAddress()  memberAddress : " + memberAddress);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberAddress", memberAddress);
-		return sqlSession.update(NAMESPACE + ".updateAddress", args);
-	}
 
 	@Override
 	public List<MemberVO> select() {
@@ -152,20 +98,6 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.selectList(NAMESPACE + ".select");
 	}
 
-	@Override
-	public int updateLevel(String memberId, int amount) {
-		logger.info("updateLevel()");
-		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("memberId", memberId);
-		args.put("amount", amount);
-		return sqlSession.update(NAMESPACE + ".updateLevel", args);
-	}
-
-	@Override
-	public int delete(String memberId) {
-		logger.info("delete()");
-		return sqlSession.delete(NAMESPACE + ".delete", memberId);
-	}
 
 	@Override
 	public List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname) {

@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	(#{memberNickname}, #{alarmCode}, #{alarmPrefix}, #{content}, #{sendNickname}, #{title}, #{boardId})
 	</insert>  
 	
-	<update id="update">
+	<update id="update_check">
 		update ${alarm}
 		set ${alarmChecked} = 'o'
 		where ${alarmId} = #{alarmId}
@@ -34,5 +34,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${alarm}
 		where ${alarmId} = #{alarmId}
 	</delete>
+	
+	<select id="selectCommentId" resultType="Integer">
+        select *
+        from (
+            select ${idName} 
+            from ${selectTable} 
+            where ${memberNickname} = #{sendNick} 
+            order by ${commentCreatedDate} desc
+            ) 
+            where rownum = 1
+	</select>
+	
+	<select id="findPage" resultType="Integer">
+		select rn
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${selectTable} where ${boardIdName} = #{boardId} 
+	 			order by ${commentCreatedDate} desc
+	 		)a
+	 	) where ${commentIdName} = #{commentId}
+	</select>
+	
+	<update id="update_comment_id">
+		update ${alarm}
+		set ${commentId} = #{commentId}
+		where ${alarmId} = #{alarmId}
+	</update>
+	
+	<update id="update_reply_id">
+		update ${alarm}
+		set ${replyId} = #{commentId}
+		where ${alarmId} = #{alarmId}
+	</update>
+	
+		<select id="find_comment_id_by_reply_id" resultType="Integer">
+	 	select ${commentIdName} from ${selectTable} where ${replyIdName} = #{replyId} 
+	 			
+	</select>
 </mapper>
 

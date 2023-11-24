@@ -20,12 +20,10 @@
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
 					<form action="update" method="post">
-						<input type="hidden" name="page" value="${page}"> <input
-							type="hidden" name="fBoardId" value="${vo.fBoardId}">
+						<input type="hidden" name="fBoardId" value="${vo.fBoardId}">
 						<div class="form-group">
-							<label for="fBoardTitle">제목</label> <input type="text"
-								class="form-control" id="fBoardTitle" name="fBoardTitle"
-								value="${vo.fBoardTitle}">
+							<label for="fBoardTitle">제목</label> 
+							<input type="text" class="form-control" id="fBoardTitle" name="fBoardTitle" value="${vo.fBoardTitle}">
 						</div>
 						<p>작성자: ${vo.memberNickname}</p>
 						<p>작성일: ${vo.fBoardCreatedDate}</p>

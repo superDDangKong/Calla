@@ -50,16 +50,13 @@ table, th, td {
 								<th scope="row">닉네임</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" id="memberNickname"
-											value='${vo.memberNickname}' readonly>
+										<input type="text" class="form-control" id="memberNickname" value='${vo.memberNickname}' readonly>
 									</div>
 									<div class="form-group">
-										<input type="text" class="form-control" id="newNickname"
-											required>
+										<input type="text" class="form-control" id="newNickname" required>
 									</div>
 									<div class="form-group">
-										<button class="btn btn-primary" id="btnUpdateNickname"
-											disabled>닉네임 변경</button>
+										<button class="btn btn-primary" id="btnUpdateNickname" disabled>닉네임 변경</button>
 									</div>
 									<div id="newNicknameEffect" style="color: red;"></div>
 								</td>
@@ -71,13 +68,11 @@ table, th, td {
 										<tbody>
 											<tr>
 												<th scope="row">현재 비밀번호</th>
-												<td><input type="password" class="form-control"
-													id="currentPw" required></td>
+												<td><input type="password" class="form-control"	id="currentPw" required></td>
 											</tr>
 											<tr>
 												<th scope="row">새 비밀번호</th>
-												<td><input type="password" class="form-control"
-													id="newPw" required></td>
+												<td><input type="password" class="form-control"	id="newPw" required></td>
 											</tr>
 											<tr>
 												<td><div id="newPwEffect" style="color: red"></div></td>
@@ -92,8 +87,7 @@ table, th, td {
 											</tr>
 											<tr>
 												<td></td>
-												<td><button class="btn btn-primary" id="btnUpdatePw"
-														disabled>비밀번호 변경</button></td>
+												<td><button class="btn btn-primary" id="btnUpdatePw" disabled>비밀번호 변경</button></td>
 											</tr>
 										</tbody>
 									</table>
@@ -103,15 +97,13 @@ table, th, td {
 								<th scope="row">휴대폰 번호</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" id="memberPhone"
-											value='${vo.memberPhone}' readonly>
+										<input type="text" class="form-control" id="memberPhone" value='${vo.memberPhone}' readonly>
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control" id="newPhone" required>
 									</div>
 									<div class="form-group">
-										<button class="btn btn-primary" id="btnUpdatePhone" disabled>번호
-											변경</button>
+										<button class="btn btn-primary" id="btnUpdatePhone" disabled>번호 변경</button>
 									</div>
 									<div id="newPhoneEffect" style="color: red;"></div>
 								</td>
@@ -120,20 +112,17 @@ table, th, td {
 								<th scope="row">이메일</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" id="memberEmail"
-											value='${vo.memberEmail}' readonly>
+										<input type="text" class="form-control" id="memberEmail" value='${vo.memberEmail}' readonly>
 									</div>
 									<div class="input-group form-group">
-										<input type="text" class="form-control" id="email_id"
-											placeholder="calla" required>
+										<input type="text" class="form-control" id="email_id" placeholder="calla" required>
 										<div class="input-group-prepend">
 											<span class="input-group-text">@</span>
 										</div>
-										<input type="text" class="form-control" id="email_domain"
-											placeholder="naver.com" required>
-									</div> <input type="hidden" id="newMemberEmail">
-									<button class="btn btn-primary" id="btnUpdateEmail" disabled>이메일
-										변경</button>
+										<input type="text" class="form-control" id="email_domain" placeholder="naver.com" required>
+									</div> 
+									<input type="hidden" id="newMemberEmail">
+									<button class="btn btn-primary" id="btnUpdateEmail" disabled>이메일 변경</button>
 									<div id="newEmailEffect" style="color: red;"></div>
 								</td>
 							</tr>
@@ -141,52 +130,42 @@ table, th, td {
 								<th scope="row">관심사</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" id="memberInterest"
-											value='${vo.memberInterest}' readonly>
+										<input type="text" class="form-control" id="memberInterest"	value='${vo.memberInterest}' readonly>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input"
-											id="interest_cartoon" value="만화"> <label
-											class="form-check-label" for="interest_cartoon">만화</label>
+										<input type="checkbox" class="form-check-input"	id="interest_cartoon" value="만화"> 
+										<label class="form-check-label" for="interest_cartoon">만화</label>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input"
-											id="interest_goods" value="굿즈"> <label
-											class="form-check-label" for="interest_goods">굿즈</label>
+										<input type="checkbox" class="form-check-input" id="interest_goods" value="굿즈"> 
+										<label class="form-check-label" for="interest_goods">굿즈</label>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input"
-											id="interest_character" value="캐릭터"> <label
-											class="form-check-label" for="interest_character">캐릭터</label>
+										<input type="checkbox" class="form-check-input"	id="interest_character" value="캐릭터"> 
+										<label class="form-check-label" for="interest_character">캐릭터</label>
 									</div>
-									<button class="btn btn-primary" id="btnUpdateInterest">관심사
-										변경</button> <input type="hidden" id="newMemberInterest">
+									<button class="btn btn-primary" id="btnUpdateInterest">관심사	변경</button> 
+									<input type="hidden" id="newMemberInterest">
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">주소</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" id="memberAddress"
-											value='${vo.memberAddress}' readonly>
-									</div> <input type="hidden" id="newMemberAddress">
+										<input type="text" class="form-control" id="memberAddress" value='${vo.memberAddress}' readonly>
+									</div> 
+									<input type="hidden" id="newMemberAddress">
 									<div class="form-group">
-										<input type="text" class="form-control" id="postcode"
-											placeholder="우편번호" required readonly>
-										<button class="btn btn-primary" onclick="execDaumPostcode()">우편번호
-											찾기</button>
+										<input type="text" class="form-control" id="postcode" placeholder="우편번호" required readonly>
+										<button class="btn btn-primary" onclick="execDaumPostcode()">우편번호	찾기</button>
 									</div>
 									<div class="form-group">
-										<input type="text" class="form-control" id="address"
-											placeholder="주소" required readonly> <input
-											type="text" class="form-control" id="detailAddress"
-											placeholder="상세주소">
+										<input type="text" class="form-control" id="address" placeholder="주소" required readonly> 
+										<input type="text" class="form-control" id="detailAddress" placeholder="상세주소">
 									</div>
 									<div class="form-group">
-										<input type="text" class="form-control" id="extraAddress"
-											placeholder="참고항목" required readonly>
-										<button class="btn btn-primary" id="btnUpdateAddress" disabled>주소
-											변경</button>
+										<input type="text" class="form-control" id="extraAddress" placeholder="참고항목" required readonly>
+										<button class="btn btn-primary" id="btnUpdateAddress" disabled>주소 변경</button>
 									</div>
 								</td>
 							</tr>
@@ -203,315 +182,252 @@ table, th, td {
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('#newPw').on('keyup', function() {
-								validatePasswords();
-							});
-
-							$('#newPwCheck').on('keyup', function() {
-								validatePasswords();
-							});
-
-							function validatePasswords() {
-								var newPw = $('#newPw').val(); // 새 비밀번호 값 
-								var newPwCheck = $('#newPwCheck').val(); // 확인 비밀번호 값
-								var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-								// 비밀번호 정규식
-								var newPwValid = pwEffectiveness.test(newPw); // 새로 입력한 비번 정규식 테스트
-								var newPwCheckValid = newPw === newPwCheck; // 
-
-								$('#newPwEffect')
-										.html(
-												newPwValid ? "비밀번호 사용이 가능합니다."
-														: "영문, 숫자, 특수기호(!@#$%^&*) 모두 조합하여 8글자 이상.");
-								if (newPwCheck != "") {
-									$('#newPwCheckEffect').html(
-											newPwCheckValid ? "비밀번호가 일치합니다."
-													: "비밀번호가 일치하지 않습니다.");
-								}
-
-								if (newPwValid && newPwCheckValid) {
-									$('#btnUpdatePw').prop("disabled", false);
-								} else {
-									$('#btnUpdatePw').prop("disabled", true);
-								}
-							}
-
-							$('#btnUpdatePw').click(function() {
-								var currentPw = $('#currentPw').val();
-								var newPw = $('#newPw').val();
-								var newPwCheck = $('#newPwCheck').val();
-								var memberId = $('#memberId').val();
-								var obj = {
-									'currentPw' : currentPw,
-									'newPw' : newPw,
-									'newPwCheck' : newPwCheck
-								};
-								$.ajax({
-									type : 'PUT',
-									url : 'updatePw/' + memberId,
-									headers : {
-										'Content-Type' : 'application/json'
-									},
-									data : JSON.stringify(obj), // JSON으로 변환
-									success : function(result) {
-										console.log(result);
-										if (result == 1) {
-											alert('비밀번호 수정 성공');
-											$('#newPwCheckEffect').html("");
-											$('#newPwEffect').html("");
-										} else {
-											alert('현재 비밀번호가 다릅니다.');
-											$('#currentPw').val("");
-										}
-									}
-
-								}); // end ajax()
-							})// end btnUpdatePw.click
-							// ---------------------- end 비밀번호 수정--------------------------------------------------- 
-
-							$('#newNickname')
-									.on(
-											'keyup',
-											function() {
-												$('#btnUpdateNickname').prop(
-														"disabled", true);
-												var memberNickname = $(
-														'#newNickname').val();
-												var nicknameEffectiveness = /^[가-힣ㄱ-ㅎa-zA-Z0-9]{2,20}$/;
-												var newNicknameValid = nicknameEffectiveness
-														.test(memberNickname)
-												var newNicknameCheck = false;
-												$
-														.ajax({ // JoinRestController의 checkNick 송수신
-															type : 'POST',
-															url : 'checkNick',
-															data : {
-																memberNickname : memberNickname
-															},
-															success : function(
-																	result) {
-																console
-																		.log(result); // 조건문 사용해서 css효과줘서 아이디 사용불가 가능 표현 만들기
-																if (result == 1) {
-																	newNicknameCheck = false;
-																	if (newNicknameValid) {
-																		$(
-																				'#newNicknameEffect')
-																				.html(
-																						'이미 존재하는 닉네임입니다..');
-																	}
-																} else {
-																	newNicknameCheck = true;
-																	if (newNicknameValid) {
-																		$(
-																				'#btnUpdateNickname')
-																				.prop(
-																						"disabled",
-																						false);
-																		$(
-																				'#newNicknameEffect')
-																				.html(
-																						'사용가능한 닉네임입니다.');
-																	}
-																}
-															} // end success
-														}) // end ajax
-												if (!newNicknameValid) {
-													$('#newNicknameEffect')
-															.html(
-																	'영문/한글/숫자 2글자 이상으로 입력해주세요');
-												}
-											})// end newNickname.keyup
-
-							$('#btnUpdateNickname').click(
-									function() {
-										var newNickname = $('#newNickname')
-												.val();
-										var memberId = $('#memberId').val();
-
-										$.ajax({
-											type : 'PUT',
-											url : 'updateNickname/' + memberId,
-											data : newNickname, // JSON으로 변환
-											success : function(result) {
-												console.log(result);
-												if (result == 1) {
-													alert('닉네임 수정 성공');
-													$('#memberNickname').val(
-															newNickname);
-													$('#newNicknameEffect')
-															.html("");
-												}
-											}
-										}); // end ajax()
-									}) // end btnUpdateNickname
-							// ---------------------- end 닉네임 수정--------------------------------------------------- 
-
-							$('#newPhone')
-									.on(
-											'keyup',
-											function() {
-												$('#btnUpdatePhone').prop(
-														"disabled", true);
-												var newPhone = $('#newPhone')
-														.val();
-												var phoneEffectiveness = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
-												var newPhoneValid = phoneEffectiveness
-														.test(newPhone);
-
-												$('#newPhoneEffect')
-														.html(
-																newPhoneValid ? '사용가능한 전화번호 입니다'
-																		: ' 01로시작하는 8~9자리 숫자를 입력해 주세요');
-												if (newPhoneValid) {
-													$('#btnUpdatePhone').prop(
-															"disabled", false);
-												}
-											})// end newPhone.keyup
-
-							$('#btnUpdatePhone').click(function() {
-								var newPhone = $('#newPhone').val();
-								var memberId = $('#memberId').val();
-
-								$.ajax({
-									type : 'PUT',
-									url : 'updatePhone/' + memberId,
-									data : newPhone, // JSON으로 변환
-									success : function(result) {
-										console.log(result);
-										if (result == 1) {
-											alert('연락처 수정 성공');
-											$('#memberPhone').val(newPhone);
-											$('#newPhoneEffect').html("");
-										}
-									}
-								}); // end ajax()
-							}) // end btnUpdatePhone
-							// ---------------------- end 번호 수정--------------------------------------------------- 
-
-							$('#email_id').on('keyup', function() {
-								validateEmail();
-							}) // end email_id.keyup
-							$('#email_domain').on('keyup', function() {
-								validateEmail();
-							}) // end emain_domain.keyup 
-
-							$('#domain_list').change(function() {
-								if ($(this).val() == "-직접입력-") {
-									$('#email_domain').val("");
-									$("#email_domain").attr("readonly", false);
-								} else {
-									$("#email_domain").val($(this).val());
-									$("#email_domain").attr("readonly", true);
-								}
-								validateEmail();
-							}) // domain_list.change
-
-							$('#btnUpdateEmail').click(
-									function() {
-										var newMemberEmail = $(
-												'#newMemberEmail').val();
-										console.log(newMemberEmail);
-										var memberId = $('#memberId').val();
-										$.ajax({
-											type : 'PUT',
-											url : 'updateEmail/' + memberId,
-											data : newMemberEmail,
-											success : function(result) {
-												console.log(result);
-												if (result == 1) {
-													alert('이메일 수정 성공');
-													$('#memberEmail').val(
-															newMemberEmail);
-													$('#newEmailEffect').html(
-															"");
-												}
-											}
-										}); // end ajax()
-									}) // end btnUpdateEmail
-
-							function validateEmail() {
-								var emailEffectiveness = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-								var emailId = $('#email_id').val();
-								var emailDomain = $('#email_domain').val();
-								var newEmail = emailId + '@' + emailDomain;
-								$('#newMemberEmail').val(newEmail);
-								console.log(newEmail);
-								if (emailEffectiveness.test(newEmail)) {
-									$('#newEmailEffect').text('사용가능한 이메일입니다.');
-									$('#btnUpdateEmail')
-											.attr('disabled', false);
-								} else {
-									$('#newEmailEffect').text('잘못된 이메일 형식입니다.');
-									$('#btnUpdateEmail').attr('disabled', true);
-								}
-							} // end validateEmail
-							// ---------------------- end 이메일 수정--------------------------------------------------- 
-
-							$('#btnUpdateInterest').click(
-									function() {
-										var newMemberInterest = "";
-										newMemberInterest += $(
-												'#interest_goods').prop(
-												'checked') ? $(
-												'#interest_goods').val()
-												+ " " : "";
-										newMemberInterest += $(
-												'#interest_character').prop(
-												'checked') ? $(
-												'#interest_character').val()
-												+ " " : "";
-										newMemberInterest += $(
-												'#interest_cartoon').prop(
-												'checked') ? $(
-												'#interest_cartoon').val()
-												+ " " : "";
-												
-										var memberId = $('#memberId').val();
-										if(newMemberInterest != "") {
-											$.ajax({
-												type : 'PUT',
-												url : 'updateInterest/' + memberId,
-												data : newMemberInterest, // JSON으로 변환
-												success : function(result) {
-													console.log(result);
-													if (result == 1) {
-														alert('관심사 수정 성공');
-														$('#memberInterest').val(
-																newMemberInterest);
-													}
-												}
-											}); // end ajax()
-										} else {
-											alert('관심사를 한가지 이상 선택해 주세요')
-										}
-									}) // end btnUpdateAddress
-							// ---------------------- end 관심사 수정--------------------------------------------------- 
-
-							$('#btnUpdateAddress').click(
-									function() {
-										var newMemberAddress = $(
-												'#newMemberAddress').val();
-										var memberId = $('#memberId').val();
-										$.ajax({
-											type : 'PUT',
-											url : 'updateAddress/' + memberId,
-											data : newMemberAddress, // JSON으로 변환
-											success : function(result) {
-												console.log(result);
-												if (result == 1) {
-													alert('주소 수정 성공');
-													$('#memberAddress').val(
-															newMemberAddress);
-												}
-											}
-										}); // end ajax()
-									}) // end btnUpdateAddress
-							// ---------------------- end 주소 수정--------------------------------------------------- 
-						}); // end document.ready
+	    $('#newPw').on('keyup', function () {
+	        validatePasswords();
+	    });
+	
+	    $('#newPwCheck').on('keyup', function () {
+	        validatePasswords();
+	    });
+	
+	    function validatePasswords() {
+	        var newPw = $('#newPw').val();
+	        var newPwCheck = $('#newPwCheck').val();
+	        var pwEffectiveness = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+	        var newPwValid = pwEffectiveness.test(newPw);
+	        var newPwCheckValid = newPw === newPwCheck;
+	
+	        $('#newPwEffect').html(
+	            newPwValid ? "비밀번호 사용이 가능합니다." : "영문, 숫자, 특수기호(!@#$%^&*) 모두 조합하여 8글자 이상."
+	        );
+	
+	        if (newPwCheck !== "") {
+	            $('#newPwCheckEffect').html(
+	                newPwCheckValid ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다."
+	            );
+	        }
+	
+	        if (newPwValid && newPwCheckValid) {
+	            $('#btnUpdatePw').prop("disabled", false);
+	        } else {
+	            $('#btnUpdatePw').prop("disabled", true);
+	        }
+	    } // end validatePasswords
+	
+	    $('#btnUpdatePw').click(function () {
+	        var currentPw = $('#currentPw').val();
+	        var newPw = $('#newPw').val();
+	        var newPwCheck = $('#newPwCheck').val();
+	        var memberId = $('#memberId').val();
+	        var obj = {
+	            'currentPw': currentPw,
+	            'newPw': newPw,
+	            'newPwCheck': newPwCheck
+	        };
+	
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/pw/' + memberId,
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            data: JSON.stringify(obj),
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    alert('비밀번호 수정 성공');
+	                    $('#newPwCheckEffect').html("");
+	                    $('#newPwEffect').html("");
+	                } else {
+	                    alert('현재 비밀번호가 다릅니다.');
+	                    $('#currentPw').val("");
+	                }
+	            }
+	        });
+	    }); // end btnUpdatePw
+	
+	    $('#newNickname').on('keyup', function () {
+	        $('#btnUpdateNickname').prop("disabled", true);
+	        var memberNickname = $('#newNickname').val();
+	        var nicknameEffectiveness = /^[가-힣ㄱ-ㅎa-zA-Z0-9]{2,20}$/;
+	        var newNicknameValid = nicknameEffectiveness.test(memberNickname);
+	        var newNicknameCheck = false;
+	
+	        $.ajax({
+	            type: 'POST',
+	            url: 'checkNick',
+	            data: {
+	                memberNickname: memberNickname
+	            },
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    newNicknameCheck = false;
+	                    if (newNicknameValid) {
+	                        $('#newNicknameEffect').html('이미 존재하는 닉네임입니다..');
+	                    }
+	                } else {
+	                    newNicknameCheck = true;
+	                    if (newNicknameValid) {
+	                        $('#btnUpdateNickname').prop("disabled", false);
+	                        $('#newNicknameEffect').html('사용가능한 닉네임입니다.');
+	                    }
+	                }
+	            }
+	        });
+	
+	        if (!newNicknameValid) {
+	            $('#newNicknameEffect').html('영문/한글/숫자 2글자 이상으로 입력해주세요');
+	        }
+	    }); 
+	
+	    $('#btnUpdateNickname').click(function () {
+	        var newNickname = $('#newNickname').val();
+	        var memberId = $('#memberId').val();
+	
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/nickname/' + memberId,
+	            data: newNickname,
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    alert('닉네임 수정 성공');
+	                    $('#memberNickname').val(newNickname);
+	                    $('#newNicknameEffect').html("");
+	                }
+	            }
+	        });
+	    }); // end btnUpdateNickname
+	
+	    $('#newPhone').on('keyup', function () {
+	        $('#btnUpdatePhone').prop("disabled", true);
+	        var newPhone = $('#newPhone').val();
+	        var phoneEffectiveness = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
+	        var newPhoneValid = phoneEffectiveness.test(newPhone);
+	
+	        $('#newPhoneEffect').html(
+	            newPhoneValid ? '사용가능한 전화번호 입니다' : ' 01로 시작하는 8~9자리 숫자를 입력해 주세요'
+	        );
+	
+	        if (newPhoneValid) {
+	            $('#btnUpdatePhone').prop("disabled", false);
+	        }
+	    });
+	
+	    $('#btnUpdatePhone').click(function () {
+	        var newPhone = $('#newPhone').val();
+	        var memberId = $('#memberId').val();
+	
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/phone/' + memberId,
+	            data: newPhone,
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    alert('연락처 수정 성공');
+	                    $('#memberPhone').val(newPhone);
+	                    $('#newPhoneEffect').html("");
+	                }
+	            }
+	        });
+	    });
+	
+	    $('#email_id').on('keyup', function () {
+	        validateEmail();
+	    });
+	
+	    $('#email_domain').on('keyup', function () {
+	        validateEmail();
+	    });
+	
+	    $('#domain_list').change(function () {
+	        if ($(this).val() == "-직접입력-") {
+	            $('#email_domain').val("");
+	            $("#email_domain").attr("readonly", false);
+	        } else {
+	            $("#email_domain").val($(this).val());
+	            $("#email_domain").attr("readonly", true);
+	        }
+	        validateEmail();
+	    });
+	
+	    $('#btnUpdateEmail').click(function () {
+	        var newMemberEmail = $('#newMemberEmail').val();
+	        var memberId = $('#memberId').val();
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/email/' + memberId,
+	            data: newMemberEmail,
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    alert('이메일 수정 성공');
+	                    $('#memberEmail').val(newMemberEmail);
+	                    $('#newEmailEffect').html("");
+	                }
+	            }
+	        });
+	    });
+	
+	    function validateEmail() {
+	        var emailEffectiveness = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	        var emailId = $('#email_id').val();
+	        var emailDomain = $('#email_domain').val();
+	        var newEmail = emailId + '@' + emailDomain;
+	        $('#newMemberEmail').val(newEmail);
+	
+	        if (emailEffectiveness.test(newEmail)) {
+	            $('#newEmailEffect').text('사용가능한 이메일입니다.');
+	            $('#btnUpdateEmail').attr('disabled', false);
+	        } else {
+	            $('#newEmailEffect').text('잘못된 이메일 형식입니다.');
+	            $('#btnUpdateEmail').attr('disabled', true);
+	        }
+	    } // end validateEmail
+	
+	    $('#btnUpdateInterest').click(function () {
+	        var newMemberInterest = "";
+	        newMemberInterest += $('#interest_goods').prop('checked') ? $('#interest_goods').val() + " " : "";
+	        newMemberInterest += $('#interest_character').prop('checked') ? $('#interest_character').val() + " " : "";
+	        newMemberInterest += $('#interest_cartoon').prop('checked') ? $('#interest_cartoon').val() + " " : "";
+	
+	        var memberId = $('#memberId').val();
+	        if (newMemberInterest !== "") {
+	            $.ajax({
+	                type: 'PUT',
+	                url: 'update/interest/' + memberId,
+	                data: newMemberInterest,
+	                success: function (result) {
+	                    console.log(result);
+	                    if (result == 1) {
+	                        alert('관심사 수정 성공');
+	                        $('#memberInterest').val(newMemberInterest);
+	                    }
+	                }
+	            });
+	        } else {
+	            alert('관심사를 한가지 이상 선택해 주세요');
+	        }
+	    });
+	
+	    $('#btnUpdateAddress').click(function () {
+	        var newMemberAddress = $('#newMemberAddress').val();
+	        var memberId = $('#memberId').val();
+	        $.ajax({
+	            type: 'PUT',
+	            url: 'update/address/' + memberId,
+	            data: newMemberAddress,
+	            success: function (result) {
+	                console.log(result);
+	                if (result == 1) {
+	                    alert('주소 수정 성공');
+	                    $('#memberAddress').val(newMemberAddress);
+	                }
+	            }
+	        });
+	    });
 	</script>
 	<%@ include file="../footer.jspf"%>
 </body>

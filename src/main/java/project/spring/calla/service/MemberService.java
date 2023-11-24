@@ -16,7 +16,7 @@ public interface MemberService {
 	int create(MemberVO vo);
 	int checkId(String memberId);
 	int checkNick(String memberNickname);
-	MemberVO read(String memberId);
+	MemberVO read(String memberId); // (home, ) select*
 	List<MemberVO> read();
 	int update(MemberVO vo);
 	String searchId(String memberName, String memberEmail);
@@ -25,15 +25,6 @@ public interface MemberService {
 	Map<String, Object> readLikes(String memberId);
 	Map<String, Object> readRecentlyView(MyPageCriteria criteria, String memberId);
 	Map<String, Integer> getTotalCountsByRecentlyView(String memberId);
-	
-	int updatePw(String memberId, String memberPw);
-	int updateNickname(String memberId, String memberNickname);
-	int updatePhone(String memberId, String memberPhone);
-	int updateEmail(String memberId, String memberEmail);
-	int updateInterest(String memberId, String memberInterest);
-	int updateAddress(String memberId, String memberAddress);
-	int updateLevel(String memberId, int amount);
-	int delete(String memberId);
 	
 	int deleteRecentlyViewProduct(int productRecentlyViewId);
 	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);

@@ -214,6 +214,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="sendNickname" value="send_nickname" />
 		<property name="title" value="title" />
 		<property name="boardId" value="board_id" />
+		<property name="commentId" value="comment_id" />
+		<property name="replyId" value="reply_id" />
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->

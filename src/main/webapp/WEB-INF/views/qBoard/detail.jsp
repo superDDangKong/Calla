@@ -148,7 +148,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			</div>
 			
 		</div>
-		
+		<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
 		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
 		<c:set var="memberNickname" value="${memberNickname }" />
 		<c:set var="voMemberNickname" value="${vo.memberNickname }" />
@@ -240,7 +240,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
          // 게시판 댓글 전체 가져오기
          function getAllComments(){
             var qBoardId = $('#qBoardId').val();
-            
+            console.log('qBoardId = ' + qBoardId);
             var url = 'comments/all/' + qBoardId;
             $.getJSON(
                url,
