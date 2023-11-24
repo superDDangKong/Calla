@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.QBoardCommentVO;
+import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
 
@@ -68,6 +69,21 @@ public class QBoardCommentServiceImple implements QBoardCommentService {
 		int result = qBoardDAO.updateCommentCnt(-1, qBoardId);
 		logger.info(result + "행 수정 성공");
 		return 1;
+	}
+
+	@Override
+	public List<QBoardCommentVO> read(PageCriteria criteria, int qBoardId) {
+		logger.info("read() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("qBoardId = " + qBoardId);
+		return qBoardCommentDAO.select(criteria, qBoardId);
+	}
+
+	@Override
+	public int getTotalCounts(int qBoardId) {
+		logger.info("getTotalCounts() 호출");
+		return qBoardCommentDAO.getTotalCounts(qBoardId);
 	}
 
 }

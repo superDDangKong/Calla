@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_all_by_board_comment_id" resultType="QBoardReplyVO">
 		select * from ${q_board_reply}
 		where ${qBoardCommentId} = #{qBoardCommentId}
-		order by ${qBoardReplyId}
+		order by ${qBoardReplyId} desc
 	</select>
 
 	<update id="update">

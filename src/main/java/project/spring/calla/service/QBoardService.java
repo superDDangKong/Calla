@@ -9,9 +9,9 @@ import project.spring.calla.pageutil.PageCriteria;
 public interface QBoardService {
 	int create(QBoardVO vo);
 	List<QBoardVO> read(PageCriteria criteria);
-	QBoardVO read(int boardId);
+	QBoardVO read(int qBoardId);
 	int update(QBoardVO vo);
-	int delete(int boardId);
+	int delete(int qBoardId);
 	int getTotalCounts();
 	int updateViews(int views, int qBoardId);
 	List<QBoardVO> readBymemberNickname(PageCriteria criteria, String keyword);

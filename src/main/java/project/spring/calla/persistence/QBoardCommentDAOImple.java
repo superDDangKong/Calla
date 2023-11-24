@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.QBoardCommentVO;
 import project.spring.calla.domain.UProductCommentVO;
+import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
 public class QBoardCommentDAOImple implements QBoardCommentDAO{
@@ -57,5 +58,20 @@ public class QBoardCommentDAOImple implements QBoardCommentDAO{
 	public List<QBoardCommentVO> select(String memberNickname) {
 		logger.info("select(memberNickname) »£√‚ memberNickname = " + memberNickname);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname", memberNickname);
+	}
+
+	@Override
+	public List<QBoardCommentVO> select(PageCriteria criteria, int qBoardId) {
+		Map<String, Object> args = new HashMap();
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("qBoardId", qBoardId);
+		return sqlSession.selectList(NAMESPACE + ".paging", args);
+	}
+
+	@Override
+	public int getTotalCounts(int qBoardId) {
+		logger.info("getTotalCounts()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count", qBoardId);
 	}
 }

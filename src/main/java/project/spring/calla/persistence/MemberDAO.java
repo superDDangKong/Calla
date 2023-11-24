@@ -2,6 +2,8 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.UProductBuyVO;
@@ -11,8 +13,8 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 public interface MemberDAO {
-	
-	int insert(MemberVO vo);
+	//throws DataIntegrityViolationException
+	int insert(MemberVO vo) throws DataIntegrityViolationException; // 데이터베이스의 제약 조건, 무결성 규칙  
 	int checkId(String memberId);
 	int checkNickname(String memberNickname);
 	int update(MemberVO vo);

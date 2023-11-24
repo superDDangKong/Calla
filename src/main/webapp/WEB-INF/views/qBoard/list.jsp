@@ -113,10 +113,11 @@ body {
 					</tr>
 				</thead>
 				<tbody>
+					<c:set var="memberNickname" value="${memberNickname }"/> 
 					<c:forEach var="vo" items="${list }">
 						<tr>
 							<td class="td">${vo.qBoardId }</td>
-							<td class="td"><a href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
+							<td class="td"><a class="title" href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
 							<td class="td">${vo.memberNickname }</td>
 							<fmt:formatDate value="${vo.qBoardCreatedDate }"
 							pattern="yyyy-MM-dd" var="qBoardCreatedDate"/>
@@ -128,6 +129,7 @@ body {
 				</tbody>
 			</table>
 		</div>
+		
 		<ul style="text-align:center">
 			<c:if test="${pageMaker.hasPrev }">
 				<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
@@ -144,13 +146,24 @@ body {
 	</div>
 	<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 	<input type="hidden" id="insertAlert" value="${insert_result }">
+	<input type="hidden" id="statusAlert" value="${status_result }">
 	
 	<script type="text/javascript">
+		$(document).ready(function(){
+			var memberNickname = $('#memberNickname').val();
+			console.log("로그인멤버닉네임: " + memberNickname);
+			
+		})
+		
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 글 작성 성공!');
 		}
-
+		
+		var result2 = $('#statusAlert').val();
+		if(result2 == 'secret') {
+			alert('비공개 글입니다.');
+		}
 	</script>
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

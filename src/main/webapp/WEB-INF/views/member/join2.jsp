@@ -5,46 +5,82 @@
 <html>
 <head>
 <style type="text/css">
-.input-form-backgroud {
-            background-color: #f5f5f5;
-            padding: 20px;
+
+.member__form{
+ 	border: 1px solid rgba(0, 0, 0, 0.3);
+	width: 20%;
+    padding: 16px 0 12px;
+    background: none transparent;
+    font-family: dotum,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    text-indent: 10px;
 }
-.input-form {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
+
+#member_id{
+	border-top-left-radius: 10px; /* 상단 좌측 모서리를 10px로 둥글게 만듭니다. */
+    border-top-right-radius: 10px; /* 상단 우	측 모서리를 10px로 둥글게 만듭니다. */
 }
-.input-form h4 {
-            background-color: #007bff; /* 제목 배경색 */
-            color: #fff; /* 제목 글자색 */
-            padding: 10px;
-            margin-top: 0;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+
+#member_nickname{
+	border-bottom-left-radius: 10px; /* 하단 좌측 모서리를 10px로 둥글게 만듭니다. */
+    border-bottom-right-radius: 10px; /* 하단 우측 모서리를 10px로 둥글게 만듭니다. */
+}
+
+.error_msg{
+	font-size: 14px;
+}
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
         }
 
-.form-group {
+        form {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-.form-label {
-            font-weight: bold;
-            font-size: 18px;
-        }
-.form-control {
-            border: 1px solid #ccc; /* 입력 필드 보더 스타일 */
-        	border-radius: 5px;
-            padding: 10px;
+        .member__form {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
         }
 
-.form-control:focus {
-            border-color: #007bff; /* 입력 필드 포커스 시 보더 색상 */
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* 입력 필드 포커스 시 테두리 효과 */
+        .box {
+            width: 100px;
         }
-.invalid-feedback {
-            color: #dc3545;
-            font-size: 14px;
+
+        #domain-list {
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        #join_button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .final_email_ck,
+        .final_interest_ck,
+        .final_add_ck {
+            color: red;
         }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -56,75 +92,80 @@
 <link href="../resources/css/styles.css" rel="stylesheet" />
 <%@ include file="../header.jspf" %> 
 <title>회원가입</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container" >
-		<div class="input-form-backgroud row">
-			<div class="input-form col-md-12 mx-auto">
-				<h4>회원가입</h4>
-				<form name="join" action="join" id="join"method="post">
-					<div class="row">
-						<div class="col-md-6 mb-3" >
-							<label for="member_name">이름</label><br>
-							<input type="text" id="member_name" class="member__form" name="memberName" placeholder="홍길동" required style="text-align:center">
-							<div class="invalid-feedback">이름을 입력해주세요.</div>
-						</div>
-						<div class="col-md-6 mb-3" style="text-align:center">
-							<label for="member_nickname">별명</label><br>
-							<input type="text" id="member_nickname" class="member__form" name="memberNickname" placeholder="calla" required>
-							<div class="invalid-feedback">별명을 입력해주세요.</div>
-						</div>
-						<div class="col-md-4 mb-3" >
-							<label for="member_id">아이디</label><br>
-							<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디" required>
-							<div class="invalid-feedback">아이디를 입력해주세요.</div>
-						</div>
-						<div class="col-md-4 mb-3" >
-							<label for="member_pw">비밀번호</label><br>
-							<input type="password" id="member_pw" class="member__form" name="memberPw" placeholder="비밀번호" required>
-							<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
-						</div>
-						<div class="col-md-5 mb-3" style="width: 660px;">
-							<label for="memberEmail">이메일</label><br>
-							<input type="email" name="memberEmail" id="memberEmail" class="member__form">
-							<div class="invalid-feedback">이메일을 입력해주세요.</div>
-						</div>
-						<div class="col-md-5 mb-3" style="width: 660px;">
-							<label for="member_pw_ck">비밀번호 재확인</label><br>
-							<input type="password" id="member_pw_ck" class="member__form" name="member_pw_check" placeholder="비밀번호 확인" required>
-							<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
-						</div>
-						<div>
-							<label for="member_phone">핸드폰</label><br>
-							<input type="tel" id="member_phone" class="member__form" name="memberPhone" placeholder="010-1234-5678" required><br>
-							<div class="invalid-feedback">전화번호를 입력해주세요.</div>
-						</div>
-						<div>관심사<br>
-        					만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
-        					굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
-        				    캐릭터<input type="checkbox" name="check" class="check" id="check3" value="캐릭터">
-        					<input type="hidden" name="memberInterest" id="memberInterest">
-        					<div class="invalid-feedback">관심사를 선택해주세요.</div>
-        				</div>
-        				<div>
-	        				<input type="text" id="postcode" class="member___form" placeholder="우편번호" required>
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" id="address" class="member___form" placeholder="주소" required>
-							<input type="text" id="detailAddress" class="member___form" placeholder="상세주소">
-							<input type="text" id="extraAddress" class="member___form" placeholder="참고항목" required>
-							<br>
-							<input type="submit" name="join_button" id="join_button" value="가입하기">  
-							  
-							<div class="invalid-feedback">주소를 확인해주세요.</div><!-- 주소를 확인해주세요 -->
-							<input type="hidden" name="memberAddress" id="memberAddress">
-        				</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<div style="text-align:center">
+	<h1><a href="http://localhost:8080/calla/"><span>Calla</span></a></h1>
+	 <form name="join" action="join" id="join"method="post"> 
+	 	<div>
+			<div id="f">
+				<input type="text" id="member_id" class="member__form" name="memberId" placeholder="아이디" required>
+				<br>
 
+				<input type="password" id="member_pw" class="member__form" name="memberPw" placeholder="비밀번호" required>
+				<br>
+
+				<input type="password" id="member_pw_ck" class="member__form" name="member_pw_check" placeholder="비밀번호 확인" required>
+				<br>
+						
+				<input type="text" id="member_name" class="member__form" name="memberName" placeholder="홍길동" required>
+				<br>
+		
+			
+				<input type="text" id="member_nickname" class="member__form" name="memberNickname" placeholder="calla" required><br>
+				<span class="error_msg" id="error_id_msg"></span>
+				<span class="error_msg" id="error_pw_msg"></span>
+				<span class="error_msg" id="error_name_msg"></span>
+				<span class="error_msg" id="error_nick_msg"></span>
+			</div>
+			<span class="error_msg" id="error_email_msg"></span>
+			<span class="error_msg" id="error_phone_msg"></span>
+			<span class="error_msg" id="error_interest_msg"></span>
+			<span class="error_msg" id="error_address_msg"></span>
+			<div>
+				<input type="text" class="member__form" name="member_email1" id="email_id" placeholder="calla" required>@
+				<input type="text" class="member__form" name="member_email2" id="email_domain" class="box" placeholder="naver.com" required>
+				<select class="box" id="domain-list" name="emailSelection" onchange="select_change(this.value);">
+					<option value="type">-직접입력-</option>
+					<option value="naver.com">naver.com</option>
+  					<option value="gmail.com">gmail.com</option>
+  					<option value="hanmail.net">hanmail.net</option>
+  					<option value="nate.com">nate.com</option>
+  					<option value="kakao.com">kakao.com</option>
+				</select>
+				<span class="final_email_ck"></span><!-- 이메일 형식대로 입력하라는 문장출력 -->
+				<input type="hidden" name="memberEmail" id="memberEmail">
+			</div><br>
+		
+			<div>
+        		<input type="tel" id="member_phone" class="member__form" name="memberPhone" placeholder="010-1234-5678" required><br>
+        	</div><br>
+        
+        	<div>관심사<br>
+        		만화<input type="checkbox" name="check" class="check" id="check1" value="만화">
+        		굿즈<input type="checkbox" name="check" class="check" id="check2" value="굿즈">
+        		캐릭터<input type="checkbox" name="check" class="check" id="check3" value="캐릭터">
+        		<input type="hidden" name="memberInterest" id="memberInterest">
+        		<span class="final_interest_ck"></span>
+        	</div>
+      	
+      	
+      		<br>
+      		<div></div> <!-- 주소api -->
+      		<input type="text" id="postcode" class="member__form" placeholder="우편번호" required>
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+			<input type="text" id="address" class="member__form" placeholder="주소" required>
+			<input type="text" id="detailAddress" class="member__form" placeholder="상세주소"><br>
+			<input type="text" id="extraAddress" class="member__form" placeholder="참고항목" required>
+			<br>
+			<input type="submit" name="join_button" id="join_button" value="가입하기">  
+			  
+			<span class="final_add_ck"></span><!-- 주소를 확인해주세요 -->
+			<input type="hidden" name="memberAddress" id="memberAddress">
+      	</div>
+      
+   	</form>
+</div>
       <script>
       /* 유효성 검사 통과유무 변수 */
       var idckcorCheck = false;			// 아이디 유효성 검사
@@ -135,7 +176,7 @@
       var nickNameCheck = false;		// 닉네임 중복 검사
       var mailCheck = false;            // 이메일
       var phoneCheck = false;			// 핸드폰
-      var addressCheck = false;         	// 주소
+      var addressCheck = false;         // 주소
       
       $('#join').submit(function(event){
     	  var memberId = $('#member_id').val();
@@ -192,53 +233,47 @@
     	        // 폼 제출 이벤트 발생 시 실행되는 코드
 				// 아이디 유효성 + 중복검사 
       $('#member_id').blur(function() {
-       var memberId = $('#member_id').val(); // 클라이언트가 입력한 아이디 변수에 저장
-       console.log("입력한 아이디 : " + memberId); // 입력한 아이디 콘솔에 띄우기
-    	    // 아이디 정규식
-       var idEffectiveness = /^[A-Za-z0-9]{8,}$/;
-       if(memberId !== ""){
-    	   
-        	// 아이디 유효성 확인
-    	if (idEffectiveness.test(memberId)){
-    		idckcorCheck = true; // 아이디 유효성 검사 통과 변수
-    		
-    		// 중복확인 ajax
-    		$.ajax({ // JoinRestController의 checkId 송수신
-        		 type : 'POST',
-        		 url : '/calla/member/checkId',  
-        		 data : {memberId : memberId},
-        		 success : function(result){
-        			 console.log(result + "중복"); 
-        			 if (result == 1) {
-        				 console.log("사용불가능한아이디")
-        				 idckCheck = false; // 아이디 중복검사 통과 변수
-        				 $('#error_id_msg').text('사용 불가능한 아이디 입니다.');
-        				 $("#error_id_msg").append("<br>");
-        		    	 $('#error_id_msg').css('color', 'red');
-        				 
-        			 } else {
-        				 console.log("사용가능한아이디")
-        				 idckCheck = true; // 아이디 중복검사 통과 변수
-        				 $('#error_id_msg').text('');
-        			 }
-        		 } // end success
-        	 }) // end ajax
-        	 
-    	} else {
-    		console.log("아이디 유효성 검사 실패");
-    		idckcorCheck = false; // 아이디 유효성 검사 실패 변수
-    		$('#error_id_msg').text('아이디 유효성 검사 실패');
-    		$('#error_id_msg').append("<br>");
-    		$('#error_id_msg').css('color', 'red');
+      	var memberId = $('#member_id').val(); // 클라이언트가 입력한 아이디 변수에 저장
+       	console.log("입력한 아이디 : " + memberId); // 입력한 아이디 콘솔에 띄우기
+       	// 아이디 정규식
+       	var idEffectiveness = /^[A-Za-z0-9]{8,}$/;
+       	if(memberId == ""){
+    	  	$('#error_id_msg').text('아이디를 입력해주세요.');
+     	  	$('#error_id_msg').append("<br>");
+   		 	$('#error_id_msg').css('color', 'red');
+   		  	return;
+      	}
+       	
+       	if (!idEffectiveness.test(memberId)){
+       		console.log("아이디: 최소 8자 이상의 영문 대소문자, 숫자만 사용 가능합니다.");
+    	    idckcorCheck = false; // 아이디 유효성 검사 실패 변수
+    	    $('#error_id_msg').text('아이디 유효성 검사 실패');
+    	    $('#error_id_msg').append("<br>");
+    	    $('#error_id_msg').css('color', 'red');
+    	    return;
     	}
-       
-      } else {
-    	  $('#error_id_msg').text('아이디를 입력해주세요.');
-    	  $('#error_id_msg').append("<br>");
-  		  $('#error_id_msg').css('color', 'red');
-      }			 
-    	}); // end 아이디 function(아이디 유효성 검사 + 중복체크)
-    	
+       	idckcorCheck = true; // 아이디 유효성 검사 통과 변수
+		// 중복확인 ajax
+		$.ajax({ // JoinRestController의 checkId 송수신
+			type : 'POST',
+			url : '/calla/member/checkId',  
+			data : {memberId : memberId},
+			success : function(result){
+				console.log(result + "중복"); 
+				if (result == 1) {
+					console.log("사용불가능한아이디")
+					idckCheck = false; // 아이디 중복검사 통과 변수
+					$('#error_id_msg').text('사용 불가능한 아이디 입니다.');
+					$("#error_id_msg").append("<br>");
+					$('#error_id_msg').css('color', 'red');
+				} else {
+					console.log("사용가능한아이디")
+					idckCheck = true; // 아이디 중복검사 통과 변수
+					$('#error_id_msg').text('');
+   			 	}
+   		 	} // end success
+   	 	}) // end ajax
+      		 
      	/* // 비밀번호 유효성 검사 
     	$('#member_pw').focus(function() {
     		var memberPw = $('#member_pw').val(); // 클라이언트가 입력한 비밀번호 변수에 저장
@@ -306,7 +341,7 @@
     			} else {
     				console.log("비밀번호 유효성 검사 실패");
     				pwckCheck = false; 
-    				$('#error_pw_msg').text('사용 불가능한 비밀번호 입니다.');
+    				$('#error_pw_msg').text('비밀번호: 최소 8자 이상의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.');
     				$('#error_pw_msg').append("<br>");
 		    		$('#error_pw_msg').css('color', 'red');
     			}
@@ -381,7 +416,7 @@
 			}
 		}) // end 닉네임 중복확인
 		
-		/* $(document).click(function(){
+		$(document).click(function(){
 			var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 			var emailId = $('#email_id').val();
   			var emailDomain = $('#email_domain').val();
@@ -398,7 +433,7 @@
 			   	$('#error_email_msg').css('color', 'red');
   			}
   			
-		})// end 이메일 합치기	  */
+		})// end 이메일 합치기	 
 		
 		
     	$('#member_phone').blur(function(){
@@ -413,7 +448,7 @@
     		 phoneCheck = true;
     		 $('#error_phone_msg').text('');
     	 } else {
-    		 $('#error_phone_msg').text('사용 불가능한 이메일입니다.');
+    		 $('#error_phone_msg').text('사용 불가능한 연락처입니다.');
 			 $('#error_phone_msg').append("<br>");
 			 $('#error_phone_msg').css('color', 'red');
     	 }

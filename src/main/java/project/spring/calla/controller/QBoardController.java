@@ -1,7 +1,6 @@
 package project.spring.calla.controller;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
+import project.spring.calla.service.QBoardCommentService;
 import project.spring.calla.service.QBoardService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
@@ -48,8 +49,11 @@ public class QBoardController {
 	@Autowired
 	private QBoardService qBoardService;
 	
+	@Autowired
+	private QBoardCommentService qBoardCommentService;
+	
 	@GetMapping("/list")
-	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
+	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword, RedirectAttributes reAttr) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		List<QBoardVO> list = null;
@@ -90,6 +94,7 @@ public class QBoardController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
+		reAttr.addFlashAttribute("status_result", "secret");
 	} // end list()
 	
 	@GetMapping("/register")
@@ -113,13 +118,12 @@ public class QBoardController {
 	      // 이미지 경로 저장
 	      vo.setqBoardImagePath(savedFileName);
 	      int result = qBoardService.create(vo);
-	      logger.info("여기실행왜안돼냐고 ㅅㅂ");
 	      logger.info("result = " + result);
 	      logger.info(result + "행 삽입"); // 여기서 result 1이 나와야함
 
 	      if (result == 1) {
 	      reAttr.addFlashAttribute("insert_result", "success");
-	      return "redirect:/qBoard/list"; // 띄어쓰기 ㅅㅂ
+	      return "redirect:/qBoard/list"; 
 	      } else {
 	      return "redirect:/qBoard/register";
 	      }
@@ -140,8 +144,8 @@ public class QBoardController {
 	
 	
 	@GetMapping("/detail")
-	public String detail(Model model, Integer qBoardId, Integer page, String qBoardStatus,
-			HttpServletRequest request, HttpServletResponse response) {
+	public String detail(Model model, Integer qBoardId, Integer page,
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes reAttr) {
 		String cookieName = "qBoard_" + qBoardId;
 		Cookie[] cookies = request.getCookies();
 		boolean cookieFound = false;
@@ -168,13 +172,59 @@ public class QBoardController {
 		}
 		logger.info("detail() 호출 : boardId = " + qBoardId);
 		QBoardVO vo = qBoardService.read(qBoardId);
+		HttpSession session = request.getSession();
+		String memberNickname = (String) session.getAttribute("memberNickname");
+		Integer memberLevel = (Integer) session.getAttribute("memberLevel");
+		logger.info("게시글 공개 여부 : " + vo.getqBoardStatus()); // 게시글의 공개 or 비공개
+		
+		PageMaker pageMaker = new PageMaker();
+		PageCriteria criteria = new PageCriteria();
+		
+		pageMaker.setTotalCount(qBoardCommentService.getTotalCounts(qBoardId));
+		
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
-		return "/qBoard/detail";
+		model.addAttribute("pageMaker", pageMaker);
+		
+		
+		
+	    if(vo.getqBoardStatus().equals("공개")) { // 선택한 게시글의 공개여부를 가져오고 공개일 때
+	    	logger.info("공개게시글임");
+	    	logger.info("현재 로그인한 멤버 닉네임 : " + memberNickname);
+			logger.info("현재 로그인한 멤버 레벨 : " + memberLevel);
+			return "/qBoard/detail";
+			
+		} else {
+			logger.info("비공개게시글임");
+			logger.info("작성자 닉네임 : " + vo.getMemberNickname());
+			logger.info("현재 로그인한 멤버 닉네임 : " + memberNickname);
+			logger.info("현재 로그인한 멤버 레벨 : " + memberLevel);
+			if(memberNickname != null) {
+				if(vo.getMemberNickname().equals(memberNickname) || memberLevel.equals(2) || memberLevel.equals(3)) {
+					logger.info("비공개인데 작성자 닉네임이랑 현재로 로그인한 멤버 닉네임이 같고, 관리자 등급일 때 볼수 있음");
+					return "/qBoard/detail";
+					
+				} else {
+					logger.info("비공개인데 로그인을 안한 경우");
+					reAttr.addFlashAttribute("status_result", "secret");
+					return "redirect:/qBoard/list";
+					
+				}
+				
+			}
+			logger.info("비공개인데 로그인을 안한 경우");
+			reAttr.addFlashAttribute("status_result", "secret");
+			return "redirect:/qBoard/list";
+			
+		}
+		
+		
 	} // end detail
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, Integer qBoardId, Integer page) {
+	public void updateGET(Model model, Integer qBoardId, String qBoardStatus, Integer page) {
 		logger.info("updateGET() 호출 : boardId = " + qBoardId);
 		QBoardVO vo = qBoardService.read(qBoardId);
 		model.addAttribute("vo", vo);

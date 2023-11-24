@@ -148,7 +148,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			</div>
 			
 		</div>
-		
+		<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
 		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
 		<c:set var="memberNickname" value="${memberNickname }" />
 		<c:set var="voMemberNickname" value="${vo.memberNickname }" />
@@ -170,7 +170,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			<br><br>
 				<div class="border">
 					${memberNickname}<br><br> 
-					<input type="hidden" id="memberNickname" value=${memberNickname }>
+					<input type="hidden" name="memberNickname" id="memberNickname" value=${memberNickname }>
 					<div class="form-group">
 						<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
 					</div>
@@ -190,13 +190,20 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 			<br>
 			<div style="text-align: center;">
 				<div id="comments"></div>
+				
+				<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}"> 
+				<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
+				<input type="hidden" id="pageMaker_startPageNo"	value="${pageMaker.startPageNo}"> 
+				<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+				<input type="hidden" id="pageMaker_commentPage"	value="${pageMaker.criteria.page}"> 
+				<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
+				<br>
 			</div>
 		
 			
 	</div>
 		<script type="text/javascript">
       $(document).ready(function() {
-    	
     	  var img = $('#img').val();
     	  var date = $('#date').val();
     	  
@@ -207,58 +214,63 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
             var qBoardId = $('#qBoardId').val(); // 게시판 번호 데이터
             var memberNickname = $('#memberNickname').val(); // 작성자 데이터
             var qBoardCommentContent = $('#qBoardCommentContent').val(); // 댓글 내용
+            console.log("입력한댓글"+qBoardCommentContent);
             var obj = {
                   'qBoardId' : qBoardId, // 게시글 번호
                   'memberNickname' : memberNickname, // 회원닉네임
                   'qBoardCommentContent' : qBoardCommentContent // 게시글 댓글 내용
             } // obj	
             console.log(obj);
-            
-            // $.ajax로 송수신
-            $.ajax({
-               type : 'POST',
-               url : 'comments',
-               headers : {
-                  'Content-Type' : 'application/json'
-               },
-               data : JSON.stringify(obj), // JSON으로 변환
-               success : function(result){
-                  console.log(result);
-                  if(result == 1) {
-                     console.log('댓글 입력 성공');
-                     socket.send(
-	                     $('#registerNick').val() + "," + "새 댓글" + "," + "문의게시판" + "," +
-	                     qBoardCommentContent + "," +
-	                     memberNickname + "," + $('#qBoardTitle').val() + "," + qBoardId
-	                	 );
-                     getAllComments();
-                  }
-               }
-            }); // end ajax()   
+            if(qBoardCommentContent.trim() === '') {
+            	alert("공백은 댓글입력이 안됩니다.")
+            	return;
+            }
+	            // $.ajax로 송수신
+	            $.ajax({
+	               type : 'POST',
+	               url : 'comments',
+	               headers : {
+	                  'Content-Type' : 'application/json'
+	               },
+	               data : JSON.stringify(obj), // JSON으로 변환
+	               success : function(result){
+	                  console.log(result);
+	                  if(result == 1) {
+	                     console.log('댓글 입력 성공');
+	                     $('#qBoardCommentContent').val(' ');
+	                     socket.send(
+		                     $('#registerNick').val() + "," + "새 댓글" + "," + "문의게시판" + "," +
+		                     qBoardCommentContent + "," +
+		                     memberNickname + "," + $('#qBoardTitle').val() + "," + qBoardId
+		                	 );
+	                     getAllComments();
+	                  }
+	               }
+	            }); // end ajax()   
          }); // end btnAdd.click()
          
          // 게시판 댓글 전체 가져오기
          function getAllComments(){
             var qBoardId = $('#qBoardId').val();
-            
-            var url = 'comments/all/' + qBoardId;
-            $.getJSON(
-               url,
-               function(data) {
-                  
-                  // data : 서버에서 전송받은 list 데이터가 저장되어 있음.
-                  // getJSON()에서 json 데이터는
-                  // javascript object로 자동 parsing됨.
-                  console.log(data);
-               
-                  var memberNickname = $('#memberNickname').val();
-               
-                  var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+            var commentPage = $('#pageMaker_commentPage').val();
+            var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
+            var url = 'comments/all/' + qBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+            $.getJSON(url, function(data) {
+            	var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
+                var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
+                $('#pageMaker_startPageNo').val(data.pageMaker.startPageNo);
+                $('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
+                var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
+                var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val(); 
+                // data : 서버에서 전송받은 list 데이터가 저장되어 있음.
+                // getJSON()에서 json 데이터는
+                // javascript object로 자동 parsing됨.
+                var memberNickname = $('#memberNickname').val();
+                var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
                   
                   // $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수. 사실 걍 for문 써도 됌
-                  $(data).each(function(){
+                  $(data.list).each(function(){
                      // this : 컬렉션의 각 인덱스 데이터를 의미
-                     console.log(this);
                      
                      var qBoardCommentCreatedDate = new Date(this.qBoardCommentCreatedDate);
                      var formattedDate = qBoardCommentCreatedDate.getFullYear() + '-' +
@@ -291,20 +303,54 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 
 						   list += '<button class="btn btn-sm btnReply">답글</button>'
 						       + '</div>'
-						       + '<hr>'
 						       + '</div>';
+						       
+						   
                   }); // end each()
+                list += '<div style="text-align: center;">'
+                	+ '<ul id="comment_page">'
+                	
+			   if (pageMaker_hasPrev) {
+	               list += '<li><button class="btn_comment_prev">이전</button></li>';
+	           }
+
+	            for (var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
+	                list += '<li><button class="btn_comment_page" value=' + num + '>'
+                    + num
+                    + '</button></li>';
+                }
+
+			    if (pageMaker_hasNext) {
+			    	list += '<li><button class="btn_comment_next">이후</button></li>';
+			    }
+			                
+			    list += '</ul>' + '</div>';  
                   
                 
-                  $('#comments').html(list);
-                  console.log("456");
+                $('#comments').html(list);
                   
                }
             ); // end getJSON()
             
             
          } // end getAllComment()
-         console.log("123")
+         
+         $(document).on('click', '.btn_comment_page', function () {
+             $('#pageMaker_commentPage').val($(this).val());
+             getAllComments();
+         });
+
+         $(document).on('click', '.btn_comment_prev', function () {
+             $('#pageMaker_commentPage').val(+$('#pageMaker_startPageNo').val() - 1);
+             console.log("이전버튼눌림");
+             getAllComments();
+         });
+
+         $(document).on('click', '.btn_comment_next', function () {
+             $('#pageMaker_commentPage').val(+$('#pageMaker_endPageNo').val() + 1);
+             getAllComments();
+         });         
+         
          // 수정 버튼을 클릭하면 선택된 댓글 수정
          $("#comments").on('click','.comment_item .btn_update', function(){
             console.log(this);

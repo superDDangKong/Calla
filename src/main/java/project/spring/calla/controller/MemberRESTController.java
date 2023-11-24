@@ -42,20 +42,19 @@ public class MemberRESTController {
 	@Autowired
 	private MemberService memberService;
 	
-	
-	/*
-	 * @PostMapping("/login") public String login(String memberId, String memberPw,
-	 * String targetURL, HttpServletRequest request) {
-	 * 
-	 * }
-	 */
+
 	
 	@PostMapping("/join")
-	public ResponseEntity<Integer> createMember(@RequestBody MemberVO vo) {
+	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {
 		logger.info("createMember() : vo = " + vo.toString());
 		int result = 0;
-		result = memberService.create(vo);
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		try {
+			result = memberService.create(vo);
+		} catch (IllegalStateException e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	} // end createMember
 	
 	@PostMapping("/checkId") // @RequestParam("member_Id")

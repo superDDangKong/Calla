@@ -67,15 +67,17 @@ public class MemberController {
 
 //	@PostMapping("/join")
 //	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
-//		logger.info("joinPOST  : " + vo.toString());
+//		logger.info("joinPost ȣ��");
+//		logger.info("createMember" + vo.toString());
 //		int result = memberService.create(vo);
 //		if(result == 1) {
-//			reAttr.addFlashAttribute("insert", "success");
+//			reAttr.addFlashAttribute("joinResult", "success");
 //			return "redirect:/member/login";
 //		} else {
 //			return "redirect:/member/join";
 //		}
 //	}
+	
 	@GetMapping("/login")
 	public void loginGET(String targetURL) {
 	}
@@ -90,7 +92,7 @@ public class MemberController {
 
 		logger.info("loginPOST() " + loginSessions.toString());
 		HttpSession existedSession = loginSessions.get(memberId);
-		logger.info("기존 세션 = " + existedSession);
+		logger.info("= " + existedSession);
 		if (existedSession != null) {
 			existedSession.invalidate();
 		}

@@ -40,9 +40,9 @@ public class QBoardServiceImple implements QBoardService{
 	}
 
 	@Override
-	public QBoardVO read(int boardId) {
-		logger.info("read() 호출 : boardId = " + boardId);
-		return dao.select(boardId);
+	public QBoardVO read(int qBoardId) {
+		logger.info("read() 호출 : boardId = " + qBoardId + ", ");
+		return dao.select(qBoardId);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class QBoardServiceImple implements QBoardService{
 	}
 
 	@Override
-	public int delete(int boardId) {
-		logger.info("delete() 호출 : boardId = " + boardId);
-		return dao.delete(boardId);
+	public int delete(int qBoardId) {
+		logger.info("delete() 호출 : qBoardId = " + qBoardId);
+		return dao.delete(qBoardId);
 	}
 
 	@Override

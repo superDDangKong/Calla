@@ -97,13 +97,19 @@
             </div>
         </div>
     </div>
-
+	<input type="hidden" name="joinResult" id="joinResult" value="${joinResult }">
 	<input type="hidden" name="searchResult" id="searchResult" value="${searchResult }">
 	<input type="hidden" name="searchId" id="searchId" value="${searchId }">
 	<input type="hidden" name="searchPw" id="searchPw" value="${searchPw }">
 	
 	
 	<script type="text/javascript">
+		var joinResult = $('#joinResult').val();
+		if (joinResult == 'success') {
+		alert("회원가입을 축하합니다.");
+		}
+	
+	
 		var searchResult = $('#searchResult').val();
 		var searchId = $('#searchId').val();
 		var searchPw = $('#searchPw').val();
