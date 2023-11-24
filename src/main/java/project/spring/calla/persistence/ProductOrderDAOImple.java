@@ -31,12 +31,10 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 	}
 
 	@Override
-	public int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress) {
+	public int update(int productOrderId, String recipientName, String memberAddress) {
 		logger.info("update() »£√‚");
 		Map<String, Object> args = new HashMap();
-		args.put("productId", productId);
-		args.put("memberId", memberId);
-		args.put("memberEmail", memberEmail);
+		args.put("productOrderId", productOrderId);
 		args.put("recipientName", recipientName);
 		args.put("memberAddress", memberAddress);
 		return sqlSession.update(NAMESPACE + ".update", args);

@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.ProductCommentVO;
+import project.spring.calla.domain.ProductImageVO;
 import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.ProductOrderListVO;
 import project.spring.calla.domain.ProductOrderVO;
@@ -35,6 +36,7 @@ import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
+import project.spring.calla.service.ProductImageService;
 import project.spring.calla.service.ProductLikeService;
 import project.spring.calla.service.ProductOrderListService;
 import project.spring.calla.service.ProductOrderService;
@@ -63,6 +65,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductOrderService productOrderService;
+	
+	@Autowired
+	private ProductImageService productImageService;
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -125,33 +130,37 @@ public class ProductController {
 	} // end registerGET()
 	
 	@PostMapping("/register")
-	public String registerPost(ProductVO vo,  @RequestParam("productImage") MultipartFile file, RedirectAttributes reAttr) {
-		logger.info("registerPOST() 호占쏙옙");
-		logger.info(vo.toString());		
-		logger.info("占쏙옙占쏙옙 占싱몌옙 : " + file.getOriginalFilename());
-		logger.info("占쏙옙占쏙옙 크占쏙옙 : " + file.getSize());
-		
-		try {
-			// 占쏙옙占쏙옙 占쏙옙占쏙옙
-			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-			// 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙
-			vo.setProductImagePath(savedFileName);
-			int result = productService.create(vo);
-			logger.info(result + "占쏙옙 占쏙옙占쏙옙");
-			
-			if(result == 1) {
-				reAttr.addFlashAttribute("insert_result", "success");
-				return "redirect:/product/list";
-			} else {
-				return "redirect:/product/register";
-			}
-		} catch (Exception e) {
-			return "redirect:/product/register";
-		}
-		
-		
-		
-	}  // end registerPOST()
+	public String registerPost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, RedirectAttributes reAttr) {
+	    // 상품 정보 등록 로직...
+
+	    try {
+	        int productId = productService.create(vo); // 상품 등록
+
+	        List<String> savedFileNames = new ArrayList<>();
+	        List<ProductImageVO> imageList = new ArrayList<>(); // 이미지 리스트
+
+	        for (MultipartFile file : files) {
+	            String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
+	            savedFileNames.add(savedFileName);
+
+	            ProductImageVO imageVO = new ProductImageVO();
+	            imageVO.setProductId(productId);
+	            imageVO.setProductImagePath(savedFileName);
+
+	            imageList.add(imageVO); // 이미지 리스트에 추가
+	        }
+
+	        vo.setImages(imageList); // 상품 VO에 이미지 리스트 설정
+
+	        productService.createWithImages(vo); // 상품 및 이미지 정보 함께 등록
+
+	        reAttr.addFlashAttribute("insert_result", "success");
+	        return "redirect:/product/list";
+	    } catch (Exception e) {
+	        return "redirect:/product/register";
+	    }
+	} // end registerPOST()
+
 	
 	@GetMapping("/detail")
 	public String detail(Model model, Integer productId, String memberId, Integer page, HttpServletRequest request, HttpServletResponse response) {
@@ -240,23 +249,26 @@ public class ProductController {
 		logger.info("updatePOST() 호占쏙옙 : vo = " + vo.toString());			
 		logger.info("占쏙옙占쏙옙 占싱몌옙 : " + file.getOriginalFilename());
 		logger.info("占쏙옙占쏙옙 크占쏙옙 : " + file.getSize());
-		try {	
-			if(file != null && !file.isEmpty()) {
-				String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-				vo.setProductImagePath(savedFileName);
-			}
-			
-			int result = productService.update(vo);
-			
-			if(result == 1) {
-				return "redirect:/product/list?page=" + page;
-			} else {
-				return "redirect:product/update?productId=" + vo.getProductId();
-			}	
-		} catch (Exception e) {
-			return "redirect:product/update?productId=" + vo.getProductId();
-		}
-		
+		try {
+	        if (file != null && !file.isEmpty()) {
+	            String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
+	            
+	            ProductImageVO imageVO = new ProductImageVO();
+	            imageVO.setProductId(vo.getProductId());
+	            imageVO.setProductImagePath(savedFileName);
+	            productImageService.update(imageVO.getProductImageId(), savedFileName); // 이미지 정보 업데이트
+	        }
+
+	        int result = productService.update(vo);
+
+	        if (result == 1) {
+	            return "redirect:/product/list?page=" + page;
+	        } else {
+	            return "redirect:/product/update?productId=" + vo.getProductId();
+	        }
+	    } catch (Exception e) {
+	        return "redirect:/product/update?productId=" + vo.getProductId();
+	    }
 		
 	} // end updatePOST()
 	

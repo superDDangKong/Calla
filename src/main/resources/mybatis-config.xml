@@ -80,7 +80,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productLikes" value="product_likes"/>
 		<property name="productCreatedDate" value="product_created_date"/>
 		<property name="productCategori" value="product_categori"/>
-		<property name="productImagePath" value="product_image_path"/>
 		<property name="productContent" value="product_content"/>
 		<property name="productCommentCount" value="product_comment_count"/>
 		<property name="memberLevel" value="member_level"/>
@@ -214,6 +213,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="sendNickname" value="send_nickname" />
 		<property name="title" value="title" />
 		<property name="boardId" value="board_id" />
+		
+		<property name="product_Image" value="product_Image"/>
+		<property name="productId" value="product_id"/>
+		<property name="productImageId" value="product_image_id"/>
+		<property name="productImagePath" value="product_image_path"/>
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->

@@ -26,9 +26,9 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	}
 
 	@Override
-	public int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress) {
+	public int update(int productOrderId, String recipientName, String memberAddress) {
 		logger.info("update() »£√‚ ");
-		return dao.update(productId, memberId, memberEmail, recipientName, memberAddress);
+		return dao.update(productOrderId, recipientName, memberAddress);
 	}
 
 	@Override

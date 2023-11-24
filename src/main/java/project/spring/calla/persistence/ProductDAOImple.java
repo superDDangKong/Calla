@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import project.spring.calla.domain.ProductImageVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -175,6 +176,13 @@ public class ProductDAOImple implements ProductDAO {
 		args.put("productId", productId);
 		return sqlSession.update(NAMESPACE + ".update_rated_count", args);
 	}
+
+	@Override
+	public Object insertImages(List<ProductImageVO> images) {
+		  logger.info("insertImages() »£√‚ : images = " + images.toString());
+		  return sqlSession.insert(NAMESPACE + ".insertImages", images);
+	}
+
 
 	
 	

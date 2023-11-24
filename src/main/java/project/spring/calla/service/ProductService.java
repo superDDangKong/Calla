@@ -21,5 +21,6 @@ public interface ProductService {
 	List<ProductVO> readByInterest(String interest); 
 	int createRecentlyView(int productId, String memberId); // 최근 본 상품
 	List<ProductCommentVO> getCommentsByProductId(int productId); // 댓글가져오기
+	Object createWithImages(ProductVO vo);
 	
 }

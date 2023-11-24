@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${product}
-		(${productName}, ${productPrice}, ${productCategori}, ${productImagePath}, ${productContent})
-		values (#{productName}, #{productPrice}, #{productCategori}, #{productImagePath}, #{productContent})
+		(${productName}, ${productPrice}, ${productCategori}, ${productContent})
+		values (#{productName}, #{productPrice}, #{productCategori}, #{productContent})
 	</insert>
 	
 	<select id="select_all" resultType="ProductVO">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="update">
 		update ${product}
-		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productImagePath} = #{productImagePath}, ${productContent} = #{productContent}
+		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productContent} = #{productContent}
 		where ${productId} = #{productId} 
 	</update>
 	
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="paging" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productContent}, ${productCommentCount}, ${productRatedCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}
 		from(
 			select rownum rn, a.* from(
 				select * from ${product} order by ${productId} desc
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_by_product_name_or_product_content" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productImagePath}, ${productImagePath}, ${productContent}, ${productCommentCount}, ${productRatedCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}
 		from(
 			select rownum rn, a.* from(
 	 			select * from ${product} 
@@ -113,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="select_recently_view" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productImagePath}, ${productRecentlyViewId}
+		select ${productId}, ${productName}, ${productPrice}, ${productRecentlyViewId}
 		from(
 			select rownum rn, a.* from(
 				select p.*, pr.${productRecentlyViewId}
@@ -142,5 +142,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	where ${productId} = #{productId}
 	</update>
 
-	
+	<insert id="insertImages" parameterType="java.util.List">
+	    <foreach collection="list" item="image" separator=";">
+	        INSERT INTO product_image (product_id, product_image_path)
+	        VALUES (#{image.productId}, #{image.productImagePath})
+	    </foreach>
+	</insert>
 </mapper>

@@ -28,7 +28,10 @@
 		<div>
     		<p>이미지</p>
     		<input type="hidden" name="productImagePath" value="${vo.productImagePath}"> 	
-    		<input id="productImage" type="file" name="productImage" placeholder="이미지"> 		
+    		<div id="imageContainer">
+                <input id="productImage" type="file" name="productImages" multiple="multiple">
+            </div>
+            <input type="button" id="addImage" value="이미지 추가">	
 		</div>	
 		<div>
 			<textarea rows="20" cols="120" name="productContent">${vo.productContent }</textarea>
@@ -37,5 +40,17 @@
 			<input type="submit" value="등록">
 		</div>
 	</form>
+	
+	<script>
+        document.getElementById('addImage').onclick = function() {
+            var container = document.getElementById('imageContainer');
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.name = 'productImages';
+            input.multiple = 'multiple';
+            container.appendChild(document.createElement('br'));
+            container.appendChild(input);
+        };
+    </script>
 </body>
 </html>

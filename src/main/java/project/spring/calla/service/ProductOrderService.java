@@ -6,7 +6,7 @@ import project.spring.calla.domain.ProductOrderVO;
 
 public interface ProductOrderService {
 	int create(ProductOrderVO vo);
-	int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress);
+	int update(int productOrderId, String recipientName, String memberAddress);
 	int delete(int productorderId);
 	ProductOrderVO readBy(String memberId);
 	List<ProductOrderVO> read();

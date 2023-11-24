@@ -34,7 +34,10 @@
 		</div>
 		<div>
 			<p>이미지 :</p>
-			<input id="productImage" type="file" name="productImage" placeholder="이미지" >
+			 <div id="imageContainer">
+                <input id="productImage" type="file" name="productImages" multiple="multiple">
+            </div>
+            <input type="button" id="addImage" value="이미지 추가">
 		</div>
 		<div>
 			<input type="submit" value="등록">
@@ -44,6 +47,13 @@
 		
 	</form>
 	
+	<script>
+	$(document).ready(function() {
+	    $("#addImage").click(function() {
+	        $("#imageContainer").append('<input type="file" name="productImages" multiple="multiple"><br>');
+	    });
+	});
+	</script>
 	
 </body>
 </html>
