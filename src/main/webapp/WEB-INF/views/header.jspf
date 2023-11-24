@@ -44,7 +44,7 @@
 						<input type="submit" value="로그아웃">
 					</form>
 					&nbsp;&nbsp;
-					<form action="/calla/member/orders" method="get">
+					<form action="/calla/activity/orders" method="get">
 						<input type="submit" value="마이페이지"> 
 					</form>
 				</c:if>
@@ -70,7 +70,7 @@
 	            <p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
 	
 				<div class="container mt-4">
-				    <form action="/calla/member/searchByOption" method="get">
+				    <form action="/calla/activity/searchByOption" method="get">
 				        <div class="input-group">
 				            <select id="productOption" name="productOption" class="form-select">
 				                <option value="" selected>전체 검색</option>

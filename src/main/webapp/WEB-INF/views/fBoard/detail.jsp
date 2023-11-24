@@ -241,7 +241,9 @@ li {
 			    	           target.style.backgroundColor = '';
 			    	           target.style.border = '';
 		    	           }, 2000);  // 2초 후에 스타일 초기화
-	    	           
+		        		   if (window.location.hash) {
+		        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+		        			}
 	    	   		     } else if (fragmentList[1] > 0) {
 	    	        	   getAllReplies(targetCommentElement);
 	    	    	       }
@@ -384,7 +386,6 @@ li {
         	       
 	        	   if (fragmentList[1] > 0) {
 
-
 	        		   setTimeout(function() {
 	        		   var targetReplyElement = $('.fBoardReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
 	        		   
@@ -392,6 +393,9 @@ li {
 		        		   targetReplyElement.style.border = '2px solid';
 	        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 	        		   }, 100);
+	        		   if (window.location.hash) {
+	        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+	        			}
 	        	   }
         	   }
             }); // end getJson

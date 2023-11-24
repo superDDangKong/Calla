@@ -75,7 +75,7 @@
 
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/level/' + memberId.text(),
+	            url: 'updatelevel/' + memberId.text(),
 	            data: memberLevel.text(),
 	            success: function (newMemberLevel) {
 	                console.log(newMemberLevel);

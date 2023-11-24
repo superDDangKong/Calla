@@ -41,7 +41,7 @@ public class FBoardCommentDAOImple implements FBoardCommentDAO {
 	@Override
 	public int update(int fBoardCommentId, String fBoardCommentContent) {
 		logger.info("update() »£√‚");
-		logger.info("replyId = " + fBoardCommentId + ", replyContent = " + fBoardCommentContent);
+		logger.info("replyId = " + fBoardCommentId + ", commentContent = " + fBoardCommentContent);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("fBoardCommentId", fBoardCommentId);
 		args.put("fBoardCommentContent", fBoardCommentContent);

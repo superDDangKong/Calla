@@ -227,7 +227,7 @@ table, th, td {
 	
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/pw/' + memberId,
+	            url: 'updatepw/' + memberId,
 	            headers: {
 	                'Content-Type': 'application/json'
 	            },
@@ -287,7 +287,7 @@ table, th, td {
 	
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/nickname/' + memberId,
+	            url: 'updatenickname/' + memberId,
 	            data: newNickname,
 	            success: function (result) {
 	                console.log(result);
@@ -321,7 +321,7 @@ table, th, td {
 	
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/phone/' + memberId,
+	            url: 'updatephone/' + memberId,
 	            data: newPhone,
 	            success: function (result) {
 	                console.log(result);
@@ -358,7 +358,7 @@ table, th, td {
 	        var memberId = $('#memberId').val();
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/email/' + memberId,
+	            url: 'updateemail/' + memberId,
 	            data: newMemberEmail,
 	            success: function (result) {
 	                console.log(result);
@@ -397,7 +397,7 @@ table, th, td {
 	        if (newMemberInterest !== "") {
 	            $.ajax({
 	                type: 'PUT',
-	                url: 'update/interest/' + memberId,
+	                url: 'updateinterest/' + memberId,
 	                data: newMemberInterest,
 	                success: function (result) {
 	                    console.log(result);
@@ -417,7 +417,7 @@ table, th, td {
 	        var memberId = $('#memberId').val();
 	        $.ajax({
 	            type: 'PUT',
-	            url: 'update/address/' + memberId,
+	            url: 'updateaddress/' + memberId,
 	            data: newMemberAddress,
 	            success: function (result) {
 	                console.log(result);

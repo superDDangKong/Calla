@@ -193,7 +193,10 @@ public class FBoardController {
 		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
-		criteria.setPage(page);
+		if(page != null) {
+			criteria.setPage(page);
+			
+		}
 		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));
 		
 		pageMaker.setCriteria(criteria);

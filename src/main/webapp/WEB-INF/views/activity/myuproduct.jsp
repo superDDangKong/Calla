@@ -250,7 +250,7 @@ td {
 <script type="text/javascript">
   function openPop(uProductId) {
     var pageMaker = '${pageMaker.criteria.page}';
-    var popup = window.open('http://localhost:8080/calla/member/choosenickname?uProductId=' + uProductId + '&page=' + pageMaker, '팝업', 'width=500px,height=600px,scrollbars=yes');
+    var popup = window.open('http://localhost:8080/calla/activity/choosenickname?uProductId=' + uProductId + '&page=' + pageMaker, '팝업', 'width=500px,height=600px,scrollbars=yes');
   }
 </script>
 
