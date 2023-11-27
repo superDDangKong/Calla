@@ -63,16 +63,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${member} where ${memberNickname} = #{memberNickname}
 	</select>
 	
-	
-	
 	<update id="memberManner_update">
 		UPDATE ${member}
 		SET ${memberManner} = ${memberManner} + 0.2
 		WHERE ${memberNickname} = #{memberNickname}
 	</update>
 	
+	<update id="memberManner_updates">
+		UPDATE ${member}
+		SET ${memberManner} = ${memberManner} - 0.2
+		WHERE ${memberNickname} = #{memberNickname}
+	</update>
 	
+	<insert id="insert_manner">
+		insert into ${u_product_manner}
+		(${uProductId}, ${memberNickname}, ${sellerNickname})
+		values (#{uProductId}, #{memberNickname}, #{sellerNickname})
+	</insert>
 	
+	<select id="select_count_memberManner" resultType="Integer">
+		select count(*) total_cnt
+		from ${u_product_manner}
+		where ${uProductId} = #{uProductId}
+	</select>
+	
+	<insert id="insert_manner_down">
+		insert into ${u_product_manner_down}
+		(${uProductId}, ${memberNickname}, ${sellerNickname})
+		values (#{uProductId}, #{memberNickname}, #{sellerNickname})
+	</insert>
+	
+	<select id="select_count_memberManner_down" resultType="Integer">
+		select count(*) total_cnt
+		from ${u_product_manner_down}
+		where ${uProductId} = #{uProductId}
+	</select>
 	
 	 	 	 
 </mapper>

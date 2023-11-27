@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.spring.calla.domain.UProductMannerVO;
 import project.spring.calla.service.UProductReviewService;
 
 // * RESTful url과 의미
@@ -31,15 +33,40 @@ public class UProductReviewRESTController {
 
 	@Autowired
 	private UProductReviewService reviewservice;
+	
+	@Transactional(value = "transactionManager")
+	@PostMapping // POST : 댓글 입력
+	public ResponseEntity<Integer> createReply(@RequestBody UProductMannerVO vo) {
+		// @RequestBody
+		// - 클라이언트에서 전송받은 json epdlxjfmf
+		// 자바 객체로 변환해주는 annotation
+		logger.info("createReply() 호출 : vo = " + vo.toString());
 
 	
+		int result = 0;
+		String sellerNickname = vo.getSellerNickname();
+		logger.info("createReply() 호출 : uProductId = " + vo.getuProductId());
 
-	@PutMapping("/{sellerNickname}") // PUT : 댓글 수정
-	public ResponseEntity<Float> updatemanner(@PathVariable("sellerNickname") String sellerNickname) {
-		logger.info("updatemanner() 호출");
-		logger.info("sellerNickname : " + sellerNickname);
-		float result = reviewservice.updatememberManner(sellerNickname);
-		return new ResponseEntity<Float>(result, HttpStatus.OK);
+		try {
+			
+			int count = reviewservice.count(vo.getuProductId());
+			logger.info("reviewservice() 호출 : count = " + count);
+			if(count == 0) {
+			
+			result = reviewservice.insertmanner(vo);
+		
+			reviewservice.updatememberManner(sellerNickname);
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+			
+		} else {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
 	

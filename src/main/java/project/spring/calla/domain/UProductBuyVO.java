@@ -6,7 +6,7 @@ public class UProductBuyVO {
 	
 	private int uProductBuyId;
 	private String uProductName; // 등록
-	private String uProductPrice; // 등록
+	private int uProductPrice; // 등록
 	private Date uProductCreatedDate;
 	private String uProductCategori; // 등록
 	private String memberAddress; //등록
@@ -18,7 +18,7 @@ public class UProductBuyVO {
 	
 	public UProductBuyVO() {}
 
-	public UProductBuyVO(int uProductBuyId, String uProductName, String uProductPrice, Date uProductCreatedDate,
+	public UProductBuyVO(int uProductBuyId, String uProductName, int uProductPrice, Date uProductCreatedDate,
 			String uProductCategori, String memberAddress, String uProductContent, String buyerNickname,
 			String uProductImagePath, int uProductId, String sellerNickname) {
 		super();
@@ -51,11 +51,11 @@ public class UProductBuyVO {
 		this.uProductName = uProductName;
 	}
 
-	public String getuProductPrice() {
+	public int getuProductPrice() {
 		return uProductPrice;
 	}
 
-	public void setuProductPrice(String uProductPrice) {
+	public void setuProductPrice(int uProductPrice) {
 		this.uProductPrice = uProductPrice;
 	}
 
@@ -133,7 +133,6 @@ public class UProductBuyVO {
 	}
 
 	
-
 
 	
 	

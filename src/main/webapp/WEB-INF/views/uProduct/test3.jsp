@@ -12,7 +12,6 @@
 
 .slide_div_wrap {
 	padding: 15px 0 15px 0;
-	background: #e6e9f6;
 }
 
 .image_wrap img {
@@ -41,32 +40,6 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="/calla/">Goott mall</a>
-			<div class="collapse navbar-collapse justify-content-end"
-				id="navbarSupportedContent">
-				<c:if test="${empty memberNickname }">
-					<form action="/calla/member/login" method="get">
-						<input type="submit" value="로그인">
-					</form>
-					<form action="/calla/member/join" method="get">
-						<input type="submit" value="회원가입">
-					</form>
-				</c:if>
-				<c:if test="${not empty memberNickname }">
-					${memberNickname }&nbsp;님&nbsp; 
-					<form action="/calla/member/logout" method="get">
-						<input type="submit" value="로그아웃">
-					</form>
-					<form action="/calla/member/order" method="get">
-						<input type="submit" value="마이페이지"> <input type="hidden"
-							name="memberId" value="${memberId }">
-					</form>
-				</c:if>
-			</div>
-		</div>
-	</nav>
 
 	<div class="slide_div_wrap">
 
@@ -98,6 +71,121 @@
 				<a href="/calla/fBoard/list" class="nav-link mx-2 text-white">자유게시판</a>
 				<a href="/calla/qBoard/list" class="nav-link mx-2 text-white">문의게시판</a>
 			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="../sidebar2.jspf"%>
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
+				<c:if test="${not empty memberNickname }">
+					<h5>${memberNickname }님환영합니다!</h5>
+					<hr>
+					회원님을 위한 추천 상품 리스트 ↓ ↓ ↓
+				</c:if>
+				<div class="container">
+					<h1 class="display-4">공용상품</h1>
+				</div>
+				<section class="py-5">
+					<div class="container px-4 px-lg-5 mt-5">
+						<div
+							class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+							<input type="hidden" id="test" value='${lists}'>
+							<c:forEach var="ProductVO" items="${lists.productList }">
+								<div class="col mb-5">
+									<div class="card h-100">
+										<%-- <img class="card-img-top" src="fBoard/display?fileName=${ProductVO.productImagePath}" width="200px" height="150px" alt="..." /> --%>
+										<div class="card-body p-4">
+											<div class="text-center">
+												<h5 class="fw-bolder">
+													<a
+														href="product/detail?productId=${ProductVO.productId }&memberId=${memberId}">${ProductVO.productName }</a>
+												</h5>
+												<div>
+													<h6>${ProductVO.productCategori }</h6>
+												</div>
+												<div
+													class="d-flex justify-content-center small text-warning mb-2">
+													좋아요 : ${ProductVO.productLikes } 조회수 :
+													${ProductVO.productViews }</div>
+												가격 : ${ProductVO.productPrice }
+											</div>
+
+										</div>
+										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+											<div class="text-center">
+												<a class="btn btn-outline-dark mt-auto"
+													href="product/detail?productId=${ProductVO.productId }&memberId=${memberId}">상품
+													보기</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</c:forEach>
+						</div>
+					</div>
+				</section>
+
+				<div class="container">
+					<h1 class="display-4">중고상품</h1>
+				</div>
+
+				<section class="py-5">
+					<div class="container px-4 px-lg-5 mt-5">
+						<div
+							class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+							<c:forEach var="uProductVO" items="${lists.uProductList }">
+
+								<div class="col mb-5">
+									<div class="card h-100">
+										<!-- Product image-->
+										<img class="card-img-top"
+											<%-- src="fBoard/display?fileName=${uProductVO.uProductImagePath}" --%>
+											alt="..." />
+										<!-- Product details-->
+										<div class="card-body p-4">
+											<div class="text-center">
+												<!-- Product name-->
+												<h5 class="fw-bolder">
+
+													<a
+														href="uProduct/detail?uProductId=${uProductVO.uProductId }">${uProductVO.uProductName }</a>
+
+												</h5>
+												<!-- Product reviews-->
+												<div
+													class="d-flex justify-content-center small text-warning mb-2">
+													<div class="bi-star-fill"></div>
+													<div class="bi-star-fill"></div>
+													<div class="bi-star-fill"></div>
+													<div class="bi-star-fill"></div>
+													<div class="bi-star-fill"></div>
+												</div>
+												<!-- Product price-->
+												${uProductVO.uProductPrice }
+
+											</div>
+										</div>
+										<!-- Product actions-->
+										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+											<div class="text-center">
+												<a class="btn btn-outline-dark mt-auto" href="#">Add to
+													cart</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</c:forEach>
+
+						</div>
+					</div>
+				</section>
+			</main>
+			<%-- <%@ include file="sidebarRight.jspf"%> --%>
 		</div>
 	</div>
 

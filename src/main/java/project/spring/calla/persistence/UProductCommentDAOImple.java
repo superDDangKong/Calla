@@ -42,8 +42,8 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 		logger.info("update() »£√‚");
 		logger.info("replyId = " + uProductCommentId + ", replyContent = " + uProductCommentContent);
 		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("fBoardCommentId", uProductCommentId);
-		args.put("fBoardCommentContent", uProductCommentContent);
+		args.put("uProductCommentId", uProductCommentId);
+		args.put("uProductCommentContent", uProductCommentContent);
 		return sqlSession.update(NAMESPACE + ".update", args);
 	}
 

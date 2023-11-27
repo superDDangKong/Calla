@@ -158,6 +158,8 @@ td {
 	border: none;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
@@ -189,6 +191,7 @@ td {
 					<td colspan="2">상품정보</td>
 					<td>등록날짜</td>
 					<td>상품금액</td>
+					<td>후기</td>
 					<td>삭제</td>
 				</tr>
 			</thead>
@@ -204,10 +207,47 @@ td {
 						<fmt:formatDate value="${vo.uProductCreatedDate }"
 							pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
 						<td>${uProductCreatedDate }</td>
-						<td><span class="price">${vo.uProductPrice }</span><br>
+						<td><span class="price">${vo.uProductPrice }원</span><br>
 						<td>			
-						<a href="review?sellerNickname=${vo.sellerNickname }&page=${pageMaker.criteria.page}">후기 남기기</a>	 
+						<a href="review?sellerNickname=${vo.sellerNickname }&uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">후기 남기기</a>	 
 						</td>
+						<td>
+						
+						 <button type="button" id="btn_delete_${vo.uProductBuyId}" style="border: none; background: none;">
+							<i class="fa-solid fa-trash fa-xl"></i>
+						</button>
+						
+						<script type="text/javascript">
+					    $(document).ready(function() {
+					        var deleteBtn = $('#btn_delete_${vo.uProductBuyId}');
+					
+					        deleteBtn.click(function(){
+					            var uProductBuyId = '${vo.uProductBuyId}'; // 버튼의 ID에서 uProductId 추출
+					            console.log(uProductBuyId);
+					
+					           
+					                $.ajax({
+					                    type: 'DELETE',
+					                    url: 'buy/' + uProductBuyId,
+					                    headers: {
+					                        'Content-Type': 'application/json'
+					                    },
+					                    success: function(result) {
+					                        console.log(result);
+					                        if (result == 1) {
+					                            alert('삭제 성공');
+					                            location.reload();
+					                        }
+					                    }
+					                }); // end ajax()
+					           
+					        }); // end btn_update click event
+					    }); // end document ready
+					</script>
+						
+						
+						</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductName}, ${uProductPrice}, ${uProductViews}, ${uProductLikes},
 		${uProductCreatedDate}, ${uProductCategori}, ${uProductImagePath},
 		${uProductContent}, ${memberAddress}, ${memberNickname},
-		${uProductCommentCount}
+		${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.* from(
 		select * from
@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductCategori},
 		${uProductImagePath}, ${uProductContent},
 		${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.* from(
 		select * from ${u_product}
@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductCategori},
 		${uProductImagePath}, ${uProductContent},
 		${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.* from(
 		SELECT * FROM ${u_product}
@@ -155,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
 		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.*
 		from(
@@ -292,7 +292,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
 		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.*
 		from(
@@ -319,18 +319,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<update id="u_product_statement_update">
+		UPDATE ${u_product}
+		SET ${uProductStatement} = '예약중'
+		WHERE ${uProductId} = #{uProductId}
+	</update>
+	
+	<update id="u_product_statement_updates">
+		UPDATE ${u_product}
+		SET ${uProductStatement} = '거래가능'
+		WHERE ${uProductId} = #{uProductId}
+	</update>
+	
+	<delete id="delete_uproductsell">
+		delete from ${u_product_sell} where ${uProductSellId} = #{uProductSellId}
+	</delete>
+	
+		<delete id="delete_uproductbuy">
+		delete from ${u_product_buy} where ${uProductBuyId} = #{uProductBuyId}
+	</delete>
+	
+	<select id="select_by_u_product_like"
+		resultType="UproductVO">
+
+		select ${uProductId}, ${uProductName}, ${uProductPrice},
+		${uProductViews},
+		${uProductLikes}, ${uProductCreatedDate},
+		${uProductCategori},
+		${uProductImagePath}, ${uProductContent},
+		${memberAddress},
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
+		from(
+		select rownum rn, a.* from(
+		SELECT * FROM ${u_product}
+		order by ${uProductLikes} desc
+		)a
+		) where rn between #{start} and #{end}
+
+	</select>
+
+	<select id="total_count_by_u_product_like"
+		resultType="Integer">
+		select count(*) total_cnt from ${u_product} order by ${uProductLikes} desc	
+	</select>
 	
 	 	 
 	 	 
 </mapper>
-
-
-
-
-
-
-
-
 
 
 

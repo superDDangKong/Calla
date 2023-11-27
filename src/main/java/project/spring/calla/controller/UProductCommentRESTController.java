@@ -73,7 +73,7 @@ public class UProductCommentRESTController {
 	@DeleteMapping("/{uProductCommentId}") // ¥Ò±€ ªË¡¶ 
 	public ResponseEntity<Integer> deleteComment(@PathVariable("uProductCommentId") int uProductCommentId,
 			@RequestBody int uProductId) {
-		logger.info("FBoardCommentId = " + uProductCommentId);
+		logger.info("FBoardCommentId = " + uProductCommentId, "uProductId : " + uProductId);
 
 		int result = 0;
 		try {

@@ -305,5 +305,11 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		return sqlSession.selectOne(NAMESPACE + ".total_count_orders", memberId);
 	}
+
+	@Override
+	public int deleteUProduct(int uProductId) {
+		logger.info("delete() 호출");
+		return sqlSession.delete(NAMESPACE + ".delete_uproduct", uProductId);
+	}
 	
 }

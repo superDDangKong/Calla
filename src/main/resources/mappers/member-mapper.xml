@@ -119,7 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
 		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.*
 		from(
@@ -387,6 +387,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from ${product_order}
 		where ${memberId} = #{memberId} 
 	</select>
+	
+	<delete id="delete_uproduct">
+		delete from ${u_product} where ${uProductId} = #{uProductId}
+	</delete>
+	
+	
+	
+	
 </mapper>
 
 

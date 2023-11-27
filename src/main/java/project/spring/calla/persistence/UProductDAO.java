@@ -63,6 +63,19 @@ public interface UProductDAO {
 	
 	String selectManner(String memberNickname);
 	
+	int statementupdate(int uProductId);
+	
+	int statementupdates(int uProductId);
+	
+	int deleteUProductsell(int uProductSellId);
+	
+	int deleteUProductbuy(int uProductBuyId);
+	
+	List<UProductVO> selectByUproductLike(PageCriteria criteria); // 占신삼옙품 占싯삼옙
+	int getTotalCountsByUproductLike();
+	
+	
+	
 }
 
 

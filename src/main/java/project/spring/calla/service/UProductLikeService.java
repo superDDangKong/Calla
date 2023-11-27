@@ -12,4 +12,5 @@ public interface UProductLikeService {
 	int getTotalCounts(int uProductId);
 	int checkProductLike(int uProductLikeId, String memberId);
 	UProductLikeVO read(int uProductId, String memberId);
+	
 }

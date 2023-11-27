@@ -31,6 +31,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -103,12 +104,26 @@
       <input type="hidden" id="uProductTitle" value="${vo.uProductName}">
    
    	 	<fmt:parseNumber value="${memberManner}"   var="memberManner"/>
+   	 	
       	<c:if test="${(memberManner) >= 40}">
-   		 <span style="float:right; color:orange;">${memberManner}&deg;C</span>
+      	 <span style="float:right; color:orange;">
+		 <i class="fa-regular fa-face-surprise"></i>
+   			 ${memberManner}&deg;C
+		</span>
 		</c:if>
 		
 		<c:if test="${(memberManner) >= 35 && (memberManner) < 40}">
-   		 <span style="float:right; color:green;">${memberManner}&deg;C</span>
+   		 <span style="float:right; color:green;">
+		 <i class="fa-regular fa-face-smile"></i>
+   			 ${memberManner}&deg;C
+		</span>
+		</c:if>
+		
+		<c:if test="${(memberManner) < 35}">
+		<span style="float:right; color:blue;">
+		 <i class="fa-regular fa-face-tired"></i>
+   			 ${memberManner}&deg;C
+		</span>
 		</c:if>
      
      	
@@ -129,7 +144,7 @@
         <hr style="border: solid 2px gray;">
         
         <p>가격 문의는 비밀 댓글로 해주세요</p>
-         <span class="price"> 가격 : ${vo.uProductPrice}</span>
+         <span class="price"> 가격 : ${vo.uProductPrice}원</span>
       </div>
       <div class="item-order">
         <div class="input-group mb-3">
@@ -144,17 +159,6 @@
              value = "${vo.uProductName }"
             readonly
           />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">수량</label>
-          </div>
-          <select class="custom-select" id="inputGroupSelect01">
-            <option selected>-- 수량을 선택하세요 --</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
@@ -188,21 +192,39 @@
 		</div>
 		
 		  <br>
-		
-        <button type="button" onclick="order()" class="btn btn-primary btn-order">
-          찜하기
-        </button>
+        
+        
+        
+        
+        <c:if test="${not empty sessionScope.memberId }">
         
         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.memberId }">
         
         <c:if test="${uProductLikeId == 0 }">
-        <button id="likeBtn">좋아요</button>
+        <button id="likeBtn" class="btn btn-primary btn-order">좋아요</button>
         </c:if>
-        <c:if test="${uProductLikeId != 0 }">
-        <button id="likeBtn">좋아요취소</button>		
+        <c:if test="${uProductLikeId != 0 }" >
+        <button id="likeBtn" class="btn btn-primary btn-order">좋아요취소</button>	
         </c:if>
         
+        </c:if>
         
+         <a href="list?page=${page }"><input type="button" value="상품 목록" style="float:right;"></a>
+    
+    <br>
+	<br>
+	<br>
+	
+	<input type="hidden" id="uProductId" value="${vo.uProductId }">
+     <c:if test="${vo.memberNickname eq sessionScope.memberNickname}">
+	<a href="update?uProductId=${vo.uProductId }&page=${page }"><input type="button" value="글 수정" style="float:right;"></a>
+	
+	
+	<form action="delete" method="POST">
+		<input type="hidden" name="uProductId" value="${vo.uProductId }">
+		<input type="submit" value="상품 삭제" style="float:right;">
+	</form>
+     </c:if>   
         
         
       </div>
@@ -212,19 +234,7 @@
 	<br>
 	<br>
     
-    <a href="list?page=${page }"><input type="button" value="상품 목록" style="float:right;"></a>
-    
-    <br>
-	<br>
-	<br>
-    
-	<a href="update?uProductId=${vo.uProductId }&page=${page }"><input type="button" value="글 수정" style="float:right;"></a>
-	
-	
-	<form action="delete" method="POST">
-		<input type="hidden" id="uProductId" name="uProductId" value="${vo.uProductId }">
-		<input type="submit" value="상품 삭제" style="float:right;">
-	</form>
+   
 	
 	<br>
 	<br>
@@ -297,15 +307,14 @@
 										<div class="bi-star-fill"></div>
 									</div>
 									<!-- Product price-->
-									${vo.uProductPrice }
+									${vo.uProductPrice }원
 
 								</div>
 							</div>
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">Add to
-										cart</a>
+									<a class="btn btn-outline-dark mt-auto" href="#">${vo.uProductStatement }</a>
 								</div>
 							</div>
 						</div>
@@ -391,10 +400,10 @@
 								
 								list += '<div class="uproduct_comment_item">'
 									+'<pre>'
-									+'<input type="hidden" id="uProductCommentId" value="' + this.uProductCommentId + '">'
+									+'<input type="hidden" class="uProductCommentId" value="' + this.uProductCommentId + '">'
 									+ this.memberNickname
 									+ '&nbsp;&nbsp;'
-									+'<input type="text" ' + readonly + ' id="uProductCommentContent" value="' + this.uProductCommentContent + '">'
+									+'<input type="text" ' + readonly + ' class="uProductCommentContent" value="' + this.uProductCommentContent + '">'
 									+ '&nbsp;&nbsp;'
 									+ uProductCommentCreatedDate
 									+ '&nbsp;&nbsp;'
@@ -410,8 +419,8 @@
 			$("#uproductcomments").on('click', '.uproduct_comment_item .btn_update', function(){
 				console.log(this);
 				
-				var uProductCommentId = $(this).prevAll('#uProductCommentId').val();
-				var uProductCommentContent = $(this).prevAll('#uProductCommentContent').val();
+				var uProductCommentId = $(this).prevAll('.uProductCommentId').val();
+				var uProductCommentContent = $(this).prevAll('.uProductCommentContent').val();
 				console.log("선택된 댓글 번호 : " + uProductCommentId + ", 댓글 내용 : " + uProductCommentContent);
 				
 				$.ajax({
@@ -434,9 +443,10 @@
 			$("#uproductcomments").on('click', '.uproduct_comment_item .btn_delete', function(){
 				console.log(this);
 				
-				var uProductId = $('uProductId').val();
-				var uProductCommentId = $(this).prevAll('#uProductCommentId').val();
+				var uProductId = $('#uProductId').val();
+				var uProductCommentId = $(this).prevAll('.uProductCommentId').val();
 				console.log("선택된 댓글 번호 : " + uProductCommentId);
+				console.log("uProductId:" + uProductId);
 			
 				$.ajax({
 					type : 'DELETE',
@@ -514,6 +524,6 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
-	<script src="js/scripts.js"></script>
+	<script src="/calla/resources/js/scripts.js"></script>
   </body>
 </html>

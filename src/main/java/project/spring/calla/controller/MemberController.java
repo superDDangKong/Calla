@@ -62,12 +62,12 @@ public class MemberController {
 
 	@GetMapping("/join")
 	public void showJoinPage() {
-		logger.info("showJoinPage() ȣ��");
+		logger.info("showJoinPage() ȣ��");
 	}
 
 //	@PostMapping("/join")
 //	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) {
-//		logger.info("joinPost ȣ��");
+//		logger.info("joinPost ȣ��");
 //		logger.info("createMember" + vo.toString());
 //		int result = memberService.create(vo);
 //		if(result == 1) {
@@ -324,21 +324,29 @@ public class MemberController {
 	}
 	
 	@PostMapping("/choosenickname")
-	public void choosenicknamePOST(UProductBuyVO vo, RedirectAttributes reAttr, UProductSellVO svo) throws Exception {
-		// RedirectAttributes
-		
-		logger.info("choosenicknamePOST() ");
-		logger.info(vo.toString());
-		logger.info(svo.toString());
-		int result = memberService.buysellcreate(vo, svo);
-		logger.info("result = " + result);
-		
-		
-		if(result == 1) {
-			logger.info("�����̰�");
-		} 
-		
-	} // end registerPOST()
+	public String choosenicknamePOST(UProductBuyVO vo, RedirectAttributes reAttr, UProductSellVO svo) throws Exception {
+	    // RedirectAttributes
+	    // - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
+	    logger.info("choosenicknamePOST() 호출");
+	    logger.info(vo.toString());
+	    logger.info(svo.toString());
+	    int result = memberService.buysellcreate(vo, svo);
+	    logger.info("result = " + result);
+	    logger.info(result + "행 삽입");
+
+	    int uProductId = vo.getuProductId();
+
+	    if (result == 1) {
+	        memberService.deleteUProduct(uProductId);
+	        String redirectUrl = "redirect:/closeWindow?result=" + result;
+	        logger.info("창 종료");
+	        return redirectUrl;
+	    }
+
+	    // 만약 result가 1이 아니라면, 다른 페이지로 리다이렉트하거나 그에 맞게 처리할 수 있습니다.
+	    return "redirect:/calla";
+	} 
+	
 	@GetMapping("/cancel")
 	public void cancelGET() {};
 	

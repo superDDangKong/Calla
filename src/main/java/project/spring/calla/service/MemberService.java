@@ -37,9 +37,9 @@ public interface MemberService {
 	
 	int deleteRecentlyViewProduct(int productRecentlyViewId);
 	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);
-	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
+	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); // �뜝�룞�삕�뭹�뜝�룞�삕�뜝占� �뜝�떩�뼲�삕�뜝�룞�삕�뜝占�
 	int getTotalCountsBymyuproduct(String memberNickname);
-	UProductVO read(int uProductId); // 占쏙옙품ID 占싻억옙占쏙옙占�
+	UProductVO read(int uProductId); // �뜝�룞�삕�뭹ID �뜝�떩�뼲�삕�뜝�룞�삕�뜝占�
 	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
 	
 	int deleteProductLike(int productLikeId, int amount, int productId);
@@ -59,4 +59,17 @@ public interface MemberService {
 	
 	List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
 	int getTotalCountsProductsByOption(String keyword, String interest, String option);
+	
+	int deleteUProduct(int uProductId);
+	
+	
 }
+
+
+
+
+
+
+
+
+

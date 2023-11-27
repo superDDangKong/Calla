@@ -340,4 +340,10 @@ public class MemberServiceImple implements MemberService {
 		return MemberDAO.getTotalCountsOrders(memberId);
 	}
 
+	@Override
+	public int deleteUProduct(int uProductId) {
+		logger.info("deleteUProduct() 호출");
+		return MemberDAO.deleteUProduct(uProductId);
+	}
+
 }

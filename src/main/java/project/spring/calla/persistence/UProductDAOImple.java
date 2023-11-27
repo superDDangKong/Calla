@@ -294,5 +294,43 @@ public class UProductDAOImple implements UProductDAO {
 		logger.info("selectManner() »£√‚ : memberNickname = " + memberNickname);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_membermanner", memberNickname);
 	}
+
+	@Override
+	public int statementupdate(int uProductId) {
+		logger.info("statementupdate() »£√‚ : uProductStatement = " + uProductId);
+		return sqlSession.update(NAMESPACE + ".u_product_statement_update", uProductId);
+	}
+
+	@Override
+	public int statementupdates(int uProductId) {
+		logger.info("statementupdate() »£√‚ : uProductStatement = " + uProductId);
+		return sqlSession.update(NAMESPACE + ".u_product_statement_updates", uProductId);
+	}
+
+	@Override
+	public int deleteUProductsell(int uProductSellId) {
+		logger.info("deleteUProductsell() »£√‚");
+		return sqlSession.delete(NAMESPACE + ".delete_uproductsell", uProductSellId);
+	}
+
+	@Override
+	public int deleteUProductbuy(int uProductBuyId) {
+		logger.info("deleteUProductbuy() »£√‚");
+		return sqlSession.delete(NAMESPACE + ".delete_uproductbuy", uProductBuyId);
+	}
+
+	@Override
+	public List<UProductVO> selectByUproductLike(PageCriteria criteria) {
+		logger.info("selectByUproductCreatedDate() »£ÔøΩÔøΩ");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_by_u_product_like", criteria);
+	}
+
+	@Override
+	public int getTotalCountsByUproductLike() {
+		logger.info("getTotalCountsByUproductCreatedDate()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_u_product_like");
+	}
 	
 }
