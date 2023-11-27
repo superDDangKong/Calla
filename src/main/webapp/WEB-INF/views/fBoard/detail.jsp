@@ -17,13 +17,10 @@ li {
 <meta charset="UTF-8">
 <title>${vo.fBoardTitle }</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <%@ include file="../header.jspf"%>
 </head>
 <body>
@@ -32,8 +29,11 @@ li {
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
-					<br> <a href="list?page=${page }"><input type="button"
-						class="btn btn-secondary float-right" value="글 목록"></a> <br>
+					<br> 
+					<a href="list?page=${page }">
+						<input type="button" class="btn btn-secondary float-right" value="글 목록">
+					</a> 
+					<br>
 					<div class="post-detail">
 						<br>
 						<h2>${vo.fBoardTitle }</h2>
@@ -41,8 +41,7 @@ li {
 						<input type="hidden" id="registerNick" value="${vo.memberNickname}">
 
 						<p>${vo.memberNickname }</p>
-						<fmt:formatDate value="${vo.fBoardCreatedDate }"
-							pattern="yyyy.MM.dd. hh:mm" var="fBoardCreatedDate" />
+						<fmt:formatDate value="${vo.fBoardCreatedDate }" pattern="yyyy.MM.dd. hh:mm" var="fBoardCreatedDate" />
 						<p>${fBoardCreatedDate }</p>
 						<hr>
 						<div>
@@ -65,9 +64,8 @@ li {
 								</div>
 								<div class="p-2">
 									<form action="delete" method="POST">
-										<input type="hidden" id="fBoardId" name="fBoardId"
-											value="${vo.fBoardId}"> <input type="submit"
-											value="글 삭제" class="btn btn-danger">
+										<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId}"> 
+										<input type="submit" value="글 삭제" class="btn btn-danger">
 									</form>
 								</div>
 							</div>
@@ -78,12 +76,10 @@ li {
 							<div>
 								<p>댓글</p>
 								<div class="border">
-									<br> ${memberNickname}<br> <input type="hidden"
-										id="memberNickname" value=${memberNickname }>
+									<br> ${memberNickname}<br> 
+									<input type="hidden" id="memberNickname" value=${memberNickname }>
 									<div class="form-group">
-										<textarea id="fBoardCommentContent" class="form-control"
-											rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;"
-											required></textarea>
+										<textarea id="fBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required>	</textarea>
 									</div>
 									<div style="text-align: right;">
 										<button id="btnCommentAdd" class="btn btn-dark">작성</button>
@@ -93,8 +89,7 @@ li {
 						</c:if>
 						<c:if test="${memberNickname == null}">
 							<br> 
-							댓글 작성은 <a
-								href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
+							댓글 작성은 <a href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
 						</c:if>
 						<hr>
 						<br>
@@ -120,21 +115,20 @@ li {
 <script type="text/javascript">
     $(document).ready(function () {
     	window.addEventListener('hashchange', function() {
-    		console.log("hashchange 호출")
 	    	getAllComments();
     	});
         getAllComments();
 		
+        var fBoardId = $('#fBoardId').val();
+        var memberNickname = $('#memberNickname').val();
+        var fBoardCommentContent = $('#fBoardCommentContent').val();
+        console.log(fBoardId + memberNickname + fBoardCommentContent);
         $('#btnCommentAdd').click(function () {
-            var fBoardId = $('#fBoardId').val();
-            var memberNickname = $('#memberNickname').val();
-            var fBoardCommentContent = $('#fBoardCommentContent').val();
             var obj = {
                 'fBoardId': fBoardId,
                 'memberNickname': memberNickname,
                 'fBoardCommentContent': fBoardCommentContent
             };
-            console.log(obj);
 
             $.ajax({
                 type: 'POST',

@@ -33,12 +33,12 @@ public class ActivityRESTController {
 			LoggerFactory.getLogger(ActivityRESTController.class);
 	
 	@Autowired
-	private ActivityService memberActivityService;
+	private ActivityService ativityService;
 	
 	
 	@GetMapping("/orders/{page}")
 	public ResponseEntity<Map<String, Object>> readOrderList(@PathVariable("page") int page, HttpServletRequest request) {
-		logger.info("readOrders ");
+		logger.info("readOrders");
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		
@@ -48,8 +48,8 @@ public class ActivityRESTController {
 		
 		List<ProductOrderVO> list = null;
 		
-		list = memberActivityService.readOrders(memberId, criteria);
-		pageMaker.setTotalCount(memberActivityService.getTotalCountsOrders(memberId));
+		list = ativityService.readOrders(memberId, criteria);
+		pageMaker.setTotalCount(ativityService.getTotalCountsOrders(memberId));
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		
@@ -69,8 +69,8 @@ public class ActivityRESTController {
 		MyPageMaker pageMaker = new MyPageMaker();
 		List<UProductVO> list = null;
 		
-		list = memberActivityService.readBoards(memberNickname, option, criteria);
-		pageMaker.setTotalCount(memberActivityService.getTotalCountsBoard(memberNickname, option));
+		list = ativityService.readBoards(memberNickname, option, criteria);
+		pageMaker.setTotalCount(ativityService.getTotalCountsBoard(memberNickname, option));
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		
@@ -88,8 +88,8 @@ public class ActivityRESTController {
 		MyPageMaker pageMaker = new MyPageMaker();
 		List<UProductCommentVO> list = null;
 		
-		list = memberActivityService.readComments(memberNickname, option, criteria);
-		pageMaker.setTotalCount(memberActivityService.getTotalCountsComment(memberNickname, option));
+		list = ativityService.readComments(memberNickname, option, criteria);
+		pageMaker.setTotalCount(ativityService.getTotalCountsComment(memberNickname, option));
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		
@@ -111,8 +111,8 @@ public class ActivityRESTController {
 		
 		List<UProductVO> list = null;
 		if(memberId != null) {
-			list = memberActivityService.readLikes(memberId, option, criteria);
-			pageMaker.setTotalCount(memberActivityService.getTotalCountsLike(memberId, option));
+			list = ativityService.readLikes(memberId, option, criteria);
+			pageMaker.setTotalCount(ativityService.getTotalCountsLike(memberId, option));
 		} 
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
@@ -135,13 +135,13 @@ public class ActivityRESTController {
 		int amount = -1;
 		if(productLikeIdList.size() != 0) {
 			for(int i = 0; i < productLikeIdList.size(); i++) {
-				memberActivityService.deleteProductLike(productLikeIdList.get(i), amount, productIdList.get(i));
+				ativityService.deleteProductLike(productLikeIdList.get(i), amount, productIdList.get(i));
 			}
 		}
 		
 		if(uProductLikeIdList.size() != 0) {
 			for(int i = 0; i < uProductLikeIdList.size(); i++) {
-				memberActivityService.deleteUProductLike(uProductLikeIdList.get(i), amount, uProductIdList.get(i));
+				ativityService.deleteUProductLike(uProductLikeIdList.get(i), amount, uProductIdList.get(i));
 			}
 		}
 		
@@ -158,12 +158,12 @@ public class ActivityRESTController {
 		criteria.setPage(page);
 		criteria.setNumsPerPage(4);
 		
-		Map<String, Integer> counts = memberActivityService.getTotalCountsByRecentlyView(memberId);
+		Map<String, Integer> counts = ativityService.getTotalCountsByRecentlyView(memberId);
 		pageMaker.setTotalCount(counts.get("productCount"));
 		pageMaker.setCriteria(criteria);
 		
 		pageMaker.setPageData();
-		Map<String, Object> lists = memberActivityService.readRecentlyView(criteria, memberId);
+		Map<String, Object> lists = ativityService.readRecentlyView(criteria, memberId);
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
 	}
@@ -177,13 +177,13 @@ public class ActivityRESTController {
 		
 		criteria.setPage(page);
 		criteria.setNumsPerPage(4);
-		Map<String, Integer> counts = memberActivityService.getTotalCountsByRecentlyView(memberId);
+		Map<String, Integer> counts = ativityService.getTotalCountsByRecentlyView(memberId);
 		pageMaker.setTotalCount(counts.get("uProductCount"));
 		
 		pageMaker.setCriteria(criteria);
 		
 		pageMaker.setPageData();
-		Map<String, Object> lists = memberActivityService.readRecentlyView(criteria, memberId);
+		Map<String, Object> lists = ativityService.readRecentlyView(criteria, memberId);
 		lists.put("pageMaker", pageMaker);
 		return new ResponseEntity<Map<String, Object>>(lists, HttpStatus.OK);
 	}
@@ -194,7 +194,7 @@ public class ActivityRESTController {
 
 		int result = 0;
 		try {
-			result = memberActivityService.deleteRecentlyViewProduct(productRecentlyViewId);
+			result = ativityService.deleteRecentlyViewProduct(productRecentlyViewId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -207,7 +207,7 @@ public class ActivityRESTController {
 
 		int result = 0;
 		try {
-			result = memberActivityService.deleteRecentlyViewUProduct(uProductRecentlyViewId);
+			result = ativityService.deleteRecentlyViewUProduct(uProductRecentlyViewId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -37,22 +37,7 @@ public class ActivityServiceImple implements ActivityService {
 				LoggerFactory.getLogger(ActivityServiceImple.class);
 	    
 		@Autowired
-		private MemberDAO MemberDAO;
-		
-		@Autowired
 		private ActivityDAO ActivityDAO;
-		
-		@Autowired
-		private FBoardCommentDAO fBoardCommentDAO;
-	  
-		@Autowired
-		private QBoardCommentDAO qBoardCommentDAO;
-		
-		@Autowired
-		private UProductCommentDAO uProductCommentDAO;
-		
-		@Autowired
-		private ProductCommentDAO productCommentDAO;
 		
 		@Autowired
 		private FBoardDAO fBoardDAO;

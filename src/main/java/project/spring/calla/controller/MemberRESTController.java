@@ -81,6 +81,19 @@ public class MemberRESTController {
 		return result;
 	} // end checkNick
 	
+	@PutMapping("/update/{memberId}") // 비밀번호, 레벨 제외
+	public ResponseEntity<Integer> updateMember(@PathVariable("memberId") String memberId, @RequestBody Map<String, String> obj, HttpSession session) {
+		logger.info("updateMember() ");
+		logger.info("newData = " + obj);
+		String newData = obj.get("newData");
+		String category = obj.get("category");
+		
+		int result = memberService.update(memberId, newData, category);
+			if (category.equals("memberNickname") && result==1) {
+				session.setAttribute("memberNickname", newData);
+			}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end updateNickname
 	
 	@PutMapping("/updatepw/{memberId}") // 
 	public ResponseEntity<Integer> updateMemberPw(@PathVariable("memberId") String memberId, @RequestBody Map<String, Object> args, HttpSession session) {
@@ -103,59 +116,6 @@ public class MemberRESTController {
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePw
-	
-	@PutMapping("/updatenickname/{memberId}") // PUT :
-	public ResponseEntity<Integer> updateMemberNickname(@PathVariable("memberId") String memberId, @RequestBody String newNickname, HttpSession session) {
-		logger.info("updateMemberNickname() ");
-		logger.info("newNickname = " + newNickname);
-		
-		int result = memberService.updateNickname(memberId, newNickname);
-			if (result==1) {
-				session.setAttribute("memberNickname", newNickname);
-			}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end updateNickname
-	
-	
-	@PutMapping("/updatephone/{memberId}") // PUT :
-	public ResponseEntity<Integer> updateMemberPhone(@PathVariable("memberId") String memberId, @RequestBody String newPhone) {
-		logger.info("updateMemberPhone()");
-		logger.info("newPhone = " + newPhone);
-		
-		int result = memberService.updatePhone(memberId, newPhone);
-			
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end updatePhone
-	
-	@PutMapping("/updateemail/{memberId}") // PUT : 
-	public ResponseEntity<Integer> updateMemberEmail(@PathVariable("memberId") String memberId, @RequestBody String newEmail) {
-		logger.info("updateMemberEmail() ");
-		logger.info("newEmail = " + newEmail);
-		
-		int result = memberService.updateEmail(memberId, newEmail);
-			
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end updateEmail
-	
-	@PutMapping("/updateinterest/{memberId}") // PUT : 
-	public ResponseEntity<Integer> updateMemberInterest(@PathVariable("memberId") String memberId, @RequestBody String newInterest) {
-		logger.info("updateMemberInterest() ");
-		logger.info("newInterest = " + newInterest);
-		
-		int result = memberService.updateInterest(memberId, newInterest);
-			
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end updateEmail
-	
-	@PutMapping("/updateaddress/{memberId}") // PUT : 
-	public ResponseEntity<Integer> updateMemberAddress(@PathVariable("memberId") String memberId, @RequestBody String newAddress) {
-		logger.info("updateMemberAddress() ");
-		logger.info("newAddress = " + newAddress);
-		
-		int result = memberService.updateAddress(memberId, newAddress);
-			
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end updateAddress
 	
 	@PutMapping("/updatelevel/{memberId}") 
 	public ResponseEntity<Integer> updateMemberLevel(@PathVariable("memberId") String memberId, @RequestBody String memberLevel, HttpSession session) {

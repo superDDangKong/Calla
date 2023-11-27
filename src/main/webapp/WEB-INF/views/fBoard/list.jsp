@@ -40,23 +40,17 @@ li {
 				<div class="container">
 					<br>
 					<h1 class="text-center">
-						<a href="list"
-							style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">
-							자유 게시판 </a>
+						<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">자유 게시판 </a>
 					</h1>
-					<br> <input type="hidden" id="selectedOption" value=${option }>
+					<br> 
+					<input type="hidden" id="selectedOption" value=${option }>
 					<input type="hidden" id="sessionNickname" value=${memberNickname }>
-
-
 					<hr>
 					<br>
-
 					<div id="register">
-						<a href="register"><input type="button"
-							class="btn btn-dark float-right" value="글 작성"></a>
+						<a href="register"><input type="button" class="btn btn-dark float-right" value="글 작성"></a>
 					</div>
-					<table class="table table-hover text-center"
-						style="border: 1px solid;">
+					<table class="table table-hover text-center" style="border: 1px solid;">
 						<thead>
 							<tr>
 								<th style="width: 60px" class="bg-primary text-white">번호</th>
@@ -71,11 +65,9 @@ li {
 							<c:forEach var="vo" items="${list }">
 								<tr>
 									<td>${vo.fBoardId }</td>
-									<td><a
-										href="detail?fBoardId=${vo.fBoardId }&page=${pageMaker.criteria.page}">${vo.fBoardTitle }</a></td>
+									<td><a href="detail?fBoardId=${vo.fBoardId }&page=${pageMaker.criteria.page}">${vo.fBoardTitle }</a></td>
 									<td>${vo.memberNickname }</td>
-									<fmt:formatDate value="${vo.fBoardCreatedDate }"
-										pattern="yyyy.MM.dd." var="fBoardCreatedDate" />
+									<fmt:formatDate value="${vo.fBoardCreatedDate }" pattern="yyyy.MM.dd." var="fBoardCreatedDate" />
 									<td>${fBoardCreatedDate }</td>
 									<td>${vo.fBoardCommentCount }</td>
 									<td>${vo.fBoardViews }</td>
@@ -86,19 +78,21 @@ li {
 
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.hasPrev }">
-							<li class="text-secondary" style="margin-right: 5px"><a
-								href="list?page=${pageMaker.startPageNo - 1 }">◀</a></li>
+							<li class="text-secondary" style="margin-right: 5px">
+								<a href="list?page=${pageMaker.startPageNo - 1 }">◀</a>
+							</li>
 						</c:if>
 
-						<c:forEach begin="${pageMaker.startPageNo }"
-							end="${pageMaker.endPageNo }" var="num">
-							<li class="text-secondary" style="margin-right: 5px"><a
-								href="list?page=${num }&option=${option}&keyword=${keyword}">${num }</a></li>
+						<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
+							<li class="text-secondary" style="margin-right: 5px">
+								<a href="list?page=${num }&option=${option}&keyword=${keyword}">${num }</a>
+							</li>
 						</c:forEach>
 
 						<c:if test="${pageMaker.hasNext }">
-							<li class="text-secondary" style="margin-right: 5px"><a
-								href="list?page=${pageMaker.endPageNo + 1 }">▶</a></li>
+							<li class="text-secondary" style="margin-right: 5px">
+								<a href="list?page=${pageMaker.endPageNo + 1 }">▶</a>
+							</li>
 						</c:if>
 					</ul>
 					<hr>
@@ -126,26 +120,32 @@ li {
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							if ($("#selectedOption").val() != "") {
-								$("#option").val($("#selectedOption").val());
-							}
-
-							if ($('#sessionNickname').val() == "") {
-								var list = "게시글 작성은 <a href='/calla/member/login?targetURL=/fBoard/register'>로그인</a>이 필요합니다."
-								$("#register").html(list);
-							}
-						}) // end document.ready()
+		$(document).ready(function() {
+			if ($("#selectedOption").val() != "") {
+				$("#option").val($("#selectedOption").val());
+			}
+			if ($('#sessionNickname').val() == "") {
+				var list = "게시글 작성은 <a href='/calla/member/login?targetURL=/fBoard/register'>로그인</a>이 필요합니다."
+				$("#register").html(list);
+			}
+		}) // end document.ready()
 	</script>
 
-	<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 	<input type="hidden" id="insertAlert" value="${insert_result }">
+	<input type="hidden" id="updateAlert" value="${update_result }">
+	<input type="hidden" id="deleteAlert" value="${delete_result }">
 	<script type="text/javascript">
-		var result = $('#insertAlert').val();
-		if (result == 'success') {
+		var insertResult = $('#insertAlert').val();
+		var updateResult = $('#updateAlert').val();
+		var deleteResult = $('#deleteAlert').val();
+		if (insertResult == 'success') {
 			alert('새 글 작성 성공!');
+		}
+		if (updateResult == 'success') {
+			alert('글 수정 성공!');
+		}
+		if (deleteResult == 'success') {
+			alert('글 삭제 성공!');
 		}
 	</script>
 	<%@ include file="../footer.jspf"%>

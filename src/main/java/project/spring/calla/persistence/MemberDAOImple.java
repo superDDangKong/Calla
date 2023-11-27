@@ -31,6 +31,52 @@ public class MemberDAOImple implements MemberDAO{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public String login(String memberId, String memberPw) {
+		logger.info("login() memberId = " + memberId + "memberPw = " + memberPw);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("memberId", memberId);
+		args.put("memberPw", memberPw);
+		return sqlSession.selectOne(NAMESPACE + ".login", args);
+	}
+	
+	@Override
+	public MemberVO select(String memberId) {
+		logger.info("select(memberId) memberId : " + memberId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_member_id", memberId);
+	}
+	
+	@Override
+	public String searchId(String memberName, String memberEmail) {
+		logger.info("searchId()  memberName : " + memberName);
+		logger.info("searchId()  memberEmail : " + memberEmail);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberName", memberName);
+		args.put("memberEmail", memberEmail);
+		return sqlSession.selectOne(NAMESPACE + ".search_id", args);
+	}
+
+	@Override
+	public String searchPw(String memberId, String memberPhone) {
+		logger.info("searchPw()  memberId : " + memberId);
+		logger.info("searchPw()  memberPhone : " + memberPhone);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("memberId", memberId);
+		args.put("memberPhone", memberPhone);
+		return sqlSession.selectOne(NAMESPACE + ".search_pw", args);
+	}
+	
+	@Override
+	public int delete(String memberId) {
+		logger.info("delete()");
+		return sqlSession.delete(NAMESPACE + ".delete", memberId);
+	}
+	
+	@Override
+	public List<MemberVO> select() {
+		logger.info("select 호출");
+		return sqlSession.selectList(NAMESPACE + ".select");
+	}
+	
 	@Override
 	public int insert(MemberVO vo) { // 회占쏙옙占쏙옙占쏙옙
 		logger.info("insert() : vo = " + vo.toString());
@@ -51,38 +97,15 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.selectOne(NAMESPACE + ".select_by_nickname", memberNickname);
 	}
 
-	@Override
-	public MemberVO select(String memberId) {
-		logger.info("select(memberId) memberId : " + memberId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_member_id", memberId);
-	}
-	
-	public String login(String memberId, String memberPw) {
-		logger.info("login() memberId = " + memberId + "memberPw = " + memberPw);
-		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("memberId", memberId);
-		args.put("memberPw", memberPw);
-		return sqlSession.selectOne(NAMESPACE + ".login", args);
-	}
 
 	@Override
-	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId()  memberName : " + memberName);
-		logger.info("searchId()  memberEmail : " + memberEmail);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberName", memberName);
-		args.put("memberEmail", memberEmail);
-		return sqlSession.selectOne(NAMESPACE + ".search_id", args);
-	}
-
-	@Override
-	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw()  memberId : " + memberId);
-		logger.info("searchPw()  memberPhone : " + memberPhone);
+	public int update(String memberId, String newData, String category) {
+		logger.info("update() memberId : " + memberId + "newData = " + newData + "category = " + category);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("memberId", memberId);
-		args.put("memberPhone", memberPhone);
-		return sqlSession.selectOne(NAMESPACE + ".search_pw", args);
+		args.put("newData", newData);
+		args.put("category", category);
+		return sqlSession.update(NAMESPACE + ".update", args);
 	}
 
 	@Override
@@ -95,58 +118,6 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public int updateNickname(String memberId, String memberNickname) {
-		logger.info("updateNickname() memberNickname : " + memberNickname);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberNickname", memberNickname);
-		return sqlSession.update(NAMESPACE + ".updateNickname", args);
-	}
-
-	@Override
-	public int updatePhone(String memberId, String memberPhone) {
-		logger.info("updatePhone()  memberPhone : " + memberPhone);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberPhone", memberPhone);
-		return sqlSession.update(NAMESPACE + ".updatePhone", args);
-	}
-
-	@Override
-	public int updateEmail(String memberId, String memberEmail) {
-		logger.info("updateEmail()  memberEmail : " + memberEmail);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberEmail", memberEmail);
-		return sqlSession.update(NAMESPACE + ".updateEmail", args);
-	}
-
-	@Override
-	public int updateInterest(String memberId, String memberInterest) {
-		logger.info("updateInterest()  memberInterest : " + memberInterest);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberInterest", memberInterest);
-		return sqlSession.update(NAMESPACE + ".updateInterest", args);
-
-	}
-
-	@Override
-	public int updateAddress(String memberId, String memberAddress) {
-		logger.info("updateAddress()  memberAddress : " + memberAddress);
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("memberId", memberId);
-		args.put("memberAddress", memberAddress);
-		return sqlSession.update(NAMESPACE + ".updateAddress", args);
-	}
-
-	@Override
-	public List<MemberVO> select() {
-		logger.info("select 호출");
-		return sqlSession.selectList(NAMESPACE + ".select");
-	}
-	
-	@Override
 	public int updateLevel(String memberId, int amount) {
 		logger.info("updateLevel()");
 		Map<String, Object> args = new HashMap<String, Object>();
@@ -155,12 +126,7 @@ public class MemberDAOImple implements MemberDAO{
 		return sqlSession.update(NAMESPACE + ".updateLevel", args);
 	}
 
-	@Override
-	public int delete(String memberId) {
-		logger.info("delete()");
-		return sqlSession.delete(NAMESPACE + ".delete", memberId);
-	}
-	
+
 
 
 }

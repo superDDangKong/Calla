@@ -30,35 +30,44 @@ public class MemberServiceImple implements MemberService {
 	@Autowired
 	private MemberDAO MemberDAO;
 	
-	@Autowired
-	private FBoardCommentDAO fBoardCommentDAO;
-  
-	@Autowired
-	private QBoardCommentDAO qBoardCommentDAO;
 	
-	@Autowired
-	private UProductCommentDAO uProductCommentDAO;
+	@Override
+	public String login(String memberId, String memberPw) {
+		logger.info("login() 호출 memberId : " + memberId);
+		return MemberDAO.login(memberId, memberPw);
+	}
 	
-	@Autowired
-	private ProductCommentDAO productCommentDAO;
+	@Override
+	public MemberVO read(String memberId) {
+		logger.info("read(memberId) 호출 memberId : " + memberId);
+		return MemberDAO.select(memberId);
+	}
 	
-	@Autowired
-	private FBoardDAO fBoardDAO;
-  
-	@Autowired
-	private QBoardDAO qBoardDAO;
-	
-	@Autowired
-	private UProductDAO uProductDAO;
-	
-	@Autowired
-	private ProductDAO productDAO;
-	
-	@Autowired
-	private ProductLikeDAO productLikeDAO;
-	
-	@Autowired
-	private UProductLikeDAO uProductLikeDAO;
+	@Override
+	public String searchId(String memberName, String memberEmail) {
+		logger.info("searchId() 호출 memberName : " + memberName);
+		logger.info("searchId() 호출 memberEmail : " + memberEmail);
+		return MemberDAO.searchId(memberName, memberEmail);
+	}
+
+	@Override
+	public String searchPw(String memberId, String memberPhone) {
+		logger.info("searchPw() 호출 memberId : " + memberId);
+		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
+		return MemberDAO.searchPw(memberId, memberPhone);
+	}
+
+	@Override
+	public int delete(String memberId) {
+		logger.info("delete() 호출");
+		return MemberDAO.delete(memberId);
+	}
+
+	@Override
+	public List<MemberVO> read() {
+		logger.info("read() 호출");
+		return MemberDAO.select();
+	}
 	
 	@Override
 	public int create(MemberVO vo) { 
@@ -79,35 +88,13 @@ public class MemberServiceImple implements MemberService {
 		logger.info("checkNick() �샇異� : memberNickname = " + memberNickname);
 		return MemberDAO.checkNickname(memberNickname);
 	}
-	  
-
-
-	@Override
-	public MemberVO read(String memberId) {
-		logger.info("read(memberId) 호출 memberId : " + memberId);
-		return MemberDAO.select(memberId);
-	}
-
-	@Override
-	public String login(String memberId, String memberPw) {
-		logger.info("login() 호출 memberId : " + memberId);
-		return MemberDAO.login(memberId, memberPw);
-	}
 	
 	@Override
-	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() 호출 memberName : " + memberName);
-		logger.info("searchId() 호출 memberEmail : " + memberEmail);
-		return MemberDAO.searchId(memberName, memberEmail);
+	public int update(String memberId, String newData, String category) {
+		logger.info("update() memberId : " + memberId + "newData = " + newData + "category = " + category);
+		return MemberDAO.update(memberId, newData, category);
 	}
-
-	@Override
-	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() 호출 memberId : " + memberId);
-		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
-		return MemberDAO.searchPw(memberId, memberPhone);
-	}
-
+	
 	@Override
 	public int updatePw(String memberId, String memberPw) {
 		logger.info("update() �샇異� memberPw : " + memberPw);
@@ -115,47 +102,11 @@ public class MemberServiceImple implements MemberService {
 	}
 	
 	@Override
-	public int updateNickname(String memberId, String memberNickname) {
-		logger.info("updateNickname 호출");
-		return MemberDAO.updateNickname(memberId, memberNickname);
-	}
-
-	@Override
-	public int updatePhone(String memberId, String memberPhone) {
-		return MemberDAO.updatePhone(memberId, memberPhone);
-	}
-
-	@Override
-	public int updateEmail(String memberId, String memberEmail) {
-		return MemberDAO.updateEmail(memberId, memberEmail);
-	}
-
-	@Override
-	public int updateInterest(String memberId, String memberInterest) {
-		return MemberDAO.updateInterest(memberId, memberInterest);
-	}
-	
-	@Override
-	public int updateAddress(String memberId, String memberAddress) {
-		return MemberDAO.updateAddress(memberId, memberAddress);
-	}
-
-	@Override
-	public List<MemberVO> read() {
-		logger.info("read() 호출");
-		return MemberDAO.select();
-	}
-
-	@Override
 	public int updateLevel(String memberId, int amount) {
 		return MemberDAO.updateLevel(memberId, amount);
 	}
+
 	
-	@Override
-	public int delete(String memberId) {
-		logger.info("delete() 호출");
-		return MemberDAO.delete(memberId);
-	}
 
 
 }

@@ -67,6 +67,26 @@ public class ActivityDAOImple implements ActivityDAO{
 	}
 
 	@Override
+	public List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
+		logger.info("selectAllBoards 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("keyword", "%" + keyword + "%");
+		args.put("interest", "%" + interest + "%");
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectList(NAMESPACE + ".select_products_by_option", args);
+	}
+
+	@Override
+	public int getTotalCountsProductsByOption(String keyword, String interest, String option) {
+		Map<String, String> args = new HashMap();
+		args.put("keyword", "%" + keyword + "%");
+		args.put("interest", "%" + interest + "%");
+		args.put("option", "%" + option + "%");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_products_by_option", args);
+	}
+	
+	@Override
 	public List<UProductVO> selectBoards(String memberNickname, String option, MyPageCriteria criteria) {
 		logger.info("selecBoards 호출");
 		Map<String, Object> args = new HashMap();
@@ -140,24 +160,6 @@ public class ActivityDAOImple implements ActivityDAO{
 		return sqlSession.selectOne(NAMESPACE + ".total_count_orders", memberId);
 	}
 	
-	@Override
-	public List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
-		logger.info("selectAllBoards 호출");
-		Map<String, Object> args = new HashMap();
-		args.put("criteria", criteria);
-		args.put("keyword", "%" + keyword + "%");
-		args.put("interest", "%" + interest + "%");
-		args.put("option", "%" + option + "%");
-		return sqlSession.selectList(NAMESPACE + ".select_products_by_option", args);
-	}
-
-	@Override
-	public int getTotalCountsProductsByOption(String keyword, String interest, String option) {
-		Map<String, String> args = new HashMap();
-		args.put("keyword", "%" + keyword + "%");
-		args.put("interest", "%" + interest + "%");
-		args.put("option", "%" + option + "%");
-		return sqlSession.selectOne(NAMESPACE + ".total_count_products_by_option", args);
-	}
+	
 	
 }

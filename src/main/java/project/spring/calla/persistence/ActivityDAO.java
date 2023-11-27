@@ -11,12 +11,17 @@ import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
 public interface ActivityDAO {
 
+	// controller
 	List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname);
 	int getTotalCountsBymyuproduct(String memberNickname);
 	UProductVO select(int uProductId); // 상품 검색
 	int insertbuy(UProductBuyVO vo);
 	int insertsell(UProductSellVO svo);
 	
+	List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
+	int getTotalCountsProductsByOption(String keyword, String interest, String option);
+
+	// restcontroller
 	List<UProductVO> selectBoards(String memberNickname, String option, MyPageCriteria criteria);
 	int getTotalCountsBoard(String memberNickname, String option);
 	
@@ -28,7 +33,4 @@ public interface ActivityDAO {
 	
 	List<ProductOrderVO> selectOrders(String memberId, MyPageCriteria criteria);
 	int getTotalCountsOrders(String memberId);
-	
-	List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
-	int getTotalCountsProductsByOption(String keyword, String interest, String option);
 }

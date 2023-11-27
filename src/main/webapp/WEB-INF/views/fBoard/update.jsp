@@ -25,14 +25,13 @@
 							<label for="fBoardTitle">제목</label> 
 							<input type="text" class="form-control" id="fBoardTitle" name="fBoardTitle" value="${vo.fBoardTitle}">
 						</div>
-						<p>작성자: ${vo.memberNickname}</p>
-						<p>작성일: ${vo.fBoardCreatedDate}</p>
+						<fmt:formatDate value="${vo.fBoardCreatedDate }" pattern="yyyy.MM.dd." var="fBoardCreatedDate" />
+						<p>작성일: ${fBoardCreatedDate}</p>
 						<div class="form-group">
 							<label for="fBoardContent">내용</label>
-							<textarea class="form-control" id="fBoardContent"
-								name="fBoardContent" rows="10">${vo.fBoardContent}</textarea>
+							<textarea class="form-control" id="fBoardContent" name="fBoardContent" rows="10">${vo.fBoardContent}</textarea>
 						</div>
-						<button type="submit" class="btn btn-primary">수정</button>
+						<input type="submit" class="btn btn-primary" value="수정">
 					</form>
 				</div>
 			</main>

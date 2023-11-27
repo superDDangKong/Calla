@@ -216,11 +216,12 @@ public class FBoardController {
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(FBoardVO vo) {
+	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = fBoardService.update(vo);
 		
 		if(result == 1) {
+			reAttr.addFlashAttribute("update_result", "success");
 			return "redirect:/fBoard/list";
 		} else {
 			return "redirect:/fBoard/update?fBoardId=" + vo.getfBoardId();
@@ -228,10 +229,11 @@ public class FBoardController {
 	} // end updatePOST()
 	
 	@PostMapping("/delete")
-	public String delete(Integer fBoardId) {
+	public String delete(Integer fBoardId, RedirectAttributes reAttr) {
 		logger.info("delete() 호출 : boardId = " + fBoardId);
 		int result = fBoardService.delete(fBoardId);
 		if(result == 1) {
+			reAttr.addFlashAttribute("delete_result", "success");
 			return "redirect:/fBoard/list";
 		} else {
 			return "redirect:/fBoard/list";

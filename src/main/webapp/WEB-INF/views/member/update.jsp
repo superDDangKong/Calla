@@ -182,6 +182,7 @@ table, th, td {
 		</div>
 	</div>
 	<script type="text/javascript">
+		var category = "";
 	    $('#newPw').on('keyup', function () {
 	        validatePasswords();
 	    });
@@ -284,11 +285,19 @@ table, th, td {
 	    $('#btnUpdateNickname').click(function () {
 	        var newNickname = $('#newNickname').val();
 	        var memberId = $('#memberId').val();
-	
-	        $.ajax({
+			category = "member_nickname";
+			var obj = {
+					'newData' : newNickname,
+					'category' : category
+			}
+			
+			$.ajax({
 	            type: 'PUT',
-	            url: 'updatenickname/' + memberId,
-	            data: newNickname,
+	            url: 'update/' + memberId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -297,7 +306,7 @@ table, th, td {
 	                    $('#newNicknameEffect').html("");
 	                }
 	            }
-	        });
+	        }); // end ajax
 	    }); // end btnUpdateNickname
 	
 	    $('#newPhone').on('keyup', function () {
@@ -318,11 +327,19 @@ table, th, td {
 	    $('#btnUpdatePhone').click(function () {
 	        var newPhone = $('#newPhone').val();
 	        var memberId = $('#memberId').val();
-	
-	        $.ajax({
+			category = "member_phone";
+			var obj = {
+					'newData' : newPhone,
+					'category' : category
+			}
+			
+			$.ajax({
 	            type: 'PUT',
-	            url: 'updatephone/' + memberId,
-	            data: newPhone,
+	            url: 'update/' + memberId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -356,10 +373,19 @@ table, th, td {
 	    $('#btnUpdateEmail').click(function () {
 	        var newMemberEmail = $('#newMemberEmail').val();
 	        var memberId = $('#memberId').val();
-	        $.ajax({
+			category = "member_email";
+			var obj = {
+					'newData' : newMemberEmail,
+					'category' : category
+			}
+			
+			$.ajax({
 	            type: 'PUT',
-	            url: 'updateemail/' + memberId,
-	            data: newMemberEmail,
+	            url: 'update/' + memberId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -392,21 +418,29 @@ table, th, td {
 	        newMemberInterest += $('#interest_goods').prop('checked') ? $('#interest_goods').val() + " " : "";
 	        newMemberInterest += $('#interest_character').prop('checked') ? $('#interest_character').val() + " " : "";
 	        newMemberInterest += $('#interest_cartoon').prop('checked') ? $('#interest_cartoon').val() + " " : "";
-	
-	        var memberId = $('#memberId').val();
-	        if (newMemberInterest !== "") {
-	            $.ajax({
-	                type: 'PUT',
-	                url: 'updateinterest/' + memberId,
-	                data: newMemberInterest,
-	                success: function (result) {
-	                    console.log(result);
-	                    if (result == 1) {
-	                        alert('관심사 수정 성공');
-	                        $('#memberInterest').val(newMemberInterest);
-	                    }
-	                }
-	            });
+			category = "member_interest";
+			var memberId = $('#memberId').val();
+			var obj = {
+					'newData' : newMemberInterest,
+					'category' : category
+			}
+			if(newMemberInterest != "") {
+				
+				$.ajax({
+		            type: 'PUT',
+		            url: 'update/' + memberId,
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                data: JSON.stringify(obj),
+		                success: function (result) {
+		                    console.log(result);
+		                    if (result == 1) {
+		                        alert('관심사 수정 성공');
+		                        $('#memberInterest').val(newMemberInterest);
+		                    }
+		                } // end success
+		            }); // end ajax
 	        } else {
 	            alert('관심사를 한가지 이상 선택해 주세요');
 	        }
@@ -415,10 +449,20 @@ table, th, td {
 	    $('#btnUpdateAddress').click(function () {
 	        var newMemberAddress = $('#newMemberAddress').val();
 	        var memberId = $('#memberId').val();
-	        $.ajax({
+			category = "member_address";
+
+			var obj = {
+					'newData' : newMemberAddress,
+					'category' : category
+			}
+			
+			$.ajax({
 	            type: 'PUT',
-	            url: 'updateaddress/' + memberId,
-	            data: newMemberAddress,
+	            url: 'update/' + memberId,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(obj),
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {

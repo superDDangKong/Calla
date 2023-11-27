@@ -13,6 +13,16 @@ import project.spring.calla.pageutil.PageCriteria;
 
 public interface ActivityService {
 
+	// controller
+	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); 
+	int getTotalCountsBymyuproduct(String memberNickname);
+	UProductVO read(int uProductId); 
+	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
+	
+	List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
+	int getTotalCountsProductsByOption(String keyword, String interest, String option);
+	
+	// restcontroller
 	Map<String, Integer> getTotalCountsByMemberNickname(String memberNickname);
 	Map<String, Object> readLikes(String memberId);
 	
@@ -21,11 +31,7 @@ public interface ActivityService {
 	
 	int deleteRecentlyViewProduct(int productRecentlyViewId);
 	int deleteRecentlyViewUProduct(int uProductRecentlyViewId);
-	
-	List<UProductVO> readmyuproduct(PageCriteria criteria, String memberNickname); 
-	int getTotalCountsBymyuproduct(String memberNickname);
-	UProductVO read(int uProductId); 
-	int buysellcreate(UProductBuyVO vo, UProductSellVO svo);
+
 	
 	int deleteProductLike(int productLikeId, int amount, int productId);
 	int deleteUProductLike(int uProductLikeId, int amount, int uProductId);
@@ -42,6 +48,5 @@ public interface ActivityService {
 	List<ProductOrderVO> readOrders(String memberId, MyPageCriteria criteria);
 	int getTotalCountsOrders(String memberId);
 	
-	List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
-	int getTotalCountsProductsByOption(String keyword, String interest, String option);
+
 }
