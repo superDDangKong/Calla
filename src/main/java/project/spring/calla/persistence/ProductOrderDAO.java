@@ -12,4 +12,5 @@ public interface ProductOrderDAO {
 	List<ProductOrderVO> select();
 	List<ProductOrderVO> select(String memberId);
 	int updateDeliveryStatus(int productOrderId, String deliveryStatus);
+	int updateStatus(int productOrderId, String newDeliveryStatus);
 }

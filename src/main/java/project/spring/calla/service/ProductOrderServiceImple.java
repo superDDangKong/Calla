@@ -69,4 +69,10 @@ public class ProductOrderServiceImple implements ProductOrderService {
 		return dao.select();
 	}
 
+	@Override
+	public int updateStatus(int productOrderId, String newDeliveryStatus) {
+		logger.info("updateStatus() »£√‚");
+		return dao.updateStatus(productOrderId, newDeliveryStatus);
+	}
+
 }

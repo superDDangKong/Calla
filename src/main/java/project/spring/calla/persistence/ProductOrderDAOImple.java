@@ -89,4 +89,13 @@ public class ProductOrderDAOImple implements ProductOrderDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 
+	@Override
+	public int updateStatus(int productOrderId, String newDeliveryStatus) {
+		logger.info("updateStatus() »£√‚");
+		Map<String, Object> args = new HashMap();
+		args.put("productOrderId", productOrderId);
+		args.put("deliveryStatus", newDeliveryStatus);
+		return sqlSession.update(NAMESPACE + ".updateStatus", args);
+	}
+
 }

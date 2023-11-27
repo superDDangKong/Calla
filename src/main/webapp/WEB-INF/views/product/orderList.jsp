@@ -41,7 +41,6 @@ li {
 <meta charset="UTF-8">
 <title>OrderList</title>
 	<%@ include file="../header.jspf" %> 	
-	<h1>orderList</h1>
 	<h1>장바구니</h1>
 	<button id="home"><a href="/calla/">홈</a></button>
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>

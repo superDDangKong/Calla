@@ -29,25 +29,25 @@ public class ProductDAOImple implements ProductDAO {
 	
 	@Override
 	public int insert(ProductVO vo) {
-		logger.info("insert() È£ï¿½ï¿½");
+		logger.info("insert() È£Ãâ");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	} // end insert()
 
 	@Override
 	public List<ProductVO> select() {
-		logger.info("select() È£ï¿½ï¿½");
+		logger.info("select() È£Ãâ");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	} // end select()
 
 	@Override
 	public ProductVO select(int productId) {
-		logger.info("select() È£ï¿½ï¿½ : productId = " + productId);
+		logger.info("select() È£Ãâ : productId = " + productId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() È£ï¿½ï¿½ : vo = " + vo.toString());
+		logger.info("update() È£Ãâ : vo = " + vo.toString());
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
@@ -59,7 +59,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select() È£ï¿½ï¿½");
+		logger.info("select() È£Ãâ");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
@@ -67,13 +67,13 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int getTotalCount() {
-		logger.info("getTotalCounts()");
+		logger.info("getTotalCounts() È£Ãâ");
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
 	@Override
 	public int updateCommentCount(int amount, int productId) {
-		logger.info("updateCommentCount() : productId = " + productId);
+		logger.info("updateCommentCount() È£Ãâ : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
@@ -82,7 +82,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword) {
-		logger.info("selectByTitleOrContent() È£ï¿½ï¿½");
+		logger.info("selectByTitleOrContent() È£Ãâ");
 		Map<String, Object> args = new HashMap();
 //		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
@@ -94,13 +94,13 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int getTotalCountsByProductNameOrProductContent(String keyword) {
-		logger.info("getTotalTitleContent()");
+		logger.info("getTotalTitleContent() È£Ãâ");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_product_name_or_product_content", "%" + keyword + "%");
 	}
 
 	@Override
 	public int updateViews(int views, int productId) {
-		logger.info("updateViews() : fBoardId = " + productId);
+		logger.info("updateViews() È£Ãâ : fBoardId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("views", views);
 		args.put("productId", productId);
@@ -109,7 +109,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int updateLikeCount(int amount, int productId) {
-		logger.info("updateLikeCount() : productId = " + productId);
+		logger.info("updateLikeCount() È£Ãâ : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
@@ -118,7 +118,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectLikes(String memberId) {
-		logger.info("selectLikes() : memberId = " + memberId);
+		logger.info("selectLikes() È£Ãâ : memberId = " + memberId);
 		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
 	

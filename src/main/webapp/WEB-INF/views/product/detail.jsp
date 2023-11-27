@@ -121,6 +121,10 @@
 	.starR.on{
 	  text-shadow: 0 0 0 #ffbc00;
 	}
+	
+	
+	
+		
     </style>
 
 
@@ -146,8 +150,15 @@
 	
 	<div class="wrap">
 		<div class="product-img">
-      		<img src="display?fileName=${vo.productImagePath}" class="productImage">
-      	</div>
+		    <div class="slider">
+		        <c:forEach var="image" items="${imageArray}">
+		            <img src="display?fileName=${image}" class="productImage" style="display:none;" />
+		        </c:forEach>
+		    </div>
+		    <button class="prevBtn">이전</button>
+		    <button class="nextBtn">다음</button>
+		</div>
+		<br>
 	 	<div class="product-desc">
         	<h2>
           	${vo.productName }
@@ -772,10 +783,35 @@
 			}); // end click
 			
 		}); // end document
-		
-		
-		
-		
+
+	</script>
+	
+	<script>
+		var currentImageIndex = 0;
+		var images = document.querySelectorAll('.slider img');
+		var prevBtn = document.querySelector('.prevBtn');
+		var nextBtn = document.querySelector('.nextBtn');
+	
+		function showImage(index) {
+		    images.forEach(function(image) {
+		        image.style.display = 'none';
+		    });
+		    images[index].style.display = 'block';
+		}
+	
+		prevBtn.addEventListener('click', function() {
+		    currentImageIndex = (currentImageIndex === 0) ? images.length - 1 : currentImageIndex - 1;
+		    showImage(currentImageIndex);
+		});
+	
+		nextBtn.addEventListener('click', function() {
+		    currentImageIndex = (currentImageIndex === images.length - 1) ? 0 : currentImageIndex + 1;
+		    showImage(currentImageIndex);
+		});
+	
+		// 초기 이미지 표시
+		showImage(currentImageIndex);
+
 	</script>
 	
 </body>

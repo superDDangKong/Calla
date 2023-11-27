@@ -12,6 +12,8 @@
 <%@ include file="../header.jspf" %> 	
 </head>
 <h1>주문내역</h1>
+<button id="home"><a href="/calla/">홈</a></button>
+<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
 <body>
 	<c:set var="memberId" value="${memberId}" />
 	<c:set var="memberLevel" value="${memberLevel}" />

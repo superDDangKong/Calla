@@ -13,4 +13,5 @@ public interface ProductOrderService {
 //	int create(int productId, String productName, int productPrice, int productAmount, String memberId);
 	List<ProductOrderVO> read(String memberId);
 	int updateDeliveryStatus(int productOrderId, String deliveryStatus);
+	int updateStatus(int productOrderId, String newDeliveryStatus);
 }
