@@ -2,13 +2,13 @@ package project.spring.calla.service;
 
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.domain.ProductImageVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductCommentDAO;
@@ -115,22 +115,18 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public Object createWithImages(ProductVO vo) {
-	    logger.info("createWithImages() 호출 : vo = " + vo.toString());
-
-	    // 상품을 먼저 등록하고, 상품 ID를 받아옵니다.
-	    int productId = dao.insert(vo);
-
-	    // 받아온 상품 ID를 이미지 목록에 설정합니다.
-	    if (productId > 0 && vo.getImages() != null && !vo.getImages().isEmpty()) {
-	        for (ProductImageVO image : vo.getImages()) {
-	            image.setProductId(productId); // 상품 ID 설정
-	        }
-	    }
-
-	    // 이미지 목록을 함께 등록합니다.
-	    return dao.insertImages(vo.getImages());
+	public int updateProductWithImages(int productId) {
+		logger.info("updateProductWithImages() 호출");
+		return dao.update(productId);
 	}
+
+//	@Override
+//	public int update(int productId, String string) {
+//		logger.info("update() 호출");
+//		return dao.update(productId, string);
+//	}
+
+	
 
 
 	

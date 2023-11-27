@@ -4,29 +4,29 @@ import java.util.Date;
 import java.util.List;
 
 public class ProductVO {
-	private int productId; // ��ǰ ��ȣ
-	private String productName; // ��ǰ �̸�
-	private int productPrice; // ��ǰ ����
-	private int productViews; // ��ǰ ��ȸ��
-	private int productLikes; // ��ǰ ���ƿ� ��
-	private Date productCreatedDate; // ��ǰ ��� ��¥
-	private String productCategori; // ��ǰ ī�װ���
-	private String productContent; // ��ǰ ����
-	private int productCommentCount; // ��ǰ ��� ����
-	private String memberNickname; // ȸ�� �г���
-	private int memberLevel; // ȸ�� ���
+	private int productId; // 占쏙옙품 占쏙옙호
+	private String productName; // 占쏙옙품 占싱몌옙
+	private int productPrice; // 占쏙옙품 占쏙옙占쏙옙
+	private int productViews; // 占쏙옙품 占쏙옙회占쏙옙
+	private int productLikes; // 占쏙옙품 占쏙옙占싣울옙 占쏙옙
+	private Date productCreatedDate; // 占쏙옙품 占쏙옙占� 占쏙옙짜
+	private String productCategori; // 占쏙옙품 카占쌓곤옙占쏙옙
+	private String productContent; // 占쏙옙품 占쏙옙占쏙옙
+	private int productCommentCount; // 占쏙옙품 占쏙옙占� 占쏙옙占쏙옙
+	private String memberNickname; // 회占쏙옙 占싻놂옙占쏙옙
+	private int memberLevel; // 회占쏙옙 占쏙옙占�
 	private int productAmount;
 	private int productLikeId;
 	private int productRecentlyViewId;
-	private int productRatedCount; // ��ǰ ���� ����
-	private List<ProductImageVO> images;
+	private int productRatedCount; // 占쏙옙품 占쏙옙占쏙옙 占쏙옙占쏙옙
+	private String productImagePath;
 	
 	public ProductVO() {}
 
 	public ProductVO(int productId, String productName, int productPrice, int productViews, int productLikes,
-			Date productCreatedDate, String productCategori, String productImagePath, String productContent,
-			int productCommentCount, String memberNickname, int memberLevel, int productAmount, int productLikeId,
-			int productRecentlyViewId, int productRatedCount) {
+			Date productCreatedDate, String productCategori, String productContent, int productCommentCount,
+			String memberNickname, int memberLevel, int productAmount, int productLikeId, int productRecentlyViewId,
+			int productRatedCount, String productImagePath) {
 		this.productId = productId;
 		this.productName = productName;
 		this.productPrice = productPrice;
@@ -42,7 +42,7 @@ public class ProductVO {
 		this.productLikeId = productLikeId;
 		this.productRecentlyViewId = productRecentlyViewId;
 		this.productRatedCount = productRatedCount;
-		this.images = images;
+		this.productImagePath = productImagePath;
 	}
 
 	public int getProductId() {
@@ -99,14 +99,6 @@ public class ProductVO {
 
 	public void setProductCategori(String productCategori) {
 		this.productCategori = productCategori;
-	}
-
-	public String getProductImagePath() {
-		return productImagePath;
-	}
-
-	public void setProductImagePath(String productImagePath) {
-		this.productImagePath = productImagePath;
 	}
 
 	public String getProductContent() {
@@ -173,12 +165,12 @@ public class ProductVO {
 		this.productRatedCount = productRatedCount;
 	}
 
-	public List<ProductImageVO> getImages() {
-		return images;
+	public String getProductImagePath() {
+		return productImagePath;
 	}
 
-	public void setImages(List<ProductImageVO> images) {
-		this.images = images;
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
 	}
 
 	@Override
@@ -189,7 +181,7 @@ public class ProductVO {
 				+ ", productCommentCount=" + productCommentCount + ", memberNickname=" + memberNickname
 				+ ", memberLevel=" + memberLevel + ", productAmount=" + productAmount + ", productLikeId="
 				+ productLikeId + ", productRecentlyViewId=" + productRecentlyViewId + ", productRatedCount="
-				+ productRatedCount + ", images=" + images + "]";
+				+ productRatedCount + ", productImagePath=" + productImagePath + "]";
 	}
 
 	

@@ -38,16 +38,6 @@
 		</div>
 	</form>
 	
-	<script>
-        document.getElementById('addImage').onclick = function() {
-            var container = document.getElementById('imageContainer');
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.name = 'productImages';
-            input.multiple = 'multiple';
-            container.appendChild(document.createElement('br'));
-            container.appendChild(input);
-        };
-    </script>
+	
 </body>
 </html>

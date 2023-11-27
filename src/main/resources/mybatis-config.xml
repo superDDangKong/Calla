@@ -214,10 +214,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="title" value="title" />
 		<property name="boardId" value="board_id" />
 		
-		<property name="product_Image" value="product_Image"/>
-		<property name="productId" value="product_id"/>
-		<property name="productImageId" value="product_image_id"/>
-		<property name="productImagePath" value="product_image_path"/>
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->

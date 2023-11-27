@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert">
 		insert into ${product}
-		(${productName}, ${productPrice}, ${productCategori}, ${productContent})
-		values (#{productName}, #{productPrice}, #{productCategori}, #{productContent})
+		(${productName}, ${productPrice}, ${productCategori}, ${productContent}, ${productImagePath})
+		values (#{productName}, #{productPrice}, #{productCategori}, #{productContent}, #{productImagePath})
 	</insert>
 	
 	<select id="select_all" resultType="ProductVO">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<update id="update">
 		update ${product}
-		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productContent} = #{productContent}
+		set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productCategori} = #{productCategori}, ${productContent} = #{productContent}, ${productImagePath} = #{productImagePath}
 		where ${productId} = #{productId} 
 	</update>
 	
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="paging" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}, ${productImagePath}
 		from(
 			select rownum rn, a.* from(
 				select * from ${product} order by ${productId} desc
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_by_product_name_or_product_content" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}
+		select ${productId}, ${productName}, ${productPrice}, ${productViews}, ${productLikes}, ${productCreatedDate}, ${productCategori}, ${productContent}, ${productCommentCount}, ${productRatedCount}, ${productImagePath}
 		from(
 			select rownum rn, a.* from(
 	 			select * from ${product} 

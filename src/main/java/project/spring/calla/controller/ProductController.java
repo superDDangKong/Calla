@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.domain.ProductImageVO;
 import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.ProductOrderListVO;
 import project.spring.calla.domain.ProductOrderVO;
@@ -36,7 +35,6 @@ import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
-import project.spring.calla.service.ProductImageService;
 import project.spring.calla.service.ProductLikeService;
 import project.spring.calla.service.ProductOrderListService;
 import project.spring.calla.service.ProductOrderService;
@@ -66,8 +64,6 @@ public class ProductController {
 	@Autowired
 	private ProductOrderService productOrderService;
 	
-	@Autowired
-	private ProductImageService productImageService;
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -112,12 +108,14 @@ public class ProductController {
 			
 		}
 		logger.info("totalCount = " + pageMaker.getTotalCount());
-
+		
+		logger.info("list = " + list);
 		for(ProductVO productVo : list) {
 			String productImagePath = productVo.getProductImagePath();
 			String[] imagePaths = productImagePath.split(","); 
 
 			String firstImagePath = imagePaths[0];
+			
 			productVo.setProductImagePath(firstImagePath);
 		}
 		
@@ -254,34 +252,38 @@ public class ProductController {
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(ProductVO vo, Integer page, @RequestParam("productImages") MultipartFile[] files) {
-		logger.info("updatePOST() 호출 : vo = " + vo.toString());			
-		String fileString ="";
-		try {	
-			List<String> savedFileNames = new ArrayList<>();
-			for (MultipartFile file : files) {
-				logger.info("파일 이름 : " + file.getOriginalFilename());
-				logger.info("파일 크기 : " + file.getSize());
-				if(file != null && !file.isEmpty()) {
-					String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-					fileString += savedFileName + ",";
-				}
-			}
-			
-			vo.setProductImagePath(fileString);
-			int result = productService.update(vo);
-			
-			if(result == 1) {
-				return "redirect:/product/list?page=" + page;
-			} else {
-				return "redirect:product/update?productId=" + vo.getProductId();
-			}	
-		} catch (Exception e) {
-			return "redirect:product/update?productId=" + vo.getProductId();
-		}
-		
-		
-	} // end updatePOST()
+	public String updatePost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, Integer page, RedirectAttributes reAttr) {
+	    logger.info("updatePost() 호출 : vo = " + vo.toString());
+
+	    try {
+	        StringBuilder fileString = new StringBuilder();
+
+	        if (files != null && files.length > 0) {
+	            for (MultipartFile file : files) {
+	                logger.info("파일 이름 : " + file.getOriginalFilename());
+	                logger.info("파일 크기 : " + file.getSize());
+
+	                String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
+
+	                if (fileString.length() > 0) {
+	                    fileString.append(",");
+	                }
+	                fileString.append(savedFileName);
+	            }
+	        }
+
+	        vo.setProductImagePath(fileString.toString());
+
+	        // productService에서 이미지와 다른 정보를 함께 업데이트하는 메서드가 있다고 가정합니다.
+	        productService.update(vo);
+
+	        return "redirect:/product/list?page=" + page;
+	    } catch (Exception e) {
+	        return "redirect:/product/update?productId=" + vo.getProductId();
+	    }
+	} // end updatePost();
+
+
 	
 	@PostMapping("/delete")
 	public String delete(Integer productId) {

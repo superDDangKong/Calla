@@ -1,6 +1,7 @@
 package project.spring.calla.persistence;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.ProductImageVO;
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -178,11 +178,21 @@ public class ProductDAOImple implements ProductDAO {
 	}
 
 	@Override
-	public Object insertImages(List<ProductImageVO> images) {
-		  logger.info("insertImages() 호출 : images = " + images.toString());
-		  return sqlSession.insert(NAMESPACE + ".insertImages", images);
+	public int update(int productId) {
+		logger.info("update() 호출");
+		return sqlSession.update(NAMESPACE + ".update", productId);
 	}
 
+//	@Override
+//	public int update(int productId, String string) {
+//		logger.info("update() 호출");
+//		Map<String, Integer> args = new HashMap();
+//		args.put("productId", productId);
+//		args.put("string", string);
+//		return sqlSession.update(NAMESPACE + ".update", args);
+//	}
+
+	
 
 	
 	
