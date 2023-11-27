@@ -110,7 +110,11 @@ public class MemberServiceImple implements MemberService {
 		return MemberDAO.updateLevel(memberId, amount);
 	}
 
-	
+	@Override
+	public int deleteUProduct(int uProductId) {
+		logger.info("deleteUProduct() 호출");
+		return MemberDAO.deleteUProduct(uProductId);
+	}
 
 
 }

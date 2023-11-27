@@ -18,7 +18,6 @@ public interface MemberDAO {
 	List<MemberVO> select();
 	
 	// restcontroller
-	int insert(MemberVO vo);
 	int checkId(String memberId);
 	int checkNickname(String memberNickname);
 	int update(String memberId, String newData, String category);

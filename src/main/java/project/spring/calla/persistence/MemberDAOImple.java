@@ -7,17 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.domain.ProductOrderVO;
-import project.spring.calla.domain.UProductBuyVO;
-import project.spring.calla.domain.UProductCommentVO;
-import project.spring.calla.domain.UProductSellVO;
-import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
 
 @Repository
 public class MemberDAOImple implements MemberDAO{
@@ -125,6 +117,12 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("memberId", memberId);
 		args.put("amount", amount);
 		return sqlSession.update(NAMESPACE + ".updateLevel", args);
+	}
+
+	@Override
+	public int deleteUProduct(int uProductId) {
+		logger.info("delete() 호출");
+		return sqlSession.delete(NAMESPACE + ".delete_uproduct", uProductId);
 	}
 
 

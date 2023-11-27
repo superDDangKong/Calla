@@ -22,6 +22,7 @@ public interface MemberService {
 	int updatePw(String memberId, String memberPw);
 	int updateLevel(String memberId, int amount);
 	
+	int deleteUProduct(int uProductId);
 }
 
 
