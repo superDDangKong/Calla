@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.MemberVO;
@@ -32,10 +33,9 @@ public class MemberDAOImple implements MemberDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int checkId(String memberId) { // å ì™ì˜™å ì‹±ë“¸ì˜™ å ìŒ©ë¸ì˜™ì²´í¬
+	public int checkId(String memberId) { 
 		logger.info("select_by_id() ");
 		int result  = sqlSession.selectOne(NAMESPACE + ".select_by_id", memberId);
-		logger.info(result+"å ìŒ©ë¸ì˜™");
 		return result;
 	}
 
@@ -46,9 +46,17 @@ public class MemberDAOImple implements MemberDAO{
 	}
 
 	@Override
-	public int insert(MemberVO vo) { // íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™
-		logger.info("insert() : vo = " + vo.toString());
-		return sqlSession.insert(NAMESPACE + ".insert", vo);
+	public int insert(MemberVO vo) throws IllegalStateException {
+		int result = 0;
+		try {
+			logger.info("insert() : vo = " + vo.toString());
+			result = sqlSession.insert(NAMESPACE + ".insert", vo);
+		} catch (DataIntegrityViolationException e) { // 
+			String errorMessage = "È¸¿øÁ¤º¸¸¦ ÀúÀåÇÏ´Â Áß¿¡ ¹®Á¦°¡ ¹ß»ıÇß½À´Ï´Ù. Áßº¹È®ÀÎÀ» ÇØÁÖ¼¼¿ä.";
+			logger.error(errorMessage, e);
+			throw new IllegalStateException(errorMessage, e); 
+		}	// ÇöÀç »óÅÂ¿¡¼­ È¸¿ø Á¤º¸¸¦ ÀúÀåÇÏ´Âµ¥ ¹®Á¦°¡ ¹ß»ıÇßÀ» ¶§ ¹ß»ıÇÏ´Â ¿¹¿ÜÀÔ´Ï´Ù.
+		return result;
 	}
 	
 	public String login(String memberId, String memberPw) {
@@ -148,7 +156,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<MemberVO> select() {
-		logger.info("updateAddress() ï¿½ìƒ‡ç•°ï¿½");
+		logger.info("updateAddress() ");
 		return sqlSession.selectList(NAMESPACE + ".select");
 	}
 
@@ -169,7 +177,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<UProductVO> selectmyuproduct(PageCriteria criteria, String memberNickname) {
-		logger.info("selectByAddress() í˜¸ì¶œ");
+		logger.info("selectByAddress() ");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
@@ -187,7 +195,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public UProductVO select(int uProductId) {
-		logger.info("select() í˜¸ì¶œ : uProductId = " + uProductId);
+		logger.info("select() : uProductId = " + uProductId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", uProductId);
 	}
 
@@ -206,7 +214,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
-		logger.info("selectAllBoards í˜¸ì¶œ");
+		logger.info("selectAllBoards ");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("keyword", "%" + keyword + "%");
@@ -226,7 +234,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<UProductVO> selectBoards(String memberNickname, String option, MyPageCriteria criteria) {
-		logger.info("selecBoards í˜¸ì¶œ");
+		logger.info("selecBoards ");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("memberNickname", memberNickname);
@@ -236,7 +244,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int getTotalCountsBoard(String memberNickname, String option) {
-		logger.info("getTotalCountsBoard í˜¸ì¶œ");
+		logger.info("getTotalCountsBoard ");
 		Map<String, String> args = new HashMap();
 		args.put("memberNickname", memberNickname);
 		args.put("option", "%" + option + "%");
@@ -245,7 +253,7 @@ public class MemberDAOImple implements MemberDAO{
 	
 	@Override
 	public List<UProductCommentVO> selectComments(String memberNickname, String option, MyPageCriteria criteria) {
-		logger.info("selecComments í˜¸ì¶œ");
+		logger.info("selecComments ");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("memberNickname", memberNickname);
@@ -255,7 +263,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int getTotalCountsComment(String memberNickname, String option) {
-		logger.info("getTotalCountsComment í˜¸ì¶œ");
+		logger.info("getTotalCountsComment");
 		Map<String, String> args = new HashMap();
 		args.put("memberNickname", memberNickname);
 		args.put("option", "%" + option + "%");
@@ -264,7 +272,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<UProductVO> selectLikes(String memberId, String option, MyPageCriteria criteria) {
-		logger.info("selecLikes í˜¸ì¶œ");
+		logger.info("selecLikes");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("memberId", memberId);
@@ -274,7 +282,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int getTotalCountsLike(String memberId, String option) {
-		logger.info("getTotalCountsLike í˜¸ì¶œ");
+		logger.info("getTotalCountsLike");
 		Map<String, String> args = new HashMap();
 		args.put("memberId", memberId);
 		args.put("option", "%" + option + "%");
@@ -283,7 +291,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public List<ProductOrderVO> selectOrders(String memberId, MyPageCriteria criteria) {
-		logger.info("selecOrders í˜¸ì¶œ");
+		logger.info("selecOrders");
 		Map<String, Object> args = new HashMap();
 		args.put("criteria", criteria);
 		args.put("memberId", memberId);
@@ -292,7 +300,7 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int getTotalCountsOrders(String memberId) {
-		logger.info("getTotalCountsOrders í˜¸ì¶œ");
+		logger.info("getTotalCountsOrders");
 		Map<String, String> args = new HashMap();
 		args.put("memberId", memberId);
 		return sqlSession.selectOne(NAMESPACE + ".total_count_orders", memberId);

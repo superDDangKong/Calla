@@ -180,7 +180,8 @@
 			console.log("비밀번호 유효성 검사 실패")
 			return false;
 		}
-		
+		memberPwError.text('');
+		console.log("비밀번호검사 유효성 검사 성공")
 	    return true;
 	    
 	}; // end pwEffectivenessCheck()
@@ -235,7 +236,7 @@
 		
 		if (memberNickname.trim() === '') {
 			memberNicknameError.text('닉네임을 입력해주세요.');
-			memberNicknameError.text('color', 'red');
+			memberNicknameError.css('color', 'red');
 			console.log("닉네임이 공백임")
 			nickNameCheck = false;
 			return 
@@ -243,7 +244,7 @@
 		
 		if (!nicknameEffectiveness.test(memberNickname)) {
 			memberNicknameError.text('닉네임: 한글, 영문 대/소문자, 숫자로 2자 이상이어야 합니다.');
-			memberNicknameError.text('color', 'red');
+			memberNicknameError.css('color', 'red');
 			console.log("닉네임 제대로 입력")
 			nickNameCheck = false;
 			return false;
@@ -270,7 +271,7 @@
 		}) // end ajax
 	}; // end nicknameDuplicationCheck()
 	
-	function mailConfirmCheck() { // 메일 입력 유무 확인 함수
+	function mailConfirmCheck(memberEmail) { // 메일 입력 유무 확인 함수
 		console.log("메일검사 호출");
 		var memberEmailId = $('#email_id').val();
 		var memberEmailDomain = $('#email_domain').val();
@@ -405,22 +406,6 @@
 		
 		$('#join').submit(function(e){
 			e.preventDefault();
-			var memberId = $('#member_id').val();
-			var memberPw = $('#member_pw').val();
-			var memberName = $('#member_name').val();
-			var memberNickname = $('#member_nickname').val();
-			var memberEmail = $('#memberEmail').val();
-			var memberPhone = $('#member_phone').val();
-			var memberInterest = $('#memberInterest').val();
-			var memberAddress = $('#memberAddress').val();
-			console.log(memberId);
-			console.log(memberPw);
-			console.log(memberName);
-			console.log(memberNickname);
-			console.log(memberEmail);
-			console.log(memberPhone);
-			console.log(memberInterest);
-			console.log(memberAddress);
 			
 			if (!idCheck || !nickNameCheck){ // 아이디 또는 닉넴임 검사 false가 나오면 form 제출막기
 				console.log("아이디 또는 닉네임");
@@ -468,12 +453,23 @@
 				console.log('여기까지 왔다 드뎌');
 				return;
 			} 
-			pwAccordanceCheck(); // 비밀번호 재확인 검사
-			nameConfirmCheck(); // 이름 입력 검사
-			mailConfirmCheck(); // 메일 입력 검사
-			phoneConfirmCheck(); // 연락처 입력 검사
-			interestValues(); // 관심사 입력 검사
-			addressConfirmCheck(); // 주소 검사 
+			
+			var memberId = $('#member_id').val();
+			var memberPw = $('#member_pw').val();
+			var memberName = $('#member_name').val();
+			var memberNickname = $('#member_nickname').val();
+			var memberEmail = $('#memberEmail').val();
+			var memberPhone = $('#member_phone').val();
+			var memberInterest = $('#memberInterest').val();
+			var memberAddress = $('#memberAddress').val();
+			console.log(memberId);
+			console.log(memberPw);
+			console.log(memberName);
+			console.log(memberNickname);
+			console.log(memberEmail); // 값이 없다고 나옴
+			console.log(memberPhone);
+			console.log(memberInterest); // change가 안되면 값이 없음
+			console.log(memberAddress); // 값이 없다고 나옴
 			
  			 var obj = {
 				'memberId' : memberId,
@@ -494,13 +490,15 @@
                  },
                 data : JSON.stringify(obj),
 				success : function(result){
-					if(result == 1){
+					if(result === 1){
 						location.href = 'http://localhost:8080/calla/member/login?';
+						alert('회원가입을 축하합니다.');
 					}
-				}, // success
+				}/* , // success
 				error: function(result){
+					console.log(result); // objec Objec
 					alert(result);
-				}
+				} */
 			}) // ajax   
 		}) // join.submit
 		

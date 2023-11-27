@@ -52,6 +52,11 @@ public class QBoardController {
 	@Autowired
 	private QBoardCommentService qBoardCommentService;
 	
+	@GetMapping("/chat")
+	public void chat() {
+		logger.info("chat() 호출");
+	}
+	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword, RedirectAttributes reAttr) {
 		logger.info("list() 호출");

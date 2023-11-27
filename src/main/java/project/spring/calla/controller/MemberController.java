@@ -62,7 +62,7 @@ public class MemberController {
 
 	@GetMapping("/join")
 	public void showJoinPage() {
-
+		logger.info("showJoinPage() »£√‚");
 	}
 
 //	@PostMapping("/join")

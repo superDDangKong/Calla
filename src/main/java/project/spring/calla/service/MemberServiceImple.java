@@ -76,6 +76,8 @@ public class MemberServiceImple implements MemberService {
 			return result = MemberDAO.insert(vo);
 		} catch (DataIntegrityViolationException e) {
 			throw new IllegalStateException("닉네임이나 id를 확인해주세요");
+			// 어떤 항목에서 에러가 생긴건지 
+			
 		}
 	}
 

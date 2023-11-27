@@ -34,7 +34,6 @@ table, th, td {
     padding: 8px;
     text-align: left;
 } */
-
 ul {
 	list-style-type : none;
 }
@@ -65,11 +64,13 @@ body {
 	
 	
 	<h1 class="text-center">
-		<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">
-			문의게시판 </a>
+		<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
 	</h1>
 	
-	<a href="register"><input type="button" value="글 작성"></a>
+	<a href="register" class="write-button"><input type="button" value="글 작성"></a>
+	<form action="/calla/qBoard/chat" method="GET" >
+		<input type="submit" value="FAQ챗 봇">
+	</form>
 	<hr>
 	<div class="container mt-4">
     <form action="list" method="GET">
