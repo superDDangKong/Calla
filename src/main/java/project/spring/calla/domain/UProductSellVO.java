@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class UProductSellVO {
 
-	private int uProductOrderId;
+	private int uProductSellId;
 	private String uProductName; // 등록
-	private String uProductPrice; // 등록
+	private int uProductPrice; // 등록
 	private Date uProductCreatedDate;
 	private String uProductCategori; // 등록
 	private String memberAddress; // 등록
@@ -16,14 +16,13 @@ public class UProductSellVO {
 	private String uProductImagePath;
 	private int uProductId;
 
-	public UProductSellVO() {
-	}
+	public UProductSellVO() {}
 
-	public UProductSellVO(int uProductOrderId, String uProductName, String uProductPrice, Date uProductCreatedDate,
+	public UProductSellVO(int uProductSellId, String uProductName, int uProductPrice, Date uProductCreatedDate,
 			String uProductCategori, String memberAddress, String uProductContent, String sellerNickname,
 			String buyerNickname, String uProductImagePath, int uProductId) {
 		super();
-		this.uProductOrderId = uProductOrderId;
+		this.uProductSellId = uProductSellId;
 		this.uProductName = uProductName;
 		this.uProductPrice = uProductPrice;
 		this.uProductCreatedDate = uProductCreatedDate;
@@ -36,12 +35,12 @@ public class UProductSellVO {
 		this.uProductId = uProductId;
 	}
 
-	public int getuProductOrderId() {
-		return uProductOrderId;
+	public int getuProductSellId() {
+		return uProductSellId;
 	}
 
-	public void setuProductOrderId(int uProductOrderId) {
-		this.uProductOrderId = uProductOrderId;
+	public void setuProductSellId(int uProductSellId) {
+		this.uProductSellId = uProductSellId;
 	}
 
 	public String getuProductName() {
@@ -52,11 +51,11 @@ public class UProductSellVO {
 		this.uProductName = uProductName;
 	}
 
-	public String getuProductPrice() {
+	public int getuProductPrice() {
 		return uProductPrice;
 	}
 
-	public void setuProductPrice(String uProductPrice) {
+	public void setuProductPrice(int uProductPrice) {
 		this.uProductPrice = uProductPrice;
 	}
 
@@ -126,12 +125,15 @@ public class UProductSellVO {
 
 	@Override
 	public String toString() {
-		return "UProductSellVO [uProductOrderId=" + uProductOrderId + ", uProductName=" + uProductName
+		return "UProductSellVO [uProductSellId=" + uProductSellId + ", uProductName=" + uProductName
 				+ ", uProductPrice=" + uProductPrice + ", uProductCreatedDate=" + uProductCreatedDate
 				+ ", uProductCategori=" + uProductCategori + ", memberAddress=" + memberAddress + ", uProductContent="
 				+ uProductContent + ", sellerNickname=" + sellerNickname + ", buyerNickname=" + buyerNickname
 				+ ", uProductImagePath=" + uProductImagePath + ", uProductId=" + uProductId + "]";
 	}
+
+	
+	
 
 	
 

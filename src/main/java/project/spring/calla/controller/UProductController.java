@@ -1,11 +1,15 @@
 package project.spring.calla.controller;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -161,6 +165,11 @@ public class UProductController {
 				list = uproductService.readdate(criteria);
 				pageMaker.setTotalCount(uproductService.getTotalCountsBydate());
 
+			} else if (name.equals("searchlike")) {
+
+				list = uproductService.readlike(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBylike());
+
 			} else {
 
 				logger.info("if else");
@@ -222,6 +231,7 @@ public class UProductController {
 
 	@GetMapping("/detail")
 	public void detail(Model model, Integer uProductId, Integer page, HttpServletRequest request) {
+
 		logger.info("detail() 호占쏙옙 : productId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
 		logger.info("호占쏙옙 : prdocutVO = " + vo);
@@ -238,22 +248,21 @@ public class UProductController {
 				uProductLikeId = uproductLikeVO.getuProductLikeId();
 			} 
 		
-		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 		model.addAttribute("memberManner", memberManner);
 		model.addAttribute("uProductLikeId", uProductLikeId);
-		
 		if(memberId != null) {
 			int recentlyViewInsert = uproductService.createRecentlyView(uProductId, memberId);
 			logger.info(String.valueOf(recentlyViewInsert));
-		}
+			
+		}	
 	} // end detail()
 
 	@GetMapping("/update")
 	public void updateGET(Model model, Integer uProductId, Integer page) {
-		logger.info("updateGET() 호占쏙옙 : productId = " + uProductId);
+		logger.info("updateGET() 호占쏙옙 : uProductId = " + uProductId);
 		UProductVO vo = uproductService.read(uProductId);
 		logger.info("updateGET() 호占쏙옙 : vo = " + vo.toString());
 		model.addAttribute("vo", vo);

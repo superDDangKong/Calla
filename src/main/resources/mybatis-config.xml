@@ -63,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductContent" value="u_product_content" />
 		<property name="uProductImagePath" value="u_product_image_path" />
 		<property name="uProductCommentCount" value="u_product_comment_count"/>
+		<property name="uProductStatement" value="u_product_statement"/>
 		
 		<property name="u_product_comment" value="u_product_comment" />
 		<property name="uProductCommentId" value="u_product_comment_id" />
@@ -201,6 +202,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="uProductReviewTitle" value="u_product_review_title" />
 		<property name="uProductReviewCreatedDate" value="u_product_review_created_date" />
 		<property name="uProductReviewContent" value="u_product_review_content" />
+		
+		<property name="u_product_manner" value="u_product_manner" />
+		<property name="uProductMannerId" value="u_product_manner_id" />
+		<property name="uProductReviewId" value="u_product_review_id" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="sellerNickname" value="seller_nickname"/>
+		
+		<property name="u_product_manner_down" value="u_product_manner_down" />
+		<property name="uProductMannerDownId" value="u_product_manner_down_id" />
+		<property name="uProductReviewId" value="u_product_review_id" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="sellerNickname" value="seller_nickname"/>
+		
+		
+		
 	</properties>
 	
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->

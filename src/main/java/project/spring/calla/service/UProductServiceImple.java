@@ -196,6 +196,45 @@ public class UProductServiceImple implements UProductService {
 		return dao.selectManner(memberNickname);
 	}
 
+	@Override
+	public int statementupdate(int uProductId) {
+		logger.info("statementupdate() È£Ãâ : uProductId = " + uProductId);
+		return dao.statementupdate(uProductId);
+	}
+
+	@Override
+	public int statementupdates(int uProductId) {
+		logger.info("statementupdate() È£Ãâ : uProductId = " + uProductId);
+		return dao.statementupdates(uProductId);
+	}
+
+	@Override
+	public int deleteUProductsell(int uProductSellId) {
+		logger.info("deleteUProductsell() È£Ãâ");
+		return dao.deleteUProductsell(uProductSellId);
+	}
+
+	@Override
+	public int deleteUProductbuy(int uProductBuyId) {
+		logger.info("deleteUProductbuy() È£Ãâ");
+		return dao.deleteUProductbuy(uProductBuyId);
+	}
+
+	@Override
+	public List<UProductVO> readlike(PageCriteria criteria) {
+		logger.info("readdate() È£ï¿½ï¿½");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		
+		return dao.selectByUproductLike(criteria);
+	}
+
+	@Override
+	public int getTotalCountsBylike() {
+		logger.info("getTotalCountsBydate() È£ï¿½ï¿½");
+		return dao.getTotalCountsByUproductLike();
+	}
+
 	
 
 }

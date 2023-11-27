@@ -52,4 +52,6 @@ public interface MemberDAO {
 	List<UProductVO> selectProductsByOption(PageCriteria criteria, String keyword, String interest, String option);
 	int getTotalCountsProductsByOption(String keyword, String interest, String option);
 	
+	int deleteUProduct(int uProductId);
+	
 }

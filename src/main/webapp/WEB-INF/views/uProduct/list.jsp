@@ -49,10 +49,13 @@ li {
 		<select id="name" name="name">
 			<option value="searchName" selected>전체</option>
 			<option value="searchDate">신상품</option>
+			<option value="searchlike">좋아요순</option>
 		</select>
 			
 			 <input type="text" name="keyword" value="${keyword }"> <input
 			type="submit" value="검색">
+			
+			<a href="register"><input type="button" value="상품등록"></a>
 			
 	</form>
 	
@@ -116,14 +119,24 @@ li {
 									</span>
 									
 									<span>
-									${vo.uProductLikes }
+									${vo.uProductLikes } &nbsp;
+									</span>
+									
+									
+									
+									<span >
+									<i class="fa-regular fa-comment"></i>
+									</span>
+									
+									<span>
+									${vo.uProductCommentCount }
 									</span>
 									
 									<br>
 									<br>
 									
 									<div>
-									${vo.uProductPrice }
+									${vo.uProductPrice }원
 									</div>						
 								
 									
@@ -132,8 +145,7 @@ li {
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">Add to
-										cart</a>
+									<a class="btn btn-outline-dark mt-auto" href="#">${vo.uProductStatement }</a>
 								</div>
 							</div>
 						</div>
@@ -180,6 +192,6 @@ li {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
-	<script src="js/scripts.js"></script>
+	<script src="../resources/js/scripts.js"></script>
 </body>
 </html>

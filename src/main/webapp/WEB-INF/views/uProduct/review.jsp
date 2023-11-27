@@ -22,8 +22,8 @@
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<form action="review" method="POST">
-					<input type="hidden" id="sellerNickname"
-						value="${sellerNickname }">
+					<input type="hidden" name="sellerNickname" id="sellerNickname" value="${sellerNickname }">
+					<input type="hidden" id="uProductId" value="${uProductId }">
 					<div>
 						<p>제목 :</p>
 						<input type="text" name="uProductReviewTitle" placeholder="제목 입력"
@@ -34,7 +34,7 @@
 
 					<div>
 						<p>작성자 :</p>
-						<input type="text" name="memberNickname"
+						<input type="text" name="memberNickname" id="memberNickname"
 							value="${sessionScope.memberNickname }" readonly="readonly">
 					</div>
 
@@ -53,11 +53,8 @@
 
 				<br>
 
-
-
 				<button id="mannerupbtn" name="mannerupbtn"> 매너 칭찬하기 </button>
-
-
+				<button id="mannerdownbtn" name="mannerupbtn"> 매너 비판하기 </button>
 
 			</main>
 			<%@ include file="../sidebarRight.jspf"%>
@@ -71,18 +68,66 @@
 
 	    mannerBtn.click(function() {
 	        var sellerNickname = $('#sellerNickname').val();
+	        var uProductId = $('#uProductId').val(); 
+            var memberNickname = $('#memberNickname').val(); 
+            var obj = {
+                  'sellerNickname' : sellerNickname,
+                  'uProductId' : uProductId,
+                  'memberNickname' : memberNickname
+            }
+            console.log(obj);
 	    	console.log(sellerNickname);
 
 	            $.ajax({
-	                type: 'PUT',
-	                url: 'manner/' + sellerNickname,
+	                type: 'POST',
+	                url: 'manner/',
 	                headers: {
 	                    'Content-Type': 'application/json'
 	                },
+	                data : JSON.stringify(obj), // JSON으로 변환
 	                success: function(result) {
 	                    console.log(result);
 	                    if(result == '1') {
 	                        alert('매너칭찬을 하였습니다!')
+	                     } else {
+	                    	 alert('이미 매너칭찬을 하였습니다!')
+	                     }
+	                }
+	            });
+	    	});
+	    });
+	    
+	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    var mannerBtn = $('#mannerdownbtn');
+
+	    mannerBtn.click(function() {
+	        var sellerNickname = $('#sellerNickname').val();
+	        var uProductId = $('#uProductId').val(); 
+            var memberNickname = $('#memberNickname').val(); 
+            var obj = {
+                  'sellerNickname' : sellerNickname,
+                  'uProductId' : uProductId,
+                  'memberNickname' : memberNickname
+            }
+            console.log(obj);
+	    	console.log(sellerNickname);
+
+	            $.ajax({
+	                type: 'POST',
+	                url: 'mannerdown/',
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                data : JSON.stringify(obj), // JSON으로 변환
+	                success: function(result) {
+	                    console.log(result);
+	                    if(result == '1') {
+	                        alert('매너온도를 내렸습니다')
+	                     } else {
+	                    	 alert('이미 매너온도를 내렸습니다')
 	                     }
 	                }
 	            });

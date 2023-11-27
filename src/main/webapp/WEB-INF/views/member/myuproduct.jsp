@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
 <style type="text/css">
 body {
 	margin: 0;
@@ -177,8 +179,8 @@ td {
 			<ul>
 				<li>예약 버튼을 누르면 상품목록이 거래가능에서 예약중으로 바뀝니다.</li>
 				<li>거래가 완료 되었으면 거래완료 버튼을 눌러서 거래자의 닉네임을 골라주세요.</li>
-				<li>실수로 예약 버튼을 눌렀거나 거래자의 닉네임을 잘못 선태했을시 1대1 문의를 해주시거나
-					수정버튼을 이용해 고쳐주시기 바랍니다.</li>
+				<li>실수로 예약 버튼을 눌렀거나 거래자의 닉네임을 잘못 선태했을시 1대1 문의를 해주시거나 수정버튼을 이용해
+					고쳐주시기 바랍니다.</li>
 			</ul>
 		</div>
 		<table class="cart__list">
@@ -187,14 +189,20 @@ td {
 				<tr>
 					<td></td>
 					<td colspan="2">상품정보</td>
-					<td>등록날짜</td>
-					<td>상품금액</td>
+					<td>등록 날짜</td>
+					<td>상품 금액</td>
+					<td>예약 하기</td>
+					<td>거래 완료</td>
 					<td>삭제</td>
 				</tr>
 			</thead>
 
 			<tbody>
 				<c:forEach var="vo" items="${list }">
+					<input type="hidden" id="uProductStatement"
+						name="uProductStatement" value="${vo.uProductStatement }">
+					<input type="hidden" id="uProductId" name="uProductId"
+						value="${vo.uProductId }">
 					<tr class="cart__list__detail">
 						<td></td>
 						<td><img class="card-img-top"
@@ -206,10 +214,106 @@ td {
 						<fmt:formatDate value="${vo.uProductCreatedDate }"
 							pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
 						<td>${uProductCreatedDate }</td>
+						
 						<td><span class="price">${vo.uProductPrice }</span><br>
-						<td>			
-							 <button onclick="openPop('${vo.uProductId}')">거래 완료</button>
+						
+						<td>
+						
+			    	<c:choose>
+					    <c:when test="${vo.uProductStatement eq '거래가능'}">
+					        <button class="btn_update" id="btn_update_${vo.uProductId}" name="btn_update">예약하기</button>
+					    </c:when>
+					    <c:when test="${vo.uProductStatement eq '예약중'}">
+					        <button class="btn_update" id="btn_update_${vo.uProductId}" name="btn_update">예약취소</button>
+					    </c:when>
+					</c:choose>
+					
+					<script type="text/javascript">
+					    $(document).ready(function() {
+					        var updateBtn = $('#btn_update_${vo.uProductId}');
+					
+					        updateBtn.click(function(){
+					            var uProductId = '${vo.uProductId}'; // 버튼의 ID에서 uProductId 추출				            
+					            console.log(uProductId);
+					
+					            if ($(this).text() === '예약하기') { 
+					                $.ajax({
+					                    type: 'PUT',
+					                    url: 'statement/' + uProductId,
+					                    headers: {
+					                        'Content-Type': 'application/json'
+					                    },
+					                    success: function(result) {
+					                        console.log(result);
+					                        if (result == 1) {
+					                            alert('예약 성공');
+					                            updateBtn.text('예약취소');
+					                        }
+					                    }
+					                }); // end ajax()
+					            } else { 
+					                $.ajax({
+					                    type: 'PUT',
+					                    url: 'statement/' + uProductId, // 변경된 URL
+					                    headers: {
+					                        'Content-Type': 'application/json'
+					                    },
+					                    success: function(result) {
+					                        console.log(result);
+					                        if (result == 1) {
+					                            alert('예약 취소 성공');
+					                            updateBtn.text('예약하기');
+					                        }
+					                    }
+					                });
+					            }
+					        }); // end btn_update click event
+					    }); // end document ready
+					</script>
+					       			
+       			    
 						</td>
+						
+						<td>
+							<button onclick="openPop('${vo.uProductId}')">거래 완료</button>
+						</td>
+						
+						<td>
+						<button type="button" id="btn_delete_${vo.uProductId}" style="border: none; background: none;">
+							<i class="fa-solid fa-trash fa-xl"></i>
+						</button>
+						
+						<script type="text/javascript">
+					    $(document).ready(function() {
+					        var deleteBtn = $('#btn_delete_${vo.uProductId}');
+					
+					        deleteBtn.click(function(){
+					            var uProductId = '${vo.uProductId}'; // 버튼의 ID에서 uProductId 추출
+					            console.log(uProductId);
+					
+					           
+					                $.ajax({
+					                    type: 'DELETE',
+					                    url: 'statement/' + uProductId,
+					                    headers: {
+					                        'Content-Type': 'application/json'
+					                    },
+					                    success: function(result) {
+					                        console.log(result);
+					                        if (result == 1) {
+					                            alert('삭제 성공');
+					                            location.reload();
+					                        }
+					                    }
+					                }); // end ajax()
+					           
+					        }); // end btn_update click event
+					    }); // end document ready
+					</script>
+						
+						
+						</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -230,6 +334,16 @@ td {
 
 		</ul>
 
+		<script type="text/javascript">
+			function openPop(uProductId) {
+				var pageMaker = '${pageMaker.criteria.page}';
+				var popup = window.open(
+						'http://localhost:8080/calla/member/choosenickname?uProductId='
+								+ uProductId + '&page=' + pageMaker, '팝업',
+						'width=500px,height=600px,scrollbars=yes');
+			}
+		</script>
+
 
 		<div class="cart__mainbtns">
 
@@ -244,15 +358,13 @@ td {
 		</div>
 	</section>
 
+
 	<%@ include file="../footer.jspf"%>
+
 </body>
 
-<script type="text/javascript">
-  function openPop(uProductId) {
-    var pageMaker = '${pageMaker.criteria.page}';
-    var popup = window.open('http://localhost:8080/calla/member/choosenickname?uProductId=' + uProductId + '&page=' + pageMaker, '팝업', 'width=500px,height=600px,scrollbars=yes');
-  }
-</script>
-
-
 </html>
+
+
+
+

@@ -29,7 +29,7 @@
 	</beans:bean>
 	
  	<beans:bean id="uploadpath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
+		<beans:constructor-arg value="\\172.16.3.4\\upload"></beans:constructor-arg>
 	</beans:bean> 
 	
 	

@@ -91,7 +91,7 @@ public class UProductReviewController {
 
 
 	@GetMapping("/review")
-	public void review(Model model, String sellerNickname, Integer page, HttpServletRequest request) {
+	public void review(Model model, String sellerNickname, int uProductId, Integer page, HttpServletRequest request) {
 		logger.info("review() »£√‚ : sellerNickname = " + sellerNickname);
 		
 		
@@ -99,6 +99,7 @@ public class UProductReviewController {
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("sellerNickname", sellerNickname);
+		model.addAttribute("uProductId", uProductId);
 		model.addAttribute("page", page);
 		
 	

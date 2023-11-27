@@ -158,6 +158,8 @@ td {
 	border: none;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
@@ -195,6 +197,7 @@ td {
 
 			<tbody>
 				<c:forEach var="vo" items="${list }">
+				<input type="hidden" id="uProductSellId" name="uProductSellId" value="${vo.uProductSellId }">
 					<tr class="cart__list__detail">
 						<td></td>
 						<td><img class="card-img-top"
@@ -204,9 +207,39 @@ td {
 						<fmt:formatDate value="${vo.uProductCreatedDate }"
 							pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
 						<td>${uProductCreatedDate }</td>
-						<td><span class="price">${vo.uProductPrice }</span><br>
+						<td><span class="price">${vo.uProductPrice }원</span><br>
 						<td>			
-							 
+							 <button type="button" id="btn_delete_${vo.uProductSellId}" style="border: none; background: none;">
+							<i class="fa-solid fa-trash fa-xl"></i>
+						</button>
+						
+						<script type="text/javascript">
+					    $(document).ready(function() {
+					        var deleteBtn = $('#btn_delete_${vo.uProductSellId}');
+					
+					        deleteBtn.click(function(){
+					            var uProductSellId = '${vo.uProductSellId}'; // 버튼의 ID에서 uProductId 추출
+					            console.log(uProductSellId);
+					
+					           
+					                $.ajax({
+					                    type: 'DELETE',
+					                    url: 'sell/' + uProductSellId,
+					                    headers: {
+					                        'Content-Type': 'application/json'
+					                    },
+					                    success: function(result) {
+					                        console.log(result);
+					                        if (result == 1) {
+					                            alert('삭제 성공');
+					                            location.reload();
+					                        }
+					                    }
+					                }); // end ajax()
+					           
+					        }); // end btn_update click event
+					    }); // end document ready
+					</script>
 						</td>
 					</tr>
 				</c:forEach>

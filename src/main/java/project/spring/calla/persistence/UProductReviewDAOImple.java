@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.MemberVO;
+import project.spring.calla.domain.UProductMannerDownVO;
+import project.spring.calla.domain.UProductMannerVO;
 import project.spring.calla.domain.UProductReviewVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.PageCriteria;
@@ -84,15 +86,40 @@ public class UProductReviewDAOImple implements UProductReviewDAO{
 
 	@Override
 	public float updatememberManner(String memberNickname) {
-		logger.info("select() 호출 : memberNickname = " + memberNickname);
+		logger.info("updatememberManner() 호출 : memberNickname = " + memberNickname);
 		return sqlSession.update(NAMESPACE + ".memberManner_update", memberNickname);
 	}
-
 	
-	
+	@Override
+	public float updatememberManners(String memberNickname) {
+		logger.info("updatememberManners() 호출 : memberNickname = " + memberNickname);
+		return sqlSession.update(NAMESPACE + ".memberManner_updates", memberNickname);
+	}
 
-	
+	@Override
+	public int insertmanner(UProductMannerVO vo){
+		logger.info("insert() 호출");
+		return sqlSession.insert(NAMESPACE + ".insert_manner", vo);
+	}
 
+	@Override
+	public int count(int uProductId) {
+		logger.info("count() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_count_memberManner", uProductId);
+	}
+
+	@Override
+	public int insertmannerdown(UProductMannerDownVO vo) {
+		logger.info("insertmannerdown() 호출");
+		return sqlSession.insert(NAMESPACE + ".insert_manner_down", vo);
+	}
+
+	@Override
+	public int countmannerdown(int uProductId) {
+		logger.info("countmannerdown() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_count_memberManner_down", uProductId);
+	}
+		
 	
 
 
