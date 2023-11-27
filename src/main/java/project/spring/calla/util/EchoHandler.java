@@ -1,6 +1,7 @@
 package project.spring.calla.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -89,14 +90,45 @@ public class EchoHandler extends TextWebSocketHandler{
 				vo.setTitle(title);
 				vo.setBoardId(boardId);
 				
-				if(!registerNick.equals(sendNick)) {
+				if(!registerNick.equals(sendNick)) { // 받는사람과 보내는 사람이 다를때만 알람 등록
 					int insertResult = alarmService.create(vo);
 					logger.info(insertResult+"행 알람 삽입");
-				
-					WebSocketSession responseIdSession = userSessions.get(registerNick);
-					if (responseIdSession != null) {
-						TextMessage tmpMsg = new TextMessage(title + "에 " + alarmCode + "<br>" + sendNick + ": " + content);
-						responseIdSession.sendMessage(tmpMsg);
+
+					
+					if (insertResult == 1) { // 알람 등록이 성공했을때만 알람 전송
+						
+						List<AlarmVO> list = alarmService.read(registerNick);
+						int alarmId = list.get(0).getAlarmId();
+						WebSocketSession responseIdSession = userSessions.get(registerNick);
+						
+						if (responseIdSession != null) { // 받는사람이 로그인 상태 일때만 알람 전송
+							if(alarmCode.contains("댓글")) { // 댓글 알람
+								int commentId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
+								logger.info("commentId = " + commentId);
+		
+								int updateResult = alarmService.updateCommentId(alarmId, commentId);
+								logger.info("updateResult = " + updateResult +"행 업데이트 완료");
+	
+								TextMessage tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId);
+								responseIdSession.sendMessage(tmpMsg);
+									
+							} else if (alarmCode.contains("답글")) { // 답글알람
+								int replyId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
+								logger.info("replyId = " + replyId);
+								
+								int updateReplyResult = alarmService.updateReplyId(alarmId, replyId);
+								logger.info("updateResult = " + updateReplyResult +"행 업데이트 완료");
+								
+								int commentId = alarmService.findCommentIdByReplyId(alarmPrefix, replyId);
+								logger.info("commentId = " + commentId);
+								
+								int updateResult = alarmService.updateCommentId(alarmId, commentId);
+								logger.info("updateResult = " + updateResult +"행 업데이트 완료");
+								
+								TextMessage tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId + "," + replyId);
+								responseIdSession.sendMessage(tmpMsg);
+							}
+						}
 					}
 				}
 			}

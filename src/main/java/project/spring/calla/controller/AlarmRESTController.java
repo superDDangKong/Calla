@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.AlarmVO;
@@ -33,8 +34,7 @@ public class AlarmRESTController {
 		List<AlarmVO> lists = alarmService.read(memberNickname);
 		logger.info(lists.toString());
 		return new ResponseEntity<List<AlarmVO>>(lists, HttpStatus.OK);
-		
-	}
+	} // end readAlarm
 	
 	@GetMapping("check/{memberNickname}")
 	public ResponseEntity<Integer> checkAlarm(@PathVariable String memberNickname) {
@@ -42,12 +42,31 @@ public class AlarmRESTController {
 		int result = 0;
 		result = alarmService.check(memberNickname);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-		
-	}
+	} // end checkAlarm
+	
+	@GetMapping("findPage")
+	public ResponseEntity<Integer> findPage(@RequestParam("alarmCode") String alarmCode,
+		    @RequestParam("alarmPrefix") String alarmPrefix,
+		    @RequestParam("boardId") int boardId,
+		    @RequestParam("commentId") int commentId) {
+		    
+		    logger.info("findPage 호출: alarmCode={}, alarmPrefix={}, boardId={}, commentId={}", 
+		        alarmCode, alarmPrefix, boardId, commentId);
+
+		    AlarmVO vo = new AlarmVO();
+		    vo.setAlarmCode(alarmCode);
+		    vo.setAlarmPrefix(alarmPrefix);
+		    vo.setBoardId(boardId);
+		    vo.setCommentId(commentId);
+
+		    int page = alarmService.findPage(vo);
+		    return new ResponseEntity<>(page, HttpStatus.OK);
+	} // end findPage
+	
 	@PutMapping("/{alarmId}") // PUT : 댓글 수정
-	public ResponseEntity<Integer> updateAlarm(@PathVariable int alarmId) {
-		logger.info("upadateAlarm 호출 alarmId = " + alarmId);
-		int result = alarmService.update(alarmId);
+	public ResponseEntity<Integer> updateCheck(@PathVariable int alarmId) {
+		logger.info("upadateCheck 호출 alarmId = " + alarmId);
+		int result = alarmService.updateCheck(alarmId);
 		logger.info("result = " + result);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}

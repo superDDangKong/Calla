@@ -65,14 +65,14 @@ private void testSelect() {
 	System.out.println(vo.toString());
 }
 
-private void testuproduct() {
-	PageCriteria criteria = new PageCriteria(1, 3);
-	List<UProductVO> list = memberdao.selectmyuproduct(criteria, "슈퍼관리자");
-	for(UProductVO vo : list) {
-		logger.info(vo.toString());
-	}
-		
-	}
+//private void testuproduct() {
+//	PageCriteria criteria = new PageCriteria(1, 3);
+//	List<UProductVO> list = memberdao.selectmyuproduct(criteria, "슈퍼관리자");
+//	for(UProductVO vo : list) {
+//		logger.info(vo.toString());
+//	}
+//		
+//	}
 
 private void testRecommand() {
 	List<UProductVO> list = dao.recommendCategori("야채", 60);

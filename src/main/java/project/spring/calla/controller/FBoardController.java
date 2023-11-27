@@ -193,43 +193,47 @@ public class FBoardController {
 		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
-		
+		if(page != null) {
+			criteria.setPage(page);
+			
+		}
 		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));
 		
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
+		model.addAttribute("page", page); // 댓글 페이징 초기 페이지 번호
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "/fBoard/detail";
 	} // end detail()
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, Integer fBoardId, Integer page) {
+	public void updateGET(Model model, Integer fBoardId) {
 		logger.info("updateGET() 호출 : fBoardId = " + fBoardId);
 		FBoardVO vo = fBoardService.read(fBoardId);
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(FBoardVO vo, Integer page) {
+	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = fBoardService.update(vo);
 		
 		if(result == 1) {
-			return "redirect:/fBoard/list?page=" + page;
+			reAttr.addFlashAttribute("update_result", "success");
+			return "redirect:/fBoard/list";
 		} else {
 			return "redirect:/fBoard/update?fBoardId=" + vo.getfBoardId();
 		}
 	} // end updatePOST()
 	
 	@PostMapping("/delete")
-	public String delete(Integer fBoardId) {
+	public String delete(Integer fBoardId, RedirectAttributes reAttr) {
 		logger.info("delete() 호출 : boardId = " + fBoardId);
 		int result = fBoardService.delete(fBoardId);
 		if(result == 1) {
+			reAttr.addFlashAttribute("delete_result", "success");
 			return "redirect:/fBoard/list";
 		} else {
 			return "redirect:/fBoard/list";

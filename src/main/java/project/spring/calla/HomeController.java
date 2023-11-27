@@ -42,9 +42,10 @@ public class HomeController {
 	UProductService uProductService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
+	public String home(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
+		
 		Map<String, Object> lists = new HashMap();
 		if(memberId != null) {
 			MemberVO vo = memberService.read(memberId);

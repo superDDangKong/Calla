@@ -17,13 +17,10 @@ li {
 <meta charset="UTF-8">
 <title>${vo.fBoardTitle }</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <%@ include file="../header.jspf"%>
 </head>
 <body>
@@ -32,8 +29,11 @@ li {
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
-					<br> <a href="list?page=${page }"><input type="button"
-						class="btn btn-secondary float-right" value="글 목록"></a> <br>
+					<br> 
+					<a href="list?page=${page }">
+						<input type="button" class="btn btn-secondary float-right" value="글 목록">
+					</a> 
+					<br>
 					<div class="post-detail">
 						<br>
 						<h2>${vo.fBoardTitle }</h2>
@@ -41,8 +41,7 @@ li {
 						<input type="hidden" id="registerNick" value="${vo.memberNickname}">
 
 						<p>${vo.memberNickname }</p>
-						<fmt:formatDate value="${vo.fBoardCreatedDate }"
-							pattern="yyyy.MM.dd. hh:mm" var="fBoardCreatedDate" />
+						<fmt:formatDate value="${vo.fBoardCreatedDate }" pattern="yyyy.MM.dd. hh:mm" var="fBoardCreatedDate" />
 						<p>${fBoardCreatedDate }</p>
 						<hr>
 						<div>
@@ -61,14 +60,12 @@ li {
 						<c:if test="${memberNickname == voMemberNickname}">
 							<div class="d-flex">
 								<div class="p-2">
-									<a href="update?fBoardId=${vo.fBoardId}&page=${page}"
-										class="btn btn-primary">글 수정</a>
+									<a href="update?fBoardId=${vo.fBoardId}" class="btn btn-primary">글 수정</a>
 								</div>
 								<div class="p-2">
 									<form action="delete" method="POST">
-										<input type="hidden" id="fBoardId" name="fBoardId"
-											value="${vo.fBoardId}"> <input type="submit"
-											value="글 삭제" class="btn btn-danger">
+										<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId}"> 
+										<input type="submit" value="글 삭제" class="btn btn-danger">
 									</form>
 								</div>
 							</div>
@@ -79,12 +76,10 @@ li {
 							<div>
 								<p>댓글</p>
 								<div class="border">
-									<br> ${memberNickname}<br> <input type="hidden"
-										id="memberNickname" value=${memberNickname }>
+									<br> ${memberNickname}<br> 
+									<input type="hidden" id="memberNickname" value=${memberNickname }>
 									<div class="form-group">
-										<textarea id="fBoardCommentContent" class="form-control"
-											rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;"
-											required></textarea>
+										<textarea id="fBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required>	</textarea>
 									</div>
 									<div style="text-align: right;">
 										<button id="btnCommentAdd" class="btn btn-dark">작성</button>
@@ -94,25 +89,22 @@ li {
 						</c:if>
 						<c:if test="${memberNickname == null}">
 							<br> 
-							댓글 작성은 <a
-								href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
+							댓글 작성은 <a href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=${vo.fBoardId }">로그인</a>이 필요합니다.
 						</c:if>
 						<hr>
 						<br>
+						
 						<div>
 							<div id="comments"></div>
 						</div>
 
-						<input type="hidden" id="pageMaker_hasPrev"
-							value="${pageMaker.hasPrev}"> <input type="hidden"
-							id="pageMaker_hasNext" value="${pageMaker.hasNext}"> <input
-							type="hidden" id="pageMaker_startPageNo"
-							value="${pageMaker.startPageNo}"> <input type="hidden"
-							id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-						<input type="hidden" id="pageMaker_commentPage"
-							value="${pageMaker.criteria.page}"> <input type="hidden"
-							id="pageMaker_commentNumsPerPage"
-							value="${pageMaker.criteria.numsPerPage}"> <br>
+						<input type="hidden" id="pageMaker_hasPrev"	value="${pageMaker.hasPrev}"> 
+						<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
+						<input type="hidden" id="pageMaker_startPageNo" value="${pageMaker.startPageNo}">
+						<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+						<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}"> 
+						<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}"> 
+						<br>
 					</div>
 				</div>
 			</main>
@@ -122,18 +114,21 @@ li {
 
 <script type="text/javascript">
     $(document).ready(function () {
+    	window.addEventListener('hashchange', function() {
+	    	getAllComments();
+    	});
         getAllComments();
-
+		
+        var fBoardId = $('#fBoardId').val();
+        var memberNickname = $('#memberNickname').val();
+        var fBoardCommentContent = $('#fBoardCommentContent').val();
+        console.log(fBoardId + memberNickname + fBoardCommentContent);
         $('#btnCommentAdd').click(function () {
-            var fBoardId = $('#fBoardId').val();
-            var memberNickname = $('#memberNickname').val();
-            var fBoardCommentContent = $('#fBoardCommentContent').val();
             var obj = {
                 'fBoardId': fBoardId,
                 'memberNickname': memberNickname,
                 'fBoardCommentContent': fBoardCommentContent
             };
-            console.log(obj);
 
             $.ajax({
                 type: 'POST',
@@ -162,6 +157,7 @@ li {
             var commentPage = $('#pageMaker_commentPage').val();
             var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
             var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+           
             $.getJSON(url, function (data) {
                 var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
                 var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
@@ -221,8 +217,34 @@ li {
                     + '</div>';
 
                 $('#comments').html(list);
+                
+        		var fragment = window.location.hash;
+    	        if (fragment) {
+    	        	
+    	        	fragment = fragment.replace('#', '');
+    	        	fragmentList = fragment.split(',');
+    	        	
+    	        	var targetCommentElement = $('.fBoardCommentId').filter('[value="' + fragmentList[0] + '"]');
+	    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
+		    	           var target = targetCommentElement[0].parentElement;
+		    	           target.style.backgroundColor = 'lightgray'; 
+		    	           target.style.border = '2px solid';   
+		    	           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			    	        
+		    	           setTimeout(function() {
+			    	           target.style.backgroundColor = '';
+			    	           target.style.border = '';
+		    	           }, 2000);  // 2초 후에 스타일 초기화
+		        		   if (window.location.hash) {
+		        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+		        			}
+	    	   		     } else if (fragmentList[1] > 0) {
+	    	        	   getAllReplies(targetCommentElement);
+	    	    	       }
+    	       	
+    	        } // if(fragment)
             });
-        }
+        } // end getAllComents
 
         $(document).on('click', '.btn_comment_page', function () {
             $('#pageMaker_commentPage').val($(this).val());
@@ -291,17 +313,13 @@ li {
             getAllReplies(fBoardCommentId);
         });
 
-													comment_item
-															.append('<div class="replies bg-light">' + list + '</div>');
-												}); // end getJSON()
-							} // end getAllReplies()
+							
         function getAllReplies(fBoardCommentId) {
             $('.replies').html('');
             var url = 'replies/all/' + fBoardCommentId.val();
             var comment_item = fBoardCommentId.closest('.comment_item');
 
             $.getJSON(url, function (data) {
-                console.log(data);
                 var memberNickname = $('#memberNickname').val();
                 var list = '';
 
@@ -339,7 +357,7 @@ li {
                         + '<br>'
                         + '</pre>'
                         + '</div>';
-                });
+                }); // end each
 
                 list += memberNickname
                     + '<br>'
@@ -354,8 +372,28 @@ li {
                 comment_item.append('<div class="replies bg-light">'
                     + list
                     + '</div>');
-            });
-        }
+              var fragment = window.location.hash;
+        	   if (fragment) {
+        	        	
+        	       fragment = fragment.replace('#', '');
+        	       fragmentList = fragment.split(',');
+        	       
+	        	   if (fragmentList[1] > 0) {
+
+	        		   setTimeout(function() {
+	        		   var targetReplyElement = $('.fBoardReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
+	        		   
+		        		   targetReplyElement.style.backgroundColor = 'lightgray';
+		        		   targetReplyElement.style.border = '2px solid';
+	        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	        		   }, 100);
+	        		   if (window.location.hash) {
+	        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+	        			}
+	        	   }
+        	   }
+            }); // end getJson
+        } // end getAllReplies
 
         $(document).on('click', '.btnReplyAdd', function () {
             var commentItem = $(this).closest('.comment_item');

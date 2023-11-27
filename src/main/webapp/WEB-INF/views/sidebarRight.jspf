@@ -25,7 +25,7 @@
 </head>
 <body>
 	<c:if test="${not empty memberNickname }">
-	<input type="hidden" id="memberId" value=${memberId }>
+	<input type="hidden" id="sidebarMemberId" value=${memberId }>
 	<input type="hidden" id="productPage" value=1>
 	<input type="hidden" id="uProductPage" value=1>
 	
@@ -74,7 +74,7 @@
 		        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 		    });
 		    
-		var memberId = $('#memberId').val();
+		var memberId = $('#sidebarMemberId').val();
 		getProductRecentlyView();
 		getUProductRecentlyView();
 		
@@ -82,7 +82,7 @@
 			var productPage = $('#productPage').val();
 			$.ajax({
 				type : 'GET',
-				url : '/calla/member/recentlyView/product/' + memberId + '/' + productPage,
+				url : '/calla/activity/recentlyView/product/' + memberId + '/' + productPage,
 				success : function(lists) {
 					var productHTML = "공용상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
@@ -138,7 +138,7 @@
 			var uProductPage = $('#uProductPage').val();
 			$.ajax({
 				type : 'GET',
-				url : '/calla/member/recentlyView/uProduct/' + memberId + '/' + uProductPage,
+				url : '/calla/activity/recentlyView/uProduct/' + memberId + '/' + uProductPage,
 				success : function(lists) {
 					var uProductHTML = "중고상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
@@ -249,7 +249,7 @@
 			var productRecentlyViewId = $(this).closest('.recently_product_item').find('.productRecentlyViewId').val();
 			$.ajax({
 				type : 'delete',
-				url : '/calla/member/recentlyView/product/' + productRecentlyViewId,
+				url : '/calla/activity/recentlyView/product/' + productRecentlyViewId,
 				success : function(result) {
 						if(result==1) {
 							console.log("삭제성공")
@@ -267,7 +267,7 @@
 			console.log($(this).closest('.recently_u_product_item').find('.uProductRecentlyViewId'));
 			$.ajax({
 				type : 'delete',
-				url : '/calla/member/recentlyView/uProduct/' + uProductRecentlyViewId,
+				url : '/calla/activity/recentlyView/uProduct/' + uProductRecentlyViewId,
 				success : function(result) {
 						if(result==1) {
 							console.log("삭제성공")

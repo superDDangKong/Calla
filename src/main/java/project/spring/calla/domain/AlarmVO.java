@@ -13,11 +13,14 @@ public class AlarmVO {
 	String sendNickname;
 	String title;
 	int boardId;
+	int commentId;
+	int replyId;
 	
 	public AlarmVO() {}
 
 	public AlarmVO(int alarmId, String memberNickname, String alarmCode, String alarmChecked, Date alarmCreatedDate,
-			String alarmPrefix, String sendNickname, int boardId, String content, String title) {
+			String alarmPrefix, String content, String sendNickname, String title, int boardId, int commentId,
+			int replyId) {
 		super();
 		this.alarmId = alarmId;
 		this.memberNickname = memberNickname;
@@ -25,10 +28,12 @@ public class AlarmVO {
 		this.alarmChecked = alarmChecked;
 		this.alarmCreatedDate = alarmCreatedDate;
 		this.alarmPrefix = alarmPrefix;
-		this.sendNickname = sendNickname;
-		this.boardId = boardId;
 		this.content = content;
+		this.sendNickname = sendNickname;
 		this.title = title;
+		this.boardId = boardId;
+		this.commentId = commentId;
+		this.replyId = replyId;
 	}
 
 	public int getAlarmId() {
@@ -79,28 +84,20 @@ public class AlarmVO {
 		this.alarmPrefix = alarmPrefix;
 	}
 
-	public String getSendNickname() {
-		return sendNickname;
-	}
-
-	public void setSendNickname(String sendNickname) {
-		this.sendNickname = sendNickname;
-	}
-
-	public int getBoardId() {
-		return boardId;
-	}
-
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
-	}
-
 	public String getContent() {
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSendNickname() {
+		return sendNickname;
+	}
+
+	public void setSendNickname(String sendNickname) {
+		this.sendNickname = sendNickname;
 	}
 
 	public String getTitle() {
@@ -111,13 +108,38 @@ public class AlarmVO {
 		this.title = title;
 	}
 
+	public int getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
+
+	public int getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
+	}
+
+	public int getReplyId() {
+		return replyId;
+	}
+
+	public void setReplyId(int replyId) {
+		this.replyId = replyId;
+	}
+
 	@Override
 	public String toString() {
 		return "AlarmVO [alarmId=" + alarmId + ", memberNickname=" + memberNickname + ", alarmCode=" + alarmCode
 				+ ", alarmChecked=" + alarmChecked + ", alarmCreatedDate=" + alarmCreatedDate + ", alarmPrefix="
-				+ alarmPrefix + ", sendNickname=" + sendNickname + ", boardId=" + boardId + ", content=" + content
-				+ ", title=" + title + "]";
+				+ alarmPrefix + ", content=" + content + ", sendNickname=" + sendNickname + ", title=" + title
+				+ ", boardId=" + boardId + ", commentId=" + commentId + ", replyId=" + replyId + "]";
 	}
+
 	
 	
 }

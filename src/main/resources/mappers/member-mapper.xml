@@ -5,16 +5,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.spring.calla.MemberMapper">
 
+	<select id="login" resultType="String">
+		select ${memberId} from ${member}
+		where ${memberId} = #{memberId} and ${memberPw} = #{memberPw}
+	</select>
+	
+	
+	<select id="select_by_member_id" resultType="MemberVO">
+		select * from ${member}
+		where ${memberId} = #{memberId}
+	</select>
+	
+	<select id="search_id" resultType="String">
+		select ${memberId} from ${member}
+		where ${memberName} = #{memberName} and ${memberEmail} = #{memberEmail}
+	</select>
+	
+	<select id="search_pw" resultType="String">
+		select ${memberPw} from ${member}
+		where ${memberId} = #{memberId} and ${memberPhone} = #{memberPhone}
+	</select>
 
+	<delete id="delete">
+		delete from ${member} where ${memberId} = #{memberId}
+	</delete>
+
+	<select id="select" resultType="MemberVO">
+		select * from ${member}
+	</select>
+
+	<!-- 회원가입 -->
 	<insert id="insert">
 		insert into ${member}
 		(${memberId}, ${memberPw}, ${memberName}, ${memberEmail}, ${memberPhone},
 		${memberInterest}, ${memberAddress}, ${memberNickname})
 		values (#{memberId}, #{memberPw}, #{memberName}, #{memberEmail},
-		#{memberPhone}, #{memberInterest}, #{memberAddress}, #{memberNickname})<!-- 
-			물음표 -->
+		#{memberPhone}, #{memberInterest}, #{memberAddress}, #{memberNickname})
 	</insert>
-	<!-- property의 name과 vo의 변수 이름이 같아야함 -->
 
 	<!-- 아이디 중복체크 -->
 	<select id="select_by_id" resultType="Integer"> <!-- 셀렉트는 무조건 resulttype이 있어야함 -->
@@ -28,75 +55,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{memberNickname}
 	</select>
 	
-	<select id="info" resultType="MemberVO">
-		select ${memberId} and ${memberLevel}
-		from ${member}
-	</select>
-
-
-	<select id="login" resultType="String">
-		select ${memberId} from ${member}
-		where ${memberId} = #{memberId} and ${memberPw} = #{memberPw}
-	</select>
-
-	<select id="select_by_member_id" resultType="MemberVO">
-		select * from ${member}
-		where ${memberId} = #{memberId}
-	</select>
-
 	<update id="update">
 		update ${member}
-		set ${memberPw} = #{memberPw}, ${memberName} = #{memberName},
-		${memberEmail} = #{memberEmail}, ${memberPhone} = #{memberPhone},
-		${memberInterest} = #{memberInterest}, ${memberAddress} =
-		#{memberAddress},
-		${memberNickname} = #{memberNickname}
+		set ${category} = #{newData}
 		where ${memberId} = #{memberId}
 	</update>
-	
-	<select id="search_id" resultType="String">
-		select ${memberId} from ${member}
-		where ${memberName} = #{memberName} and ${memberEmail} = #{memberEmail}
-	</select>
-	
-	<select id="search_pw" resultType="String">
-		select ${memberPw} from ${member}
-		where ${memberId} = #{memberId} and ${memberPhone} = #{memberPhone}
-	</select>
 	
 	<update id="updatePw">
 		update ${member}
 		set ${memberPw} = #{memberPw}
-		where ${memberId} = #{memberId}
-	</update>
-	
-	<update id="updateNickname">
-		update ${member}
-		set ${memberNickname} = #{memberNickname}
-		where ${memberId} = #{memberId}
-	</update>
-	
-	<update id="updatePhone">
-		update ${member}
-		set ${memberPhone} = #{memberPhone}
-		where ${memberId} = #{memberId}
-	</update>
-	
-	<update id="updateEmail">
-		update ${member}
-		set ${memberEmail} = #{memberEmail}
-		where ${memberId} = #{memberId}
-	</update>
-
-	<update id="updateInterest">
-		update ${member}
-		set ${memberInterest} = #{memberInterest}
-		where ${memberId} = #{memberId}
-	</update>
-	
-	<update id="updateAddress">
-		update ${member}
-		set ${memberAddress} = #{memberAddress}
 		where ${memberId} = #{memberId}
 	</update>
 	
@@ -105,295 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${memberLevel} = ${memberLevel} + #{amount}
 		where ${memberId} = #{memberId}
 	</update>
-	
-	<select id="select" resultType="MemberVO">
-		select * from ${member}
-	</select>
-	
-	<delete id="delete">
-		delete from ${member} where ${memberId} = #{memberId}
-	</delete>
-	
-	<select id="select_by_my_u_product" resultType="UproductVO">
-		select
-		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
-		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
-		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
-		from(
-		select rownum rn, a.*
-		from(
-		select * from ${u_product}
-		where ${memberNickname} = #{memberNickname} 
-		)a
-		) where rn between #{start} and #{end}
-
-	</select>
-	
-	<select id="total_count_by_my_u_product"
-		resultType="Integer">
-		select count(*) total_cnt from ${u_product}
-		where ${memberNickname} = #{memberNickname}
-	</select>
-	
-	<select id="select_by_product_id" resultType="UproductVO">
-		select * from
-		${u_product} where ${uProductId} = #{uProductId}
-	</select>
-	
-	<insert id="buy_insert">
-		insert into ${u_product_buy}
-		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
-		${buyerNickname}, ${uProductImagePath}, ${uProductId}, ${sellerNickname})
-		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
-		#{uProductContent}, #{buyerNickname}, #{uProductImagePath}, #{uProductId}, #{sellerNickname})<!-- 
-			물음표 -->
-	</insert>
-	
-	
-	<insert id="sell_insert">
-		insert into ${u_product_sell}
-		(${uProductName}, ${uProductPrice}, ${uProductCategori}, ${memberAddress}, ${uProductContent},
-		${sellerNickname}, ${uProductImagePath}, ${buyerNickname}, ${uProductId})
-		values (#{uProductName}, #{uProductPrice}, #{uProductCategori}, #{memberAddress},
-		#{uProductContent}, #{sellerNickname}, #{uProductImagePath}, #{buyerNickname}, #{uProductId})<!-- 
-			물음표 -->
-	</insert>
-	
-	<select id="select_products_by_option" resultType="UProductVO">
-		select ${uProductId}, ${uProductName}, <!-- ${uProductPrice}, --> ${uProductCreatedDate}, ${uProductLikes}, ${uProductViews}, ${uProductCommentCount}, ${uProductImagePath}, ${uProductCategori}, category
-		from(
-			select rownum rn, a.*
-			from(
-				select b.*
-				from(
-					select ${uProductId}, ${uProductName}, <!-- ${uProductPrice}, --> ${uProductCreatedDate}, ${uProductLikes}, ${uProductViews}, ${uProductCommentCount}, ${uProductImagePath}, ${uProductCategori}, 'u' as category
-					from ${u_product}
-					where ${uProductCategori} like #{interest} and 
-					(${uProductName} like #{keyword} or ${uProductContent} like #{keyword})
-			
-					union all
-			
-					select ${productId}, ${productName}, <!-- ${productPrice}, --> ${productCreatedDate}, ${productLikes}, ${productViews}, ${productCommentCount}, ${productImagePath}, ${productCategori}, 'p' as category
-					from ${product}
-					where ${productCategori} like #{interest} and 
-					(${productName} like #{keyword} or ${productContent} like #{keyword})
-					
-					order by 4 desc
-					)b 
-					where category like #{option}
-				)a
-				
-		) where rn between #{criteria.start} and #{criteria.end}
-	</select>
-	
-	<select id="total_count_products_by_option" resultType="Integer">
-		select count(*) 
-		from (
-			select ${uProductId}, ${uProductName}, <!-- ${uProductPrice},  -->${uProductCreatedDate}, ${uProductLikes}, ${uProductViews}, ${uProductCommentCount}, ${uProductImagePath}, ${uProductCategori}, 'u' as category
-			from ${u_product}
-			where ${uProductCategori} like #{interest} and (${uProductName} like #{keyword} or ${uProductContent} like #{keyword})
-	
-			union all
-	
-			select ${productId}, ${productName}, <!-- ${productPrice}, --> ${productCreatedDate}, ${productLikes}, ${productViews}, ${productCommentCount}, ${productImagePath}, ${productCategori}, 'p' as category
-			from ${product}
-			where ${productCategori} like #{interest} and (${productName} like #{keyword} or ${productContent} like #{keyword})
-			)
-		where category like #{option}
-	</select>
-		
-	
-	<select id="select_boards" resultType="UProductVO">
-		select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, category
-		from(
-			select rownum rn, a.*
-			from(
-				select b.*
-				from(
-					select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, 'au' as category
-					from ${u_product}
-					where ${memberNickname} = #{memberNickname}
-			
-					union all
-			
-					select ${fBoardId}, ${fBoardTitle}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}, 'af' as category
-					from ${f_board}
-					where ${memberNickname} = #{memberNickname}
-					
-					union all
-					
-					select ${qBoardId}, ${qBoardTitle}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}, 'aq' as category
-					from ${q_board}
-					where ${memberNickname} = #{memberNickname}
-					
-					order by 3 desc
-					)b
-					where category like #{option}
-				)a
-		) where rn between #{criteria.start} and #{criteria.end}
-	</select>
-	
-	<select id="total_count_boards" resultType="Integer">
-		select count(*) 
-		from (
-				select ${uProductId}, ${uProductName}, ${uProductCreatedDate}, ${uProductViews}, ${uProductCommentCount}, 'au' as category
-				from ${u_product}
-				where ${memberNickname} = #{memberNickname}
-		
-				union all
-		
-				select ${fBoardId}, ${fBoardTitle}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}, 'af' as category
-				from ${f_board}
-				where ${memberNickname} = #{memberNickname}
-				
-				union all
-				
-				select ${qBoardId}, ${qBoardTitle}, ${qBoardCreatedDate}, ${qBoardViews}, ${qBoardCommentCount}, 'aq' as category
-				from ${q_board}
-				where ${memberNickname} = #{memberNickname}
-				
-				order by 3 desc
-			)
-			where category like #{option}
-
-	</select>
-	
-	<select id="select_comments" resultType="UProductCommentVO">
-		select ${uProductId}, ${uProductCommentContent}, ${uProductCommentCreatedDate}, category
-		from(
-			select rownum rn, a.*
-			from(
-				select b.*
-				from (
-				select ${uProductId}, ${uProductCommentContent}, ${uProductCommentCreatedDate}, 'au' as category
-				from ${u_product_comment}
-				where ${memberNickname} = #{memberNickname}
-		
-				union all
-				
-				select ${productId}, ${productCommentContent}, ${productCommentCreatedDate}, 'ap' as category
-				from ${product_comment}
-				where ${memberNickname} = #{memberNickname}
-		
-				union all
-		
-				select ${fBoardId}, ${fBoardCommentContent}, ${fBoardCommentCreatedDate}, 'af' as category
-				from ${f_board_comment}
-				where ${memberNickname} = #{memberNickname}
-				
-				union all
-				
-				select ${qBoardId}, ${qBoardCommentContent}, ${qBoardCommentCreatedDate}, 'aq' as category
-				from ${q_board_comment}
-				where ${memberNickname} = #{memberNickname}
-				
-				order by 3 desc
-				)b
-				where category like #{option}
-			)a
-		) where rn between #{criteria.start} and #{criteria.end}
-	</select>
-	
-	<select id="total_count_comments" resultType="Integer">
-		select count(*) 
-		from (
-				select ${uProductCommentId}, ${uProductCommentContent}, ${uProductCommentCreatedDate}, 'au' as category
-				from ${u_product_comment}
-				where ${memberNickname} = #{memberNickname}
-		
-				union all
-				
-				select ${productCommentId}, ${productCommentContent}, ${productCommentCreatedDate}, 'ap' as category
-				from ${product_comment}
-				where ${memberNickname} = #{memberNickname}
-		
-				union all
-		
-				select ${fBoardCommentId}, ${fBoardCommentContent}, ${fBoardCommentCreatedDate}, 'af' as category
-				from ${f_board_comment}
-				where ${memberNickname} = #{memberNickname}
-				
-				union all
-				
-				select ${qBoardCommentId}, ${qBoardCommentContent}, ${qBoardCommentCreatedDate}, 'aq' as category
-				from ${q_board_comment}
-				where ${memberNickname} = #{memberNickname}
-			)
-		where category like #{option}
-
-	</select>
-
-	<select id="select_likes" resultType="UProductVO">
-		select ${uProductName}, <!-- ${uProductPrice},--> ${uProductCreatedDate}, ${uProductCategori}, ${uProductViews}, ${uProductLikes}, ${uProductLikeId}, ${uProductId}, category
-		from(
-			select rownum rn, a.*
-			from(
-				select b.*
-				from (
-					select up.${uProductName}, <!-- up.${uProductPrice}, --> up.${uProductCreatedDate}, up.${uProductCategori}, up.${uProductViews}, up.${uProductLikes}, upl.${uProductLikeId}, upl.${uProductId}, 'au' as category
-					from ${u_product} up
-					join ${u_product_like} upl on up.${uProductId} = upl.${uProductId}
-					where upl.${memberId} = #{memberId} 
-		
-					union all
-					
-					select p.${productName}, <!-- p.${productPrice}, --> p.${productCreatedDate}, p.${productCategori}, p.${productViews}, p.${productLikes}, pl.${productLikeId}, pl.${productId}, 'ap' as category
-					from ${product} p
-					join ${product_like} pl on p.${productId} = pl.${productId}
-					where pl.${memberId} = #{memberId} 
-					
-					order by 3 desc
-				)b
-				where category like #{option}
-			)a
-		) where rn between #{criteria.start} and #{criteria.end}
-	</select>
-	
-	<select id="total_count_likes" resultType="Integer">
-		select count(*) 
-		from (
-				select up.${uProductName}, <!-- up.${uProductPrice}, --> up.${uProductCreatedDate}, up.${uProductCategori}, up.${uProductViews}, up.${uProductLikes}, upl.${uProductLikeId}, upl.${uProductId}, 'au' as category
-				from ${u_product} up
-				join ${u_product_like} upl on up.${uProductId} = upl.${uProductId}
-				where upl.${memberId} = #{memberId} 
-		
-				union all
-				
-				select p.${productName}, <!-- p.${productPrice}, --> p.${productCreatedDate}, p.${productCategori}, p.${productViews}, p.${productLikes}, pl.${productLikeId}, pl.${productId}, 'ap' as category
-				from ${product} p
-				join ${product_like} pl on p.${productId} = pl.${productId}
-				where pl.${memberId} = #{memberId} 
-			)
-		where category like #{option}
-
-	</select>
-	
-	<select id="select_orders" resultType="ProductOrderVO">
-		select *
-		from(
-			select rownum rn, a.*
-			from (
-				select *
-				from ${product_order}
-				where ${memberId} = #{memberId} order by ${productOrderCreatedDate} desc
-			)a
-		)
-		where rn between #{criteria.start} and #{criteria.end}
-	</select>
-	
-	<select id="total_count_orders" resultType="Integer">
-		select count(*)
-		from ${product_order}
-		where ${memberId} = #{memberId} 
-	</select>
-	
-	<delete id="delete_uproduct">
-		delete from ${u_product} where ${uProductId} = #{uProductId}
-	</delete>
-	
-	
-	
 	
 </mapper>
 

@@ -18,23 +18,22 @@
 		<div class="row">
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
-				<form action="register" method="POST" enctype="multipart/form-data">
-					<input type="hidden" name="memberNickname"
-						value="${memberNickname }">
-					<div>
-						<p>제목 :</p>
-						<input type="text" name="fBoardTitle" placeholder="제목 입력" required>
-					</div>
-					<div>
-						<p>내용 :</p>
-						<textarea rows="20" cols="120" name="fBoardContent"
-							placeholder="내용 입력"></textarea>
-					</div>
-					<input type="file" name="file">
-					<div>
-						<input type="submit" value="등록">
-					</div>
-				</form>
+				<div class="container">
+					<form action="register" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="memberNickname"
+							value="${memberNickname }">
+						<div class="form-group">
+							<label for="fBoardTitle">제목</label> 
+							<input type="text" class="form-control" name="fBoardTitle" placeholder="제목 입력" required>
+						</div>
+						<div class="form-group">
+							<label for="fBoardContent">내용</label>
+							<textarea class="form-control" rows="10" name="fBoardContent" placeholder="내용 입력"></textarea>
+						</div>
+						<input type="file" name="file">
+						<input type="submit" class="btn btn-primary" value="등록">
+					</form>
+				</div>
 			</main>
 			<%@ include file="../sidebarRight.jspf"%>
 		</div>
