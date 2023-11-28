@@ -274,7 +274,6 @@ public class ProductController {
 
 	        vo.setProductImagePath(fileString.toString());
 
-	        // productService에서 이미지와 다른 정보를 함께 업데이트하는 메서드가 있다고 가정합니다.
 	        productService.update(vo);
 
 	        return "redirect:/product/list?page=" + page;

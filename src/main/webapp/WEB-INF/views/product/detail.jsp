@@ -219,7 +219,7 @@
 			</div>
 			 <c:if test="${productOrderListId == 0 }">
 			<div>
-				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" id="orderBtn" value="바로 구매"></a>
+			    <a href="#" id="orderLink"><input type="button" id="orderBtn" value="바로 구매"></a>
 			</div>
 			</c:if>
 		</c:if>
@@ -812,6 +812,18 @@
 		// 초기 이미지 표시
 		showImage(currentImageIndex);
 
+	</script>
+	
+	<script>
+		document.getElementById('orderLink').addEventListener('click', function(event) {
+		    event.preventDefault(); // 기본 동작인 페이지 이동을 막음
+		    
+		    // 페이지 이동
+		    window.location.href = 'orderList?memberId=' + memberId + '&productId=' + vo.productId;
+		
+		    // 페이지 이동 후 새로고침
+		    location.reload();
+		});
 	</script>
 	
 </body>
