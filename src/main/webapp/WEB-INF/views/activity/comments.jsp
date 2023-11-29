@@ -102,6 +102,16 @@
 				$.ajax({
 					type : 'GET',
 					url : 'comments/' + memberNickname + '/' + option + '/' + page,
+					beforeSend: function() {
+						$('#loadingContainer').remove();
+						
+						var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+						$('body').append(loadingContainer);
+						$('#loadingContainer').css('display','block');
+					},
+					complete: function() {
+						$('#loadingContainer').css('display','none');	
+					},
 					success : function(args) {
 						$(args.list).each(function(){
 							var uProductCommentCreatedDate = new Date(this.uProductCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });

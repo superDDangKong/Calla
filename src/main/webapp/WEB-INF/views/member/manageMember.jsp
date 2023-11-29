@@ -77,6 +77,16 @@
 	            type: 'PUT',
 	            url: 'updatelevel/' + memberId.text(),
 	            data: memberLevel.text(),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (newMemberLevel) {
 	                console.log(newMemberLevel);
 	                if (newMemberLevel == 1) {

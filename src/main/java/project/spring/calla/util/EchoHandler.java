@@ -37,6 +37,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	//클라이언트가 웹 소켓 생성
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		logger.info("세션 생성" + session.getId());
 		logger.info("Socket 연결" + session);
 		//웹 소켓이 생성될 때마다 리스트에 넣어줌
 //		for(WebSocketSession sess : sessions) {

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.service.MemberService;
+import project.spring.calla.util.SessionManager;
 
 @Controller // @Component
 @RequestMapping(value = "/member") // url : /ex02/board
@@ -29,10 +29,14 @@ public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	private static Map<String, HttpSession> loginSessions = new HashMap<>();
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SessionManager sessionManager;
+	
+	private Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
 	
 	@GetMapping("/join")
 	public void showJoinPage() {
@@ -53,12 +57,7 @@ public class MemberController {
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		logger.info("loginPOST() " + loginSessions.toString());
-		HttpSession existedSession = loginSessions.get(memberId);
-		logger.info("= " + existedSession);
-		if (existedSession != null) {
-			existedSession.invalidate();
-		}
-
+		
 		String result = memberService.login(memberId, memberPw);
 		if (result != null) {
 			MemberVO vo = memberService.read(memberId);
@@ -67,12 +66,14 @@ public class MemberController {
 			float memberManner = vo.getMemberManner();
 			
 			reAttr.addFlashAttribute("login_result", "success");
-			HttpSession session = request.getSession();
+			String sessionId = request.getSession().getId();
+			HttpSession session = loginSessions.get(sessionId);
+			logger.info(session.getId());
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
 			session.setAttribute("memberManner", memberManner);
-			session.setMaxInactiveInterval(60 * 60);
+			session.setMaxInactiveInterval(60*60);
 			
 			loginSessions.put(memberId, session);
 			if (targetURL != null) {
@@ -101,7 +102,7 @@ public class MemberController {
 		String memberId = (String) session.getAttribute("memberId");
 		loginSessions.remove(memberId);
 		session.invalidate();
-		
+		logger.info(""+loginSessions);
 		return "redirect:/";
 	} // end logoutGET()
 
