@@ -130,8 +130,14 @@ public class ProductController {
 	} // end list()
 	
 	@GetMapping("/register")
-	public void registerGET() {
+	public String registerGET(HttpSession session) {
+		Integer memberLevel = (Integer) session.getAttribute("memberLevel");
+		logger.info("memberLevel" + memberLevel);
+		if(memberLevel == null || memberLevel < 2) {
+			return "redirect:/product/list";
+		} 
 		logger.info("registerGET()");
+		return "product/register";
 	} // end registerGET()
 	
 	@PostMapping("/register")
@@ -243,18 +249,44 @@ public class ProductController {
 
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, Integer productId, Integer page) {
+	public String updateGET(Model model, Integer productId, Integer page, RedirectAttributes reAttr, HttpSession session) {
 		logger.info("updateGET() 호출 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		logger.info("updateGET() 호출 : vo = " + vo.toString());
+		
+		String sessionMemberNickname = (String) session.getAttribute("memberNickname");
+	    if(sessionMemberNickname == null) {
+	    	return "redirect:/member/login";
+	    }
+	    
+	    String voMemberNickname = vo.getMemberNickname();
+	    
+	    if(!sessionMemberNickname.equals(voMemberNickname)) {
+	    	return "redirect:/product/list?page=" + page;
+	    }
+		
+		
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);		
+		model.addAttribute("page", page);
+		
+		return "redirect:/product/update?productId=" + vo.getProductId();		
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, Integer page, RedirectAttributes reAttr) {
+	public String updatePost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, Integer page, RedirectAttributes reAttr, HttpSession session) {
 	    logger.info("updatePost() 호출 : vo = " + vo.toString());
-
+	    
+	    String sessionMemberNickname = (String) session.getAttribute("memberNickname");
+	    if(sessionMemberNickname == null) {
+	    	return "redirect:/member/login";
+	    }
+	    
+	    String voMemberNickname = vo.getMemberNickname();
+	    
+	    if(!sessionMemberNickname.equals(voMemberNickname)) {
+	    	return "redirect:/product/list?page=" + page;
+	    }
+	    
 	    try {
 	        StringBuilder fileString = new StringBuilder();
 

@@ -39,9 +39,9 @@ public class ProductOrderScheduler {
 			Date orderTime = order.getProductOrderCreatedDate(); // 생선된 시간
 			Instant instant = orderTime.toInstant(); // Date를 Instant로 
 			LocalDateTime afterOrderTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime(); // Instant를 LocalDateTime으로 
-			LocalDateTime oneMinuteAfterOrderTime = afterOrderTime.plusHours(24); // 구매시간 + 24시간
+			LocalDateTime oneDayAfterOrderTime = afterOrderTime.plusHours(24); // 구매시간 + 24시간
 			
-			if(currentTime.isAfter(oneMinuteAfterOrderTime)) {
+			if(currentTime.isAfter(oneDayAfterOrderTime)) {
 				String currentStatus = order.getDeliveryStatus();
 				String newDeliveryStatus;
 				
