@@ -224,6 +224,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name ="memberNickname" value="member_nickname"/>
 		<property name ="sellerNickname" value="seller_nickname"/>
 		
+		<property name="mail_authentication" value="mail_authentication"/>
+		<property name="memberEmail" value="member_email"/>
+		<property name="authenticationKey" value="authentication_key"/>
+		<property name="authenticationStatus" value="authentication_status"/>
 		
 	</properties>
 	

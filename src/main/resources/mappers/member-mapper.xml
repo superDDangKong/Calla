@@ -55,6 +55,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{memberNickname}
 	</select>
 	
+<!-- 	
+	<insert id="insertMailAuth" >
+	    insert into ${mail_authentication}
+	    (${memberEmail}, ${authenticationKey})
+	    values (#{memberEmail}, #{AuthenticationKey}) map으로 보내서 가져올 때 키와 이름이 같아야함 
+	</insert>
+	
+	<insert id="insertMailAuth" >
+	    insert into ${mail_authentication}
+	    (${memberEmail}, ${authenticationKey}, ${authenticationStatus})
+	    values (#{memberEmail}, #{AuthenticationKey}, 0) map으로 보내서 가져올 때 키와 이름이 같아야함 
+	</insert>
+	
+	이메일 인증되었을 때
+	<update id="completeAuth" parameterType="String">
+    UPDATE mail_auth SET is_auth=1
+    WHERE mail=#{mail}
+	</update>
+	
+	이메일 인증키 재발급
+	<update id="updateMailAuth" parameterType="String">
+	    update ${mail_authentication} 
+	    set auth_key=#{authKey}
+	    ,is_auth=0
+	    WHERE mail=#{mail}
+	</update> -->
+	
 	<update id="update">
 		update ${member}
 		set ${category} = #{newData}

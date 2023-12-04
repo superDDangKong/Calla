@@ -26,4 +26,8 @@ public interface MemberDAO {
 	
 	int deleteUProduct(int uProductId);
 	
+	//int insertMailAuthentication(String memberEmail, String AuthenticationKey); 
+		
+	
+	
 }
