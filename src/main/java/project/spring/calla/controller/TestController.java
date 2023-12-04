@@ -50,13 +50,157 @@ import project.spring.calla.util.MediaUtil;
 @RequestMapping(value = "/test") // url : /calla/product
 public class TestController {
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+	
+	@Autowired
+	private UProductService uproductService;
+	
+	@Autowired
+	private UProductLikeService uproductlikeService;
+
+	@Resource(name = "uploadpath")
+	private String uploadpath;
 
 
-	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public void MainGET() throws Exception {
+	@GetMapping("/index")
+	public void list(Model model, Integer page, Integer numsPerPage, String name, String keyword) {
+		logger.info("list() 호占쏙옙");
+		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
+		List<UProductVO> list = null;
 
-		logger.info("占쏙옙占쏙옙 占쏙옙占�");
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
 
+		PageMaker pageMaker = new PageMaker();
+
+		if (name != null) {
+
+			if (name.equals("searchName")) {
+				logger.info("if elseif");
+				list = uproductService.readByCategoriorName(criteria, keyword);
+				pageMaker.setTotalCount(uproductService.getTotalCountsByByCategoriorName(keyword));
+			} else if (name.equals("searchDate")) {
+
+				list = uproductService.readdate(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBydate());
+
+			} else if (name.equals("searchlike")) {
+
+				list = uproductService.readlike(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBylike());
+
+			} else {
+
+				logger.info("if else");
+				list = uproductService.read(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCounts());
+
+			}
+		} else {
+			logger.info("else");
+			list = uproductService.read(criteria);
+			pageMaker.setTotalCount(uproductService.getTotalCounts());
+		}
+
+		logger.info("totalCount = " + pageMaker.getTotalCount());
+		model.addAttribute("list", list);
+		model.addAttribute("name", name);
+		model.addAttribute("keyword", keyword);
+
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	} // end list()
+	
+	@GetMapping("/list")
+	public void lists(Model model, Integer page, Integer numsPerPage, String name, String keyword) {
+		logger.info("list() 호占쏙옙");
+		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
+		List<UProductVO> list = null;
+
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		PageMaker pageMaker = new PageMaker();
+
+		if (name != null) {
+
+			if (name.equals("searchName")) {
+				logger.info("if elseif");
+				list = uproductService.readByCategoriorName(criteria, keyword);
+				pageMaker.setTotalCount(uproductService.getTotalCountsByByCategoriorName(keyword));
+			} else if (name.equals("searchDate")) {
+
+				list = uproductService.readdate(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBydate());
+
+			} else if (name.equals("searchlike")) {
+
+				list = uproductService.readlike(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCountsBylike());
+
+			} else {
+
+				logger.info("if else");
+				list = uproductService.read(criteria);
+				pageMaker.setTotalCount(uproductService.getTotalCounts());
+
+			}
+		} else {
+			logger.info("else");
+			list = uproductService.read(criteria);
+			pageMaker.setTotalCount(uproductService.getTotalCounts());
+		}
+
+		logger.info("totalCount = " + pageMaker.getTotalCount());
+		model.addAttribute("list", list);
+		model.addAttribute("name", name);
+		model.addAttribute("keyword", keyword);
+
+		pageMaker.setCriteria(criteria);
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	} // end list()
+	
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> display(String fileName) {
+		logger.info("display() 호占쏙옙");
+
+		ResponseEntity<byte[]> entity = null;
+		InputStream in = null;
+
+		String filePath = uploadpath + fileName;
+
+		try {
+			in = new FileInputStream(filePath);
+
+			// 占쏙옙占쏙옙 확占쏙옙占쏙옙
+			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
+			logger.info(extension);
+
+			// 占쏙옙占쏙옙 占쏙옙占�(response header)占쏙옙 Content-Type 占쏙옙占쏙옙
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
+			// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), // 占쏙옙占싹울옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
+					httpHeaders, // 占쏙옙占쏙옙 占쏙옙占�
+					HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return entity;
 	}
 	
 	
