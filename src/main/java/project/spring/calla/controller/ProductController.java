@@ -196,9 +196,9 @@ public class ProductController {
 			
 			int result = productService.updateViews(views, productId);
 			if(result == 1) {
-				logger.info("�뜝�룞�삕�쉶�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕");
+				logger.info("result == 1");
 			} else {
-				logger.info("�뜝�룞�삕�뜝�룞�삕");
+				logger.info("result != 1");
 			}
 			
 		}
@@ -359,7 +359,6 @@ public class ProductController {
 	    model.addAttribute("memberId", memberId);
 	    model.addAttribute("productList", productList);
 	    
-		
 	    return "/product/orderList";
 	}
 	
@@ -378,7 +377,6 @@ public class ProductController {
 	    	
 	    }
 	    
-
 	    model.addAttribute("productOrderList", productOrderList);
 
 	    return "/product/order";

@@ -4,21 +4,21 @@ import java.util.Date;
 import java.util.List;
 
 public class ProductVO {
-	private int productId; // 占쏙옙품 占쏙옙호
-	private String productName; // 占쏙옙품 占싱몌옙
-	private int productPrice; // 占쏙옙품 占쏙옙占쏙옙
-	private int productViews; // 占쏙옙품 占쏙옙회占쏙옙
-	private int productLikes; // 占쏙옙품 占쏙옙占싣울옙 占쏙옙
-	private Date productCreatedDate; // 占쏙옙품 占쏙옙占� 占쏙옙짜
-	private String productCategori; // 占쏙옙품 카占쌓곤옙占쏙옙
-	private String productContent; // 占쏙옙품 占쏙옙占쏙옙
-	private int productCommentCount; // 占쏙옙품 占쏙옙占� 占쏙옙占쏙옙
-	private String memberNickname; // 회占쏙옙 占싻놂옙占쏙옙
-	private int memberLevel; // 회占쏙옙 占쏙옙占�
+	private int productId; // 상품 ID
+	private String productName; // 상품 이름	
+	private int productPrice; // 상품 가격
+	private int productViews; // 상품 조회수
+	private int productLikes; // 상품 좋아요
+	private Date productCreatedDate; // 상품 등록 날짜
+	private String productCategori; // 카테고리
+	private String productContent; // 상품 내용
+	private int productCommentCount; // 상품 댓글 수
+	private String memberNickname; // 회원 닉네임
+	private int memberLevel; // 회원 레벨
 	private int productAmount;
 	private int productLikeId;
 	private int productRecentlyViewId;
-	private int productRatedCount; // 占쏙옙품 占쏙옙占쏙옙 占쏙옙占쏙옙
+	private int productRatedCount; // 상품 별점 수
 	private String productImagePath;
 	
 	public ProductVO() {}
