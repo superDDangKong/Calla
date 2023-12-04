@@ -23,6 +23,7 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.service.MemberService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.service.UProductService;
+import project.spring.calla.util.SessionManager;
 
 /**
  * Handles requests for the application home page.
@@ -36,6 +37,9 @@ public class HomeController {
 	MemberService memberService;
 	
 	@Autowired
+	private SessionManager sessionManager;
+	
+	@Autowired
 	ProductService productService;
 	
 	@Autowired
@@ -44,6 +48,9 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
 		logger.info("home controller home »£√‚");
+		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
+		logger.info("loginPOST() " + loginSessions.toString());
+		
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			String memberId = (String) session.getAttribute("memberId");

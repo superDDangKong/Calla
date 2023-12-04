@@ -22,8 +22,7 @@ public class SessionManager implements HttpSessionListener{
 	
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        // 세션이 생성될 때 호출되는 로직을 작성합니다.
-        System.out.println("Session Created: " + se.getSession().getId());
+    	logger.info("session created: " + se.getSession().getId());
         HttpSession session = se.getSession();
         String sessionId = session.getId();
         loginSessions.put(sessionId, session);
@@ -31,8 +30,7 @@ public class SessionManager implements HttpSessionListener{
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        // 세션이 종료될 때 호출되는 로직을 작성합니다.
-        System.out.println("Session Destroyed: " + se.getSession().getId());
+    	logger.info("session created: " + se.getSession().getId());
         HttpSession session = se.getSession();
         String sessionId = session.getId();
         loginSessions.remove(sessionId);

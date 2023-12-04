@@ -2,7 +2,6 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +35,6 @@ public class MemberController {
 	@Autowired
 	private SessionManager sessionManager;
 	
-	private Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
-	
 	@GetMapping("/join")
 	public void showJoinPage() {
 	}
@@ -56,7 +53,8 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
-		logger.info("loginPOST() " + loginSessions.toString());
+//		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
+//		logger.info("loginPOST() " + loginSessions.toString());
 		
 		String result = memberService.login(memberId, memberPw);
 		if (result != null) {
@@ -66,16 +64,22 @@ public class MemberController {
 			float memberManner = vo.getMemberManner();
 			
 			reAttr.addFlashAttribute("login_result", "success");
-			String sessionId = request.getSession().getId();
-			HttpSession session = loginSessions.get(sessionId);
-			logger.info(session.getId());
+//			String sessionId = request.getSession().getId();
+//			HttpSession session = loginSessions.get(sessionId);
+			HttpSession session = request.getSession();
+			logger.info("session = " + session);
+//			HttpSession existedSession = loginSessions.get(memberId);
+//			if(existedSession != null) {
+//				logger.info(existedSession.toString());
+//				existedSession.invalidate();
+//			}
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
 			session.setAttribute("memberManner", memberManner);
 			session.setMaxInactiveInterval(60*60);
 			
-			loginSessions.put(memberId, session);
+//			loginSessions.put(memberId, session);
 			if (targetURL != null) {
 				return "redirect:" + targetURL;
 			} else {
@@ -97,12 +101,13 @@ public class MemberController {
 	} // end loginPOST()
 	@GetMapping("/logout")
 	public String logoutGET(HttpServletRequest request) {
-		logger.info("logoutGET() " + loginSessions.toString());
+//		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
+//		logger.info("logoutGET() " + loginSessions.toString());
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
-		loginSessions.remove(memberId);
+//		loginSessions.remove(memberId);
 		session.invalidate();
-		logger.info(""+loginSessions);
+//		logger.info(""+loginSessions);
 		return "redirect:/";
 	} // end logoutGET()
 
