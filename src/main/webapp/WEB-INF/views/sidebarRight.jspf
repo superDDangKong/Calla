@@ -82,6 +82,16 @@
 			$.ajax({
 				type : 'GET',
 				url : '/calla/activity/recentlyView/product/' + memberId + '/' + productPage,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 				success : function(lists) {
 					var productHTML = "공용상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
@@ -138,6 +148,16 @@
 			$.ajax({
 				type : 'GET',
 				url : '/calla/activity/recentlyView/uProduct/' + memberId + '/' + uProductPage,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 				success : function(lists) {
 					var uProductHTML = "중고상품";
 					var hasPrev = Boolean(lists.pageMaker.hasPrev);
@@ -249,6 +269,16 @@
 			$.ajax({
 				type : 'delete',
 				url : '/calla/activity/recentlyView/product/' + productRecentlyViewId,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 				success : function(result) {
 						if(result==1) {
 							console.log("삭제성공")
@@ -267,6 +297,16 @@
 			$.ajax({
 				type : 'delete',
 				url : '/calla/activity/recentlyView/uProduct/' + uProductRecentlyViewId,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 				success : function(result) {
 						if(result==1) {
 							console.log("삭제성공")

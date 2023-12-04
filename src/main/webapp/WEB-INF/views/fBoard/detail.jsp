@@ -79,7 +79,7 @@ li {
 									<br> ${memberNickname}<br> 
 									<input type="hidden" id="memberNickname" value=${memberNickname }>
 									<div class="form-group">
-										<textarea id="fBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required>	</textarea>
+										<textarea id="fBoardCommentContent" class="form-control" rows="1" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
 									</div>
 									<div style="text-align: right;">
 										<button id="btnCommentAdd" class="btn btn-dark">작성</button>
@@ -119,11 +119,11 @@ li {
     	});
         getAllComments();
 		
-        var fBoardId = $('#fBoardId').val();
-        var memberNickname = $('#memberNickname').val();
-        var fBoardCommentContent = $('#fBoardCommentContent').val();
-        console.log(fBoardId + memberNickname + fBoardCommentContent);
+       
         $('#btnCommentAdd').click(function () {
+            var fBoardId = $('#fBoardId').val();
+            var memberNickname = $('#memberNickname').val();
+        	var fBoardCommentContent = $('#fBoardCommentContent').val();
             var obj = {
                 'fBoardId': fBoardId,
                 'memberNickname': memberNickname,
@@ -137,8 +137,17 @@ li {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('댓글 입력 성공');
                         socket.send(
@@ -151,13 +160,21 @@ li {
                 }
             });
         });
+        
+        
         function getAllComments() {
-            console.log("getAllComments() 호출");
             var fBoardId = $('#fBoardId').val();
+            var memberNickname = $('#memberNickname').val();
             var commentPage = $('#pageMaker_commentPage').val();
             var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
             var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
-           
+
+            $('#loadingContainer').remove();
+
+            var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+            $('body').append(loadingContainer);
+            $('#loadingContainer').css('display', 'block');
+            
             $.getJSON(url, function (data) {
                 var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
                 var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
@@ -165,18 +182,11 @@ li {
                 $('#pageMaker_endPageNo').val(data.pageMaker.endPageNo);
                 var pageMaker_startPageNo = +$('#pageMaker_startPageNo').val();
                 var pageMaker_endPageNo = +$('#pageMaker_endPageNo').val();
-                var memberNickname = $('#memberNickname').val();
+
                 var list = '';
 
                 $(data.list).each(function () {
                     var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                    var disabled = 'disabled';
-                    var readonly = 'readonly';
-
-                    if (memberNickname == this.memberNickname) {
-                        disabled = '';
-                        readonly = '';
-                    }
 
                     list += '<div class="comment_item">'
                         + '<input type="hidden" class="fBoardCommentId" value="' + this.fBoardCommentId + '">'
@@ -188,29 +198,30 @@ li {
                         + '</textarea>'
                         + fBoardCommentCreatedDate
                         + '<br>'
-                        + '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
-                        + '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-                        + '<button class="btnReply">답글</button>'
-                        + '<br>'
-                        + '<hr>'
-                        + '</div>';
+                        if (memberNickname == this.memberNickname) {
+	                       list += '<button class="btnCommentUpdate">수정</button>'
+	                        + '<button class="btnCommentDelete">삭제</button>'
+                        }
+                        list += '<button class="btnReply">답글</button>'
+	                        + '<br>'
+	                        + '<hr>'
+	                        + '</div>';
                 });
 
                 list += '<div style="text-align: center;">'
-                    + '<ul id="comment_page">';
+                    + '<ul class="pagination justify-content-center" id="comment_page">';
 
                 if (pageMaker_hasPrev) {
-                    list += '<li><button class="btn_comment_prev">이전</button></li>';
+                    list += '<li class="text-secondary" style="margin-right: 5px"><button class="btn_comment_prev">◀</button></li>';
                 }
 
                 for (var num = pageMaker_startPageNo; num <= pageMaker_endPageNo; num++) {
-                    list += '<li><button class="btn_comment_page" value=' + num + '>'
+                    list += '<li class="text-secondary" style="margin-right: 5px"><button class="btn_comment_page" value=' + num + '>'
                         + num
                         + '</button></li>';
                 }
-
                 if (pageMaker_hasNext) {
-                    list += '<li><button class="btn_comment_next">이후</button></li>';
+                    list += '<li class="text-secondary" style="margin-right: 5px"><button class="btn_comment_next">▶</button></li>';
                 }
 
                 list += '</ul>' + '</div>'
@@ -222,7 +233,7 @@ li {
     	        if (fragment) {
     	        	
     	        	fragment = fragment.replace('#', '');
-    	        	fragmentList = fragment.split(',');
+    	        	var fragmentList = fragment.split(',');
     	        	
     	        	var targetCommentElement = $('.fBoardCommentId').filter('[value="' + fragmentList[0] + '"]');
 	    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
@@ -243,7 +254,10 @@ li {
 	    	    	       }
     	       	
     	        } // if(fragment)
-            });
+            })//end getJSON
+            .always(function() {
+                $('#loadingContainer').css('display', 'none');
+              })
         } // end getAllComents
 
         $(document).on('click', '.btn_comment_page', function () {
@@ -272,8 +286,17 @@ li {
                     'Content-Type': 'application/json'
                 },
                 data: fBoardCommentContent,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('댓글 수정 성공!');
                         getAllComments();
@@ -293,8 +316,17 @@ li {
                     'Content-Type': 'application/json'
                 },
                 data: fBoardId,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('댓글 삭제 성공!');
                         getAllComments();
@@ -304,13 +336,14 @@ li {
         });
 
         $('#comments').on('click', '.comment_item .btnReply', function () {
-            if ($('#memberNickname').val() == null) {
-                alert('답글을 작성하려면 로그인 해 주세요');
-                return;
-            }
-
             var fBoardCommentId = $(this).closest('.comment_item').find('.fBoardCommentId');
-            getAllReplies(fBoardCommentId);
+            var replies = $(this).closest('.comment_item').find('.replies');
+            if(replies.children().length === 0) {
+            	getAllReplies(fBoardCommentId);
+            } else {
+            	replies.html("");
+            }
+            	
         });
 
 							
@@ -319,6 +352,12 @@ li {
             var url = 'replies/all/' + fBoardCommentId.val();
             var comment_item = fBoardCommentId.closest('.comment_item');
 
+            $('#loadingContainer').remove();
+
+            var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+            $('body').append(loadingContainer);
+            $('#loadingContainer').css('display', 'block');
+            
             $.getJSON(url, function (data) {
                 var memberNickname = $('#memberNickname').val();
                 var list = '';
@@ -326,14 +365,6 @@ li {
                 $(data).each(function () {
 
                     var fBoardReplyCreatedDate = new Date(this.fBoardReplyCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric',                     month: '2-digit', day: '2-digit' });
-                    var disabled = 'disabled';
-                    var readonly = 'readonly';
-
-                    if (memberNickname == this.memberNickname) {
-                        console.log("nickname 일치")
-                        disabled = '';
-                        readonly = '';
-                    }
 
                     list += '<div class="reply_item bg-light border">'
                         + '<pre>'
@@ -351,23 +382,29 @@ li {
                         + fBoardReplyCreatedDate
                         + '<br>'
                         + '&nbsp&nbsp&nbsp&nbsp'
-                        + '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
-                        + '&nbsp'
-                        + '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
-                        + '<br>'
+                        if (memberNickname == this.memberNickname) {
+	                        list += '<button class="btnReplyUpdate">수정</button>'
+		                        + '&nbsp'
+		                        + '<button class="btnReplyDelete">삭제</button>'
+                        }
+                        list += '<br>'
                         + '</pre>'
                         + '</div>';
                 }); // end each
-
-                list += memberNickname
-                    + '<br>'
-                    + '<div class="form-group bg-transparent border">'
-                    + '<textarea class="fBoardReplyContentReg form-control" rows="1" placeholder="답글 내용을 입력해 주세요." style="border:none;" required>'
-                    + '</textarea> </div>'
-                    + '<div style="text-align:right;">'
-                    + '<button class="btnReplyAdd btn btn-dark">작성</button>'
-                    + '</div>' + '<hr>'
-                    + '<br>'
+				if(memberNickname != null) {
+	                list += memberNickname
+	                    + '<br>'
+	                    + '<div class="form-group bg-transparent border">'
+	                    + '<textarea class="fBoardReplyContentReg form-control" rows="1" placeholder="답글 내용을 입력해 주세요." style="border:none;" required>'
+	                    + '</textarea> </div>'
+	                    + '<div style="text-align:right;">'
+	                    + '<button class="btnReplyAdd btn btn-dark">작성</button>'
+	                    + '</div>' + '<hr>'
+	                    + '<br>'
+				} else {
+					list += '답글 작성은 <a href="/calla/member/login?targetURL=/fBoard/detail?fBoardId=' + $("#fBoardId").val() + '">로그인</a>이 필요합니다.'
+						+ '<hr><br>'
+				}
 
                 comment_item.append('<div class="replies bg-light">'
                     + list
@@ -376,23 +413,33 @@ li {
         	   if (fragment) {
         	        	
         	       fragment = fragment.replace('#', '');
-        	       fragmentList = fragment.split(',');
+        	       var fragmentList = fragment.split(',');
         	       
 	        	   if (fragmentList[1] > 0) {
-
-	        		   setTimeout(function() {
 	        		   var targetReplyElement = $('.fBoardReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
 	        		   
-		        		   targetReplyElement.style.backgroundColor = 'lightgray';
-		        		   targetReplyElement.style.border = '2px solid';
-	        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-	        		   }, 100);
-	        		   if (window.location.hash) {
+	        		   targetReplyElement.classList.remove('bg-light');
+	        		   targetReplyElement.classList.remove('border');
+	        		   targetReplyElement.style.backgroundColor = 'lightgray';
+	        		   targetReplyElement.style.border = '2px solid';
+        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+						
+        		       setTimeout(function() {
+        		    	   targetReplyElement.style.backgroundColor = '';
+        		    	   targetReplyElement.style.border = '';
+		    	           targetReplyElement.classList.add('bg-light');
+		        		   targetReplyElement.classList.add('border');
+	    	           }, 2000);  // 2초 후에 스타일 초기화
+        		       
+        		       if (window.location.hash) {
 	        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
 	        			}
 	        	   }
         	   }
-            }); // end getJson
+            })
+            .always(function() {
+                $('#loadingContainer').css('display', 'none');
+              })// end getJson
         } // end getAllReplies
 
         $(document).on('click', '.btnReplyAdd', function () {
@@ -410,7 +457,6 @@ li {
                 'memberNickname': memberNickname,
                 'fBoardReplyContent': fBoardReplyContent
             };
-            console.log(obj);
 
             $.ajax({
                 type: 'POST',
@@ -419,8 +465,17 @@ li {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('답글 입력 성공');
                         socket.send(
@@ -439,7 +494,6 @@ li {
             var fBoardCommentId = commentItem.find('.fBoardCommentId');
             var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
             var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
-            console.log("선택된 답글 번호 : " + fBoardReplyId + ", 답글 내용 : " + fBoardReplyContent);
 
             $.ajax({
                 type: 'PUT',
@@ -448,8 +502,17 @@ li {
                     'Content-Type': 'application/json'
                 },
                 data: fBoardReplyContent,
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('답글 수정 성공!');
                         getAllReplies(fBoardCommentId);
@@ -462,7 +525,6 @@ li {
             var commentItem = $(this).closest('.comment_item');
             var fBoardCommentId = commentItem.find('.fBoardCommentId');
             var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
-            console.log("선택된 댓글 번호 : " + fBoardReplyId);
 
             $.ajax({
                 type: 'DELETE',
@@ -470,8 +532,17 @@ li {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
                 success: function (result) {
-                    console.log(result);
                     if (result == 1) {
                         alert('답글 삭제 성공!');
                         getAllReplies(fBoardCommentId);

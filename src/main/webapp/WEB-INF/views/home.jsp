@@ -41,7 +41,6 @@
 </head>
 <body>
 
-	<!-- 소켓 -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
 			<a class="navbar-brand" href="/calla/">Goott mall</a>
@@ -69,10 +68,6 @@
 		</div>
 	</nav>
 
-
-
-
-
 	<div class="slide_div_wrap">
 		<div class="slide_div">
 			<div>
@@ -88,9 +83,6 @@
 		</div>
 	</div>
 
-
-
-
 	<div id="navigator" class="text-center bg-success py-3">
 		<div class="container">
 			<div class="nav justify-content-center">
@@ -101,89 +93,9 @@
 			</div>
 		</div>
 	</div>
-
-
-
-	<ul id="alarmUL">ul
-	</ul>
-	<i id="alarmI">i</i>
-	<div id="alarmDiv">div</div>
-	<input type="hidden" id="socketuserId" value=${memberId }>
-
-	<script type="text/javascript">
-		const alarmUL = document.querySelector("#alarmUL");
-		const alarmI = document.querySelector("#alarmI");
-		const alarmDiv = document.querySelector("#alarmDiv");
-		var sock = null;
-
-		$(document).ready(function() {
-			connectWs();
-
-		});
-
-		//소켓
-		function connectWs() {
-			var ws = new SockJS("http://localhost:8080/calla/echo");
-			sock = ws;
-
-			ws.onopen = function() {
-				console.log("연결완료");
-				ws.send($('#socketuserID').val());
-			};
-
-			ws.onmessage = function(event) {
-				/* 받을 알람이 있을 때 */
-				console.log(event.data);
-				if (event.data.length > 0) {
-					let newAlarm = '';
-					newAlarm += '<li scope="col">' + event.data + "</li>"
-					$('#alarmUL').append(newAlarm);
-					alarmDiv.style.visibility = "visible";
-				}
-			};
-
-			ws.onclose = function(event) {
-				console.log('WebSocket 연결이 닫혔습니다.');
-				console.log('코드: ' + event.code + ', 이유: ' + event.reason);
-			};
-
-		};
-
-		/* 알람창 추가 */
-
-		alarmI.addEventListener('click', function() {
-			alarmUL.classList.toggle('visible');
-			$(this).stop(false, false);
-		});
-
-		alarmUL.addEventListener('click', function(e) {
-			var endIdx = e.target.textContent.indexOf(")");
-			var idx = e.target.textContent.substr(1, endIdx - 1);
-
-			$.ajax({
-				url : '/alarmDel',
-				data : {
-					"idx" : idx
-				},
-				type : 'post',
-				success : function(data) {
-					console.log(data);
-					alert("성공");
-				}
-			})
-
-			$(e.target).remove();
-			if (alarmUL.children.length == 0) {
-				alarmDiv.style.visibility = "hidden";
-			}
-
-		})
-	</script>
-
-	<!-- 소켓 -->
 	<div class="container-fluid">
 		<div class="row">
-			<%@ include file="sidebar2.jspf"%>
+			<%@ include file="sidebar2.jspf"%> 
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<c:if test="${not empty memberNickname }">
 					<h5>${memberNickname }님환영합니다!</h5>

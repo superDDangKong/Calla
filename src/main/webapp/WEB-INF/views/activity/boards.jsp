@@ -97,6 +97,16 @@
 				$.ajax({
 					type : 'GET',
 					url : 'boards/' + memberNickname + '/' + page + '/' + option,
+					beforeSend: function() {
+						$('#loadingContainer').remove();
+						
+						var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+						$('body').append(loadingContainer);
+						$('#loadingContainer').css('display','block');
+					},
+					complete: function() {
+						$('#loadingContainer').css('display','none');	
+					},
 					success : function(args) {
 						$(args.list).each(function(){
 							var uProductCreatedDate = new Date(this.uProductCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -132,7 +142,16 @@
 							$('#close').html('<button id="btn_close" style="font-size:10px;">접기<br>↑</button>');
 						} 
 						
-					}// end success
+					},// end success
+					beforeSend: function() {
+						console.log('beforeSend 호출')
+						$('#btnLogin').html('<div class="loading"></div>');
+						$('#btnLogin').attr('disabled',true);
+					},
+					complete: function() {
+						console.log('complete 호출')
+						$('#btnLogin').attr('disabled',false);
+					}
 				}); // end ajax
 			} // end readBoard(option)	
 			

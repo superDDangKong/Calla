@@ -233,6 +233,16 @@ table, th, td {
 	                'Content-Type': 'application/json'
 	            },
 	            data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -260,6 +270,16 @@ table, th, td {
 	            data: {
 	                memberNickname: memberNickname
 	            },
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -298,6 +318,16 @@ table, th, td {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -340,6 +370,16 @@ table, th, td {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -386,6 +426,16 @@ table, th, td {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -433,6 +483,16 @@ table, th, td {
 	                    'Content-Type': 'application/json'
 	                },
 	                data: JSON.stringify(obj),
+					beforeSend: function() {
+						$('#loadingContainer').remove();
+						
+						var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+						$('body').append(loadingContainer);
+						$('#loadingContainer').css('display','block');
+					},
+					complete: function() {
+						$('#loadingContainer').css('display','none');	
+					},
 		                success: function (result) {
 		                    console.log(result);
 		                    if (result == 1) {
@@ -463,6 +523,16 @@ table, th, td {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(obj),
+				beforeSend: function() {
+					$('#loadingContainer').remove();
+					
+					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+					$('body').append(loadingContainer);
+					$('#loadingContainer').css('display','block');
+				},
+				complete: function() {
+					$('#loadingContainer').css('display','none');	
+				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {

@@ -23,6 +23,7 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.service.MemberService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.service.UProductService;
+import project.spring.calla.util.SessionManager;
 
 /**
  * Handles requests for the application home page.
@@ -37,6 +38,9 @@ public class HomeController {
 	MemberService memberService;
 	
 	@Autowired
+	private SessionManager sessionManager;
+	
+	@Autowired
 	ProductService productService;
 	
 	@Autowired
@@ -44,38 +48,43 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("memberId");
+		logger.info("home controller home »£√‚");
+		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
+		logger.info("loginPOST() " + loginSessions.toString());
 		
-		Map<String, Object> lists = new HashMap();
-		if(memberId != null) {
-			MemberVO vo = memberService.read(memberId);
-			String[] interests = vo.getMemberInterest().split(" ");
-			int interestsLength = interests.length;
-			List<ProductVO> productList = new ArrayList<ProductVO>();
-			List<UProductVO> uProductList = new ArrayList<UProductVO>();;
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			String memberId = (String) session.getAttribute("memberId");
 			
-			for(int i=0; i<interestsLength; i++) {
-				String interest = interests[i];
+			Map<String, Object> lists = new HashMap();
+			if(memberId != null) {
+				MemberVO vo = memberService.read(memberId);
+				String[] interests = vo.getMemberInterest().split(" ");
+				int interestsLength = interests.length;
+				List<ProductVO> productList = new ArrayList<ProductVO>();
+				List<UProductVO> uProductList = new ArrayList<UProductVO>();;
 				
-				List<ProductVO> productListByInterest = productService.readByInterest(interest);
-				productList.addAll(productListByInterest);
+				for(int i=0; i<interestsLength; i++) {
+					String interest = interests[i];
+					
+					List<ProductVO> productListByInterest = productService.readByInterest(interest);
+					productList.addAll(productListByInterest);
+					
+					List<UProductVO> uProductListByInterest = uProductService.readByInterest(interest);
+					uProductList.addAll(uProductListByInterest);
+				}
+	
+				lists.put("productList", productList);
+				lists.put("uProductList", uProductList);
 				
-				List<UProductVO> uProductListByInterest = uProductService.readByInterest(interest);
-				uProductList.addAll(uProductListByInterest);
+			} else {
+				List<ProductVO> productList = productService.read();
+				List<UProductVO> uProductList = uProductService.read();
+				lists.put("productList", productList);
+				lists.put("uProductList", uProductList);
 			}
-
-			lists.put("productList", productList);
-			lists.put("uProductList", uProductList);
-			
-		} else {
-			List<ProductVO> productList = productService.read();
-			List<UProductVO> uProductList = uProductService.read();
-			lists.put("productList", productList);
-			lists.put("uProductList", uProductList);
+			model.addAttribute("lists", lists);
 		}
-		model.addAttribute("lists", lists);
 		return "home";
 	}
-	
 }

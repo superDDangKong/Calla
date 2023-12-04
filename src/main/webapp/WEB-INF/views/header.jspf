@@ -10,13 +10,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="/calla/resources/css/loading.css">
 <title>구트 쇼핑몰</title>
-
 </head>
 <body>
-
+<div id="realTimeAlarm" style="display: none; z-index: 1; position: fixed; background-color:white; color:black; width:100%; text-align:center;"></div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
 			<a class="navbar-brand" href="/calla/">Goott mall</a>
@@ -33,11 +32,13 @@
 				<c:if test="${not empty memberNickname }">
 					${memberNickname }&nbsp;님&nbsp;&nbsp;
 					<input type="hidden" id="headerMemberNickname" value="${memberNickname }">
-					<button type="button" class="btn position-relative" id="btn_notice">
-					    <div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white;  overflow-y: scroll;"></div>
-					    <i class="fas fa-bell"></i>
-					    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger dotIcon" style="width: 10px; height: 10px; display:none;"> </span>
-					</button>
+					<div id="alarms">
+						<button type="button" class="btn position-relative" id="btn_notice">
+						    <div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white;  overflow-y: scroll;"></div>
+						    <i class="fas fa-bell"></i>
+						    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger dotIcon" style="width: 10px; height: 10px; display:none;"> </span>
+						</button>
+					</div>
 	                &nbsp;&nbsp;
 					<form action="/calla/member/logout" method="get">
 						<input type="submit" value="로그아웃">
@@ -50,7 +51,7 @@
 			</div>
 		</div>
 	</nav>
-	<div id="realTimeAlarm" style="display: none;"></div>
+	<div id="realTimeAlarm" style="display: none; z-index: 1; position: fixed; background-color:white; font-color:black; width:100%;"></div>
 	
 	<div id="form_div" style="display: none;">
 		<form action="" method="get" id="alarmForm">
@@ -59,7 +60,6 @@
 			<input type="hidden" name="memberId" id="headerMemberId" value=${memberId }>
 		</form>
 	</div>
-	
 	<header class="bg-dark py-5">
 	    <div class="container px-4 px-lg-5 my-5">
 	        <div class="text-center text-white">
@@ -94,7 +94,7 @@
 	        </div>
 	    </div>
 	</header>
-	
+		
 	<div id="navigator" class="text-center bg-success py-3">
 	    <div class="container">
 	        <div class="nav justify-content-center">
@@ -105,7 +105,6 @@
 	        </div>
 	    </div>
 	</div>
-	
 <script type="text/javascript">
 		var socket = null;
 		var timeOut = null;
@@ -191,17 +190,29 @@
 			ws.onerror = function (err) { console.log('Error:', err); };
 		} // end connect
 		
+			$('#btn_notice').on('click', function(event) {
+				if (!$(event.target).is($(this).find('#alarm_div'))) {
+				    var alarmDiv = $('#alarm_div');
 		
-			$('#btn_notice').on('click', function() {
-				if ($('#alarm_div').children().length === 0) {
-			        readAlarm();
-			        $('#alarm_div').css("display","block");
-			    } else {
-			        $('#alarm_div').html("");
-			        $('#alarm_div').hide();
-			    }
-			}) // end btn_notice.click
-
+				    if (alarmDiv.css("display") === "none") {
+				        readAlarm();
+				        alarmDiv.css("display", "block");
+				    } else {
+				        alarmDiv.html("");
+				        alarmDiv.css("display", "none");
+				    }
+				}
+			});
+		
+		    document.addEventListener('click', function (event) {
+		        var targetElement = event.target;
+		        var alarmDiv = $('#alarm_div');
+		        if (targetElement.closest('#alarms')) {
+		        } else {
+		            alarmDiv.css("display", "none");
+		        }
+		    }); 
+		
 			function readAlarm() {
 				var memberNickname = $('#headerMemberNickname').val();
 				var memberId = $('#headerMemberId').val();
@@ -211,6 +222,16 @@
 				$.ajax({
 					type : 'GET',
 					url : '/calla/alarm/all/' + memberNickname,
+					beforeSend: function() {
+						$('#loadingContainer').remove();
+						
+						var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+						$('body').append(loadingContainer);
+						$('#loadingContainer').css('display','block');
+					},
+					complete: function() {
+						$('#loadingContainer').css('display','none');	
+					},
 					success : function(lists) {
 						$(lists).each(function(){
 							if(this.alarmChecked == 'o'){
@@ -229,7 +250,6 @@
 							
 							list += 
 								 '<div class="alarm_list" style="position: relative; background-color:' + bgColor + ';">'
-								+ '<input type="hidden" class="pre_url" value="/calla/' + prefix + '/detail?' + prefix +'Id='+ this.boardId + '&memberId=' + memberId + '">'
 								+ '<input type="hidden" class="alarmId" value="' + this.alarmId + '">'
 								+ '<input type="hidden" class="alarmCode" value="' + this.alarmCode + '">'
 								+ '<input type="hidden" class="alarmPrefix" value="' + this.alarmPrefix + '">'
@@ -254,12 +274,21 @@
 						}
 						
 						$('.btn_delete').click(function(){
-							console.log("delete 클릭");
 							var alarmId = $(this).closest('.alarm_list').find('.alarmId').val();
 							console.log(alarmId);
 							$.ajax({
 								type : 'delete',
 								url : '/calla/alarm/' + alarmId,
+								beforeSend: function() {
+									$('#loadingContainer').remove();
+									
+									var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
+									$('body').append(loadingContainer);
+									$('#loadingContainer').css('display','block');
+								},
+								complete: function() {
+									$('#loadingContainer').css('display','none');	
+								},
 								success : function(result) {
 										if(result==1) {
 											console.log("삭제성공")
@@ -285,7 +314,7 @@
 							setAndSubmit(alarmCode, alarmPrefix, boardId, commentId, replyId);
 							
 						}); // end alarm_list.click
-					}// end success
+					},// end success
 				}); // end ajax
 			}// end readAlarm
 			
@@ -295,9 +324,9 @@
 					type : 'GET',
 					url : '/calla/alarm/check/' + memberNickname,
 					success : function(result) {
-						if(result != 0) {
+						if(result != 0) { // 안읽은게 있을때
 							$('.dotIcon').css("display", "block");
-						} else {
+						} else { // 안읽은게 없을때
 							$('.dotIcon').css("display", "none");	 
 						}
 					}// end success
@@ -355,7 +384,7 @@
 								if(result==1) {
 									console.log("업데이트 성공 x -> o")
 									check();
-									}
+								}
 						}// end success
 					}); // end ajax
 			} // end alarmUpdate
