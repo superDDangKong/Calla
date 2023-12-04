@@ -1,8 +1,6 @@
 package project.spring.calla.domain;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class ProductOrderVO {
 	private String memberId;

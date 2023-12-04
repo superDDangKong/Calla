@@ -1,7 +1,6 @@
 package project.spring.calla.domain;
 
 import java.util.Date;
-import java.util.List;
 
 public class ProductVO {
 	private int productId; // 상품 ID

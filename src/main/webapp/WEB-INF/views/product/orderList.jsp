@@ -433,5 +433,20 @@ li {
 	    }
 	   
 	</script>
+	
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        // 모달로 이동하는 버튼 클릭 시 실행되는 함수
+	        $('.btn-primary[data-toggle="modal"]').on('click', function() {
+	            var checkedCount = $('.ProductOrderCheckBox:checked').length;
+	            if (checkedCount === 0) {
+	                alert('선택한 상품이 없습니다.');
+	                return false; // 모달로의 이동을 막기 위해 false 반환
+	            } 
+	        });
+	    });
+	</script>
+	
+	
 </body>
 </html>

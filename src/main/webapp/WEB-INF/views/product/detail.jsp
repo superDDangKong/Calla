@@ -226,7 +226,9 @@
 	</div>
 		
 	<c:if test="${memberNickname == null }">
-		<br> 구매하실려면 로그인해 주세요.
+		<div style="text-align: center;">
+	        <br> 구매하실려면 로그인해 주세요.
+	    </div>
 	</c:if>
 	<p></p>
 	<c:if test="${memberNickname != null}">
@@ -246,7 +248,9 @@
 	</div>
 	</c:if>
 	<c:if test="${memberNickname == null}">
-		<br> 댓글을 작성하려면 로그인해 주세요.
+		<div style="text-align: center;">
+	        <br> 댓글 / 답글을 작성하려면 로그인해 주세요.
+	    </div>
 	</c:if>
 	
 	<hr>
@@ -788,24 +792,24 @@
 	
 	<script>
 		var currentImageIndex = 0;
-		var images = document.querySelectorAll('.slider img');
-		var prevBtn = document.querySelector('.prevBtn');
-		var nextBtn = document.querySelector('.nextBtn');
+		var images = document.querySelectorAll('.slider img'); // 모든 이미지 요소
+		var prevBtn = document.querySelector('.prevBtn'); // 이전 버튼 요소
+		var nextBtn = document.querySelector('.nextBtn'); // 다음 버튼 요소
 	
 		function showImage(index) {
 		    images.forEach(function(image) {
-		        image.style.display = 'none';
+		        image.style.display = 'none'; // 모든 이미지 숨김
 		    });
-		    images[index].style.display = 'block';
+		    images[index].style.display = 'block'; // 주어진 인텍스의 이미지 표출
 		}
 	
 		prevBtn.addEventListener('click', function() {
-		    currentImageIndex = (currentImageIndex === 0) ? images.length - 1 : currentImageIndex - 1;
+		    currentImageIndex = (currentImageIndex === 0) ? images.length - 1 : currentImageIndex - 1; // 이전 이미지 인덱스
 		    showImage(currentImageIndex);
 		});
 	
 		nextBtn.addEventListener('click', function() {
-		    currentImageIndex = (currentImageIndex === images.length - 1) ? 0 : currentImageIndex + 1;
+		    currentImageIndex = (currentImageIndex === images.length - 1) ? 0 : currentImageIndex + 1; // 다음 이미지 인덱스
 		    showImage(currentImageIndex);
 		});
 	
