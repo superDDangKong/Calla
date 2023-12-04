@@ -156,7 +156,17 @@ input {
 						</span>
 					</div>
 				</div>
-				<button type="submit" target="_self" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">아이디 찾기</button>
+				<!-- <div class="style__FormController-sc-sshr17-2 iZjoOv">
+					<div class="Input__InputWrap-sc-tapcpf-1 kjWnKT">
+						<label id="condition1">이메일 인증번호</label>
+						<span class="Input__InputStateWrap-sc-tapcpf-0 bSpIrI">
+							<input type="text" id="searchCondition1" name="memberEmail" placeholder="이메일 입력">
+							<i class="icon-font icon-font-warning"></i>
+						</span>
+					</div>
+				</div> -->
+				<button type="submit" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">아이디 찾기</button>
+				<button type="button"id="authentication" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">인증번호 받기</button>
 			</form>
 		</div>
 	</div> 
@@ -242,12 +252,10 @@ input {
 				})
 			})
 			
+		$('#authentication').click(function(){
 			
-		});
-		
-		
-		
-		
+		})// end click		
+		}); // end document.ready
 	</script>
 
 	<%@ include file="../footer.jspf"%>

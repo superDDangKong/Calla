@@ -66,21 +66,21 @@ public class MemberDAOImple implements MemberDAO{
 	
 	@Override
 	public List<MemberVO> select() {
-		logger.info("select í˜¸ì¶œ");
+		logger.info("select()");
 		return sqlSession.selectList(NAMESPACE + ".select");
 	}
 	
 	@Override
-	public int insert(MemberVO vo) { // íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™
+	public int insert(MemberVO vo) { 
 		logger.info("insert() : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 	
 	@Override
-	public int checkId(String memberId) { // å ì™ì˜™å ì‹±ë“¸ì˜™ å ìŒ©ë¸ì˜™ì²´í¬
+	public int checkId(String memberId) { 
 		logger.info("select_by_id() ");
 		int result  = sqlSession.selectOne(NAMESPACE + ".select_by_id", memberId);
-		logger.info(result+"å ìŒ©ë¸ì˜™");
+		logger.info(result+"¤¾¤·");
 		return result;
 	}
 
@@ -121,9 +121,19 @@ public class MemberDAOImple implements MemberDAO{
 
 	@Override
 	public int deleteUProduct(int uProductId) {
-		logger.info("delete() í˜¸ì¶œ");
+		logger.info("delete() ");
 		return sqlSession.delete(NAMESPACE + ".delete_uproduct", uProductId);
 	}
+
+	/*
+	 * @Override public int insertMailAuthentication(String memberEmail, String
+	 * AuthenticationKey) { // ¸ŞÀÏÀ» Àü¼ÛÇÏ¸é db¿¡ »ç¿ëÀÚ¿¡ ÀÌ¸ŞÀÏ°ú ÀÎÁõÅ°¸¦ db¿¡ ÀúÀå
+	 * logger.info("insertMailAuthentication() memberEmail: " + memberEmail +
+	 * ", AuthenticationKey: " + AuthenticationKey); Map<String, String> args = new
+	 * HashMap<String, String>(); args.put("AuthenticationKey", AuthenticationKey);
+	 * args.put("memberEmail", memberEmail); return sqlSession.insert(NAMESPACE +
+	 * ".insertMailAuth", args); }
+	 */
 
 
 

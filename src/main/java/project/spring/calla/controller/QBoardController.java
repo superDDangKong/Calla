@@ -52,9 +52,9 @@ public class QBoardController {
 	@Autowired
 	private QBoardCommentService qBoardCommentService;
 	
-	@GetMapping("/chat")
-	public void chat() {
-		logger.info("chat() »£√‚");
+	@GetMapping("/note")
+	public void noteget() {
+		
 	}
 	
 	@GetMapping("/list")

@@ -68,9 +68,7 @@ body {
 	</h1>
 	
 	<a href="register" class="write-button"><input type="button" value="글 작성"></a>
-	<form action="/calla/qBoard/chat" method="GET" >
-		<input type="submit" value="FAQ챗 봇">
-	</form>
+	<a href="note" class="note"><input type="button" value="쪽지 보내기"></a>
 	<hr>
 	<div class="container mt-4">
     <form action="list" method="GET">
@@ -149,23 +147,18 @@ body {
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	<input type="hidden" id="statusAlert" value="${status_result }">
 	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var memberNickname = $('#memberNickname').val();
-			console.log("로그인멤버닉네임: " + memberNickname);
-			
-		})
-		
+<script type="text/javascript">
+	$(document).ready(function(){
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 글 작성 성공!');
 		}
-		
+
 		var result2 = $('#statusAlert').val();
 		if(result2 == 'secret') {
 			alert('비공개 글입니다.');
 		}
-	</script>
+</script>
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

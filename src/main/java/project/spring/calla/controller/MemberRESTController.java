@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,7 @@ import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
+import project.spring.calla.service.MailService;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -41,6 +44,9 @@ public class MemberRESTController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private MailService mailSendService;
 	
 	@PostMapping("/join")
 	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {
@@ -54,6 +60,38 @@ public class MemberRESTController {
 		
 		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	} // end createMember
+	
+	@GetMapping("/checkemail")
+	public String mailAuthentication(String memberEmail, HttpServletRequest request) throws Exception {
+		logger.info("mailAuth() »£√‚ ¿Œ¡ıø‰√ª«— ¿Ã∏ﬁ¿œ ¡÷º“ : " + memberEmail);
+		String authKey = mailSendService.sendMail(memberEmail); //ªÁøÎ¿⁄∞° ¿‘∑¬«— ∏ﬁ¿œ¡÷º“∑Œ ∏ﬁ¿œ¿ª ∫∏≥ø
+		// memberService.registMailAuthentication(memberEmail, authKey);
+		HttpSession mailAuthSession = request.getSession();
+		mailAuthSession.setAttribute("memberEmail", memberEmail);
+		mailAuthSession.setAttribute("authKey", authKey);
+		mailAuthSession.setMaxInactiveInterval(60 * 3);
+		logger.info(authKey);
+		return authKey; 
+	}
+	
+	@PostMapping("/authenticationConfirm")
+	public String mailAuthKeyConfirm(String AuthenticationKey, HttpServletRequest request) {
+		logger.info("mailAuthKeyConfirm() »£√‚ AuthenticationKey: " + AuthenticationKey);
+		HttpSession mailAuthSession = request.getSession();
+	    String savedAuthenticationKey = (String) mailAuthSession.getAttribute("authKey");
+	    logger.info(savedAuthenticationKey);
+	    String result = "fail";
+	    
+	    if (AuthenticationKey.equals(savedAuthenticationKey)) {
+	    	logger.info("¿Œ¡ıº∫∞¯!");
+	    	result = "success";
+	    } else {
+	    	logger.info("¿‘∑¬«— ¿Œ¡ı≈∞ : " + AuthenticationKey);
+	    	logger.info("ªÁøÎ¿⁄ø°∞‘ ∫∏≥Ω ¿Œ¡ı≈∞ : " + savedAuthenticationKey);
+		    return result;
+	    }
+	    return result;
+	}
 	
 	@PostMapping("/checkId") // @RequestParam("member_Id")
 	public int checkId(@RequestParam("memberId") String id) {
@@ -86,7 +124,7 @@ public class MemberRESTController {
 		return result;
 	} // end checkNick
 	
-	@PutMapping("/update/{memberId}") // ÎπÑÎ∞ÄÎ≤àÌò∏, Î†àÎ≤® Ï†úÏô∏
+	@PutMapping("/update/{memberId}") 
 	public ResponseEntity<Integer> updateMember(@PathVariable("memberId") String memberId, @RequestBody Map<String, String> obj, HttpSession session) {
 		logger.info("updateMember() ");
 		logger.info("newData = " + obj);

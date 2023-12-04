@@ -6,13 +6,33 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <link href="../resources/css/styles.css" rel="stylesheet" />
 <%@ include file="../header.jspf" %> 
 <title>회원가입</title>
+<style type="text/css">
+.customButton {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 8px;
+}
+
+#numImport {
+	background-color: #008CBA; /* Blue */
+}
+
+#numConfirm {
+	background-color: #f44336; /* Red */
+}
+</style>
 </head>
 <body>
 	<div class="container mt-5">
@@ -39,6 +59,10 @@
             	<div id="error_member_nickname" class="text-danger"></div>
             </div>
             <div class="mb-3">
+                <input type="tel" id="member_phone" class="form-control" name="memberPhone" placeholder="010-1234-5678" required>
+            	<div id="error_member_phone" class="text-danger"></div>
+            </div>
+            <div class="mb-3">
                 <div class="input-group">
                     <input type="text" class="form-control" name="member_email1" id="email_id" placeholder="calla" required>
                     <span class="input-group-text">@</span>
@@ -56,11 +80,12 @@
                     <option value="kakao.com">kakao.com</option>
                 </select>
             </div>
-            <input type="hidden" name="memberEmail" id="memberEmail">
             <div class="mb-3">
-                <input type="tel" id="member_phone" class="form-control" name="memberPhone" placeholder="010-1234-5678" required>
-            	<div id="error_member_phone" class="text-danger"></div>
+                <input type="text" id="inputAuthentication" class="form-control" placeholder="이메일 인증번호"><div id="timer"></div>
+                <button type="button" id="authenticationImport" class="customButton">인증번호 받기</button>
+                <button type="button" id="authenticationConfirm" class="customButton">인증하기</button>
             </div>
+            <input type="hidden" name="memberEmail" id="memberEmail">
             <div class="mb-3">
                 <div>관심사<br>
                     <div class="form-check">
@@ -115,7 +140,23 @@
 	var addressCheck = false;  
 	// 주소
 	
-	
+	/* function updateTimer() {
+    // 현재 시간을 가져오기
+    var now = new Date();
+
+    // 분과 초 가져오기
+    var minutes = now.getMinutes();
+    var seconds = now.getSeconds();
+
+    // 시간을 표시할 형식 조합
+    var timeString = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+    // 화면에 시간 표시
+    document.getElementById('timer').innerHTML = timeString;
+	}
+
+	// 1초마다 updateTimer 함수 호출하여 시간을 업데이트
+	setInterval(updateTimer, 1000); */
 	
 	
 	function idDuplicationCheck() { // 아이디 공백 + 중복 + 유효성 검사 함수
@@ -291,6 +332,34 @@
 		memberEmailError.text(''); // 나중에 이메일 인증 만들어서 여기도 바꿔보자
 		return true;
 	};
+	
+	$('#authenticationImport').click(function(){ // 인증번호받기
+		var memberEmailId = $('#email_id').val();
+		var memberEmailDomain = $('#email_domain').val();
+		var email = memberEmailId + '@' + memberEmailDomain;
+		$('#memberEmail').val(email);
+		var memberEmail = $('#memberEmail').val();
+		
+		$.ajax({
+			type : 'GET',
+			url : '/calla/member/checkemail',
+			data : {"memberEmail": $('#memberEmail').val() },
+			success : function(result){
+				alert(result); // 인증번호
+			}, // end success
+		}) // end ajax
+	}) // end click
+	
+	$('#authenticationConfirm').click(function(){ // 인증하기 버튼 클릭
+		$.ajax({
+			type : 'POST',
+			url : '/calla/member/authenticationConfirm',
+			data : {"AuthenticationKey" : $('#inputAuthentication').val()},
+			success : function(result){
+					alert(result);
+			}
+		})
+	})
 	
 	function phoneConfirmCheck() { // 연락처 입력 유무 확인 함수
 		console.log("연락처검사 호출");

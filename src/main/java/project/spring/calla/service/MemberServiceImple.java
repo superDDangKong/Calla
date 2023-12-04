@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import project.spring.calla.domain.MailVO;
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
@@ -31,39 +32,39 @@ public class MemberServiceImple implements MemberService {
 	
 	@Override
 	public String login(String memberId, String memberPw) {
-		logger.info("login() 호출 memberId : " + memberId);
+		logger.info("login()  memberId : " + memberId);
 		return MemberDAO.login(memberId, memberPw);
 	}
 	
 	@Override
 	public MemberVO read(String memberId) {
-		logger.info("read(memberId) 호출 memberId : " + memberId);
+		logger.info("read(memberId)  memberId : " + memberId);
 		return MemberDAO.select(memberId);
 	}
 	
 	@Override
 	public String searchId(String memberName, String memberEmail) {
-		logger.info("searchId() 호출 memberName : " + memberName);
-		logger.info("searchId() 호출 memberEmail : " + memberEmail);
+		logger.info("searchId()  memberName : " + memberName);
+		logger.info("searchId()  memberEmail : " + memberEmail);
 		return MemberDAO.searchId(memberName, memberEmail);
 	}
 
 	@Override
 	public String searchPw(String memberId, String memberPhone) {
-		logger.info("searchPw() 호출 memberId : " + memberId);
-		logger.info("searchPw() 호출 memberPhone : " + memberPhone);
+		logger.info("searchPw()  memberId : " + memberId);
+		logger.info("searchPw()  memberPhone : " + memberPhone);
 		return MemberDAO.searchPw(memberId, memberPhone);
 	}
 
 	@Override
 	public int delete(String memberId) {
-		logger.info("delete() 호출");
+		logger.info("delete() ");
 		return MemberDAO.delete(memberId);
 	}
 
 	@Override
 	public List<MemberVO> read() {
-		logger.info("read() 호출");
+		logger.info("read() ");
 		return MemberDAO.select();
 	}
 	
@@ -74,8 +75,7 @@ public class MemberServiceImple implements MemberService {
 		try {
 			return result = MemberDAO.insert(vo);
 		} catch (DataIntegrityViolationException e) {
-			throw new IllegalStateException("�г����̳� id�� Ȯ�����ּ���");
-			// � �׸񿡼� ������ ������� 
+			throw new IllegalStateException("");
 			
 		}
 	}
@@ -112,9 +112,24 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int deleteUProduct(int uProductId) {
-		logger.info("deleteUProduct() 호출");
+		logger.info("deleteUProduct() ");
 		return MemberDAO.deleteUProduct(uProductId);
 	}
 
+
+
+
+	/*
+	 * @Override public void registMailAuthentication(String memberEmail, String
+	 * authenticationKey) { logger.info("registMailAuthentication() ȣ��");
+	 * logger.info("memberEmail" + memberEmail + ", authenticationKey : " +
+	 * authenticationKey); MemberDAO.insertMailAuthentication(memberEmail,
+	 * authenticationKey);
+	 * 
+	 * }
+	 * 
+	 * @Override public int mailAuthenticationConfirm(MailVO mailAuth) {
+	 * logger.info("mailAuthenticationConfirm() ȣ��"); return null; }
+	 */
 
 }

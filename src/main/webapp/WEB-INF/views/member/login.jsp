@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="memberPw">비밀번호:</label>
-                                <input type="password" id="memberPw" name="memberPw" class="form-control">
+                                <input type="password" id="memberPw" name="memberPw" class="form-control" autocomplete="off">
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">로그인</button>
                             <c:if test="${not empty param.targetURL}">
