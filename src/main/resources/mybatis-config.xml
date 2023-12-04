@@ -81,11 +81,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productLikes" value="product_likes"/>
 		<property name="productCreatedDate" value="product_created_date"/>
 		<property name="productCategori" value="product_categori"/>
-		<property name="productImagePath" value="product_image_path"/>
 		<property name="productContent" value="product_content"/>
 		<property name="productCommentCount" value="product_comment_count"/>
 		<property name="memberLevel" value="member_level"/>
 		<property name="productRatedCount" value="product_rated_count"/>
+		<property name="productImagePath" value="product_image-path"/>
 		
 		<property name="product_comment" value="product_comment"/>
 		<property name="productCommentId" value="product_comment_id"/>

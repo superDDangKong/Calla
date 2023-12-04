@@ -2,6 +2,7 @@ package project.spring.calla.service;
 
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,21 @@ public class ProductServiceImple implements ProductService {
 		logger.info("getCommentsByProductId() 호출 : productId = " + productId);
     	return productCommentDAO.selectByProductId(productId);
 	}
+
+	@Override
+	public int updateProductWithImages(int productId) {
+		logger.info("updateProductWithImages() 호출");
+		return dao.update(productId);
+	}
+
+//	@Override
+//	public int update(int productId, String string) {
+//		logger.info("update() 호출");
+//		return dao.update(productId, string);
+//	}
+
+	
+
 
 	
 	

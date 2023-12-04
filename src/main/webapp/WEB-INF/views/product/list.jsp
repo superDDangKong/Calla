@@ -56,7 +56,7 @@ li {
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="../resources/css/styles.css" rel="stylesheet" />
-<%@ include file="../header.jspf" %> 	
+<%@ include file="../header.jspf"%> 	
 
 </head>
 <body>

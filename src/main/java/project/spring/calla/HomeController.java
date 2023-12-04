@@ -27,6 +27,7 @@ import project.spring.calla.service.UProductService;
 /**
  * Handles requests for the application home page.
  */
+
 @Controller
 public class HomeController {
 	

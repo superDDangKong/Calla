@@ -6,10 +6,11 @@ import project.spring.calla.domain.ProductOrderVO;
 
 public interface ProductOrderDAO {
 	int insert(ProductOrderVO vo);
-	int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress);
+	int update(int productOrderId, String recipientName, String memberAddress);
 	int delete(int productOrderId);
 	ProductOrderVO selectBy(String memberId);
 	List<ProductOrderVO> select();
 	List<ProductOrderVO> select(String memberId);
 	int updateDeliveryStatus(int productOrderId, String deliveryStatus);
+	int updateStatus(int productOrderId, String newDeliveryStatus);
 }

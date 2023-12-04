@@ -26,9 +26,9 @@ public class ProductLikeServiceImple implements ProductLikeService {
 	public int create(ProductLikeVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = productLikeDAO.insert(vo);
-		logger.info(resultInsert + "성공");
+		logger.info(resultInsert + "좋아요 클릭");
 		int result = productDAO.updateLikeCount(1, vo.getProductId());
-		logger.info(result + "성공");
+		logger.info(result + "좋아요 개수 + 1");
 		return 1;
 	}
 
@@ -37,9 +37,9 @@ public class ProductLikeServiceImple implements ProductLikeService {
 	public int delete(int productId, String memberId) throws Exception {
 		logger.info("delete() 호출 : productId = " + productId + ", memberId = " + memberId);
 		int resultDelete = productLikeDAO.delete(productId, memberId);
-		logger.info(resultDelete + "성공");
+		logger.info(resultDelete + "좋아요 삭제");
 		int result = productDAO.updateLikeCount(-1, productId);
-		logger.info(result + "성공");
+		logger.info(result + "좋아요 개수 - 1");
 		return 1;
 	}
 
@@ -53,9 +53,9 @@ public class ProductLikeServiceImple implements ProductLikeService {
 	public int checkProductLike(int productLikeId, String memberId) {
 		logger.info("checkProductLike() 호출");
 		int result = productLikeDAO.checkProductLike(productLikeId, memberId);
-		 if (result > 0) { //좋아요를 한 것
+		 if (result > 0) { // 0 초과일때
 		        return 1;
-		    } else { //좋아요를 하지 않은 것
+		    } else { // 0 이하일때
 		        return 0;
 		    }
 	}

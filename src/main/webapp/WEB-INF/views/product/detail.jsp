@@ -121,6 +121,10 @@
 	.starR.on{
 	  text-shadow: 0 0 0 #ffbc00;
 	}
+	
+	
+	
+		
     </style>
 
 
@@ -146,8 +150,15 @@
 	
 	<div class="wrap">
 		<div class="product-img">
-      		<img src="display?fileName=${vo.productImagePath}" class="productImage">
-      	</div>
+		    <div class="slider">
+		        <c:forEach var="image" items="${imageArray}">
+		            <img src="display?fileName=${image}" class="productImage" style="display:none;" />
+		        </c:forEach>
+		    </div>
+		    <button class="prevBtn">이전</button>
+		    <button class="nextBtn">다음</button>
+		</div>
+		<br>
 	 	<div class="product-desc">
         	<h2>
           	${vo.productName }
@@ -208,7 +219,7 @@
 			</div>
 			 <c:if test="${productOrderListId == 0 }">
 			<div>
-				<a href="orderList?memberId=${memberId}&productId=${vo.productId}"><input type="button" id="orderBtn" value="바로 구매"></a>
+			    <a href="orderList?memberId=${memberId}&productId=${vo.productId}" ><input type="button" id="orderBtn" value="바로 구매"></a>
 			</div>
 			</c:if>
 		</c:if>
@@ -270,6 +281,7 @@
 			});
 
 			$('#btnCommentAdd').click(function(){
+				
 				var productId = $('#productId').val(); // 상품 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 닉네임 데이터
 				var productCommentContent = $('#productCommentContent').val(); // 댓글 내용
@@ -296,7 +308,8 @@
 							console.log('댓글 입력 성공');
 							alert('댓글 입력 성공');
 							getAllComments();
-							console.log("getAllcomments")
+							window.location.reload();
+							console.log("getAllcomments");
 						}
 					}
 				});
@@ -350,15 +363,26 @@
 								    return stars;
 								}
 								
+								function formatDate(date) {
+							        var year = date.getFullYear();
+							        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+							        var day = ('0' + date.getDate()).slice(-2);
+							        var hours = ('0' + date.getHours()).slice(-2);
+							        var minutes = ('0' + date.getMinutes()).slice(-2);
+							        var seconds = ('0' + date.getSeconds()).slice(-2);
+							        
+							        return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+							    }
+								
 								list += '<div class="comment_item">'
 									+ '<pre>'
 									+ '<input type="hidden" class="productCommentId" value="' + this.productCommentId + '">'
 									+ '<div class="comment-header">'
 									+ '별점 : ' + generateStars(this.productRated) + '&nbsp;&nbsp;' + '<strong>' + this.memberNickname + '</strong>'
-									+ '&nbsp;&nbsp;' + '<span class="comment-date">' + productCommentCreatedDate + '</span>'
+									+ '&nbsp;&nbsp;' + '<span class="comment-date">' + formatDate(productCommentCreatedDate) + '</span>'
 									+ '</div>'
 									+ '<div class="productCommentContent">'
-									+ '<textarea class="commentContent" rows="3" cols="120" style="border:none;" required>'
+									+ '<textarea class="commentContent" rows="3" cols="120" style="border=1px;" required>'
 									+ this.productCommentContent
 									+ '</textarea>'
 									+ '</div>'
@@ -497,6 +521,17 @@
 							readonly = '';
 						}
 						
+						function formatDate(date) {
+					        var year = date.getFullYear();
+					        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+					        var day = ('0' + date.getDate()).slice(-2);
+					        var hours = ('0' + date.getHours()).slice(-2);
+					        var minutes = ('0' + date.getMinutes()).slice(-2);
+					        var seconds = ('0' + date.getSeconds()).slice(-2);
+					        
+					        return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+					    }
+						
 						list += '<div class="reply_item">'
 							+ '<pre>'
 							+ '<input type="hidden" class="productReplyId" value="' + this.productReplyId + '">'
@@ -504,7 +539,7 @@
 							+ '&nbsp;&nbsp;' // 공백
 							+ '<input type="text" class="productReplyContent" value="' + this.productReplyContent + '" required>'	 
 							+ '&nbsp;&nbsp;' // 공백
-							+ productReplyCreatedDate
+							+ formatDate(productReplyCreatedDate)
 							+ '&nbsp;&nbsp;' // 공백
 							+ '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
 							+ '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
@@ -748,11 +783,38 @@
 			}); // end click
 			
 		}); // end document
-		
-		
-		
-		
+
 	</script>
+	
+	<script>
+		var currentImageIndex = 0;
+		var images = document.querySelectorAll('.slider img');
+		var prevBtn = document.querySelector('.prevBtn');
+		var nextBtn = document.querySelector('.nextBtn');
+	
+		function showImage(index) {
+		    images.forEach(function(image) {
+		        image.style.display = 'none';
+		    });
+		    images[index].style.display = 'block';
+		}
+	
+		prevBtn.addEventListener('click', function() {
+		    currentImageIndex = (currentImageIndex === 0) ? images.length - 1 : currentImageIndex - 1;
+		    showImage(currentImageIndex);
+		});
+	
+		nextBtn.addEventListener('click', function() {
+		    currentImageIndex = (currentImageIndex === images.length - 1) ? 0 : currentImageIndex + 1;
+		    showImage(currentImageIndex);
+		});
+	
+		// 초기 이미지 표시
+		showImage(currentImageIndex);
+
+	</script>
+	
+
 	
 </body>
 

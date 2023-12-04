@@ -41,7 +41,6 @@ li {
 <meta charset="UTF-8">
 <title>OrderList</title>
 	<%@ include file="../header.jspf" %> 	
-	<h1>orderList</h1>
 	<h1>장바구니</h1>
 	<button id="home"><a href="/calla/">홈</a></button>
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
@@ -129,7 +128,7 @@ li {
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">정보 입력</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

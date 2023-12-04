@@ -64,15 +64,13 @@ public class productOrderRESTController {
 	
 	
 	
-	@PutMapping("/{productId}/{memberId}/{memberEmail}/{recipientName}/{memberAddress}")
+	@PutMapping("/{productOrderId}/{recipientName}/{memberAddress}")
 	public ResponseEntity<Integer> updateProductOrder(
-			@PathVariable("productId") int productId,
-			@PathVariable("memberId") String memberId,
-			@PathVariable("memberEmail") String memberEmail,
+			@PathVariable("productOrderId") int productOrderId,
 			@PathVariable("recipientName") String recipientName,
 			@PathVariable("memberAddress") String memberAddress
 			){
-		int result = productOrderService.update(productId, memberId, memberEmail, recipientName, memberAddress);
+		int result = productOrderService.update(productOrderId, recipientName, memberAddress);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	

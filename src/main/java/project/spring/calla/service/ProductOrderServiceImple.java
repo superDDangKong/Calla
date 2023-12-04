@@ -26,9 +26,9 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	}
 
 	@Override
-	public int update(int productId, String memberId, String memberEmail, String recipientName, String memberAddress) {
+	public int update(int productOrderId, String recipientName, String memberAddress) {
 		logger.info("update() 호출 ");
-		return dao.update(productId, memberId, memberEmail, recipientName, memberAddress);
+		return dao.update(productOrderId, recipientName, memberAddress);
 	}
 
 	@Override
@@ -67,6 +67,12 @@ public class ProductOrderServiceImple implements ProductOrderService {
 	public List<ProductOrderVO> read() {
 		logger.info("read() 호출  ");
 		return dao.select();
+	}
+
+	@Override
+	public int updateStatus(int productOrderId, String newDeliveryStatus) {
+		logger.info("updateStatus() 호출");
+		return dao.updateStatus(productOrderId, newDeliveryStatus);
 	}
 
 }

@@ -39,7 +39,7 @@ public class ProductOrderListServiceImple implements ProductOrderListService {
 
 	@Override
 	public int delete(int productId, String memberId) {
-		logger.info("delete() 호출 : productId = " + memberId);
+		logger.info("delete() 호출 : productId = " + productId + ", memberId = " + memberId);
 		return dao.delete(productId, memberId);
 	}
 

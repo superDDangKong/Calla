@@ -29,8 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="update">
 		update ${product_order}
-		set ${memberEmail} = #{memberEmail}, ${recipientName} = #{recipientName}, ${memberAddress} = #{memberAddress}
-		where ${memberId} = #{memberId} and ${productId} = #{productId}
+		set ${recipientName} = #{recipientName}, ${memberAddress} = #{memberAddress}
+		where ${productOrderId} = #{productOrderId}
 	</update>
 	
 	<update id="updateDeliveryStatus">
@@ -44,7 +44,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${productOrderId} = #{productOrderId}
 	</delete>
 	
-	
+	<update id="updateStatus">
+		update ${product_order}
+		set ${deliveryStatus} = #{deliveryStatus}
+		where ${productOrderId} = #{productOrderId}
+	</update>
 	
 	
 	

@@ -12,7 +12,7 @@ public class ProductOrderVO {
 	private String memberEmail;
 	private String recipientName; // ¼ö·ÉÀÎ
 	private String memberAddress;
-	private String productOrderId;
+	private int productOrderId;
 	private int productId;
 	private String productImagePath;
     private String productName;
@@ -25,9 +25,9 @@ public class ProductOrderVO {
 	}
 
 	public ProductOrderVO(String memberId, Date productOrderCreatedDate, String memberCard, String memberCardNumber,
-			String memberEmail, String recipientName, String memberAddress, String productOrderId, int productId,
-			String productImagePath, String productName, int productPrice, int productAmount, String deliveryStatus) {
-		super();
+			String memberEmail, String recipientName, String memberAddress, int productOrderId, int productId,
+			String productImagePath, String productName, int productPrice, int productAmount, String deliveryStatus,
+			MemberVO member) {
 		this.memberId = memberId;
 		this.productOrderCreatedDate = productOrderCreatedDate;
 		this.memberCard = memberCard;
@@ -42,6 +42,7 @@ public class ProductOrderVO {
 		this.productPrice = productPrice;
 		this.productAmount = productAmount;
 		this.deliveryStatus = deliveryStatus;
+		this.member = member;
 	}
 
 	public String getMemberId() {
@@ -100,11 +101,11 @@ public class ProductOrderVO {
 		this.memberAddress = memberAddress;
 	}
 
-	public String getProductOrderId() {
+	public int getProductOrderId() {
 		return productOrderId;
 	}
 
-	public void setProductOrderId(String productOrderId) {
+	public void setProductOrderId(int productOrderId) {
 		this.productOrderId = productOrderId;
 	}
 
@@ -155,13 +156,13 @@ public class ProductOrderVO {
 	public void setDeliveryStatus(String deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
-	
-	 public MemberVO getMember() {
-	    return member;
+
+	public MemberVO getMember() {
+		return member;
 	}
 
 	public void setMember(MemberVO member) {
-	    this.member = member;
+		this.member = member;
 	}
 
 	@Override
@@ -171,10 +172,10 @@ public class ProductOrderVO {
 				+ memberEmail + ", recipientName=" + recipientName + ", memberAddress=" + memberAddress
 				+ ", productOrderId=" + productOrderId + ", productId=" + productId + ", productImagePath="
 				+ productImagePath + ", productName=" + productName + ", productPrice=" + productPrice
-				+ ", productAmount=" + productAmount + ", deliveryStatus=" + deliveryStatus + "]";
+				+ ", productAmount=" + productAmount + ", deliveryStatus=" + deliveryStatus + ", member=" + member
+				+ "]";
 	}
-
-	
+    
 	
     
     

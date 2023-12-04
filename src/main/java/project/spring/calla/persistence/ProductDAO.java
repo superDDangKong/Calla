@@ -2,6 +2,7 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
+
 import project.spring.calla.domain.ProductVO;
 import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.MyPageCriteria;
@@ -27,6 +28,8 @@ public interface ProductDAO {
 	int getTotalCountsByRecentlyView(String memberId);	
 	int deleteRecentlyView(int productRecentlyViewId);
 	int updateRatedCount(int amount, int productId);
+//	int update(int productId, String string);
+	int update(int productId);
 	
 	
 }

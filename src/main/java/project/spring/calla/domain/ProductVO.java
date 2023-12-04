@@ -4,30 +4,29 @@ import java.util.Date;
 import java.util.List;
 
 public class ProductVO {
-	private int productId; // »óÇ° ¹øÈ£
-	private String productName; // »óÇ° ÀÌ¸§
-	private int productPrice; // »óÇ° °¡°İ
-	private int productViews; // »óÇ° Á¶È¸¼ö
-	private int productLikes; // »óÇ° ÁÁ¾Æ¿ä ¼ö
-	private Date productCreatedDate; // »óÇ° µî·Ï ³¯Â¥
-	private String productCategori; // »óÇ° Ä«Å×°í¸®
-	private String productImagePath; // »óÇ° ÀÌ¹ÌÁö °æ·Î
-	private String productContent; // »óÇ° ¼³¸í
-	private int productCommentCount; // »óÇ° ´ñ±Û °¹¼ö
-	private String memberNickname; // È¸¿ø ´Ğ³×ÀÓ
-	private int memberLevel; // È¸¿ø µî±Ş
+	private int productId; // ìƒí’ˆ ID
+	private String productName; // ìƒí’ˆ ì´ë¦„	
+	private int productPrice; // ìƒí’ˆ ê°€ê²©
+	private int productViews; // ìƒí’ˆ ì¡°íšŒìˆ˜
+	private int productLikes; // ìƒí’ˆ ì¢‹ì•„ìš”
+	private Date productCreatedDate; // ìƒí’ˆ ë“±ë¡ ë‚ ì§œ
+	private String productCategori; // ì¹´í…Œê³ ë¦¬
+	private String productContent; // ìƒí’ˆ ë‚´ìš©
+	private int productCommentCount; // ìƒí’ˆ ëŒ“ê¸€ ìˆ˜
+	private String memberNickname; // íšŒì› ë‹‰ë„¤ì„
+	private int memberLevel; // íšŒì› ë ˆë²¨
 	private int productAmount;
 	private int productLikeId;
 	private int productRecentlyViewId;
-	private int productRatedCount; // »óÇ° º°Á¡ °¹¼ö
+	private int productRatedCount; // ìƒí’ˆ ë³„ì  ìˆ˜
+	private String productImagePath;
 	
 	public ProductVO() {}
-	
+
 	public ProductVO(int productId, String productName, int productPrice, int productViews, int productLikes,
-			Date productCreatedDate, String productCategori, String productImagePath, String productContent,
-			int productCommentCount, String memberNickname, int memberLevel, int productAmount, int productLikeId,
-			int productRecentlyViewId, int productRatedCount) {
-		super();
+			Date productCreatedDate, String productCategori, String productContent, int productCommentCount,
+			String memberNickname, int memberLevel, int productAmount, int productLikeId, int productRecentlyViewId,
+			int productRatedCount, String productImagePath) {
 		this.productId = productId;
 		this.productName = productName;
 		this.productPrice = productPrice;
@@ -35,7 +34,6 @@ public class ProductVO {
 		this.productLikes = productLikes;
 		this.productCreatedDate = productCreatedDate;
 		this.productCategori = productCategori;
-		this.productImagePath = productImagePath;
 		this.productContent = productContent;
 		this.productCommentCount = productCommentCount;
 		this.memberNickname = memberNickname;
@@ -44,177 +42,148 @@ public class ProductVO {
 		this.productLikeId = productLikeId;
 		this.productRecentlyViewId = productRecentlyViewId;
 		this.productRatedCount = productRatedCount;
+		this.productImagePath = productImagePath;
 	}
-
 
 	public int getProductId() {
 		return productId;
 	}
 
-
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-
 
 	public String getProductName() {
 		return productName;
 	}
 
-
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-
 
 	public int getProductPrice() {
 		return productPrice;
 	}
 
-
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
 	}
-
 
 	public int getProductViews() {
 		return productViews;
 	}
 
-
 	public void setProductViews(int productViews) {
 		this.productViews = productViews;
 	}
-
 
 	public int getProductLikes() {
 		return productLikes;
 	}
 
-
 	public void setProductLikes(int productLikes) {
 		this.productLikes = productLikes;
 	}
-
 
 	public Date getProductCreatedDate() {
 		return productCreatedDate;
 	}
 
-
 	public void setProductCreatedDate(Date productCreatedDate) {
 		this.productCreatedDate = productCreatedDate;
 	}
-
 
 	public String getProductCategori() {
 		return productCategori;
 	}
 
-
 	public void setProductCategori(String productCategori) {
 		this.productCategori = productCategori;
 	}
-
-
-	public String getProductImagePath() {
-		return productImagePath;
-	}
-
-
-	public void setProductImagePath(String productImagePath) {
-		this.productImagePath = productImagePath;
-	}
-
 
 	public String getProductContent() {
 		return productContent;
 	}
 
-
 	public void setProductContent(String productContent) {
 		this.productContent = productContent;
 	}
-
 
 	public int getProductCommentCount() {
 		return productCommentCount;
 	}
 
-
 	public void setProductCommentCount(int productCommentCount) {
 		this.productCommentCount = productCommentCount;
 	}
-
 
 	public String getMemberNickname() {
 		return memberNickname;
 	}
 
-
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
 	}
-
 
 	public int getMemberLevel() {
 		return memberLevel;
 	}
 
-
 	public void setMemberLevel(int memberLevel) {
 		this.memberLevel = memberLevel;
 	}
-
 
 	public int getProductAmount() {
 		return productAmount;
 	}
 
-
 	public void setProductAmount(int productAmount) {
 		this.productAmount = productAmount;
 	}
-
 
 	public int getProductLikeId() {
 		return productLikeId;
 	}
 
-
 	public void setProductLikeId(int productLikeId) {
 		this.productLikeId = productLikeId;
 	}
-
 
 	public int getProductRecentlyViewId() {
 		return productRecentlyViewId;
 	}
 
-
 	public void setProductRecentlyViewId(int productRecentlyViewId) {
 		this.productRecentlyViewId = productRecentlyViewId;
 	}
 
-	
 	public int getProductRatedCount() {
 		return productRatedCount;
 	}
 
-
 	public void setProductRatedCount(int productRatedCount) {
 		this.productRatedCount = productRatedCount;
+	}
+
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
 	}
 
 	@Override
 	public String toString() {
 		return "ProductVO [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productViews=" + productViews + ", productLikes=" + productLikes + ", productCreatedDate="
-				+ productCreatedDate + ", productCategori=" + productCategori + ", productImagePath=" + productImagePath
-				+ ", productContent=" + productContent + ", productCommentCount=" + productCommentCount
-				+ ", memberNickname=" + memberNickname + ", memberLevel=" + memberLevel + ", productAmount="
-				+ productAmount + ", productLikeId=" + productLikeId + ", productRecentlyViewId="
-				+ productRecentlyViewId + ", productRatedCount=" + productRatedCount + "]";
+				+ productCreatedDate + ", productCategori=" + productCategori + ", productContent=" + productContent
+				+ ", productCommentCount=" + productCommentCount + ", memberNickname=" + memberNickname
+				+ ", memberLevel=" + memberLevel + ", productAmount=" + productAmount + ", productLikeId="
+				+ productLikeId + ", productRecentlyViewId=" + productRecentlyViewId + ", productRatedCount="
+				+ productRatedCount + ", productImagePath=" + productImagePath + "]";
 	}
 
+	
+	
 }

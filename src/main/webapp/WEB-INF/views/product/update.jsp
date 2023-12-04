@@ -26,10 +26,10 @@
 			<input type="text" name="productCategori" value="${vo.productCategori }"></p>
 		</div>	
 		<div>
-    		<p>이미지</p>
-    		<input type="hidden" name="productImagePath" value="${vo.productImagePath}"> 	
-    		<input id="productImage" type="file" name="productImage" placeholder="이미지"> 		
-		</div>	
+            <p>이미지 :</p>
+            <!-- 각 이미지에 대한 입력 필드를 배열로 받도록 변경 -->
+            <input type="file" name="productImages" placeholder="Image" required multiple>
+        </div>
 		<div>
 			<textarea rows="20" cols="120" name="productContent">${vo.productContent }</textarea>
 		</div>
@@ -37,5 +37,7 @@
 			<input type="submit" value="등록">
 		</div>
 	</form>
+	
+	
 </body>
 </html>

@@ -1,6 +1,7 @@
 package project.spring.calla.persistence;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,25 +29,25 @@ public class ProductDAOImple implements ProductDAO {
 	
 	@Override
 	public int insert(ProductVO vo) {
-		logger.info("insert() »£ÔøΩÔøΩ");
+		logger.info("insert() »£√‚");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	} // end insert()
 
 	@Override
 	public List<ProductVO> select() {
-		logger.info("select() »£ÔøΩÔøΩ");
+		logger.info("select() »£√‚");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	} // end select()
 
 	@Override
 	public ProductVO select(int productId) {
-		logger.info("select() »£ÔøΩÔøΩ : productId = " + productId);
+		logger.info("select() »£√‚ : productId = " + productId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() »£ÔøΩÔøΩ : vo = " + vo.toString());
+		logger.info("update() »£√‚ : vo = " + vo.toString());
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
@@ -58,7 +59,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select() »£ÔøΩÔøΩ");
+		logger.info("select() »£√‚");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
@@ -66,13 +67,13 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int getTotalCount() {
-		logger.info("getTotalCounts()");
+		logger.info("getTotalCounts() »£√‚");
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
 	@Override
 	public int updateCommentCount(int amount, int productId) {
-		logger.info("updateCommentCount() : productId = " + productId);
+		logger.info("updateCommentCount() »£√‚ : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
@@ -81,7 +82,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectByProductNameOrProductContent(PageCriteria criteria, String keyword) {
-		logger.info("selectByTitleOrContent() »£ÔøΩÔøΩ");
+		logger.info("selectByTitleOrContent() »£√‚");
 		Map<String, Object> args = new HashMap();
 //		args.put("criteria", criteria);
 		args.put("start", criteria.getStart());
@@ -93,13 +94,13 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int getTotalCountsByProductNameOrProductContent(String keyword) {
-		logger.info("getTotalTitleContent()");
+		logger.info("getTotalTitleContent() »£√‚");
 		return sqlSession.selectOne(NAMESPACE + ".total_count_by_product_name_or_product_content", "%" + keyword + "%");
 	}
 
 	@Override
 	public int updateViews(int views, int productId) {
-		logger.info("updateViews() : fBoardId = " + productId);
+		logger.info("updateViews() »£√‚ : fBoardId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("views", views);
 		args.put("productId", productId);
@@ -108,7 +109,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public int updateLikeCount(int amount, int productId) {
-		logger.info("updateLikeCount() : productId = " + productId);
+		logger.info("updateLikeCount() »£√‚ : productId = " + productId);
 		Map<String, Integer> args = new HashMap();
 		args.put("amount", amount);
 		args.put("productId", productId);
@@ -117,7 +118,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectLikes(String memberId) {
-		logger.info("selectLikes() : memberId = " + memberId);
+		logger.info("selectLikes() »£√‚ : memberId = " + memberId);
 		return sqlSession.selectList(NAMESPACE + ".select_likes", memberId);
 	}
 	
@@ -175,6 +176,23 @@ public class ProductDAOImple implements ProductDAO {
 		args.put("productId", productId);
 		return sqlSession.update(NAMESPACE + ".update_rated_count", args);
 	}
+
+	@Override
+	public int update(int productId) {
+		logger.info("update() »£√‚");
+		return sqlSession.update(NAMESPACE + ".update", productId);
+	}
+
+//	@Override
+//	public int update(int productId, String string) {
+//		logger.info("update() »£√‚");
+//		Map<String, Integer> args = new HashMap();
+//		args.put("productId", productId);
+//		args.put("string", string);
+//		return sqlSession.update(NAMESPACE + ".update", args);
+//	}
+
+	
 
 	
 	
