@@ -12,6 +12,7 @@
 <body>
 	<h2>상품 등록</h2>
 	<form action="register" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="sessionNickname" value=${memberNickname }>
 		<div>
 			<p>상품 이름 :</p>
 			<input type="text" name="productName" placeholder="이름 입력" required>

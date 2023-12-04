@@ -254,38 +254,21 @@ public class ProductController {
 		ProductVO vo = productService.read(productId);
 		logger.info("updateGET() 호출 : vo = " + vo.toString());
 		
-		String sessionMemberNickname = (String) session.getAttribute("memberNickname");
-	    if(sessionMemberNickname == null) {
-	    	return "redirect:/member/login";
-	    }
-	    
-	    String voMemberNickname = vo.getMemberNickname();
-	    
-	    if(!sessionMemberNickname.equals(voMemberNickname)) {
-	    	return "redirect:/product/list?page=" + page;
-	    }
-		
+		Integer memberLevel = (Integer) session.getAttribute("memberLevel");
+		logger.info("memberLevel" + memberLevel);
+		if(memberLevel == null || memberLevel < 2) {
+			return "redirect:/product/list";
+		} 
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 		
-		return "redirect:/product/update?productId=" + vo.getProductId();		
+		return "/product/update";		
 	} // end updateGET()
 	
 	@PostMapping("/update")
 	public String updatePost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, Integer page, RedirectAttributes reAttr, HttpSession session) {
 	    logger.info("updatePost() 호출 : vo = " + vo.toString());
-	    
-	    String sessionMemberNickname = (String) session.getAttribute("memberNickname");
-	    if(sessionMemberNickname == null) {
-	    	return "redirect:/member/login";
-	    }
-	    
-	    String voMemberNickname = vo.getMemberNickname();
-	    
-	    if(!sessionMemberNickname.equals(voMemberNickname)) {
-	    	return "redirect:/product/list?page=" + page;
-	    }
 	    
 	    try {
 	        StringBuilder fileString = new StringBuilder();
