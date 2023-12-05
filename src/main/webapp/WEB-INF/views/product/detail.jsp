@@ -284,15 +284,15 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">댓글 수정</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
-	      <div class="modal-body">
-	        ...
+	      <div class="modal-body" style="max-height: 300px; overflow-y: auto;">
+	        <input type="text" class="updateCommentContent form-control" required style="width: 100%;">
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">수정</button>
 	      </div>
 	    </div>
 	  </div>
@@ -355,6 +355,7 @@
 				console.log("page = " + commentPage);
 				var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
 				var url = 'comments/all/' + productId + '/' + commentPage + '/' + commentNumsPerPage;
+				
 				$.getJSON(
 						url,
 						function(data){
@@ -368,7 +369,6 @@
 							
 							var memberNickname = $('#memberNickname').val();
 							var list = '';
-							
 							
 							$(data.list).each(function(){
 								// this : 컬렉션의 각 인덱스 데이터를 의미
@@ -418,7 +418,7 @@
 									+ this.productCommentContent
 									+ '</textarea>'
 									+ '</div>'
-									+ '<button class="btnCommentUpdate" ' + disabled + '>수정</button>'
+									+ '<button class="btnCommentUpdate1" data-bs-toggle="modal" data-bs-target="#exampleModal" ' + disabled + '>수정</button>'
 									+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
 									+ '<button class="btnReply">답글</button>'
 									+ '<br>'
@@ -441,6 +441,11 @@
 								list += '</ul>' // 리스트 닫기
 								$('#comments').html(list);
 								
+								$('.btnCommentUpdate1').on('click', function() {
+						            var productCommentId = $(this).closest('.comment_item').find('.productCommentId').val();
+						            console.log('선택된 댓글 번호:', productCommentId);
+						            $('#exampleModal').data('productCommentId', productCommentId);
+						        }); // end btnCommentUpdate1 click
 								
 						}
 					); // end JSON()
@@ -461,30 +466,28 @@
 				getAllComments();
 			})// end btn_comment_prev.click()
 			
-			$('#comments').on('click', '.comment_item .btnCommentUpdate', function(){
-				console.log(this);
-				
-				var productCommentId = $(this).prevAll('.productCommentId').val();
-				var productCommentContent = $(this).prevAll('.productCommentContent').val();
-				console.log("선택된 댓글 번호 : " + productCommentId + ", 댓글 내용 : " + productCommentContent);
-				
-				// ajax 요청
-				$.ajax({
-					type : 'PUT',
-					url : 'comments/' + productCommentId,
-					headers : {
+			$('#exampleModal').on('click', '.btn-primary', function(){
+				var productCommentId = $(this).closest('#exampleModal').data('productCommentId');
+			    var productCommentContent = $(this).closest('.modal').find('.updateCommentContent').val();
+			    console.log("선택된 댓글 번호 : " + productCommentId + ", 댓글 내용 : " + productCommentContent);
+			    
+			    $.ajax({
+			        type: 'PUT',
+			        url: 'comments/' + productCommentId,
+			        headers : {
 						'Content-Type' : 'application/json'
 					},
 					data : productCommentContent,
-					success : function(result){
-						console.log(result);
-						if(result == '1'){
-							alert('댓글 수정 성공')
-							getAllComments();
-						}
-					}
-				}); // end ajax
-			}); // end click
+			        success: function(result){
+			            console.log(result);
+			            if(result == '1'){
+			                alert('댓글 수정 성공');
+			                $('#exampleModal').modal('hide');
+			                getAllComments();
+			            }
+			        }
+			    }); // end ajax
+			}); // end exampleModal
 			
 			$("#comments").on('click', '.comment_item .btnCommentDelete', function(){
 				console.log(this);
