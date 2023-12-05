@@ -101,8 +101,7 @@ hr {
 
 </style>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
 <title>${vo.qBoardTitle }</title>
 <link
@@ -115,98 +114,107 @@ hr {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="../header.jspf" %>
 </head>
 <body>
-	<%@ include file="../header.jspf" %>
-	<div class="container">
-	<br><br><br><br><br>
-		<h2>글 보기</h2>
-		<%-- <div>
-			<p style="">글 번호 : ${vo.qBoardId }</p>
-		</div> --%>
-		<div>
-			<p>제목 : ${vo.qBoardTitle }</p>
-			<input type="hidden" id="qBoardTitle" value="${vo.qBoardTitle}">
-			<input type="hidden" id="registerNick" value="${vo.memberNickname}">
-			
-		</div>
-		<div>
-			<p id="Writer" >${vo.memberNickname }</p>
-			<fmt:formatDate value="${vo.qBoardCreatedDate }"
-				pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
-			<p id="date">${vo.qBoardCreatedDate }</p>
-		</div>
-		<div class="content">
-			<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">
-				<img src="display?fileName=${vo.qBoardImagePath }" id="img">
-			</c:if>
-			<div style="">
-				<p id="textContent">${vo.qBoardContent }</p>
-				
-			</div>
-			
-		</div>
-		<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
-		<a href="list?page=${page }"><input type="button" value="글 목록"></a>
-		<c:set var="memberNickname" value="${memberNickname }" />
-		<c:set var="voMemberNickname" value="${vo.memberNickname }" />
-		<c:if test="${memberNickname == voMemberNickname}">
-			<div class="d-flex">
-				<div class="p-2">
-					<a id="boardUpdate" href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
-				</div>
-				<div class="p-2">
-					<form action="delete" method="POST">
-						<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
-						<input id="boardDelete" type="submit" value="글 삭제"> 
-					</form>
-				</div>
-			</div>
-		</c:if>
-		<c:if test="${memberNickname != null}">
-			<div>
-			<br><br>
-				<div class="border">
-					${memberNickname}<br><br> 
-					<input type="hidden" name="memberNickname" id="memberNickname" value=${memberNickname }>
-					<div class="form-group">
-						<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="../sidebar2.jspf"%>
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
+				<div class="container">
+				<br><br><br><br><br>
+					<h2>글 보기</h2>
+					<%-- <div>
+						<p style="">글 번호 : ${vo.qBoardId }</p>
+					</div> --%>
+					<div>
+						<p>제목 : ${vo.qBoardTitle }</p>
+						<input type="hidden" id="qBoardTitle" value="${vo.qBoardTitle}">
+						<input type="hidden" id="registerNick" value="${vo.memberNickname}">
+						
 					</div>
-					<div style="text-align: right;">
-					<button id="btnCommentAdd" class="btn btn-dark">작성</button>
+					<div>
+						<p id="Writer" >${vo.memberNickname }</p>
+						<fmt:formatDate value="${vo.qBoardCreatedDate }"
+							pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
+						<p id="date">${vo.qBoardCreatedDate }</p>
 					</div>
-				</div>
-			</div>
-		</c:if>
-			
-		
-			<c:if test="${memberNickname == null}">
-				<br> 
-				댓글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=${vo.qBoardId }">로그인</a>이 필요합니다.
-			</c:if>
-			<hr>
-			<br>
-			<div style="text-align: center;">
-				<div id="comments"></div>
-				
-				<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}"> 
-				<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
-				<input type="hidden" id="pageMaker_startPageNo"	value="${pageMaker.startPageNo}"> 
-				<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-				<input type="hidden" id="pageMaker_commentPage"	value="${pageMaker.criteria.page}"> 
-				<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
-				<br>
-			</div>
-		
-			
+					<div class="content">
+						<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">
+							<img src="display?fileName=${vo.qBoardImagePath }" id="img">
+						</c:if>
+						<div style="">
+							<p id="textContent">${vo.qBoardContent }</p>
+							
+						</div>
+						
+					</div>
+					<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
+					<a href="list?page=${page }"><input type="button" value="글 목록"></a>
+					<c:set var="memberNickname" value="${memberNickname }" />
+					<c:set var="voMemberNickname" value="${vo.memberNickname }" />
+					<c:if test="${memberNickname == voMemberNickname}">
+						<div class="d-flex">
+							<div class="p-2">
+								<a id="boardUpdate" href="update?qBoardId=${vo.qBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+							</div>
+							<div class="p-2">
+								<form action="delete" method="POST">
+									<input type="hidden" id="qBoardId" name="qBoardId" value="${vo.qBoardId }"> 
+									<input id="boardDelete" type="submit" value="글 삭제"> 
+								</form>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${memberNickname != null}">
+						<div>
+						<br><br>
+							<div class="border">
+								${memberNickname}<br><br> 
+								<input type="hidden" name="memberNickname" id="memberNickname" value=${memberNickname }>
+								<div class="form-group">
+									<textarea id="qBoardCommentContent" class="form-control" rows="4" placeholder="댓글 내용을 입력해 주세요" style="border: none;" required></textarea>
+								</div>
+								<div style="text-align: right;">
+								<button id="btnCommentAdd" class="btn btn-dark">작성</button>
+								</div>
+							</div>
+						</div>
+					</c:if>
+						
+					
+						<c:if test="${memberNickname == null}">
+							<br> 
+							댓글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=${vo.qBoardId }">로그인</a>이 필요합니다.
+						</c:if>
+						<hr>
+						<br>
+						<div style="text-align: center;">
+							<div id="comments"></div>
+							
+							<input type="hidden" id="pageMaker_hasPrev" value="${pageMaker.hasPrev}"> 
+							<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
+							<input type="hidden" id="pageMaker_startPageNo"	value="${pageMaker.startPageNo}"> 
+							<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
+							<input type="hidden" id="pageMaker_commentPage"	value="${pageMaker.criteria.page}"> 
+							<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}">
+							<br>
+						</div>
+					</div>
+			</main>
+			<%@ include file="../sidebarRight.jspf"%>
+		</div>
 	</div>
-		<script type="text/javascript">
+	<script type="text/javascript">
       $(document).ready(function() {
+      	window.addEventListener('hashchange', function() {
+	    	getAllComments();
+    	});
     	  var img = $('#img').val();
     	  var date = $('#date').val();
     	  
-    	  console.log(img);
           getAllComments();
+    	  console.log(img);
           
          $('#btnCommentAdd').click(function(){ // 댓글작성 버튼 클릭 할 때 함수
             var qBoardId = $('#qBoardId').val(); // 게시판 번호 데이터
@@ -250,9 +258,11 @@ hr {
          // 게시판 댓글 전체 가져오기
          function getAllComments(){
             var qBoardId = $('#qBoardId').val();
+            var memberNickname = $('#memberNickname').val();
             var commentPage = $('#pageMaker_commentPage').val();
             var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
             var url = 'comments/all/' + qBoardId + '/' + commentPage + '/' + commentNumsPerPage;
+            
             $.getJSON(url, function(data) {
             	var pageMaker_hasPrev = Boolean(data.pageMaker.hasPrev);
                 var pageMaker_hasNext = Boolean(data.pageMaker.hasNext);
@@ -327,10 +337,35 @@ hr {
                 
                 $('#comments').html(list);
                   
-               }
-            ); // end getJSON()
-            
-            
+                var fragment = window.location.hash;
+    	        if (fragment) {
+ 	        	   
+    	        	fragment = fragment.replace('#', '');
+    	        	var fragmentList = fragment.split(',');
+    	        	
+    	        	var targetCommentElement = $('.qBoardCommentId').filter('[value="' + fragmentList[0] + '"]');
+    	        	console.log("targetElement" + targetCommentElement.length)
+    	        	
+	    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
+		    	           var target = targetCommentElement[0].parentElement;
+	    	        	   console.log("target = " + target)
+		    	           target.style.backgroundColor = 'lightgray'; 
+		    	           target.style.border = '2px solid';   
+		    	           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			    	        
+		    	           setTimeout(function() {
+			    	           target.style.backgroundColor = '';
+			    	           target.style.border = '';
+		    	           }, 2000);  // 2초 후에 스타일 초기화
+		        		   if (window.location.hash) {
+		        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+		        			}
+	    	   		     } else if (fragmentList[1] > 0) {
+	    	        	   getAllReplies(targetCommentElement);
+	    	    	       }
+    	       	
+    	        } // if(fragment)
+               }); // end getJSON()
          } // end getAllComment()
          
          $(document).on('click', '.btn_comment_page', function () {
@@ -442,7 +477,6 @@ hr {
                   console.log(data);
                
                   var memberNickname = $('#memberNickname').val();
-               
                   var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
                   
                   // $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수. 사실 걍 for문 써도 됌
@@ -506,10 +540,34 @@ hr {
 					  + '<button class="btnReplyAdd">작성</button>' 
 					  + '</div>'
 				  comment_item.append('<div class="replies">' + list + '</div>');	
-                  
-               }
-            ); // end getJSON()
-         } // end getAllReply()  
+                
+					  
+					  
+               var fragment = window.location.hash;
+           	   if (fragment) {
+           	        	
+           	       fragment = fragment.replace('#', '');
+           	       var fragmentList = fragment.split(',');
+           	       
+   	        	   if (fragmentList[1] > 0) {
+   	        		   var targetReplyElement = $('.qBoardReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
+   	        		   
+   	        		   targetReplyElement.style.backgroundColor = 'lightgray';
+   	        		   targetReplyElement.style.border = '2px solid';
+           		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   						
+           		       setTimeout(function() {
+           		    	   targetReplyElement.style.backgroundColor = '';
+           		    	   targetReplyElement.style.border = '1px solid';
+   	    	           }, 2000);  // 2초 후에 스타일 초기화
+           		       
+           		       if (window.location.hash) {
+   	        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+   	        			}
+   	        	   }
+           	   }
+               }); // end getJSON()
+            }//end getAllReply()  
          
          // 대댓글 입력
          $(document).on('click', '.btnReplyAdd', function(){

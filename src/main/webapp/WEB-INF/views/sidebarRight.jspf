@@ -28,20 +28,24 @@
 	<input type="hidden" id="productPage" value=1>
 	<input type="hidden" id="uProductPage" value=1>
 	
-		<aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarRight">
-		    <div class="position-sticky sticky-top">
-					 최근 본 상품
-				<div class="d-flex flex-row">
-					 <div id="recently_product" class="col-md-6" style="font-size:10px;"></div>
-					 <div id="recently_u_product" class="col-md-6" style="font-size:10px;"></div>
-				</div>
-				<div class="up_down">
-			    <button id="scrollToTop" class="btn btn-secondary btn-sm" style="display:none;">↑</button>
+	<aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarRight">
+	    <div class="position-sticky sticky-top">
+	    	<br>
+	        <div class="text-center">
+	            <h5>최근 본 상품</h5>
+	        </div>
+	        <br>
+	        <div class="d-flex flex-row">
+	            <div id="recently_product" class="col-md-6 text-center" style="font-size: 10px;"></div>
+	            <div id="recently_u_product" class="col-md-6 text-center" style="font-size: 10px;"></div>
+	        </div>
+			<div class="up_down text-center">
+			    <button id="scrollToTop" class="btn btn-secondary btn-sm" style="display:none; margin: 0 auto;">↑</button>
 			    <br>
-				<button id="scrollToBottom" class="btn btn-secondary btn-sm" style="display:none;">↓</button>
-				</div>
-		    </div>
-		</aside>
+			    <button id="scrollToBottom" class="btn btn-secondary btn-sm" style="display:none; margin: 0 auto;">↓</button>
+			</div>
+	    </div>
+	</aside>
 
 	
 <script type="text/javascript">
@@ -62,8 +66,6 @@
 		            scrollToBottomButton.css('display', 'none');
 		        }
 		    });
-
-
 
 		    scrollToTopButton.click(function() {
 		        $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -107,7 +109,7 @@
 							  + '<img src="/calla/fBoard/display?fileName=' + this.productImagePath + '" width="50" height="60" style="display: block;">'
 							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
 							  + '</div>'
-							  + '<div class="info">'
+							  + '<div class="info" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 200px;">'
 							  + '<span class="name" style="display: none;">'
 							  + this.productName
 							  + '</span>'
@@ -121,18 +123,18 @@
 	
 					}); // end productList.each()
 					
+					if(hasPrev){
+						productHTML += '<button class="btn_prev_product">◀</button>'
+					}
+					
 					if(totalLinkNo > 0) {
 					productHTML +=  productPage + '/' + lists.pageMaker.totalLinkNo
 					} else {
-						
 						productHTML +=
 							'<br>'
 							+ '최근(1개월 이내)에 본 공용상품이 없습니다.'
 					}
-					
-					if(hasPrev){
-						productHTML += '<button class="btn_prev_product">◀</button>'
-					}
+
 					if(hasNext){
 						productHTML	+= '<button class="btn_next_product">▶</button>'
 					}
@@ -173,12 +175,12 @@
 							  + '<img src="/calla/fBoard/display?fileName=' + this.uProductImagePath + '" width="50" height="60" style="display: block;">'
 							  + '<button class="btn btn-sm btn-outline btn-dark close-button btn_delete_recently_u_pro" style="position: absolute; top: 0; right: 0; z-index: 1;">x</button>'
 							  + '</div>'
-							  + '<div class="info">'
+							  + '<div class="info" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 200px;">'
 							  + '<span class="name" style="display: none;">'
 							  + this.uProductName
 							  + '</span>'
 							  + '<span class="price" style="display: none;">'
-							  + this.uProductPrice
+							  + this.uProductPrice + ' 원'
 							  + '</span>'
 							  + '</div>'
 							  + '</div>'
@@ -186,6 +188,10 @@
 							  + '</a>';
 	
 					}); // end productList.each()
+					
+					if(hasPrev){
+						uProductHTML += '<button class="btn_prev_u_product">◀</button>'
+					}
 					
 					if(totalLinkNo > 0) {
 						uProductHTML +=  uProductPage + '/' + totalLinkNo
@@ -195,9 +201,6 @@
 							+ '최근(1개월 이내)에 본 중고상품이 없습니다.'
 					}
 					
-					if(hasPrev){
-						uProductHTML += '<button class="btn_prev_u_product">◀</button>'
-					}
 					if(hasNext){
 						uProductHTML += '<button class="btn_next_u_product">▶</button>'
 					}

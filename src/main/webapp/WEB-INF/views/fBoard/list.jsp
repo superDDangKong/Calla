@@ -79,7 +79,7 @@ li {
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.hasPrev }">
 							<li class="text-secondary" style="margin-right: 5px">
-								<a href="list?page=${pageMaker.startPageNo - 1 }">◀</a>
+								<a href="list?page=${pageMaker.startPageNo - 1 }&option=${option}&keyword=${keyword}">◀</a>
 							</li>
 						</c:if>
 
@@ -91,7 +91,7 @@ li {
 
 						<c:if test="${pageMaker.hasNext }">
 							<li class="text-secondary" style="margin-right: 5px">
-								<a href="list?page=${pageMaker.endPageNo + 1 }">▶</a>
+								<a href="list?page=${pageMaker.endPageNo + 1 }&option=${option}&keyword=${keyword}">▶</a>
 							</li>
 						</c:if>
 					</ul>

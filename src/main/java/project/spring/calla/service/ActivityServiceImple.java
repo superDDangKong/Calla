@@ -11,22 +11,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.ProductOrderVO;
+import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.persistence.FBoardCommentDAO;
-import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.ActivityDAO;
-import project.spring.calla.persistence.MemberDAO;
-import project.spring.calla.persistence.ProductCommentDAO;
+import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.ProductDAO;
 import project.spring.calla.persistence.ProductLikeDAO;
-import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
-import project.spring.calla.persistence.UProductCommentDAO;
 import project.spring.calla.persistence.UProductDAO;
 import project.spring.calla.persistence.UProductLikeDAO;
 
@@ -81,7 +77,12 @@ public class ActivityServiceImple implements ActivityService {
 			logger.info("readRecentlyView() 호출 memberId : " + memberId);
 			logger.info("getTotalCountsByRecentlyView 호출 criteria : " + criteria.toString());
 			Map<String, Object> args = new HashMap();
-			args.put("productList", productDAO.selectRecentlyView(criteria, memberId));
+			List<ProductVO> productList = productDAO.selectRecentlyView(criteria, memberId);
+			for(ProductVO vo : productList) {
+				String[] imageList = vo.getProductImagePath().split(",");
+				vo.setProductImagePath(imageList[0]);
+			}
+			args.put("productList", productList);
 			args.put("uProductList", uProductDAO.selectRecentlyView(criteria, memberId));
 			return args;
 		}
@@ -169,7 +170,14 @@ public class ActivityServiceImple implements ActivityService {
 		@Override
 		public List<UProductVO> readProductsByOption(PageCriteria criteria, String keyword, String interest, String option) {
 			logger.info("readProductsByOption() 호출");
-			return ActivityDAO.selectProductsByOption(criteria, keyword, interest, option);
+			List<UProductVO> list = ActivityDAO.selectProductsByOption(criteria, keyword, interest, option);
+			for (UProductVO vo : list) {
+				String[] imagePath = vo.getuProductImagePath().split(",");
+				if(imagePath.length > 1) {
+					vo.setuProductImagePath(imagePath[0]);
+				}
+			}
+			return list;
 		}
 
 		@Override

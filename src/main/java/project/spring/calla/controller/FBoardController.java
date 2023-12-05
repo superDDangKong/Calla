@@ -34,10 +34,8 @@ import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
 
 @Controller // @Component
-// * 표현 계층(Presentation Layer)
-// - view(페이지)와 service를 연결하는 역할
-// - request에 대한 response를 전달하는 역할
-@RequestMapping(value="/fBoard") // url : /ex02/board
+@RequestMapping(value="/fBoard")
+
 public class FBoardController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(FBoardController.class);
@@ -57,9 +55,9 @@ public class FBoardController {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		List<FBoardVO> list = null;
-		// Paging 처리
 		
 		PageCriteria criteria = new PageCriteria();
+		PageMaker pageMaker = new PageMaker();
 		if(page != null) {
 			criteria.setPage(page);
 		}
@@ -67,7 +65,7 @@ public class FBoardController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		PageMaker pageMaker = new PageMaker();
+		
 		if (option != null) {
 			if (option.equals("searchMemberNickname")) {
 				list = fBoardService.readByMemberNickname(criteria, keyword);
@@ -95,23 +93,17 @@ public class FBoardController {
 	} // end list()
 	
 	@GetMapping("/register")
-	public void registerGET() {
-		logger.info("registerGET()");
-	} // end registerGET()
+	public void registerGET() {} // end registerGET()
 	
 	@PostMapping("/register")
 	public String registerPOST(FBoardVO vo, RedirectAttributes reAttr, MultipartFile file) {
-		// RedirectAttributes
-		// - 리다이렉트 시 데이터를 전달하기 위한 인터페이스
 		
 		logger.info("registerPost() 호출 : vo = " + vo.toString());
-		logger.info("파일 이름 : " + file.getOriginalFilename());
-		logger.info("파일 크기 : " + file.getSize());
 		try {
 			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 			vo.setfBoardImagePath(savedFileName);
 		} catch (IOException e) {
-			return "redirect:/fBoard/register";
+			return "fBoard/register";
 		}
 		
 		int result = fBoardService.create(vo);
@@ -119,9 +111,8 @@ public class FBoardController {
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/fBoard/list";
-			// redirect는 request 정보가 없어짐...
 		} else {
-			return "redirect:/fBoard/register";
+			return "fBoard/register";
 		}
 	} // end registerPOST()
 	
@@ -158,7 +149,7 @@ public class FBoardController {
 	@GetMapping("/detail")
 	public String detail(Model model, Integer fBoardId, Integer page, 
 			HttpServletRequest request, HttpServletResponse response) {
-
+		logger.info("detail() 호출 : fBoardId = " + fBoardId);
 		String cookieName = "fBoard_" + fBoardId;
 		
 		Cookie[] cookies = request.getCookies();
@@ -176,7 +167,7 @@ public class FBoardController {
 	            // 쿠키가 존재하지 않는 경우, 조회수 증가 및 쿠키 설정
 	            int views = 1; // 첫 번째 조회
 	            Cookie viewCookie = new Cookie(cookieName, String.valueOf(views));
-	            viewCookie.setMaxAge(60); // 쿠키 유효 시간 (1분)
+	            viewCookie.setMaxAge(60*60*24); // 쿠키 유효 시간 (1일)
 	            response.addCookie(viewCookie);
 	            
 	            int result = fBoardService.updateViews(views, fBoardId);
@@ -188,21 +179,19 @@ public class FBoardController {
 	            }
 		 }
 		 
-		logger.info("detail() 호출 : fBoardId = " + fBoardId);
 		FBoardVO vo = fBoardService.read(fBoardId);
 		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
-			
+			model.addAttribute("page", page);
 		}
 		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));
 		
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page); // 댓글 페이징 초기 페이지 번호
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "/fBoard/detail";
@@ -240,6 +229,4 @@ public class FBoardController {
 		}
 	} // end deletePOST()
 	
-	
-
-} // end BoardController
+} // end fBoardController

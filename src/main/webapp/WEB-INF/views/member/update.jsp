@@ -115,11 +115,21 @@ table, th, td {
 										<input type="text" class="form-control" id="memberEmail" value='${vo.memberEmail}' readonly>
 									</div>
 									<div class="input-group form-group">
-										<input type="text" class="form-control" id="email_id" placeholder="calla" required>
+										<input type="text" class="form-control" id="email_id" placeholder="이메일 입력" required>
 										<div class="input-group-prepend">
 											<span class="input-group-text">@</span>
 										</div>
 										<input type="text" class="form-control" id="email_domain" placeholder="naver.com" required>
+							            <div class="mb-3">
+							                <select class="form-select" id="domain_list">
+							                    <option value="-직접입력-">-직접입력-</option>
+							                    <option value="naver.com">naver.com</option>
+							                    <option value="gmail.com">gmail.com</option>
+							                    <option value="hanmail.net">hanmail.net</option>
+							                    <option value="nate.com">nate.com</option>
+							                    <option value="kakao.com">kakao.com</option>
+							                </select>
+							            </div>
 									</div> 
 									<input type="hidden" id="newMemberEmail">
 									<button class="btn btn-primary" id="btnUpdateEmail" disabled>이메일 변경</button>
@@ -400,6 +410,7 @@ table, th, td {
 	    });
 	
 	    $('#domain_list').change(function () {
+	    	console.log("domain_list 펑션")
 	        if ($(this).val() == "-직접입력-") {
 	            $('#email_domain').val("");
 	            $("#email_domain").attr("readonly", false);

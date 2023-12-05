@@ -21,15 +21,11 @@
 	<aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
 	    <div class="position-sticky">
 	        <ul class="nav flex-column">
-	        	<div>MY 쇼핑</div>
+	        <br>
+	        	<h5>MY 쇼핑</h5>
 	            <li class="nav-item">
-	                <a class="nav-link active" href="/calla/activity/orders">
+	                <a class="nav-link active" href="/calla/product/order">
 	                    주문 목록
-	                </a>
-	            </li>
-	            <li class="nav-item">
-	                <a class="nav-link" href="/calla/activity/cancel">
-	                    취소/반품/<br>교환/환불 내역
 	                </a>
 	            </li>
 	             <li class="nav-item">
@@ -50,7 +46,7 @@
 	        </ul>
 	        <hr>
 	        <ul class="nav flex-column">
-	        	<div>MY 활동</div>
+	        	<h5>MY 활동</h5>
 	            <li class="nav-item">
 	                <a class="nav-link active" href="/calla/activity/boards">
 	                    작성글
@@ -69,7 +65,7 @@
 	        </ul>
 	        <hr>
 	        <ul class="nav flex-column">
-	        	<div>MY 정보</div>
+	        	<h5>MY 정보</h5>
 	            <li class="nav-item">
 	                <a class="nav-link active" href="/calla/member/update">
 	                    개인정보 확인/수정

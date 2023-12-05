@@ -193,7 +193,7 @@ li {
                         + '<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
                         + this.memberNickname
                         + '<br>'
-                        + '<textarea class="form-control fBoardCommentContent" rows="1" style="border:none;">'
+                        + '<textarea class="form-control bg-white fBoardCommentContent" rows="1" style="border:none;" readonly>'
                         + this.fBoardCommentContent
                         + '</textarea>'
                         + fBoardCommentCreatedDate
@@ -224,8 +224,7 @@ li {
                     list += '<li class="text-secondary" style="margin-right: 5px"><button class="btn_comment_next">▶</button></li>';
                 }
 
-                list += '</ul>' + '</div>'
-                    + '</div>';
+                list += '</ul>' + '</div>';
 
                 $('#comments').html(list);
                 
@@ -236,6 +235,7 @@ li {
     	        	var fragmentList = fragment.split(',');
     	        	
     	        	var targetCommentElement = $('.fBoardCommentId').filter('[value="' + fragmentList[0] + '"]');
+    	        	console.log("targetElement" + targetCommentElement.length)
 	    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
 		    	           var target = targetCommentElement[0].parentElement;
 		    	           target.style.backgroundColor = 'lightgray'; 
@@ -278,6 +278,7 @@ li {
         $(document).on('click', '.comment_item .btnCommentUpdate', function () {
             var fBoardCommentId = $(this).prevAll('.fBoardCommentId').val();
             var fBoardCommentContent = $(this).prevAll('.fBoardCommentContent').val();
+            /* fBoardCommentContent. */
 
             $.ajax({
                 type: 'PUT',
@@ -373,7 +374,7 @@ li {
                         + this.memberNickname
                         + '<br>'
                         + '&nbsp&nbsp'
-                        + '<textarea class="fBoardReplyContent form-control bg-light" rows="1" style="border:none;">'
+                        + '<textarea class="fBoardReplyContent form-control bg-light" rows="1" style="border:none;" readonly>'
                         + '&nbsp&nbsp'
                         + this.fBoardReplyContent
                         + '</textarea>'

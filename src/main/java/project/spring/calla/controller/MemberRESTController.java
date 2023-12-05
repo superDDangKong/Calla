@@ -63,8 +63,8 @@ public class MemberRESTController {
 	
 	@GetMapping("/checkemail")
 	public String mailAuthentication(String memberEmail, HttpServletRequest request) throws Exception {
-		logger.info("mailAuth() È£Ãâ ÀÎÁõ¿äÃ»ÇÑ ÀÌ¸ÞÀÏ ÁÖ¼Ò : " + memberEmail);
-		String authKey = mailSendService.sendMail(memberEmail); //»ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ¸ÞÀÏÁÖ¼Ò·Î ¸ÞÀÏÀ» º¸³¿
+		logger.info("mailAuth() È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ : " + memberEmail);
+		String authKey = mailSendService.sendMail(memberEmail); //ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		// memberService.registMailAuthentication(memberEmail, authKey);
 		HttpSession mailAuthSession = request.getSession();
 		mailAuthSession.setAttribute("memberEmail", memberEmail);
@@ -76,18 +76,18 @@ public class MemberRESTController {
 	
 	@PostMapping("/authenticationConfirm")
 	public String mailAuthKeyConfirm(String AuthenticationKey, HttpServletRequest request) {
-		logger.info("mailAuthKeyConfirm() È£Ãâ AuthenticationKey: " + AuthenticationKey);
+		logger.info("mailAuthKeyConfirm() È£ï¿½ï¿½ AuthenticationKey: " + AuthenticationKey);
 		HttpSession mailAuthSession = request.getSession();
 	    String savedAuthenticationKey = (String) mailAuthSession.getAttribute("authKey");
 	    logger.info(savedAuthenticationKey);
 	    String result = "fail";
 	    
 	    if (AuthenticationKey.equals(savedAuthenticationKey)) {
-	    	logger.info("ÀÎÁõ¼º°ø!");
+	    	logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 	    	result = "success";
 	    } else {
-	    	logger.info("ÀÔ·ÂÇÑ ÀÎÁõÅ° : " + AuthenticationKey);
-	    	logger.info("»ç¿ëÀÚ¿¡°Ô º¸³½ ÀÎÁõÅ° : " + savedAuthenticationKey);
+	    	logger.info("ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° : " + AuthenticationKey);
+	    	logger.info("ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° : " + savedAuthenticationKey);
 		    return result;
 	    }
 	    return result;
@@ -132,7 +132,7 @@ public class MemberRESTController {
 		String category = obj.get("category");
 		
 		int result = memberService.update(memberId, newData, category);
-			if (category.equals("memberNickname") && result==1) {
+			if (category.equals("member_nickname") && result==1) {
 				session.setAttribute("memberNickname", newData);
 			}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -150,13 +150,8 @@ public class MemberRESTController {
 		String newPw = args.get("newPw").toString();
 		int result = 0;
 		if (memberPw.equals(args.get("currentPw"))) {
-			logger.info("pw ");
 			result = memberService.updatePw(memberId, newPw);
-			
-		} else {
-			logger.info("pw ");
-			
-		}
+		} 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end updatePw
 	
@@ -170,8 +165,8 @@ public class MemberRESTController {
 			amount = -1;
 		}
 		int updateResult = memberService.updateLevel(memberId, amount);
-		MemberVO updatedVO = memberService.read(memberId);
-		int newMemberLevel = updatedVO.getMemberLevel();
+		MemberVO vo = memberService.read(memberId);
+		int newMemberLevel = vo.getMemberLevel();
 		logger.info(String.valueOf(newMemberLevel));
 
 		return new ResponseEntity<Integer>(newMemberLevel, HttpStatus.OK);

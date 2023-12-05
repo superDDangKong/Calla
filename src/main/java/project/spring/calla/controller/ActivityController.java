@@ -34,13 +34,13 @@ import project.spring.calla.service.ActivityService;
 import project.spring.calla.service.UProductCommentService;
 import project.spring.calla.util.MediaUtil;
 
-@Controller // @Component
-@RequestMapping(value = "/activity") // url : /ex02/board
+@Controller
+@RequestMapping(value = "/activity")
 public class ActivityController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 	
-	private static Map<String, HttpSession> loginSessions = new HashMap<>();
+//	private static Map<String, HttpSession> loginSessions = new HashMap<>();
 	
 	@Resource(name = "uploadpath")
 	private String uploadpath;
@@ -54,18 +54,12 @@ public class ActivityController {
 	@GetMapping("/likes")
 	public void likesGET() {} // end likesGET()
 
-	@GetMapping("/orders")
-	public void ordersGET() {} // end likesGET()
-
 	@GetMapping("/comments")
 	public void commentsGET() {}
 
 	@GetMapping("/boards")
 	public void boardsGET() {} // end boardsGET
 
-	@GetMapping("/cancel")
-	public void cancelGET() {};
-	
 	@GetMapping("/myuproduct")
 	public void MainGET(Model model, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
 		logger.info("list() ");

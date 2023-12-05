@@ -61,91 +61,97 @@ body {
 <%@ include file="../header.jspf" %>
 </head>
 <body>
-	
-	
-	<h1 class="text-center">
-		<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
-	</h1>
-	
-	<a href="register" class="write-button"><input type="button" value="글 작성"></a>
-	<a href="note" class="note"><input type="button" value="쪽지 보내기"></a>
-	<hr>
-	<div class="container mt-4">
-    <form action="list" method="GET">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="option"></label>
-                    <select id="option" name="option" class="form-control">
-                        <option value="searchMemberNickname" selected>작성자</option>
-                        <option value="searchTitle">제목</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="keyword"></label>
-                    <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button type="submit" class="btn btn-primary btn-block">검색</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-	<div>
-		
-		<div class="container" style="width : 1140px">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="th" style="width : 60px">번호</th>
-						<th class="th" style="width : 700px">제목</th>
-						<th class="th" style="width : 120px">작성자</th>
-						<th class="th" style="width : 150px">작성일</th>
-						<th class="th" style="width : 100px">댓글수</th>
-						<th class="th" style="width : 100px">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:set var="memberNickname" value="${memberNickname }"/> 
-					<c:forEach var="vo" items="${list }">
-						<tr>
-							<td class="td">${vo.qBoardId }</td>
-							<td class="td"><a class="title" href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
-							<td class="td">${vo.memberNickname }</td>
-							<fmt:formatDate value="${vo.qBoardCreatedDate }"
-							pattern="yyyy-MM-dd" var="qBoardCreatedDate"/>
-							<td class="td">${qBoardCreatedDate }</td>
-							<td class="td">${vo.qBoardCommentCount }</td>
-							<td class="td">${vo.qBoardViews }</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="../sidebar2.jspf"%>
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
+				<div class="container">
+					<h1 class="text-center">
+						<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
+					</h1>
+					
+					<a href="register" class="write-button"><input type="button" value="글 작성"></a>
+					<a href="note" class="note"><input type="button" value="쪽지 보내기"></a>
+					<hr>
+					<div class="container mt-4">
+					    <form action="list" method="GET">
+					        <div class="row">
+					            <div class="col-md-4">
+					                <div class="form-group">
+					                    <label for="option"></label>
+					                    <select id="option" name="option" class="form-control">
+					                        <option value="searchMemberNickname" selected>작성자</option>
+					                        <option value="searchTitle">제목</option>
+					                    </select>
+					                </div>
+					            </div>
+					            <div class="col-md-4">
+					                <div class="form-group">
+					                    <label for="keyword"></label>
+					                    <input type="text" id="keyword" name="keyword" class="form-control" value="${keyword}" placeholder="검색어를 입력해주세요">
+					                </div>
+					            </div>
+					            <div class="col-md-4">
+					                <div class="form-group">
+					                    <label>&nbsp;</label>
+					                    <button type="submit" class="btn btn-primary btn-block">검색</button>
+					                </div>
+					            </div>
+					        </div>
+					    </form>
+					</div>
+					<div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="th" style="width : 80px">번호</th>
+									<th class="th" style="width : 700px">제목</th>
+									<th class="th" style="width : 120px">작성자</th>
+									<th class="th" style="width : 150px">작성일</th>
+									<th class="th" style="width : 100px">댓글수</th>
+									<th class="th" style="width : 100px">조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:set var="memberNickname" value="${memberNickname }"/> 
+								<c:forEach var="vo" items="${list }">
+									<tr>
+										<td class="td">${vo.qBoardId }</td>
+										<td class="td"><a class="title" href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
+										<td class="td">${vo.memberNickname }</td>
+										<fmt:formatDate value="${vo.qBoardCreatedDate }"
+										pattern="yyyy-MM-dd" var="qBoardCreatedDate"/>
+										<td class="td">${qBoardCreatedDate }</td>
+										<td class="td">${vo.qBoardCommentCount }</td>
+										<td class="td">${vo.qBoardViews }</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						
+						<ul style="text-align:center">
+							<c:if test="${pageMaker.hasPrev }">
+								<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }"
+								var="num">
+								<li><a href="list?page=${num }">${num }</a></li>	
+							</c:forEach>
+							<c:if test="${pageMaker.hasNext }">
+								<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
+							</c:if>
+					
+						</ul>
+						<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
+						<input type="hidden" id="insertAlert" value="${insert_result }">
+						<input type="hidden" id="statusAlert" value="${status_result }">
+					</div>
+				</div>
+			</main>
+			<%@ include file="../sidebarRight.jspf"%>
 		</div>
-		
-		<ul style="text-align:center">
-			<c:if test="${pageMaker.hasPrev }">
-				<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
-			</c:if>
-			<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }"
-				var="num">
-				<li><a href="list?page=${num }">${num }</a></li>	
-			</c:forEach>
-			<c:if test="${pageMaker.hasNext }">
-				<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
-			</c:if>
-	
-		</ul>
 	</div>
-	<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
-	<input type="hidden" id="insertAlert" value="${insert_result }">
-	<input type="hidden" id="statusAlert" value="${status_result }">
+
 	
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -158,6 +164,7 @@ body {
 		if(result2 == 'secret') {
 			alert('비공개 글입니다.');
 		}
+	})
 </script>
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

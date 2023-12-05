@@ -3,7 +3,6 @@ package project.spring.calla;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,6 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.service.MemberService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.service.UProductService;
-import project.spring.calla.util.SessionManager;
 
 /**
  * Handles requests for the application home page.
@@ -37,8 +35,8 @@ public class HomeController {
 	@Autowired
 	MemberService memberService;
 	
-	@Autowired
-	private SessionManager sessionManager;
+//	@Autowired
+//	private SessionManager sessionManager;
 	
 	@Autowired
 	ProductService productService;
@@ -49,8 +47,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
 		logger.info("home controller home »£√‚");
-		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
-		logger.info("loginPOST() " + loginSessions.toString());
+//		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
 		
 		HttpSession session = request.getSession(false);
 		if(session != null) {
@@ -85,6 +82,8 @@ public class HomeController {
 			}
 			model.addAttribute("lists", lists);
 		}
+		
+//		logger.info("home " + loginSessions.toString());
 		return "home";
 	}
 }
