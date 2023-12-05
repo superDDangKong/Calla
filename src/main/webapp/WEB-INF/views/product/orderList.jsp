@@ -156,9 +156,20 @@ li {
     		    <input type="text" id="memberCardNumber" name="memberCardNumber" placeholder="카드 번호를 입력하세요" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
     		  </div>	
 	          <div>
-    			<label for="email">이메일:</label>
-    			<input type="text" id="memberEmail" name="memberEmail" placeholder="(선택) 이메일을 입력하세요">
-    		  </div>	
+			    <label for="email">이메일:</label>
+			    <input type="text" id="memberEmail" name="memberEmail" placeholder="(선택) 이메일을 입력하세요">
+			    <span>@</span>
+			    <select id="selectEmail" name="selectEmail">
+			        <option value="">이메일을 선택하세요</option>
+			        <option value="naver.com">naver.com</option>
+			        <option value="gmail.com">gmail.com</option>
+			        <option value="hanmail.net">hanmail.net</option>
+			        <option value="nate.com">nate.com</option>
+			        <option value="kakao.com">kakao.com</option>
+			    </select>
+			    <div id="displayEmail" style="display: none;"></div>
+			</div>
+    		  <div id="emailError" style="display: none; color: red;">올바른 이메일을 입력해주세요.</div>	
 	          <div>
 	            <label for="recipientName" class="col-form-label">수령인:</label>
 	            <input type="text" id="recipientName" required>
@@ -298,13 +309,36 @@ li {
 	    });
 	    $('.totalPrice .sum').text('총 합계 : ' + new Intl.NumberFormat().format(total) + '원');
 	} // end updateTotalPrice()
+		
+	$(document).ready(function() {
+		    $('#memberEmail, #selectEmail').on('input', function() {
+		        var customEmail = $('#memberEmail').val();
+		        var selectedEmail = $('#selectEmail').val();
+		        
+		        var combinedEmail = '';
+		        if (customEmail !== '' && selectedEmail !== '') {
+		            combinedEmail = customEmail + '@' + selectedEmail;
+		            
+		            var emailRegex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		            if (emailRegex.test(combinedEmail)) {
+		                $('#displayEmail').hide().text();
+		            } else {
+		                $('#displayEmail').show().text('유효하지 않은 이메일 형식입니다.').css('color', 'red');
+		            }
+		        } else {
+		            $('#displayEmail').hide();
+		        }
+		    });
+		}); // end document();
 	
 	$('#orderBtn').click(function(){
 		var selectedProducts = []; // 선택한 상품
 		var memberId = $('#memberId').val();
 	    var memberCard = $('#memberCard').val();
 	    var memberCardNumber = $('#memberCardNumber').val();
-	    var memberEmail = $('#memberEmail').val();
+	    var customEmail = $('#memberEmail').val();
+	    var selectedEmail = $('#selectEmail').val();
+	    var memberEmail = (customEmail + '@' + selectedEmail);
 	    var recipientName = $('#recipientName').val();
 	    var memberAddress = ($('#sample4_postcode').val() + $('#sample4_roadAddress').val() + $('#sample4_jibunAddress').val() + $('#sample4_detailAddress').val() + $('#sample4_extraAddress').val());
 		
@@ -357,22 +391,21 @@ li {
 	        }
 	    });
 	});
-	
-	function validateEmail() {
-        const emailField = document.getElementById('email');
-        const email = emailField.value;
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(email) && email !== "") {
-            alert("유효한 이메일 주소를 입력하세요.");
-            emailField.value = "";
-        }
-    } // end validateEmail()
-	
 	}); // end document
 	
+	    $(document).ready(function() {
+	        // 모달로 이동하는 버튼 클릭 시 실행되는 함수
+	        $('.btn-primary[data-toggle="modal"]').on('click', function() {
+	            var checkedCount = $('.ProductOrderCheckBox:checked').length;
+	            if (checkedCount === 0) {
+	                alert('선택한 상품이 없습니다.');
+	                return false; // 모달로의 이동을 막기 위해 false 반환
+	            } 
+	        });
+	    });
+	
 	</script>
+	
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
@@ -432,19 +465,6 @@ li {
 	        }).open();
 	    }
 	   
-	</script>
-	
-	<script type="text/javascript">
-	    $(document).ready(function() {
-	        // 모달로 이동하는 버튼 클릭 시 실행되는 함수
-	        $('.btn-primary[data-toggle="modal"]').on('click', function() {
-	            var checkedCount = $('.ProductOrderCheckBox:checked').length;
-	            if (checkedCount === 0) {
-	                alert('선택한 상품이 없습니다.');
-	                return false; // 모달로의 이동을 막기 위해 false 반환
-	            } 
-	        });
-	    });
 	</script>
 	
 	
