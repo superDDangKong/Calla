@@ -274,12 +274,7 @@
 		<br>
 	</div>
 	
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	  Launch demo modal
-	</button>
-	
-	<!-- Modal -->
+	<!-- 댓글 수정 Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -292,6 +287,25 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">수정</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 답글 수정 Modal -->
+	<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel1">답글 수정</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <input type="text" class="updateReplyContent form-control" required style="width: 100%;">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary">수정</button>
 	      </div>
 	    </div>
@@ -414,7 +428,7 @@
 									+ '&nbsp;&nbsp;' + '<span class="comment-date">' + formatDate(productCommentCreatedDate) + '</span>'
 									+ '</div>'
 									+ '<div class="productCommentContent">'
-									+ '<textarea class="commentContent" rows="3" cols="120" style="border=1px;" required>'
+									+ '<textarea class="commentContent" rows="3" cols="120" style="border=1px;" readonly>'
 									+ this.productCommentContent
 									+ '</textarea>'
 									+ '</div>'
@@ -443,7 +457,7 @@
 								
 								$('.btnCommentUpdate1').on('click', function() {
 						            var productCommentId = $(this).closest('.comment_item').find('.productCommentId').val();
-						            console.log('선택된 댓글 번호:', productCommentId);
+						            console.log('선택된 댓글 번호:' + productCommentId);
 						            $('#exampleModal').data('productCommentId', productCommentId);
 						        }); // end btnCommentUpdate1 click
 								
@@ -469,7 +483,7 @@
 			$('#exampleModal').on('click', '.btn-primary', function(){
 				var productCommentId = $(this).closest('#exampleModal').data('productCommentId');
 			    var productCommentContent = $(this).closest('.modal').find('.updateCommentContent').val();
-			    console.log("선택된 댓글 번호 : " + productCommentId + ", 댓글 내용 : " + productCommentContent);
+			    console.log("선택된 댓글 번호 : " + productCommentId);
 			    
 			    $.ajax({
 			        type: 'PUT',
@@ -515,7 +529,10 @@
 			
 		}); // end document
 		
-		$('#comments').on('click', '.comment_item .btnReply', function(){
+		
+		var selectedReplyBtn; // 클릭 이벤트 변수 선언
+		$('#comments').on('click', '.comment_item .btnReply', function(event){			
+			selectedReplyBtn = event.currentTarget
 			if($('#memberNickname').val() == null) {
 				alert('답글을 작성하려면 로그인 해 주세요')
 				return;
@@ -525,7 +542,9 @@
 			getAllReplies(productCommentId);
 		}); // end btn_Reply()
 		
-		function getAllReplies(productCommentId) {
+		function getAllReplies(productCommentId ) {
+			console.log("productCommentId: ")
+			console.log(productCommentId)
 			$('.replies').html('');
 			console.log("getAllReplies() 호출");
 			var url = 'replies/all/' + productCommentId.val();
@@ -572,11 +591,11 @@
 							+ '<input type="hidden" class="productReplyId" value="' + this.productReplyId + '">'
 							+ this.memberNickname
 							+ '&nbsp;&nbsp;' // 공백
-							+ '<input type="text" class="productReplyContent" value="' + this.productReplyContent + '" required>'	 
+							+ '<input type="text" class="productReplyContent" value="' + this.productReplyContent + '" readonly>'	 
 							+ '&nbsp;&nbsp;' // 공백
 							+ formatDate(productReplyCreatedDate)
 							+ '&nbsp;&nbsp;' // 공백
-							+ '<button class="btnReplyUpdate" ' + disabled + '>수정</button>'
+							+ '<button class="btnReplyUpdate1" data-bs-toggle="modal" data-bs-target="#exampleModal1" ' + disabled + '>수정</button>'
 							+ '<button class="btnReplyDelete" ' + disabled + '>삭제</button>'
 							+ '<br>'
 							+ '</pre>'
@@ -591,6 +610,16 @@
 						+ '<button class="btnReplyAdd">작성</button>' 
 						+ '</div>'
 					comment_item.append('<div class="replies">' + list + '</div>');	
+						
+						$('.btnReplyUpdate1').on('click', function(){
+							var productReplyId = $(this).closest('.reply_item').find('.productReplyId').val();
+							var productCommentId = $(this).closest('.comment_item').find('.productCommentId').val();
+					        console.log('선택된 댓글 번호:' + productCommentId);
+							console.log('선택된 답글 번호 :' + productReplyId);
+							
+					        $('#exampleModal1').data('productCommentId', productCommentId);
+							$('#exampleModal1').data('productReplyId', productReplyId);
+						}); // end btnReplyUpdate1 Click
 				}
 			); // end getJSON()
 		} // end getAllReplies()
@@ -637,15 +666,16 @@
 			}); // end ajax()
 		}); // end btnReplyAdd.click()
 		
-		$(document).on('click', '.btnReplyUpdate', function(){
-			console.log(this);
+		$('#exampleModal1').on('click', '.btn-primary', function(){
+
 			var commentItem = $(this).closest('.comment_item');
-			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
-			var productReplyId = $(this).prevAll('.productReplyId').val();
-			var productReplyContent = $(this).prevAll('.productReplyContent').val();
-			console.log("선택된 답글 번호 : " + productReplyId + ", 답글 내용 : " + productReplyContent);	
+			var productCommentId = $(this).closest('#exampleModal1');
+			var productReplyId = $(this).closest('#exampleModal1').data('productReplyId');
+			var productReplyContent = $(this).closest('.modal').find('.updateReplyContent').val();
 			
-			// ajax 요청
+			console.log("commentItem :" + commentItem + ", commentId : " + productCommentId);
+			console.log("선택된 답글 번호 : " + productReplyId);
+			
 			$.ajax({
 				type : 'PUT',
 				url : 'replies/' + productReplyId,
@@ -653,15 +683,18 @@
 					'Content-Type' : 'application/json'
 				},
 				data : productReplyContent,
-				success : function(result) {
-					console.log(result);
-					if(result == 1) {
-						alert('답글 수정 성공!');
-						getAllReplies(productCommentId);
-					}
+				success : function(result){
+					console.log(result)
+						if(result == '1'){
+							alert('답글 수정 성공');
+							$('#exampleModal1').modal('hide');
+							selectedReplyBtn.click();
+							
+						}
 				}
-			}) // end ajax()
-		}); // end btnReplyUpdate.on()
+			}); // end ajax
+		}); // end primary1 click
+		
 		$(document).on('click', '.btnReplyDelete', function(){
 			console.log(this);
 			var commentItem = $(this).closest('.comment_item');
