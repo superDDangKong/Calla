@@ -24,5 +24,7 @@ public interface ProductService {
 //	int update(int productId, String string);
 //	int updateProductWithImages(ProductVO vo);
 	int updateProductWithImages(int productId); // 상품 이미지 업데이트
+	List<ProductVO> readByProductCategori(PageCriteria criteria, String keyword);
+	int getTotalCountsByProductCategori(String keyword);
 	
 }

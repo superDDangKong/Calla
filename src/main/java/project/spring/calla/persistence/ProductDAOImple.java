@@ -183,14 +183,25 @@ public class ProductDAOImple implements ProductDAO {
 		return sqlSession.update(NAMESPACE + ".update", productId);
 	}
 
-//	@Override
-//	public int update(int productId, String string) {
-//		logger.info("update() 호출");
-//		Map<String, Integer> args = new HashMap();
-//		args.put("productId", productId);
-//		args.put("string", string);
-//		return sqlSession.update(NAMESPACE + ".update", args);
-//	}
+	@Override
+	public List<ProductVO> selectByProductCategori(PageCriteria criteria, String keyword) {
+		logger.info("selectByProductCategori() 호출");
+		Map<String, Object> args = new HashMap();
+		args.put("criteria", criteria);
+		args.put("start", criteria.getStart());
+		args.put("end", criteria.getEnd());
+		args.put("keyword", "%" + keyword + "%");
+		logger.info("args = " + args);
+		return sqlSession.selectList(NAMESPACE + ".select_by_product_categori", args);
+	}
+
+	@Override
+	public int getTotalCountByProductCategori(String keyword) {
+		logger.info("getTotalCountByProductCategori() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".total_count_by_product_categori", "%" + keyword + "%");
+	}
+
+
 
 	
 

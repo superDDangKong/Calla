@@ -24,9 +24,9 @@
 		<div>
 			<label for="productCategori">카테고리 :</label>
 			<select id="productCategori" name="productCategori">
-				<option value="만화">만화</option>
-				<option value="굿즈">굿즈</option>
-				<option value="캐릭터">캐릭터</option>
+				<option value="지브리">지브리</option>
+				<option value="디즈니">디즈니</option>
+				<option value="마블">마블</option>
 			</select>
 		</div>
 		<div>

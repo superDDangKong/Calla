@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <meta charset="UTF-8">
 <title>주문내역</title>
-<%@ include file="../header.jspf" %> 	
+<%@ include file="../header.jspf" %> 
 </head>
 <h1>주문내역</h1>
 <button id="home"><a href="/calla/">홈</a></button>
@@ -20,9 +20,12 @@
 	<input type="hidden" id="memberId" value="${memberId}" />	
 	<input type="hidden" id="memberLevel" value="${memberLevel}" />	
 	
-	
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="productSidebar.jspf"%>
+			<main class="container col-md-9 ms-sm-auto col-lg-9 px-md-1" >
+			
 	<div id="productOrder">
-	
 	 <table>
         <thead>
             <tr>
@@ -152,6 +155,14 @@
 	    </div>
 	  </div>
 	</div>
+			
+			</main>
+			
+		</div>
+	</div>
+
+	
+	
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">

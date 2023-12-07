@@ -30,6 +30,8 @@ public interface ProductDAO {
 	int updateRatedCount(int amount, int productId);
 //	int update(int productId, String string);
 	int update(int productId);
+	List<ProductVO> selectByProductCategori(PageCriteria criteria, String keyword);
+	int getTotalCountByProductCategori(String keyword);
 	
 	
 }

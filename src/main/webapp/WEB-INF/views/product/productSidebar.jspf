@@ -23,7 +23,12 @@
 	    <div class="position-sticky">
 	        <ul class="nav flex-column">
 	        	<div>MY 쇼핑</div>
-	            
+	        	<hr>
+	        	<li class="nav-item">
+	        		<a class="nav-link" href="list">
+	        			전 체 상 품
+	        		</a>
+	        	</li>
 	            <li class="nav-item">
 	                <a class="nav-link" href="orderList?memberId=${memberId}&productId=${vo.productId}">
 	                    장 바 구 니
@@ -43,5 +48,6 @@
 	    </div>
 	</aside>
 </c:if>
+
 </body>
 </html>

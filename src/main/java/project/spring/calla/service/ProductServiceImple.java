@@ -77,7 +77,21 @@ public class ProductServiceImple implements ProductService {
 		logger.info("getTotalCountsByTitleContent() 호출");
 		return dao.getTotalCountsByProductNameOrProductContent(keyword);
 	}
-
+	
+	@Override
+	public List<ProductVO> readByProductCategori(PageCriteria criteria, String keyword){
+		logger.info("readByProductCategori() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		logger.info("keyword = " + keyword);
+		return dao.selectByProductCategori(criteria, keyword);
+	}
+	
+	@Override
+	public int getTotalCountsByProductCategori(String keyword) {
+		logger.info("getTotalCountByProductCategori() 호출");
+		return dao.getTotalCountByProductCategori(keyword);
+	}
 	@Override
 	public int updateViews(int views, int productId) {
 		logger.info("updateViews() 호출");

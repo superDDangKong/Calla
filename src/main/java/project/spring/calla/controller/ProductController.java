@@ -89,15 +89,18 @@ public class ProductController {
 		
 		if(option != null) {
 			if(option.equals("searchTitleOrContent")) {
-				logger.info("if문");
+				logger.info("sarchTitleOrContent() 호출");
 				list = productService.readByProductNameOrProductContent(criteria, keyword);
 				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));
 				
+			} else if (option.equals("searchProductCategori")) {
+				logger.info("searchProductCategori() 호출");
+				list = productService.readByProductCategori(criteria, keyword);
+				pageMaker.setTotalCount(productService.getTotalCountsByProductCategori(keyword));
 				
-			} else {
+			}else {
 				logger.info("if else문");
 				list = productService.read(criteria);
-				
 				pageMaker.setTotalCount(productService.getTotalCounts());
 				
 			}
