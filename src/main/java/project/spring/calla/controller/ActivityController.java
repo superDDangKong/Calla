@@ -139,22 +139,23 @@ public class ActivityController {
 
 	}
 	
-	@PostMapping("/choosenickname")
-	public void choosenicknamePOST(UProductBuyVO vo, RedirectAttributes reAttr, UProductSellVO svo) throws Exception {
-		// RedirectAttributes
-		
-		logger.info("choosenicknamePOST() ");
-		logger.info(vo.toString());
-		logger.info(svo.toString());
-		int result = activityService.buysellcreate(vo, svo);
-		logger.info("result = " + result);
-		
-		
-		if(result == 1) {
-			logger.info("�����̰�");
-		} 
-		
-	} // end registerPOST()
+//	@PostMapping("/choosenickname")
+//	public void choosenicknamePOST(UProductBuyVO vo, RedirectAttributes reAttr, UProductSellVO svo) throws Exception {
+//		// RedirectAttributes
+//		
+//		logger.info("choosenicknamePOST() ");
+//		logger.info(vo.toString());
+//		logger.info(svo.toString());
+//		int result = activityService.buysellcreate(vo, svo);
+//		logger.info("result = " + result);
+//		
+//		
+//		if(result == 1) {
+//			logger.info("�����̰�");
+//			reAttr.addAttribute("bs_result", "success");
+//		} 
+//		
+//	} // end registerPOST()
 	
 	@GetMapping("/searchByOption")
 	public void searchByOprionGet(Model model, String productOption, String category, String keyword, int page) {

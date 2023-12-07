@@ -39,7 +39,7 @@ li {
 						<br>
 						<a href="uproductnickname?memberNickname=${sellerNickname }&page=${pageMaker.criteria.page}"> 
 						판매물품 </a> &nbsp;&nbsp;
-						<a href="reviewboard?sellerNickname=${vo.sellerNickname }&page=${pageMaker.criteria.page}"> 
+						<a href="reviewboard?sellerNickname=${sellerNickname }&page=${pageMaker.criteria.page}"> 
 						구매후기 </a>
 					</h4>
 					<input type="hidden" id="selectedOption" value=${option }>

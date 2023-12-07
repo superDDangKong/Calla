@@ -16,6 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${uProductId} = #{uProductId}
 		order by ${uProductCommentId}
 	</select>
+	
+	<select id="select_by_uproduct_id" resultType="UproductVO">
+		select * from
+		${u_product_comment} where ${uProductId} = #{uProductId}
+	</select>
 
 	<update id="update">
 		update ${u_product_comment}

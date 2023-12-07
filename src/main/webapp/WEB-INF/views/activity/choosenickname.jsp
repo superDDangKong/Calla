@@ -2,11 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-	crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -15,16 +13,15 @@
 
 	<h3>거래자 닉네임을 선택해주세요</h3>
 	
-	<form action="choosenickname" id ="send_form" method="POST">
 		
-			<input type="hidden" name="uProductName" value="${vo.uProductName }" readonly="readonly">
-			<input type="hidden" name="uProductPrice" value="${vo.uProductPrice }" readonly="readonly">	
-			<input type="hidden" name="uProductCategori" value="${vo.uProductCategori }" readonly="readonly">
-			<input type="hidden" name="memberAddress" value="${vo.memberAddress }" readonly="readonly">
-			<input type="hidden" name="uProductContent" value="${vo.uProductContent }" readonly="readonly">
-			<input type="hidden" name="uProductImagePath" value="${vo.uProductImagePath }" readonly="readonly">
-			<input type="hidden" name="sellerNickname" value="${sessionScope.memberNickname }" readonly="readonly">
-			<input type="hidden" name="uProductId" value="${vo.uProductId }" readonly="readonly">
+			<input type="hidden" id = "uProductName" name="uProductName" value="${vo.uProductName }" readonly="readonly">
+			<input type="hidden" id = "uProductPrice" name="uProductPrice" value="${vo.uProductPrice }" readonly="readonly">	
+			<input type="hidden" id = "uProductCategori" name="uProductCategori" value="${vo.uProductCategori }" readonly="readonly">
+			<input type="hidden" id = "memberAddress" name="memberAddress" value="${vo.memberAddress }" readonly="readonly">
+			<input type="hidden" id = "uProductContent" name="uProductContent" value="${vo.uProductContent }" readonly="readonly">
+			<input type="hidden" id = "uProductImagePath" name="uProductImagePath" value="${vo.uProductImagePath }" readonly="readonly">
+			<input type="hidden" id = "sellerNickname" name="sellerNickname" value="${sessionScope.memberNickname }" readonly="readonly">
+			<input type="hidden" id = "uProductId" name="uProductId" value="${vo.uProductId }" readonly="readonly">
 			
 			<table>
 				<thead>
@@ -37,33 +34,68 @@
 				<tbody>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-					<td><input type="checkbox" name="buyerNickname" value="${vo.memberNickname }">"${vo.memberNickname }"</td>
+					<td><input type="checkbox" id = "buyerNickname" name="buyerNickname" value="${vo.memberNickname }">"${vo.memberNickname }"</td>
 				</tr>
 			</c:forEach>
 				</tbody>
 			</table>
 			
-			<input type="submit" id="send" value="등록">
+			<button id="btnAdd">등록</button>
+			
 		
-	</form>
-	
 		<script type="text/javascript">
- 		
-			String[] buyerNickname = request.getParameterValues("buyerNickname");
-		
- 			 // jquery로 값을 들고오면 더 간단
-  			function jqueryTest() {
-    		var str = "";  
-   			 $("input[name=buyerNickname]:checked").each(function (index) {  
-      			  str += $(this).val() + ",";  
-   			 });  
-   			 alert(str); // checked 된 값을 출력
- 		 }
+		$(document).ready(function(){
+			
+			$('#btnAdd').click(function(){
+				var uProductName = $('#uProductName').val();
+				var uProductPrice = $('#uProductPrice').val();
+				var uProductCategori = $('#uProductCategori').val();
+				var memberAddress = $('#memberAddress').val();
+				var uProductContent = $('#uProductContent').val();
+				var uProductImagePath = $('#uProductImagePath').val();
+				var sellerNickname = $('#sellerNickname').val();
+				var uProductId = $('#uProductId').val();
+				var buyerNickname = $('#buyerNickname').val();
+				if($("#uProductSecretComment").is(":checked")){
+					buyerNickname = $('#buyerNickname').val();
+				}
+				
+				
+				var obj = {
+						'uProductName' : uProductName,
+						'uProductPrice' : uProductPrice,
+						'uProductCategori' : uProductCategori,
+						'memberAddress' : memberAddress,
+						'uProductContent' : uProductContent,
+						'uProductImagePath' : uProductImagePath,
+						'sellerNickname' : sellerNickname,
+						'uProductId' : uProductId,
+						'buyerNickname' : buyerNickname
+						
+						  }
+				
+				console.log(obj);
+				
+				$.ajax({
+					type : 'POST',
+					url : 'choosenickname',
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : JSON.stringify(obj),
+					success : function(result){
+						console.log(result);
+						if(result == 1){
+							alert('거래 성공!');
+							window.close();
+						}
+					}
+				});
+			}); // end btnAdd
+		}); // end document 
+			
 		</script>
 	
-
-	
-
 </body>
 </html>
 

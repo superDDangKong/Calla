@@ -532,6 +532,7 @@
 			}
 			console.log(this);
 			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
+			console.log(productCommentId);
 			getAllReplies(productCommentId);
 		}); // end btn_Reply()
 		
