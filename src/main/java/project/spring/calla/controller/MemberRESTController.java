@@ -48,16 +48,19 @@ public class MemberRESTController {
 	@Autowired
 	private MailService mailSendService;
 	
-	@PostMapping("/join")
-	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {
-		logger.info("createMember() : vo = " + vo.toString());
+	@PostMapping("/join") // join.jsp ajax url 경로
+	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBody로 ajax에서 JSON형태로 보낸 데이터를 memberVO vo (자바객체)로 변환해주고
+																			// @RequestBody는 JSON.stringify(obj) 제이슨 객체를 자바 객체로 변환해줌
+																			// @RequestParam 은 memberId : memberId, memberPw : memberPw, ... 등등 매핑할수 있음
+		logger.info("createMember() : vo = " + vo.toString()); // jsp에서 보내준 데이터를 출력
 		int result = 0;
 		try {
-			result = memberService.create(vo);
+			result = memberService.create(vo); // 2.서비스에 create메소드에 클라이언트에서 전송한 데이터를 비즈니스 로직으로 전송
 		} catch (IllegalStateException e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			String resultString = e.getMessage();
+			return new ResponseEntity<Object>(resultString, HttpStatus.BAD_REQUEST); // 
 		}
-		
+		// ResponseEntity는 HTTP 응답의 상태 코드, 헤더, 본문 등을 세밀하게 제어할 수 있다.
 		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	} // end createMember
 	
