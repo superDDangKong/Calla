@@ -19,7 +19,7 @@
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
-					<form action="update" method="post">
+					<form action="update" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="fBoardId" value="${vo.fBoardId}">
 						<div class="form-group">
 							<label for="fBoardTitle">제목</label> 
@@ -31,7 +31,10 @@
 							<label for="fBoardContent">내용</label>
 							<textarea class="form-control" id="fBoardContent" name="fBoardContent" rows="10">${vo.fBoardContent}</textarea>
 						</div>
-						<input type="submit" class="btn btn-primary" value="수정">
+						<img src="display?fileName=${vo.fBoardImagePath }">
+						<input type="file" name="file">
+						<br>
+						<input type="submit" class="btn btn-primary float-right" value="수정">
 					</form>
 				</div>
 			</main>

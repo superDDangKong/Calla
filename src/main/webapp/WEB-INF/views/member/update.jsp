@@ -115,11 +115,21 @@ table, th, td {
 										<input type="text" class="form-control" id="memberEmail" value='${vo.memberEmail}' readonly>
 									</div>
 									<div class="input-group form-group">
-										<input type="text" class="form-control" id="email_id" placeholder="calla" required>
+										<input type="text" class="form-control" id="email_id" placeholder="이메일 입력" required>
 										<div class="input-group-prepend">
 											<span class="input-group-text">@</span>
 										</div>
 										<input type="text" class="form-control" id="email_domain" placeholder="naver.com" required>
+							            <div class="mb-3">
+							                <select class="form-select" id="domain_list">
+							                    <option value="-직접입력-">-직접입력-</option>
+							                    <option value="naver.com">naver.com</option>
+							                    <option value="gmail.com">gmail.com</option>
+							                    <option value="hanmail.net">hanmail.net</option>
+							                    <option value="nate.com">nate.com</option>
+							                    <option value="kakao.com">kakao.com</option>
+							                </select>
+							            </div>
 									</div> 
 									<input type="hidden" id="newMemberEmail">
 									<button class="btn btn-primary" id="btnUpdateEmail" disabled>이메일 변경</button>
@@ -133,16 +143,16 @@ table, th, td {
 										<input type="text" class="form-control" id="memberInterest"	value='${vo.memberInterest}' readonly>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input"	id="interest_cartoon" value="만화"> 
-										<label class="form-check-label" for="interest_cartoon">만화</label>
+										<input type="checkbox" class="form-check-input"	id="interest_cartoon" value="마블"> 
+										<label class="form-check-label" for="interest_cartoon">마블</label>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input" id="interest_goods" value="굿즈"> 
-										<label class="form-check-label" for="interest_goods">굿즈</label>
+										<input type="checkbox" class="form-check-input" id="interest_goods" value="디즈니"> 
+										<label class="form-check-label" for="interest_goods">디즈니</label>
 									</div>
 									<div class="form-check form-group">
-										<input type="checkbox" class="form-check-input"	id="interest_character" value="캐릭터"> 
-										<label class="form-check-label" for="interest_character">캐릭터</label>
+										<input type="checkbox" class="form-check-input"	id="interest_character" value="지브리"> 
+										<label class="form-check-label" for="interest_character">지브리</label>
 									</div>
 									<button class="btn btn-primary" id="btnUpdateInterest">관심사	변경</button> 
 									<input type="hidden" id="newMemberInterest">
@@ -172,7 +182,7 @@ table, th, td {
 						</tbody>
 					</table>
 					<c:if test="${memberLevel != 3 }">
-						<button class="btn btn-danger" id="btnDeleteMember">
+						<button class="btn btn-danger float-right" id="btnDeleteMember">
 							<a href="delete?memberId=${memberId}">회원 탈퇴</a>
 						</button>
 					</c:if>
@@ -270,16 +280,6 @@ table, th, td {
 	            data: {
 	                memberNickname: memberNickname
 	            },
-				beforeSend: function() {
-					$('#loadingContainer').remove();
-					
-					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
-					$('body').append(loadingContainer);
-					$('#loadingContainer').css('display','block');
-				},
-				complete: function() {
-					$('#loadingContainer').css('display','none');	
-				},
 	            success: function (result) {
 	                console.log(result);
 	                if (result == 1) {
@@ -400,6 +400,7 @@ table, th, td {
 	    });
 	
 	    $('#domain_list').change(function () {
+	    	console.log("domain_list 펑션")
 	        if ($(this).val() == "-직접입력-") {
 	            $('#email_domain').val("");
 	            $("#email_domain").attr("readonly", false);

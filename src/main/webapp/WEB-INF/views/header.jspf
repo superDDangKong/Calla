@@ -15,18 +15,21 @@
 <title>구트 쇼핑몰</title>
 </head>
 <body>
+
 <div id="realTimeAlarm" style="display: none; z-index: 1; position: fixed; background-color:white; color:black; width:100%; text-align:center;"></div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="/calla/">Goott mall</a>
-			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+			<a class="navbar-brand font-weight-bold text-primary" href="/calla/">
+            Goott mall
+        	</a>
+			<div class="collapse navbar-collapse justify-content-end">
 				<c:if test="${empty memberNickname }">
 					<form action="/calla/member/login" method="get">
-						<input type="submit" value="로그인">
+						<input type="submit" value="로그인" class="btn btn-outline-secondary">
 					</form>
 					&nbsp;&nbsp;
 					<form action="/calla/member/join" method="get">
-						<input type="submit" value="회원가입">
+						<input type="submit" value="회원가입" class="btn btn-outline-secondary">
 					</form>
 				</c:if>
 				<c:if test="${not empty memberNickname }">
@@ -34,24 +37,25 @@
 					<input type="hidden" id="headerMemberNickname" value="${memberNickname }">
 					<div id="alarms">
 						<button type="button" class="btn position-relative" id="btn_notice">
-						    <div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white;  overflow-y: scroll;"></div>
 						    <i class="fas fa-bell"></i>
 						    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger dotIcon" style="width: 10px; height: 10px; display:none;"> </span>
 						</button>
+						<div class="position-relative">
+							<div id="alarm_div" class="position-absolute" style="z-index: 1; display:none; width:500px; height:500px; text-align:left; background-color:white; overflow-y: scroll;"></div>
+						</div>
 					</div>
 	                &nbsp;&nbsp;
 					<form action="/calla/member/logout" method="get">
-						<input type="submit" value="로그아웃">
+						<input type="submit" value="로그아웃" class="btn btn-outline-secondary">
 					</form>
 					&nbsp;&nbsp;
-					<form action="/calla/activity/orders" method="get">
-						<input type="submit" value="마이페이지"> 
+					<form action="/calla/product/order" method="get">
+						<input type="submit" value="마이페이지" class="btn btn-outline-secondary"> 
 					</form>
 				</c:if>
 			</div>
 		</div>
 	</nav>
-	<div id="realTimeAlarm" style="display: none; z-index: 1; position: fixed; background-color:white; font-color:black; width:100%;"></div>
 	
 	<div id="form_div" style="display: none;">
 		<form action="" method="get" id="alarmForm">
@@ -60,52 +64,84 @@
 			<input type="hidden" name="memberId" id="headerMemberId" value=${memberId }>
 		</form>
 	</div>
-	<header class="bg-dark py-5">
-	    <div class="container px-4 px-lg-5 my-5">
-	        <div class="text-center text-white">
-	            <h1 class="display-4 fw-bolder">
-	                없는거 빼고 다 있는<br>구트 쇼핑몰!
-	            </h1>
-	            <p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
 	
-				<div class="container mt-4">
-				    <form action="/calla/activity/searchByOption" method="get">
-				        <div class="input-group">
-				            <select id="productOption" name="productOption" class="form-select">
-				                <option value="" selected>전체 검색</option>
-				                <option value="p">공용 상품</option>
-				                <option value="u">중고 상품</option>
-				            </select>
-				
-				            <select id="category" name="category" class="form-select">
-				                <option value="" selected>전체 검색</option>
-				                <option value="만화">만화</option>
-				                <option value="굿즈">굿즈</option>
-				                <option value="캐릭터">캐릭터</option>
-				            </select>
-							<input type="hidden" name="page" value=1>
-				            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="상품을 검색하세요...">
-				            <button type="submit" class="btn btn-primary">
-				                검색
-				            </button>
-				        </div>
-				    </form>
-				</div>
-	        </div>
-	    </div>
-	</header>
+	<% 
+        String currentURL = request.getRequestURL().toString();
+    	if(!currentURL.contains("home")) {
+    %>
+	 <header class="bg-dark py-5" id="header">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">
+                    없는거 빼고 다 있는<br>구트 쇼핑몰!
+                </h1>
+                <p class="lead fw-normal text-white-50 mb-0">프리미엄 쇼핑몰</p>
+
+                <div class="container mt-4">
+                    <form action="/calla/activity/searchByOption" method="get" class="mb-4">
+                        <div class="input-group">
+                            <select id="productOption" name="productOption" class="form-select">
+                                <option value="" selected>전체 검색</option>
+                                <option value="p">공용 상품</option>
+                                <option value="u">중고 상품</option>
+                            </select>
+
+                            <select id="category" name="category" class="form-select">
+                                <option value="" selected>전체 검색</option>
+                                <option value="마블">마블</option>
+                                <option value="디즈니">디즈니</option>
+                                <option value="지브리">지브리</option>
+                            </select>
+                            <input type="hidden" name="page" value=1>
+                            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="상품을 검색하세요...">
+                            <button type="submit" class="btn btn-primary">검색</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+		<%
+    	} else {
+		%>
+	<div class="slide_div_wrap">
+		<div class="slide_div">
+			<div>
+				<a><img src="./resources/img/02.jpg"></a>
+			</div>
+			<div>
+				<a><img src="./resources/img/01.jpg"></a>
+			</div>
+			<div>
+				<a><img src="./resources/img/tid316t001970.jpg"
+				style="width:1000px"></a>
+			</div>
+		</div>
+	</div>
+		<%
+		}
+		%>
 		
-	<div id="navigator" class="text-center bg-success py-3">
+	<div id="navigator" class="text-center bg-primary py-3">
 	    <div class="container">
-	        <div class="nav justify-content-center">
-	            <a href="/calla/product/list" class="nav-link mx-2 text-white">공용상품</a>
-	            <a href="/calla/uProduct/list" class="nav-link mx-2 text-white">중고상품</a>
-	            <a href="/calla/fBoard/list" class="nav-link mx-2 text-white">자유게시판</a>
-	            <a href="/calla/qBoard/list" class="nav-link mx-2 text-white">문의게시판</a>
-	        </div>
+	        <ul class="nav justify-content-center">
+	            <li class="nav-item">
+	                <a href="/calla/product/list" class="nav-link text-white">공용상품</a>
+	            </li>
+	            <li class="nav-item">
+	                <a href="/calla/uProduct/list" class="nav-link text-white">중고상품</a>
+	            </li>
+	            <li class="nav-item">
+	                <a href="/calla/fBoard/list" class="nav-link text-white">자유게시판</a>
+	            </li>
+	            <li class="nav-item">
+	                <a href="/calla/qBoard/list" class="nav-link text-white">문의게시판</a>
+	            </li>
+	        </ul>
 	    </div>
 	</div>
 <script type="text/javascript">
+		console.log($('#headerMemberNickname').val());
 		var socket = null;
 		var timeOut = null;
 		if($('#headerMemberId').val() != "") {
@@ -159,11 +195,12 @@
 						prefix="product";
 					}
 					list = title
-						+ " 에"
+						+ "에"
+						+ "&nbsp;"
 						+ alarmCode
 						+ "<br>" 
 						+ sendNick 
-						+ ": " 
+						+ " : " 
 						+ content 
 				}
 				realTimeAlarm.html(list);
@@ -312,7 +349,7 @@
 								alarmUpdate(alarmId);
 							}
 							setAndSubmit(alarmCode, alarmPrefix, boardId, commentId, replyId);
-							
+							readAlarm();
 						}); // end alarm_list.click
 					},// end success
 				}); // end ajax
@@ -334,6 +371,7 @@
 			} // end check
 			
 			function setAndSubmit(alarmCode, alarmPrefix, boardId, commentId, replyId) {
+				console.log("setAndSubmit 호출")
 				var prefix="";
 				
 				if(alarmPrefix=="자유게시판") {
@@ -367,6 +405,7 @@
 	                url: '/calla/alarm/findPage',
 	                data: obj,
 	                success: function (page) {
+	                	console.log(page);
 	                    inputPage.attr('value', page);
 	                    alarmForm.submit();
 

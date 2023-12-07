@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="select_recently_view" resultType="ProductVO">
-		select ${productId}, ${productName}, ${productPrice}, ${productRecentlyViewId}
+		select ${productId}, ${productName}, ${productPrice}, ${productRecentlyViewId}, ${productImagePath}
 		from(
 			select rownum rn, a.* from(
 				select p.*, pr.${productRecentlyViewId}

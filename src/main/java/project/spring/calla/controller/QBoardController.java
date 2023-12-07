@@ -180,13 +180,16 @@ public class QBoardController {
 		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
+		if(page != null) {
+			criteria.setPage(page);
+			model.addAttribute("page", page);
+		}
 		
 		pageMaker.setTotalCount(qBoardCommentService.getTotalCounts(qBoardId));
 		
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		

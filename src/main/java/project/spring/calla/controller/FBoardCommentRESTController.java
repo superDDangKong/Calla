@@ -33,21 +33,13 @@ public class FBoardCommentRESTController {
 	@Autowired
 	private FBoardCommentService fBoardCommentService;
 
-	@PostMapping // POST : 댓글 입력
+	@PostMapping
 	public ResponseEntity<Integer> createComment(@RequestBody FBoardCommentVO vo) {
-		// @RequestBody
-		// - 클라이언트에서 전송받은 json 데이터를
-		// 자바 객체로 변환해주는 annotation
 		logger.info("createComment() 호출 : vo = " + vo.toString());
-
-		// ResponseEntity<T> : Rest 방식에서 데이터를 리턴할 때 쓰이는 객체
-		// - 데이터 HttpStatus를 전송
-		// - <T> : 보내고자 하는 데이터 타입
 		int result = 0;
 		try {
 			result = fBoardCommentService.create(vo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -57,12 +49,9 @@ public class FBoardCommentRESTController {
 	public ResponseEntity<Map<String, Object>> readComments(
 			@PathVariable("FBoardId") int fBoardId, @PathVariable("commentPage") Integer commentPage, 
 			@PathVariable("commentNumsPerPage") Integer commentNumsPerPage) {
-		// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
-		logger.info("readComments() 호출 : fBoardId = " + fBoardId);
-		logger.info("readComments() 호출 : commentPage = " + commentPage);
-		logger.info("readComments() 호출 : commentNumsPerPage = " + commentNumsPerPage);
 		List<FBoardCommentVO> list = null;
 		PageCriteria criteria = new PageCriteria();
+		PageMaker pageMaker = new PageMaker();
 		
 		if(commentPage != null) {
 			criteria.setPage(commentPage);
@@ -72,7 +61,6 @@ public class FBoardCommentRESTController {
 			criteria.setNumsPerPage(commentNumsPerPage);
 		}
 		
-		PageMaker pageMaker = new PageMaker();
 		list = fBoardCommentService.read(criteria, fBoardId);
 		
 		pageMaker.setTotalCount(fBoardCommentService.getTotalCounts(fBoardId));

@@ -59,7 +59,7 @@ public class UProductMannerRESTController {
 	@PostMapping // POST : 댓글 입력
 	public ResponseEntity<Integer> mannerDown(@RequestBody UProductMannerDownVO vo) {
 		// @RequestBody
-		// - 클라이언트에서 전송받은 json epdlxjfmf
+		// - 클라이언트에서 전송받은 json
 		// 자바 객체로 변환해주는 annotation
 		logger.info("createReply() 호출 : vo = " + vo.toString());
 

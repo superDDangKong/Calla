@@ -51,6 +51,9 @@ li {
 				<section class="py-5">
 					<div class="container px-4 px-lg-5 mt-5">
 						<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+							<c:if test="${empty list }">
+								검색 조건을 만족하는 상품이 없습니다.
+							</c:if>
 							<c:forEach var="vo" items="${list }">
 								<div class="col mb-5">
 									<div class="card h-100">
@@ -88,20 +91,19 @@ li {
 											</div>
 									</div>
 								</div>
-								
 							</c:forEach>
 						</div>
 					</div>
 					
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.hasPrev }">
-							<li class="text-secondary" style="margin-right: 5px"><a href="searchByOption?page=${pageMaker.startPageNo - 1 }&productOption=${option}&keyword=${keyword}&category=${category}">이전</a></li>
+							<li class="text-secondary" style="margin-right: 5px"><a href="searchByOption?page=${pageMaker.startPageNo - 1 }&productOption=${option}&keyword=${keyword}&category=${category}">◀</a></li>
 						</c:if>
 						<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 							<li class="text-secondary" style="margin-right: 5px"><a href="searchByOption?page=${num }&productOption=${option}&keyword=${keyword}&category=${category}">${num }</a></li>
 						</c:forEach>
 						<c:if test="${pageMaker.hasNext }">
-							<li class="text-secondary" style="margin-right: 5px"><a href="searchByOption?page=${pageMaker.endPageNo + 1 }&productOption=${option}&keyword=${keyword}&category=${category}">다음</a></li>
+							<li class="text-secondary" style="margin-right: 5px"><a href="searchByOption?page=${pageMaker.endPageNo + 1 }&productOption=${option}&keyword=${keyword}&category=${category}">▶</a></li>
 						</c:if>
 					</ul>
 				</section>

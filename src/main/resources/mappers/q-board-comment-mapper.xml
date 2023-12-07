@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	from(
 	 		select rownum rn, a.* from(
 	 			select * from ${q_board_comment} where ${qBoardId} = #{qBoardId} 
-	 			order by ${qBoardCommentId}
+	 			order by ${qBoardCommentCreatedDate} desc
 	 		)a
 	 	) where rn between #{start} and #{end}
 	 </select>	

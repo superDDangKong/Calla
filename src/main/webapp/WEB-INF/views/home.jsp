@@ -37,62 +37,10 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<%@ include file="header.jspf"%>
 <title>Calla</title>
 </head>
 <body>
-
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="/calla/">Goott mall</a>
-			<div class="collapse navbar-collapse justify-content-end"
-				id="navbarSupportedContent">
-				<c:if test="${empty memberNickname }">
-					<form action="/calla/member/login" method="get">
-						<input type="submit" value="로그인">
-					</form>
-					<form action="/calla/member/join" method="get">
-						<input type="submit" value="회원가입">
-					</form>
-				</c:if>
-				<c:if test="${not empty memberNickname }">
-					${memberNickname }&nbsp;님&nbsp; 
-					<form action="/calla/member/logout" method="get">
-						<input type="submit" value="로그아웃">
-					</form>
-					<form action="/calla/member/order" method="get">
-						<input type="submit" value="마이페이지"> <input type="hidden"
-							name="memberId" value="${memberId }">
-					</form>
-				</c:if>
-			</div>
-		</div>
-	</nav>
-
-	<div class="slide_div_wrap">
-		<div class="slide_div">
-			<div>
-				<a><img src="./resources/img/02.jpg"></a>
-			</div>
-			<div>
-				<a><img src="./resources/img/01.jpg"></a>
-			</div>
-			<div>
-				<a><img src="./resources/img/tid316t001970.jpg"
-				style="width:1000px"></a>
-			</div>
-		</div>
-	</div>
-
-	<div id="navigator" class="text-center bg-success py-3">
-		<div class="container">
-			<div class="nav justify-content-center">
-				<a href="/calla/product/list" class="nav-link mx-2 text-white">공용상품</a>
-				<a href="/calla/uProduct/list" class="nav-link mx-2 text-white">중고상품</a>
-				<a href="/calla/fBoard/list" class="nav-link mx-2 text-white">자유게시판</a>
-				<a href="/calla/qBoard/list" class="nav-link mx-2 text-white">문의게시판</a>
-			</div>
-		</div>
-	</div>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="sidebar2.jspf"%> 

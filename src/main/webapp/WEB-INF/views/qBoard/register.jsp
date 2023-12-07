@@ -95,41 +95,49 @@ textarea {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="../header.jspf" %> 
 </head>
 <body>
-	<%@ include file="../header.jspf" %> 
-	<div class="container">
-	<h2>글 작성 페이지</h2>
-		<form action="register" method="post" enctype="multipart/form-data">
-			<div>
-				<input type="text" name="qBoardTitle" placeholder="제목 입력" required> <!-- 데이터를 입력할 땐 쿼리 기준 물음표 갯수로 -->
-				 <div class="styled-checkbox">
-        			<input type="radio" id="public" class="radio" name="qBoardStatus" value="공개" checked>
-    				<label for="public">공개</label>
-				    <input type="radio" id="private" class="radio" name="qBoardStatus" value="비공개">
-				    <label for="private">비공개</label>
-   				 </div>
-			</div>
-			<div>
-				<input type="text" name="memberNickname" value="${memberNickname }" readonly="readonly"> <!-- 태그네임과 vo 이름과 같아야 한다 안그럼 에러나 -->
-			</div>
-			    <div class="custom-file">
-			        <input type="file" name="customFile" class="custom-file-input" id="customFile">
-			        <label class="custom-file-label" for="customFile">파일선택</label>
-			    </div>
-				<div class="content">
-					<img id="imgDisplay" src="">
-	 					<div>
-	 						<p class="fileInfo">파일 이름: <span id="fileName"></span></p> 
-	    					<p class="fileInfo">파일 크기: <span id="fileSize"></span></p><button id="imgDelete">삭제</button>
-	 					</div> 
-	 				<textarea rows="20" cols="120" name="qBoardContent" placeholder="내용 입력" ></textarea>
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="../sidebar2.jspf"%>
+			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
+				<div class="container">
+				<h2>글 작성 페이지</h2>
+					<form action="register" method="post" enctype="multipart/form-data">
+						<div>
+							<input type="text" name="qBoardTitle" placeholder="제목 입력" required> <!-- 데이터를 입력할 땐 쿼리 기준 물음표 갯수로 -->
+							 <div class="styled-checkbox">
+			        			<input type="radio" id="public" class="radio" name="qBoardStatus" value="공개" checked>
+			    				<label for="public">공개</label>
+							    <input type="radio" id="private" class="radio" name="qBoardStatus" value="비공개">
+							    <label for="private">비공개</label>
+			   				 </div>
+						</div>
+						<div>
+							<input type="text" name="memberNickname" value="${memberNickname }" readonly="readonly"> <!-- 태그네임과 vo 이름과 같아야 한다 안그럼 에러나 -->
+						</div>
+						    <div class="custom-file">
+						        <input type="file" name="customFile" class="custom-file-input" id="customFile">
+						        <label class="custom-file-label" for="customFile">파일선택</label>
+						    </div>
+							<div class="content">
+								<img id="imgDisplay" src="">
+				 					<div>
+				 						<p class="fileInfo">파일 이름: <span id="fileName"></span></p> 
+				    					<p class="fileInfo">파일 크기: <span id="fileSize"></span></p><button id="imgDelete">삭제</button>
+				 					</div> 
+				 				<textarea rows="20" cols="120" name="qBoardContent" placeholder="내용 입력" ></textarea>
+							</div>
+						<div>
+							<input type="submit" value="등록"> 
+							
+						</div>
+					</form>
 				</div>
-			<div>
-				<input type="submit" value="등록"> 
-				
-			</div>
-		</form>
+			</main>
+			<%@ include file="../sidebarRight.jspf"%>
+		</div>
 	</div>
 	<script type="text/javascript">
 	$(document).ready(function() {

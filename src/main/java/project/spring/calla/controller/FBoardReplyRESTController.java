@@ -34,19 +34,12 @@ private FBoardReplyService fBoardReplyService;
 
 @PostMapping // POST : 댓글 입력
 public ResponseEntity<Integer> createReply(@RequestBody FBoardReplyVO vo) {
-	// @RequestBody
-	// - 클라이언트에서 전송받은 json 데이터를
-	// 자바 객체로 변환해주는 annotation
 	logger.info("createReply() 호출 : vo = " + vo.toString());
 
-	// ResponseEntity<T> : Rest 방식에서 데이터를 리턴할 때 쓰이는 객체
-	// - 데이터 HttpStatus를 전송
-	// - <T> : 보내고자 하는 데이터 타입
 	int result = 0;
 	try {
 		result = fBoardReplyService.create(vo);
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -54,14 +47,13 @@ public ResponseEntity<Integer> createReply(@RequestBody FBoardReplyVO vo) {
 
 @GetMapping("/all/{FBoardCommentId}") // GET : 댓글 선택(all)
 public ResponseEntity<List<FBoardReplyVO>> readReplies(@PathVariable("FBoardCommentId") int fBoardCommentId) {
-	// @PathVariable("fBoardId") : /all/{fBboardId} 값을 설정된 변수에 저장
 	logger.info("readReplies() 호출 : fBoardCommentId = " + fBoardCommentId);
 
 	List<FBoardReplyVO> list = fBoardReplyService.read(fBoardCommentId);
 	return new ResponseEntity<List<FBoardReplyVO>>(list, HttpStatus.OK);
 }
 
-@PutMapping("/{FBoardReplyId}") // PUT : 댓글 수정
+@PutMapping("/{FBoardReplyId}") 
 public ResponseEntity<Integer> updateReply(@PathVariable("FBoardReplyId") int fBoardReplyId,
 		@RequestBody String fBoardReplyContent) {
 	logger.info("updateReply() 호출 : fBoardReplyId = " + fBoardReplyId);

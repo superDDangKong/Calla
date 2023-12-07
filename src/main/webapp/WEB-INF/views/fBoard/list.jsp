@@ -53,12 +53,12 @@ li {
 					<table class="table table-hover text-center" style="border: 1px solid;">
 						<thead>
 							<tr>
-								<th style="width: 60px" class="bg-primary text-white">번호</th>
-								<th style="width: 700px" class="bg-primary text-white">제목</th>
-								<th style="width: 150px" class="bg-primary text-white">작성자</th>
+								<th style="width: 80px" class="bg-primary text-white">번호</th>
+								<th style="width: 600px" class="bg-primary text-white">제목</th>
+								<th style="width: 200px" class="bg-primary text-white">작성자</th>
 								<th style="width: 120px" class="bg-primary text-white">작성일</th>
-								<th style="width: 80px" class="bg-primary text-white">댓글수</th>
-								<th style="width: 80px" class="bg-primary text-white">조회수</th>
+								<th style="width: 120px" class="bg-primary text-white">댓글수</th>
+								<th style="width: 120px" class="bg-primary text-white">조회수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -79,7 +79,7 @@ li {
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.hasPrev }">
 							<li class="text-secondary" style="margin-right: 5px">
-								<a href="list?page=${pageMaker.startPageNo - 1 }">◀</a>
+								<a href="list?page=${pageMaker.startPageNo - 1 }&option=${option}&keyword=${keyword}">◀</a>
 							</li>
 						</c:if>
 
@@ -91,7 +91,7 @@ li {
 
 						<c:if test="${pageMaker.hasNext }">
 							<li class="text-secondary" style="margin-right: 5px">
-								<a href="list?page=${pageMaker.endPageNo + 1 }">▶</a>
+								<a href="list?page=${pageMaker.endPageNo + 1 }&option=${option}&keyword=${keyword}">▶</a>
 							</li>
 						</c:if>
 					</ul>

@@ -3,7 +3,6 @@ package project.spring.calla.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,10 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.service.MemberService;
-import project.spring.calla.util.SessionManager;
 
-@Controller // @Component
-@RequestMapping(value = "/member") // url : /ex02/board
+@Controller
+@RequestMapping(value = "/member")
 public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -32,8 +30,10 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private SessionManager sessionManager;
+//	@Autowired
+//	private SessionManager sessionManager;
+	
+	
 	
 	@GetMapping("/join")
 	public void showJoinPage() {
@@ -41,6 +41,7 @@ public class MemberController {
 
 	@GetMapping("/login")
 	public void loginGET(String targetURL) {
+//		logger.info("loginGET() " + sessionManager.getLoginSessions().toString());
 	}
 
 	@GetMapping("/expired")
@@ -53,7 +54,7 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
-//		Map<String, HttpSession> loginSessions = sessionManager.getLoginSessions();
+		
 //		logger.info("loginPOST() " + loginSessions.toString());
 		
 		String result = memberService.login(memberId, memberPw);
@@ -112,6 +113,16 @@ public class MemberController {
 	} // end logoutGET()
 
 
+	@GetMapping("/update")
+	public void updateGET(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		if (memberId != null) {
+			MemberVO vo = memberService.read(memberId);
+			model.addAttribute("vo", vo);
+		}
+	} // end updateGET()
+	
 	@PostMapping("/searchId")
 	public String searchIdPOST(String memberName, String memberEmail, RedirectAttributes reAttr) {
 
@@ -142,17 +153,6 @@ public class MemberController {
 		}
 
 	} // end searchPwPOST()
-	
-	@GetMapping("/update")
-	public void updateGET(Model model, HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		String memberId = (String) session.getAttribute("memberId");
-		if (memberId != null) {
-			MemberVO vo = memberService.read(memberId);
-			model.addAttribute("vo", vo);
-		}
-	} // end updateGET()
 
 	@GetMapping("/delete")
 	public String deleteGET(String memberId, HttpServletRequest request) {
