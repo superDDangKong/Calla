@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <update id="update">
 	 	update ${f_board}
-	 	set ${fBoardTitle} = #{fBoardTitle}, ${fBoardContent} = #{fBoardContent}
+	 	set ${fBoardTitle} = #{fBoardTitle}, ${fBoardContent} = #{fBoardContent}, ${fBoardImagePath} = #{fBoardImagePath}
 	 	where ${fBoardId} = #{fBoardId}
 	 </update>
 	 

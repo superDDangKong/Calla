@@ -180,7 +180,7 @@ public class FBoardController {
 		 }
 		 
 		FBoardVO vo = fBoardService.read(fBoardId);
-		
+		logger.info(vo.getfBoardImagePath());
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
@@ -205,8 +205,16 @@ public class FBoardController {
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr) {
-		logger.info("updatePOST() 호출 : vo = " + vo.toString());
+	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr, MultipartFile file) {
+		logger.info("updatePOST() 호출 : vo = " + vo.toString() + file.getOriginalFilename());
+		
+		try {
+			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
+			vo.setfBoardImagePath(savedFileName);
+		} catch (IOException e) {
+			return "redirect:/fBoard/update?fBoardId=" + vo.getfBoardId();
+		}
+		
 		int result = fBoardService.update(vo);
 		
 		if(result == 1) {

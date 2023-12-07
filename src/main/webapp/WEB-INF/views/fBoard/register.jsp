@@ -31,7 +31,7 @@
 							<textarea class="form-control" rows="10" name="fBoardContent" placeholder="내용 입력"></textarea>
 						</div>
 						<input type="file" name="file">
-						<input type="submit" class="btn btn-primary" value="등록">
+						<input type="submit" class="btn btn-primary float-right" value="등록">
 					</form>
 				</div>
 			</main>

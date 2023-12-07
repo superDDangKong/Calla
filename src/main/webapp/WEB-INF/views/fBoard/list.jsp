@@ -53,12 +53,12 @@ li {
 					<table class="table table-hover text-center" style="border: 1px solid;">
 						<thead>
 							<tr>
-								<th style="width: 60px" class="bg-primary text-white">번호</th>
-								<th style="width: 700px" class="bg-primary text-white">제목</th>
-								<th style="width: 150px" class="bg-primary text-white">작성자</th>
+								<th style="width: 80px" class="bg-primary text-white">번호</th>
+								<th style="width: 600px" class="bg-primary text-white">제목</th>
+								<th style="width: 200px" class="bg-primary text-white">작성자</th>
 								<th style="width: 120px" class="bg-primary text-white">작성일</th>
-								<th style="width: 80px" class="bg-primary text-white">댓글수</th>
-								<th style="width: 80px" class="bg-primary text-white">조회수</th>
+								<th style="width: 120px" class="bg-primary text-white">댓글수</th>
+								<th style="width: 120px" class="bg-primary text-white">조회수</th>
 							</tr>
 						</thead>
 						<tbody>

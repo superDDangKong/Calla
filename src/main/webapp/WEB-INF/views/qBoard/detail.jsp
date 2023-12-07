@@ -615,7 +615,7 @@ hr {
          }) // end 대댓글 등록 
          
          // 대댓글 수정
-         $(document).on('click', '.btnReplyUpdate', function(){
+         $(document ).on('click', '.btnReplyUpdate', function(){
         	 console.log(this);
         	 var commentItem = $(this).closest('.comment_item');
         	 var qBoardCommentId = $(this).closest('.comment_item').find('.qBoardCommentId');

@@ -88,9 +88,9 @@
 
                             <select id="category" name="category" class="form-select">
                                 <option value="" selected>전체 검색</option>
-                                <option value="만화">만화</option>
-                                <option value="굿즈">굿즈</option>
-                                <option value="캐릭터">캐릭터</option>
+                                <option value="마블">마블</option>
+                                <option value="디즈니">디즈니</option>
+                                <option value="지브리">지브리</option>
                             </select>
                             <input type="hidden" name="page" value=1>
                             <input type="text" name="keyword" id="keyword" class="form-control" placeholder="상품을 검색하세요...">
