@@ -65,6 +65,19 @@
 		class="project.spring.calla.interceptor.LoginSessionInterceptor">
 	</beans:bean>
 	
+	<annotation-driven>
+       <message-converters>
+           <!-- @ResponseBody Content-Type:application/json;charset=UTF-8  -->
+           <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+               <beans:property name="supportedMediaTypes">
+                   <beans:list>
+                       <beans:value>text/html;charset=UTF-8</beans:value>
+                   </beans:list>
+               </beans:property>
+           </beans:bean>
+       </message-converters>
+   </annotation-driven> <!-- response 결과 한글처리 -->
+	
 	<!-- 웹소켓 -->
 	<websocket:handlers>
 	    <websocket:mapping handler="echoHandler" path="/echo"/>
@@ -102,6 +115,7 @@
 	</interceptors>
 	
 	<context:component-scan base-package="project.spring.calla" />
+	<!-- component scan을 통해 전체(?)를 스캔하여 빈으로 등록(의존성 주입) -->
 	
 	<task:executor id="myExecutor" pool-size="5" />
 	<task:scheduler id="myScheduler" pool-size="5" />

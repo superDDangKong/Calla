@@ -82,6 +82,7 @@
             </div>
             <div class="mb-3">
                 <input type="text" id="inputAuthentication" class="form-control" placeholder="이메일 인증번호"><div id="timer"></div>
+                <div id="error_member_autentication" class="text-danger"></div>
                 <button type="button" id="authenticationImport" class="customButton">인증번호 받기</button>
                 <button type="button" id="authenticationConfirm" class="customButton">인증하기</button>
             </div>
@@ -90,15 +91,15 @@
                 <div>관심사<br>
                     <div class="form-check">
                         <input type="checkbox" name="check" class="form-check-input" id="check1" value="만화" checked>
-                        <label class="form-check-label" for="check1">만화</label>
+                        <label class="form-check-label" for="check1">디즈니</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" name="check" class="form-check-input" id="check2" value="굿즈">
-                        <label class="form-check-label" for="check2">굿즈</label>
+                        <label class="form-check-label" for="check2">지브리</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" name="check" class="form-check-input" id="check3" value="캐릭터">
-                        <label class="form-check-label" for="check3">캐릭터</label>
+                        <label class="form-check-label" for="check3">마블</label>
                     </div>
                     <input type="hidden" name="memberInterest" id="memberInterest">
                     <div id="error_member_interest" class="text-danger"></div>
@@ -133,35 +134,15 @@
 	// 이름입력 유무 검사
 	var nickNameCheck = false;	
 	// 닉네임 중복 검사
-	var mailCheck = false;     
+	var authenticationStatus = false;
 	// 이메일
 	var phoneCheck = false;		
 	// 핸드폰
 	var addressCheck = false;  
 	// 주소
 	
-	/* function updateTimer() {
-    // 현재 시간을 가져오기
-    var now = new Date();
-
-    // 분과 초 가져오기
-    var minutes = now.getMinutes();
-    var seconds = now.getSeconds();
-
-    // 시간을 표시할 형식 조합
-    var timeString = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-
-    // 화면에 시간 표시
-    document.getElementById('timer').innerHTML = timeString;
-	}
-
-	// 1초마다 updateTimer 함수 호출하여 시간을 업데이트
-	setInterval(updateTimer, 1000); */
-	
-	
 	function idDuplicationCheck() { // 아이디 공백 + 중복 + 유효성 검사 함수
 		console.log("아이디검사 호출");
-		var memberIdInput = $('#member_id');
 		var memberId = $('#member_id').val();
 		var idEffectiveness = /^[A-Za-z0-9]{8,}$/; // 아이디: 최소 8자 이상의 영문 대소문자, 숫자만 사용 가능합니다.
 		var memberIdError = $('#error_member_id'); // 에러메세지를 출력한 태그의 아이디를 변수로 선언
@@ -169,6 +150,7 @@
 		if (memberId.trim() === '') { // 아이디 입력란이 공백인지 확인하는 
 			memberIdError.text('아이디를 입력해주세요.');
 			memberIdError.css('color', 'red');
+			$('#member_id').css('border', '1px solid red');
 			console.log("아이디가 공백임")
 			idCheck = false;
 			return;
@@ -177,6 +159,7 @@
 		if (!idEffectiveness.test(memberId)) { // 아이디 유효성 검사(false가 나올 경우 참으로 실행)
 			memberIdError.text('아이디: 최소 8자 이상의 영문 대소문자, 숫자만 사용 가능합니다.');
 			memberIdError.css('color', 'red');
+			$('#member_id').css('border', '1px solid red');
 			console.log("아이디 유효성검사 통과못함")
 			idCheck = false;
 			return;
@@ -190,12 +173,12 @@
 				console.log(result + "개 중복"); // result가 1이면 1개 중복 0이면 0중복
 				if (result == 0) { // 중복 없을 시
 					memberIdError.text('');
-					memberIdInput.css('border', '1px solid limegreen');
+					$('#member_id').css('border', '1px solid limegreen');
 					idCheck = true;
 				} else { // 중복이 있을 시
 					memberIdError.text('사용 불가능한 아이디입니다.');
 					memberIdError.css('color', 'red');
-					memberIdInput.css('border', '1px solid red');
+					$('#member_id').css('border', '1px solid red');
 					idCheck = false;
 				}
 			} // end success
@@ -210,6 +193,7 @@
 		
 		if (memberPw.trim() === '') { // 비밀번호 입력란이 공백인지 확인하는 
 			memberPwError.text('비밀번호를 입력해주세요.');
+			$('#member_pw').css('border', '1px solid red');
 			memberPwError.css('color', 'red');
 			console.log("비밀번호 공백임")
 			return false;
@@ -217,11 +201,13 @@
 		
 		if (!pwEffectiveness.test(memberPw)) { // 비밀번호 유효성 검사(false가 나올 경우 참으로 실행)
 			memberPwError.text('비밀번호: 최소 8자 이상의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.');
+			$('#member_pw').css('border', '1px solid red');
 			memberPwError.css('color', 'red');
 			console.log("비밀번호 유효성 검사 실패")
 			return false;
 		}
 		memberPwError.text('');
+		$('#member_pw').css('border', '1px solid limegreen');
 		console.log("비밀번호검사 유효성 검사 성공")
 	    return true;
 	    
@@ -236,10 +222,11 @@
 		if (memberPw !== memberPwCheck) { // 처음에 입력한 비밀번호와 다를 때 참
 			memberPwCheckError.text('비밀번호가 일치하지 않습니다.');
 			memberPwCheckError.css('color', 'red');
+			$('#member_pw_ck').css('border', '1px solid red');
 			console.log("비밀번호가 불일치")
 			return false;
 		}
-		
+		$('#member_pw_ck').css('border', '1px solid limegreen');
 		memberPwCheckError.text('');
 		return true;
 	}; // end pwAccordaneCheck()
@@ -252,6 +239,7 @@
 		
 		if (memberName.trim() === '') { // 이름이 공백일 시 참
 			memberNameError.text('이름을 입력해주세요.');
+			$('#member_name').css('border', '1px solid red');
 			memberNameError.css('color', 'red');
 			console.log("이름이 공백임")
 			return false;
@@ -259,12 +247,14 @@
 		
 		if (!nameEffectiveness.test(memberName)) { // 이름 제대로 입력한건지 확인 false가 참
 			memberNameError.text('이름: 한글, 영문 대/소문자 중 2자 이상이어야 합니다. (특수기호, 공백 사용 불가)');
+			$('#member_name').css('border', '1px solid red');	
 			memberNameError.css('color', 'red');
 			console.log("이름 제대로 입력")
 			return false;
 		}
 		
 		// 이름을 입력 성공시
+		$('#member_name').css('border', '1px solid limegreen');
 		memberNameError.text('');
 		return true;
 	};
@@ -277,6 +267,7 @@
 		
 		if (memberNickname.trim() === '') {
 			memberNicknameError.text('닉네임을 입력해주세요.');
+			$('#member_nickname').css('border', '1px solid red');
 			memberNicknameError.css('color', 'red');
 			console.log("닉네임이 공백임")
 			nickNameCheck = false;
@@ -285,6 +276,7 @@
 		
 		if (!nicknameEffectiveness.test(memberNickname)) {
 			memberNicknameError.text('닉네임: 한글, 영문 대/소문자, 숫자로 2자 이상이어야 합니다.');
+			$('#member_nickname').css('border', '1px solid red');
 			memberNicknameError.css('color', 'red');
 			console.log("닉네임 제대로 입력")
 			nickNameCheck = false;
@@ -299,12 +291,12 @@
 				console.log(result + '개 중복');
 				if (result == 0) { // 중복된게 없을 시
 					memberNicknameError.text('');
-					/* memberNicknameError.text('사용 가능한 닉네임입니다.');
-					memberNicknameError.css('color', 'limegreen'); */
+					$('#member_nickname').css('border', '1px solid limegreen');
 					nickNameCheck = true;
 				} else {
 					console.log("닉네임 중복됨")
 					memberNicknameError.text('사용 불가능한 닉네임입니다.');
+					$('#member_nickname').css('border', '1px solid red');
 					memberNicknameError.css('color', 'red');
 					nickNameCheck = false;
 				}
@@ -334,6 +326,7 @@
 	};
 	
 	$('#authenticationImport').click(function(){ // 인증번호받기
+		console.log("인증번호 보내기 함수");
 		var memberEmailId = $('#email_id').val();
 		var memberEmailDomain = $('#email_domain').val();
 		var email = memberEmailId + '@' + memberEmailDomain;
@@ -350,16 +343,31 @@
 		}) // end ajax
 	}) // end click
 	
-	$('#authenticationConfirm').click(function(){ // 인증하기 버튼 클릭
+	function authenticationConfirmCk() { // 인증하기 버튼 클릭
+		console.log("인증번호 검사 함수");
+		if ($('#inputAuthentication').trim() === ''){
+			$('#error_member_autentication').text('이메일 인증을 해주세요.')
+			$('#error_member_autentication').css('color', 'red');
+		}
 		$.ajax({
 			type : 'POST',
 			url : '/calla/member/authenticationConfirm',
 			data : {"AuthenticationKey" : $('#inputAuthentication').val()},
 			success : function(result){
-					alert(result);
+					if (result === "fail") {
+						console.log("false 리턴");
+						$('#inputAuthentication').css('border', '1px solid red');
+						authenticationStatus;
+						console.log(authenticationStatus);
+					} else {
+						console.log("true 리턴");
+						$('#inputAuthentication').css('border', '1px solid limegreen');
+						authenticationStatus = true;
+						console.log(authenticationStatus);
+					}
 			}
 		})
-	})
+	}
 	
 	function phoneConfirmCheck() { // 연락처 입력 유무 확인 함수
 		console.log("연락처검사 호출");
@@ -369,10 +377,11 @@
 		
 		if (!phoneEffectiveness.test(memberPhone)) {
 			memberPhoneError.text('연락처: 필수정보입니다.');
+			$('#member_phone').css('border', '1px solid red');
 			memberPhoneError.css('color', 'red');
 			return false;
 		}
-		
+		$('#member_phone').css('border', '1px solid limegreen');
 		memberPhoneError.text('');
 		return true;
 	}; // end phoneConfirmCheck()
@@ -403,22 +412,23 @@
 		$("#memberAddress").val(Address);
 		var memberAddress = $('#memberAddress').val();
 		console.log(memberAddress);
-
+		
     	if (add3.trim() === '') {
+    		$('#detailAddress').css('border', '1px solid red')
     	    $('#error_member_address').text('상세주소를 입력해주세요.');
     	    $('#error_member_address').css('color', 'red');
     	    console.log("주소 검사 실패");
     	    return false;
     	} 
-    	
-    	// 성공 시에 할 작업
+		
+		$('#detatilAddress').css('border', '1px solid limegreen');    	
     	$('#error_member_address').text('');
     	return true;
     	
 	};
 	
  	
-   	$(function () {
+   	$(function() {
    	    $('#domain-list').change(function () {
    	        var selectedValue = $(this).val();
    	        var emailDomainInput = $('#email_domain');
@@ -445,9 +455,9 @@
 
    	
 	$(document).ready(function(){
-		$('#member_id').blur(function(){
+		 $('#member_id').blur(function(){
 			idDuplicationCheck();
-		})
+		}) 
 		
 		$('#member_pw').blur(function(){
 			pwEffectivenessCheck();
@@ -465,14 +475,25 @@
 			nicknameDuplicationCheck();
 		})
 		
+		$('#email_id').blur(function(){
+			mailConfirmCheck();
+		})
+		
+		$('#email_domain').blur(function(){
+			mailConfirmCheck();	
+		})
+		
 		$('#member_phone').blur(function(){
 			phoneConfirmCheck();
 		})
 		
 		$('.form-check-input').change(function(){
 			interestValues();
-		})
+		})  
 		
+		$('#authenticationConfirm').click(function(){
+			authenticationConfirmCk();
+		})
 		$('#join').submit(function(e){
 			e.preventDefault();
 			
@@ -480,8 +501,8 @@
 				console.log("아이디 또는 닉네임");
 				return;
 			} 
-
-			// 비밀번호 검사
+			
+			  // 비밀번호 검사
 			if (!pwEffectivenessCheck()){ // pwEffectivenessCheck()가 false를 리턴할 때 실행
 				console.log("비번");
 				return;
@@ -503,8 +524,14 @@
 			if (!mailConfirmCheck()) {
 				console.log("이메일");
 				return;
-			}
+			} 
 			
+			// 이메일 인증
+			if (!authenticationStatus) {
+				console.log("이메일 인증 실패");
+				return;
+			}  
+			 
 			// 연락처 확인
 			if (!phoneConfirmCheck()) {
 				console.log("연락처");
@@ -521,7 +548,7 @@
 			if (!addressConfirmCheck()) {
 				console.log('여기까지 왔다 드뎌');
 				return;
-			} 
+			}    
 			
 			var memberId = $('#member_id').val();
 			var memberPw = $('#member_pw').val();
@@ -558,16 +585,15 @@
                     'Content-Type' : 'application/json'
                  },
                 data : JSON.stringify(obj),
-				success : function(result){
+                success : function(result){
 					if(result === 1){
 						location.href = 'http://localhost:8080/calla/member/login?';
 						alert('회원가입을 축하합니다.');
+					} 
+				},
+				error : function(request, status, error){
+					alert("에러 코드: " + request.status + "\n에러 원인: " + request.responseText);
 					}
-				}/* , // success
-				error: function(result){
-					console.log(result); // objec Objec
-					alert(result);
-				} */
 			}) // ajax   
 		}) // join.submit
 		

@@ -8,25 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import project.spring.calla.domain.MailVO;
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.persistence.FBoardCommentDAO;
-import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.MemberDAO;
-import project.spring.calla.persistence.ProductCommentDAO;
-import project.spring.calla.persistence.ProductDAO;
-import project.spring.calla.persistence.ProductLikeDAO;
-import project.spring.calla.persistence.QBoardCommentDAO;
-import project.spring.calla.persistence.QBoardDAO;
-import project.spring.calla.persistence.UProductCommentDAO;
-import project.spring.calla.persistence.UProductDAO;
-import project.spring.calla.persistence.UProductLikeDAO;
 
 @Service
 public class MemberServiceImple implements MemberService {
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImple.class);
-
-	@Autowired
+	
+	// @Autowired 의존성 주입한거임 메서드안에서 MemberDAO.login(select, searchId, ...) 사용할 수 있는거임 
+	// ex) 의존성 주입을 안햇을 경우 : 각 메서드안에서 MemberDAO memberDAO = new MemberDAO(); 객체를 생성해야 햇을거임
+	@Autowired 
 	private MemberDAO MemberDAO;
 	
 	
@@ -74,8 +65,8 @@ public class MemberServiceImple implements MemberService {
 		int result = 0;
 		try {
 			return result = MemberDAO.insert(vo);
-		} catch (DataIntegrityViolationException e) {
-			throw new IllegalStateException("");
+		} catch (DataIntegrityViolationException e) { // 데이터베이스에서 무결성 제약 조건이 위배될 때 발생하는 예외 Data integrity constraint violation during member registration.
+			throw new IllegalStateException("회원 가입 중에 데이터 무결성 제약 조건 위반."); // 회원 가입 중에 데이터 무결성 제약 조건 위반: 중복된 사용자 이름 또는 이메일입니다. 
 			
 		}
 	}
@@ -121,7 +112,7 @@ public class MemberServiceImple implements MemberService {
 
 	/*
 	 * @Override public void registMailAuthentication(String memberEmail, String
-	 * authenticationKey) { logger.info("registMailAuthentication() 호출");
+	 * authenticationKey) { logger.info("registMailAuthentication() 호占쏙옙");
 	 * logger.info("memberEmail" + memberEmail + ", authenticationKey : " +
 	 * authenticationKey); MemberDAO.insertMailAuthentication(memberEmail,
 	 * authenticationKey);
@@ -129,7 +120,7 @@ public class MemberServiceImple implements MemberService {
 	 * }
 	 * 
 	 * @Override public int mailAuthenticationConfirm(MailVO mailAuth) {
-	 * logger.info("mailAuthenticationConfirm() 호출"); return null; }
+	 * logger.info("mailAuthenticationConfirm() 호占쏙옙"); return null; }
 	 */
 
 }

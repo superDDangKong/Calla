@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <style type="text/css">
 table, th, td {
 	border-style : solid;
@@ -50,7 +49,6 @@ body {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 <title>게시판 메인 페이지</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -68,7 +66,6 @@ body {
 	</h1>
 	
 	<a href="register" class="write-button"><input type="button" value="글 작성"></a>
-	<a href="note" class="note"><input type="button" value="쪽지 보내기"></a>
 	<hr>
 	<div class="container mt-4">
     <form action="list" method="GET">
@@ -128,7 +125,6 @@ body {
 				</tbody>
 			</table>
 		</div>
-		
 		<ul style="text-align:center">
 			<c:if test="${pageMaker.hasPrev }">
 				<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
@@ -140,13 +136,11 @@ body {
 			<c:if test="${pageMaker.hasNext }">
 				<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 			</c:if>
-	
 		</ul>
 	</div>
 	<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	<input type="hidden" id="statusAlert" value="${status_result }">
-	
 <script type="text/javascript">
 	$(document).ready(function(){
 		var result = $('#insertAlert').val();
@@ -158,8 +152,8 @@ body {
 		if(result2 == 'secret') {
 			alert('비공개 글입니다.');
 		}
+	})
 </script>
-	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<%@ include file="../footer.jspf"%>	
