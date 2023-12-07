@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${uProductId}, ${uProductName}, ${uProductPrice}, ${uProductViews},
 		${uProductLikes}, ${uProductCreatedDate}, ${uProductCategori},
 		${uProductImagePath}, ${uProductContent}, ${memberAddress},
-		${memberNickname}, ${uProductCommentCount}
+		${memberNickname}, ${uProductCommentCount}, ${uProductStatement}
 		from(
 		select rownum rn, a.*
 		from(

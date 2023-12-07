@@ -238,21 +238,24 @@ public class UProductController {
 		
 		String memberManner = uproductService.readmanner(vo.getMemberNickname());
 		List<UProductVO> list = uproductService.readrecommend(vo.getuProductCategori(), uProductId);
+		Integer uProductLikeId = 0;
 		
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		
-		Integer uProductLikeId = 0;
+		if(memberId != null) {
 		UProductLikeVO uproductLikeVO = uproductlikeService.read(uProductId, memberId);
 			if (uproductLikeVO != null) {
 				uProductLikeId = uproductLikeVO.getuProductLikeId();
 			} 
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 		model.addAttribute("memberManner", memberManner);
 		model.addAttribute("uProductLikeId", uProductLikeId);
+		
 		if(memberId != null) {
 			int recentlyViewInsert = uproductService.createRecentlyView(uProductId, memberId);
 			logger.info(String.valueOf(recentlyViewInsert));

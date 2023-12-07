@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.ProductOrderVO;
+import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductLikeVO;
 import project.spring.calla.domain.UProductMannerVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.service.MemberService;
+import project.spring.calla.service.UProductCommentService;
 import project.spring.calla.service.UProductReviewService;
 import project.spring.calla.service.UProductService;
 
@@ -32,12 +34,15 @@ import project.spring.calla.service.UProductService;
 // /replies/숫자 (DELETE) : 해당 댓글 번호(replyId)의 댓글을 삭제(delete)
 
 @RestController
-@RequestMapping(value = "/member/statement")
+@RequestMapping(value = "/activity/statement")
 public class UProductRESTController {
 	private static final Logger logger = LoggerFactory.getLogger(UProductRESTController.class);
 
 	@Autowired
 	private UProductService uproductService;
+	
+	@Autowired
+	private UProductCommentService uproductcommentservice;
 	
 	@Autowired
 	private UProductReviewService uproductreviewservice;

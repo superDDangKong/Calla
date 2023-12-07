@@ -15,12 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.ProductOrderVO;
+import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
+import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
@@ -211,6 +214,38 @@ public class ActivityRESTController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("/choosenickname")
+	public ResponseEntity<Integer> createBuySell(@RequestBody UProductSellVO svo) {
+		// @RequestBody
+		// - 클라이언트에서 전송받은 json 데이터를
+		// 자바 객체로 변환해주는 annotation
+		//logger.info("createComment() 호출 : vo = " + vo.toString());
+		logger.info("createComment() 호출 : vo = " + svo.toString());
+		String uproductname = svo.getuProductName();
+		String buyerNickname= svo.getBuyerNickname();
+		String memberAddress = svo.getMemberAddress();
+		String sellerNickname = svo.getSellerNickname();
+		int uproductprice = svo.getuProductPrice();
+		String uproductcategori = svo.getuProductCategori();
+		String uproductcontent = svo.getuProductContent();
+		String imagepath = svo.getuProductImagePath();
+		int uproductid = svo.getuProductId();
+		
+		UProductBuyVO vo = new UProductBuyVO(uproductid, uproductname, uproductprice, null, uproductcategori, memberAddress, uproductcontent, buyerNickname, imagepath, uproductid, sellerNickname); 
+		
+		// ResponseEntity<T> : Rest 방식에서 데이터를 리턴할 때 쓰이는 객체
+		// - 데이터 HttpStatus를 전송
+		// - <T> : 보내고자 하는 데이터 타입
+		int result = 0;
+		try {
+			result = ativityService.buysellcreate(vo, svo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 }

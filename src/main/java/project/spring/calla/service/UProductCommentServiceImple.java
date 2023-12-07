@@ -39,16 +39,26 @@ public class UProductCommentServiceImple implements UProductCommentService {
 		logger.info(result + " 행 수정 성공");
 		return 1;
 	}
+	
+	@Override
+	public UProductCommentVO selectvo(int uProductId) {
+		logger.info("read() 호占쏙옙 : boardId = " + uProductId);
+		return uProductCommentDAO.selectvo(uProductId);
+	}
 
 	@Transactional(value = "transactionManager")
 	@Override
 	public List<UProductCommentVO> read(int uProductId, HttpSession session) {
 		logger.info("read() 호출 : uProductId = " + uProductId);
 		UProductVO product = uProductDAO.select(uProductId);
+		
 
 		String memberNickname = (String) session.getAttribute("memberNickname");
 
 		List<UProductCommentVO> items = uProductCommentDAO.select(uProductId);
+		
+		logger.info("list 호출 : " + items);
+		
 
 		for (UProductCommentVO vo : items) {
 			if(memberNickname == null) { // 로그인 안된 상태
@@ -56,7 +66,8 @@ public class UProductCommentServiceImple implements UProductCommentService {
 			} else { 
 				String commenter = vo.getMemberNickname();
 				String writer = product.getMemberNickname();
-				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) { // 물건 등록자나 댓글 등록자가 아니면
+				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) { // 글 작성자가 아니거나 물건 판매자가 아닐 경우
+					if(vo.getuProductSecretComment().equals("y")) // 비밀댓글 표시를 했을 경우
 					vo.setuProductCommentContent("비밀 댓글입니다");
 				}
 			}
@@ -88,5 +99,7 @@ public class UProductCommentServiceImple implements UProductCommentService {
 		logger.info("read() 호출 : uProductId = " + uProductId);
 		return uProductCommentDAO.selected(uProductId);
 	}
+
+	
 
 }
