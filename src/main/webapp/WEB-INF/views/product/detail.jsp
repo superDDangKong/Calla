@@ -85,6 +85,25 @@
 	    background-position: center;
 	    background-size: cover;
      }
+     
+     .prevBtn,
+	 .nextBtn {
+	    position: absolute; /* 절대 위치 지정 */
+	    bottom: 10px; /* 부모 요소의 50% 위치에서부터 아래으로 정렬 */
+	    transform: translateY(-50%); /* 요소의 높이의 절반만큼 위쪽으로 이동하여 세로 중앙 정렬 */
+	    background-color: white; /* 버튼 배경색 설정 */
+	    border: none; /* 버튼 테두리 제거 */
+	    padding: 5px 10px; /* 버튼 여백 설정 */
+	 }
+	
+	 .prevBtn {
+	    left: calc(50% - 50px - 5px); /* 왼쪽 버튼 위치 계산하여 조정 */
+	 }
+	
+	 .nextBtn {
+	    right: calc(50% - 50px - 5px); /* 오른쪽 버튼 위치 계산하여 조정 */
+	 }
+     
      .productTextarea {
      	width: 100%; /* Full width */
    		height: auto; /* Automatically set height */
@@ -152,8 +171,8 @@
 		            <img src="display?fileName=${image}" class="productImage" style="display:none;" />
 		        </c:forEach>
 		    </div>
-		    <button class="prevBtn">이전</button>
-		    <button class="nextBtn">다음</button>
+		    <button class="prevBtn">◀</button>
+		    <button class="nextBtn">▶</button>
 		</div>
 		<br>
 	 	<div class="product-desc">

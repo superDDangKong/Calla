@@ -106,7 +106,7 @@ li {
 	<hr>
 	<div class="container-fluid">
 		<div class="row">
-			<%@ include file="productSidebar.jspf"%>
+			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-8 ms-sm-auto col-lg-8 px-md-4" >
 	
 	<section class="py-5">
