@@ -91,7 +91,7 @@ public class FileUploadUtil {
 				ImageIO.read(new File(parent, fileName));
 		BufferedImage destination = 
 				Scalr.resize(source, Scalr.Method.AUTOMATIC, 
-						Scalr.Mode.FIT_TO_HEIGHT, 100);
+						Scalr.Mode.FIT_TO_HEIGHT, 500);
 		String thumbnailName = 
 				uploadPath + File.separator 
 				+ savePath + File.separator
