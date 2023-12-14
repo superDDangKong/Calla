@@ -566,7 +566,7 @@ hr {
 						   } */
                            
                   }); // end each()
-               		
+               	if(memberNickname != null) {
                   list += '<div style="text-align: center;">'
 					  + memberNickname
 					  + '&nbsp;&nbsp;'
@@ -574,6 +574,10 @@ hr {
 					  + '&nbsp;&nbsp;'
 					  + '<button class="btnReplyAdd">작성</button>' 
 					  + '</div>'
+               	} else {
+               		list += '답글 작성은 <a href="/calla/member/login?targetURL=/qBoard/detail?qBoardId=' + $("#qBoardId").val() + '">로그인</a>이 필요합니다.'
+					+ '<hr><br>'
+               	}	
 				  comment_item.append('<div class="replies">' + list + '</div>');	
                 
 					  

@@ -97,8 +97,11 @@ body {
 					<h1 class="text-center">
 						<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
 					</h1>
-					
-					<a href="register" class="write-button"><input type="button" value="글 작성"></a>
+					<br>
+					<br>
+					<div id="register">
+						<a href="register" class="write-button"><input type="button" value="글 작성"></a>
+					</div>
 					<hr>
 					<%-- <div class="container mt-4">
 					    <form action="list" method="GET">
@@ -186,7 +189,7 @@ body {
 	$(document).ready(function(){
 		
 		if ($('#sessionNickname').val() == "") {
-			var list = "게시글 작성은 <a href='/calla/member/login?targetURL=/fBoard/register'>로그인</a>이 필요합니다."
+			var list = "게시글 작성은 <a href='/calla/member/login?targetURL=/qBoard/register'>로그인</a>이 필요합니다."
 			$("#register").html(list);
 		}
 		var result = $('#insertAlert').val();
