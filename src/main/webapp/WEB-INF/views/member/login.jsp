@@ -88,21 +88,30 @@
                             	<input id="rememberId" name="rememberId" type="checkbox" >
                             	<span class="checkmark"></span>
                             </label>
-                        </form> 
+                        </form>
                         <div class="text-center mt-3">
                             <a href="searchMemberInfo">아이디·비밀번호 찾기</a> 
                         </div>
+                        <div class="text-center mt-3">
+                            <a href="join">회원가입</a> 
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <br>
+	<br>
+	<br>
+    <br>
+    <input type="hidden" name="loginResult" id="loginResult" value="${loginResult }">
 	<input type="hidden" name="searchResult" id="searchResult" value="${searchResult }">
 	<input type="hidden" name="searchId" id="searchId" value="${searchId }">
 	<input type="hidden" name="searchPw" id="searchPw" value="${searchPw }">
 	
 	
 	<script type="text/javascript">
+		var loginResult = $('#loginResult').val();
 		var searchResult = $('#searchResult').val();
 		var searchId = $('#searchId').val();
 		var searchPw = $('#searchPw').val();
@@ -115,6 +124,9 @@
 			alert('회원님의 비밀번호는   ' + searchPw + '    입니다');
 		}
 		
+		if(loginResult == 'fail') {
+			alert('아이디 혹은 비밀번호를 잘못 입력하셨거나 등록되지 않은 계정입니다.')
+		} 
 		$(document).ready(function() {
             // 페이지 로드 시, localStorage에서 아이디를 가져와서 입력 필드에 설정
             var memberIdInput = $("#memberId");

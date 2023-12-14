@@ -66,7 +66,7 @@ public class MemberServiceImple implements MemberService {
 		try {
 			return result = MemberDAO.insert(vo);
 		} catch (DataIntegrityViolationException e) { // 데이터베이스에서 무결성 제약 조건이 위배될 때 발생하는 예외 Data integrity constraint violation during member registration.
-			throw new IllegalStateException("회원 가입 중에 데이터 무결성 제약 조건 위반."); // 회원 가입 중에 데이터 무결성 제약 조건 위반: 중복된 사용자 이름 또는 이메일입니다. 
+			throw new IllegalStateException("회원 가입 중에 데이터 무결성 제약 조건 위배."); // 회원 가입 중에 데이터 무결성 제약 조건 위반: 중복된 사용자 이름 또는 이메일입니다. 
 			
 		}
 	}

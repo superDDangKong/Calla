@@ -45,6 +45,34 @@ body {
 	margin : 0;
 	padding : 0;
 }
+
+/* 기본 스타일 */
+    .write-button {
+      text-decoration: none;
+    }
+
+    /* 버튼 스타일 */
+    .write-button input[type="button"] {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: 2px solid #3498db; /* 테두리 색상 */
+      color: #3498db; /* 텍스트 색상 */
+      background-color: #ffffff; /* 배경색 */
+      border-radius: 5px; /* 테두리 둥글기 */
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* 전환 효과 */
+    }
+
+    /* 호버 효과 */
+    .write-button input[type="button"]:hover {
+      background-color: #3498db; /* 호버 시 배경색 */
+      color: #ffffff; /* 호버 시 텍스트 색상 */
+      border-color: #ffffff; /* 호버 시 테두리 색상 */
+    }
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -64,14 +92,14 @@ body {
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
+					<br>
 					<h1 class="text-center">
 						<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
 					</h1>
 					
 					<a href="register" class="write-button"><input type="button" value="글 작성"></a>
-					<a href="note" class="note"><input type="button" value="쪽지 보내기"></a>
 					<hr>
-					<div class="container mt-4">
+					<%-- <div class="container mt-4">
 					    <form action="list" method="GET">
 					        <div class="row">
 					            <div class="col-md-4">
@@ -82,7 +110,7 @@ body {
 					                        <option value="searchTitle">제목</option>
 					                    </select>
 					                </div>
-					            </div>
+					            </div> 
 					            <div class="col-md-4">
 					                <div class="form-group">
 					                    <label for="keyword"></label>
@@ -97,7 +125,7 @@ body {
 					            </div>
 					        </div>
 					    </form>
-					</div>
+					</div> --%>
 					<div>
 						<table class="table">
 							<thead>
@@ -115,7 +143,9 @@ body {
 								<c:forEach var="vo" items="${list }">
 									<tr>
 										<td class="td">${vo.qBoardId }</td>
-										<td class="td"><a class="title" href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a></td>
+										<td class="td">
+											<a class="title" href="detail?qBoardId=${vo.qBoardId }&page=${pageMaker.criteria.page}">${vo.qBoardTitle }</a>
+										</td>
 										<td class="td">${vo.memberNickname }</td>
 										<fmt:formatDate value="${vo.qBoardCreatedDate }"
 										pattern="yyyy-MM-dd" var="qBoardCreatedDate"/>
@@ -128,17 +158,15 @@ body {
 						</table>
 						
 						<ul style="text-align:center">
-							<c:if test="${pageMaker.hasPrev }">
-								<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+							<c:if test="${pageMaker.hasPrev }"><!-- 현재 페이지보다 이전 페이지가 있으면  -->
+								<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li> <!-- 이전 버튼이 생성 -->
 							</c:if>
-							<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }"
-								var="num">
+							<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num"> <!-- startPageNo 시작페이지 ~ endPageNo 끝페이지 각-->
 								<li><a href="list?page=${num }">${num }</a></li>	
 							</c:forEach>
 							<c:if test="${pageMaker.hasNext }">
 								<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 							</c:if>
-					
 						</ul>
 						<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 						<input type="hidden" id="insertAlert" value="${insert_result }">
@@ -160,8 +188,10 @@ body {
 
 		var result2 = $('#statusAlert').val();
 		if(result2 == 'secret') {
-			alert('비공개 글입니다.');
+			alert('비공개 게시글입니다.');
 		}
+		
+				
 	})
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

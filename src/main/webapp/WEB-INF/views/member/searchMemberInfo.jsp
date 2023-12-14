@@ -137,7 +137,7 @@ input {
 				<button class="active1">아이디 찾기</button>
 				<button class="active2">비밀번호 찾기</button>
 			</div>
-			<form id="myForm" action="searchId" method="post">
+			<form id="myForm" action="searchId" method="post"> 
 				<div class="style__FormController-sc-sshr17-2 iZjoOv">
 					<div class="Input__InputWrap-sc-tapcpf-1 kjWnKT">
 						<label id="condition">이름</label>
@@ -165,8 +165,8 @@ input {
 						</span>
 					</div>
 				</div> -->
-				<button type="submit" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">아이디 찾기</button>
-				<button type="button"id="authentication" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">인증번호 받기</button>
+				<button type="submit" id="searchInfo" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">아이디 찾기</button>
+				<!-- <button type="button"id="authentication" class="Button__StyledButton-sc-1cxc4dz-0 hlLPsc">인증번호 받기</button> -->
 			</form>
 		</div>
 	</div> 
@@ -181,7 +181,7 @@ input {
 		if (searchResult == 'fail') {
 			alert('일치하는 회원 정보가 없습니다.')
 		}
-
+	
 		$(document).ready(function() {
 			var searchCondition = $('#searchCondition');
 			var searchCondition1 = $('#searchCondition1');
@@ -252,9 +252,7 @@ input {
 				})
 			})
 			
-		$('#authentication').click(function(){
 			
-		})// end click		
 		}); // end document.ready
 	</script>
 

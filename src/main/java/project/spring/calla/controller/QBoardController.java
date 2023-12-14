@@ -55,7 +55,7 @@ public class QBoardController {
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword, RedirectAttributes reAttr) {
 		logger.info("list() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+		logger.info("현재 페이지 = " + page + ", numsPerPage = " + numsPerPage);
 		List<QBoardVO> list = null;
 		
 		PageCriteria criteria = new PageCriteria();
@@ -110,14 +110,20 @@ public class QBoardController {
 		logger.info(vo.toString());
 		logger.info("파일 이름 : " + file.getOriginalFilename());
 		logger.info("파일 크기 : " + file.getSize());
-	
+		logger.info("공개여부 : " + vo.getqBoardStatus());
 		try {
 	    
 	      // 파일 저장
 	      String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 	      // 이미지 경로 저장
 	      vo.setqBoardImagePath(savedFileName);
-	      int result = qBoardService.create(vo);
+	      int result = 0;
+	      if (!vo.getqBoardStatus()) {
+	    	  vo.setqBoardTitle("[비밀글입니다] " + vo.getqBoardTitle());
+	    	  result = qBoardService.create(vo);
+	      } else {
+	    	  result = qBoardService.create(vo);
+	      }
 	      logger.info("result = " + result);
 	      logger.info(result + "행 삽입"); // 여기서 result 1이 나와야함
 
@@ -129,8 +135,6 @@ public class QBoardController {
 	      }
 
 	      } catch (Exception e) {
-	        logger.info("register POST 호출");
-	        logger.info("catch가 실행");
 	        e.printStackTrace();
 	      }
 	    
@@ -175,7 +179,7 @@ public class QBoardController {
 		HttpSession session = request.getSession();
 		String memberNickname = (String) session.getAttribute("memberNickname");
 		Integer memberLevel = (Integer) session.getAttribute("memberLevel");
-		logger.info("게시글 공개 여부 : " + vo.getqBoardStatus()); // 게시글의 공개 or 비공개
+		logger.info("게시글 공개 여부 : " + vo.getqBoardStatus()); // true 공개 / false 비공개
 		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
@@ -193,7 +197,7 @@ public class QBoardController {
 		
 		
 		
-	    if(vo.getqBoardStatus().equals("공개")) { // 선택한 게시글의 공개여부를 가져오고 공개일 때
+	    if(vo.getqBoardStatus()) { // true 공개 / false 비공개
 	    	logger.info("공개게시글임");
 	    	logger.info("현재 로그인한 멤버 닉네임 : " + memberNickname);
 			logger.info("현재 로그인한 멤버 레벨 : " + memberLevel);

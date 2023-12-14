@@ -11,7 +11,7 @@ public class QBoardVO {
 	private int qBoardViews;
 	private int qBoardCommentCount;
 	private String qBoardImagePath;
-	private String qBoardStatus;
+	private boolean qBoardStatus;
 	
 	
 	public QBoardVO() {}
@@ -19,7 +19,7 @@ public class QBoardVO {
 
 	public QBoardVO(int qBoardId, String memberNickname, String qBoardTitle, String qBoardContent,
 			Date qBoardCreatedDate, int qBoardViews, int qBoardCommentCount, String qBoardImagePath,
-			String qBoardStatus) {
+			boolean qBoardStatus) {
 		super();
 		this.qBoardId = qBoardId;
 		this.memberNickname = memberNickname;
@@ -113,12 +113,12 @@ public class QBoardVO {
 	}
 
 
-	public String getqBoardStatus() {
+	public boolean getqBoardStatus() {
 		return qBoardStatus;
 	}
 
 
-	public void setqBoardStatus(String qBoardStatus) {
+	public void setqBoardStatus(boolean qBoardStatus) {
 		this.qBoardStatus = qBoardStatus;
 	}
 

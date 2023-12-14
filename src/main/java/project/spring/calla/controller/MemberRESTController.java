@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.service.MailService;
+import project.spring.calla.service.MailServiceImple;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -35,28 +35,27 @@ public class MemberRESTController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MailService mailSendService;
+	private MailServiceImple mailSendService;
 	
-	@PostMapping("/join") // join.jsp ajax url ���
-	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBody�� ajax���� JSON���·� ���� �����͸� memberVO vo (�ڹٰ�ü)�� ��ȯ���ְ�
-																			// @RequestBody�� JSON.stringify(obj) ���̽� ��ü�� �ڹ� ��ü�� ��ȯ����
-																			// @RequestParam �� memberId : memberId, memberPw : memberPw, ... ��� �����Ҽ� ����
-		logger.info("createMember() : vo = " + vo.toString()); // jsp���� ������ �����͸� ���
+	@PostMapping("/join") // join.jsp ajax url 占쏙옙占�
+	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBody占쏙옙 ajax占쏙옙占쏙옙 JSON占쏙옙占승뤄옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싶몌옙 memberVO vo (占쌘바곤옙체)占쏙옙 占쏙옙환占쏙옙占쌍곤옙
+																			// @RequestBody占쏙옙 JSON.stringify(obj) 占쏙옙占싱쏙옙 占쏙옙체占쏙옙 占쌘뱄옙 占쏙옙체占쏙옙 占쏙옙환占쏙옙占쏙옙
+																			// @RequestParam 占쏙옙 memberId : memberId, memberPw : memberPw, ... 占쏙옙占� 占쏙옙占쏙옙占쌀쇽옙 占쏙옙占쏙옙
+		logger.info("createMember() : vo = " + vo.toString()); // jsp占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占싶몌옙 占쏙옙占�
 		int result = 0;
 		try {
-			result = memberService.create(vo); // 2.���񽺿� create�޼ҵ忡 Ŭ���̾�Ʈ���� ������ �����͸� ����Ͻ� �������� ����
+			result = memberService.create(vo); // 2.占쏙옙占쏟스울옙 create占쌨소드에 클占쏙옙占싱억옙트占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙絿占� 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		} catch (IllegalStateException e) {
-			String resultString = e.getMessage();
-			return new ResponseEntity<Object>(resultString, HttpStatus.BAD_REQUEST); // 
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST); // 
 		}
-		// ResponseEntity�� HTTP ������ ���� �ڵ�, ���, ���� ���� �����ϰ� ������ �� �ִ�.
+		// ResponseEntity占쏙옙 HTTP 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌘듸옙, 占쏙옙占�, 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싹곤옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쌍댐옙.
 		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	} // end createMember
 	
 	@GetMapping("/checkemail")
 	public String mailAuthentication(String memberEmail, HttpServletRequest request) throws Exception {
-		logger.info("mailAuth() ȣ�� ������û�� �̸��� �ּ� : " + memberEmail);
-		String authKey = mailSendService.sendMail(memberEmail); //����ڰ� �Է��� �����ּҷ� ������ ����
+		logger.info("mailAuth()호출 인증번호를 보낼 이메일 주소 : " + memberEmail);
+		String authKey = mailSendService.sendMail(memberEmail); 
 		// memberService.registMailAuthentication(memberEmail, authKey);
 		HttpSession mailAuthSession = request.getSession();
 		mailAuthSession.setAttribute("memberEmail", memberEmail);
@@ -68,18 +67,19 @@ public class MemberRESTController {
 	
 	@PostMapping("/authenticationConfirm")
 	public String mailAuthKeyConfirm(String AuthenticationKey, HttpServletRequest request) {
-		logger.info("mailAuthKeyConfirm() ȣ�� AuthenticationKey: " + AuthenticationKey);
+		logger.info("mailAuthKeyConfirm() 호출");
+		logger.info("AuthenticationKey: " + AuthenticationKey);
 		HttpSession mailAuthSession = request.getSession();
 	    String savedAuthenticationKey = (String) mailAuthSession.getAttribute("authKey");
 	    logger.info(savedAuthenticationKey);
 	    String result = "fail";
 	    
 	    if (AuthenticationKey.equals(savedAuthenticationKey)) {
-	    	logger.info("��������!");
+	    	logger.info("이메일 인증성공!");
 	    	result = "success";
 	    } else {
-	    	logger.info("�Է��� ����Ű : " + AuthenticationKey);
-	    	logger.info("����ڿ��� ���� ����Ű : " + savedAuthenticationKey);
+	    	logger.info("사용자가 입력한 인증번호 : " + AuthenticationKey);
+	    	logger.info("세션에 저장된 인증번호 : " + savedAuthenticationKey);
 		    return result;
 	    }
 	    return result;

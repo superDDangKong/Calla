@@ -85,6 +85,25 @@ textarea {
     .styled-checkbox input:checked + label:after {
         display: block;
     }
+    
+    .insert {
+  background-color: #4CAF50; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 없음 */
+  padding: 10px 20px; /* 안쪽 여백 */
+  text-align: center; /* 가운데 정렬 */
+  text-decoration: none; /* 밑줄 없음 */
+  display: inline-block;
+  font-size: 16px; /* 글자 크기 */
+  margin: 4px 2px; /* 바깥쪽 여백 */
+  cursor: pointer; /* 커서 모양 변경 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  transition: background-color 0.3s; /* 배경색 변경 시 부드러운 전환 효과 */
+}
+
+.insert:hover {
+  background-color: #45a049; /* 마우스 호버 시 배경색 변경 */
+}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -108,14 +127,14 @@ textarea {
 						<div>
 							<input type="text" name="qBoardTitle" placeholder="제목 입력" required> <!-- 데이터를 입력할 땐 쿼리 기준 물음표 갯수로 -->
 							 <div class="styled-checkbox">
-			        			<input type="radio" id="public" class="radio" name="qBoardStatus" value="공개" checked>
+			        			<input type="radio" id="public" class="radio" name="qBoardStatus" value="true" checked>
 			    				<label for="public">공개</label>
-							    <input type="radio" id="private" class="radio" name="qBoardStatus" value="비공개">
+							    <input type="radio" id="private" class="radio" name="qBoardStatus" value="false">
 							    <label for="private">비공개</label>
 			   				 </div>
 						</div>
 						<div>
-							<input type="text" name="memberNickname" value="${memberNickname }" readonly="readonly"> <!-- 태그네임과 vo 이름과 같아야 한다 안그럼 에러나 -->
+							<input type="text" name="memberNickname" id="nickname" value="${memberNickname }" readonly="readonly"> <!-- 태그네임과 vo 이름과 같아야 한다 안그럼 에러나 -->
 						</div>
 						    <div class="custom-file">
 						        <input type="file" name="customFile" class="custom-file-input" id="customFile">
@@ -130,7 +149,7 @@ textarea {
 				 				<textarea rows="20" cols="120" name="qBoardContent" placeholder="내용 입력" ></textarea>
 							</div>
 						<div>
-							<input type="submit" value="등록"> 
+							<input type="submit" class="insert" value="등록"> 
 							
 						</div>
 					</form>
@@ -148,6 +167,7 @@ textarea {
 				console.log("공개");
 			} else {
 				console.log("비공개");
+				
 			}
 		})
 		
@@ -205,7 +225,11 @@ textarea {
 
 	    	  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 	    	} // end functon
+	      var memberNickname = $('#nickname').val();
 	      
+	    if (memberNickname == '') {
+	    	$('#nickname').remove();
+	    } 
 	    }); // end document 
 	</script>
 	<%@ include file="../footer.jspf"%>
