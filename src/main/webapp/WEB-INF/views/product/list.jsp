@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <head>
 <style type="text/css">
 	.rating {
@@ -73,8 +71,12 @@ li {
 	</form>
 	<div id="register">
 		<a href="register"><input type="button" value="상품등록"></a>
-		
 	</div>
+	<c:if test="${memberNickname != null}">         
+         <div>
+            <a href="orderList?memberId=${memberId}"><input type="button" value="장바구니 이동"></a>
+         </div>
+	</c:if>
 	<input type="hidden" id="selectedOption" value=${option }>
 	<input type="hidden" id="sessionNickname" value=${memberNickname }>
 	<input type="hidden" id="sessionLevel" value=${memberLevel }>

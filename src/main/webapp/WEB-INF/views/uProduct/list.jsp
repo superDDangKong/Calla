@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-	integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-	crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style type="text/css">
 table, th, td {
 	border-style: solid;
@@ -32,9 +33,7 @@ img {
 
 </style>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
