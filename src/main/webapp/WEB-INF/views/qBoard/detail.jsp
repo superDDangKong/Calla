@@ -267,7 +267,6 @@ hr {
             	alert("공백은 댓글입력이 안됩니다.")
             	return;
             }
-	            // $.ajax로 송수신
 	            $.ajax({
 	               type : 'POST',
 	               url : 'comments',

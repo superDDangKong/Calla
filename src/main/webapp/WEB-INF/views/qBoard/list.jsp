@@ -93,6 +93,7 @@ body {
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
 					<br>
+					<input type="hidden" id="sessionNickname" value=${memberNickname }>
 					<h1 class="text-center">
 						<a href="list" style="text-decoration: none; color: #007BFF; font-size: 36px; font-weight: bold;">문의게시판 </a>
 					</h1>
@@ -171,6 +172,8 @@ body {
 						<!-- BoardController -> registerPOST()에서 보낸 데이터 저장 -->
 						<input type="hidden" id="insertAlert" value="${insert_result }">
 						<input type="hidden" id="statusAlert" value="${status_result }">
+						<input type="hidden" id="updateResult" value="${update_result }">
+						<input type="hidden" id="deleteResult" value="${delete_result }">
 					</div>
 				</div>
 			</main>
@@ -181,6 +184,11 @@ body {
 	
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		if ($('#sessionNickname').val() == "") {
+			var list = "게시글 작성은 <a href='/calla/member/login?targetURL=/fBoard/register'>로그인</a>이 필요합니다."
+			$("#register").html(list);
+		}
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 글 작성 성공!');
@@ -191,6 +199,15 @@ body {
 			alert('비공개 게시글입니다.');
 		}
 		
+		var result3 = $('#updateResult').val();
+		if(result3 == 'success') {
+			alert('게시글이 수정되었습니다.');
+		}
+		
+		var result4 = $('#deleteResult').val();
+		if(result4 == 'success'){
+			alert('게시글이 삭제되었습니다.');
+		}
 				
 	})
 </script>

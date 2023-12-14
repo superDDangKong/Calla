@@ -239,11 +239,12 @@ public class QBoardController {
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(QBoardVO vo, Integer page) {
+	public String updatePOST(QBoardVO vo, Integer page, RedirectAttributes reAttr) {
 		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = qBoardService.update(vo);
 		
 		if(result == 1) {
+			reAttr.addFlashAttribute("update_result", "success");
 			return "redirect:/qBoard/list?page=" + page;
 		} else {
 			return "redirect:/qBoard/update?boardId=" + vo.getqBoardId();
@@ -251,10 +252,11 @@ public class QBoardController {
 	} // end updatePOST()
 	
 	@PostMapping("/delete")
-	public String delete(Integer qBoardId) {
+	public String delete(Integer qBoardId, RedirectAttributes reAttr) {
 		logger.info("delete() 호출 : boardId = " + qBoardId);
 		int result = qBoardService.delete(qBoardId);
 		if(result == 1) {
+			reAttr.addFlashAttribute("delete_result", "success");
 			return "redirect:/qBoard/list";
 		} else {
 			return "redirect:/qBoard/list";
