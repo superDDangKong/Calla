@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.QBoardCommentDAO;
 import project.spring.calla.persistence.QBoardDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service
 public class QBoardCommentServiceImple implements QBoardCommentService {

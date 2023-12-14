@@ -10,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 @Repository
 public class UProductDAOImple implements UProductDAO {

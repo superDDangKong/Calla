@@ -32,8 +32,6 @@ import project.spring.calla.domain.ProductLikeVO;
 import project.spring.calla.domain.ProductOrderListVO;
 import project.spring.calla.domain.ProductOrderVO;
 import project.spring.calla.domain.ProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
 import project.spring.calla.service.ProductLikeService;
 import project.spring.calla.service.ProductOrderListService;
@@ -41,6 +39,8 @@ import project.spring.calla.service.ProductOrderService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
+import project.spring.calla.util.PageCriteria;
+import project.spring.calla.util.PageMaker;
 
 @Controller
 
@@ -70,12 +70,12 @@ public class ProductController {
 	
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage, String option, String keyword) {
-		logger.info("list() 호출");
+		logger.info("list() �샇異�");
 		logger.info("page = " + page + " , numsPerPage = " + numsPerPage);
 		
 		List<ProductVO> list = null;
 		
-		// Paging 처리
+		// Paging 泥섎━
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -84,22 +84,22 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		
-		// pagerMaker 처리
+		// pagerMaker 泥섎━
 		PageMaker pageMaker = new PageMaker();
 		
 		if(option != null) {
 			if(option.equals("searchTitleOrContent")) {
-				logger.info("sarchTitleOrContent() 호출");
+				logger.info("sarchTitleOrContent() �샇異�");
 				list = productService.readByProductNameOrProductContent(criteria, keyword);
 				pageMaker.setTotalCount(productService.getTotalCountsByProductNameOrProductContent(keyword));
 				
 			} else if (option.equals("searchProductCategori")) {
-				logger.info("searchProductCategori() 호출");
+				logger.info("searchProductCategori() �샇異�");
 				list = productService.readByProductCategori(criteria, keyword);
 				pageMaker.setTotalCount(productService.getTotalCountsByProductCategori(keyword));
 				
 			}else {
-				logger.info("if else문");
+				logger.info("if else臾�");
 				list = productService.read(criteria);
 				pageMaker.setTotalCount(productService.getTotalCounts());
 				
@@ -145,24 +145,24 @@ public class ProductController {
 	
 	@PostMapping("/register")
 	public String registerPost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, RedirectAttributes reAttr) {
-	    logger.info("registerPOST() 호출");
+	    logger.info("registerPOST() �샇異�");
 	    logger.info(vo.toString());
 	    String fileString ="";
 	    try {
 	        List<String> savedFileNames = new ArrayList<>();
 
 	        for (MultipartFile file : files) {
-	            logger.info("파일 이름 : " + file.getOriginalFilename());
-	            logger.info("파일 크기 : " + file.getSize());
+	            logger.info("�뙆�씪 �씠由� : " + file.getOriginalFilename());
+	            logger.info("�뙆�씪 �겕湲� : " + file.getSize());
 
 	            String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 	            fileString += savedFileName + ",";
-	            logger.info("파일" + savedFileNames);
+	            logger.info("�뙆�씪" + savedFileNames);
 	        }
 
 	        vo.setProductImagePath(fileString);
 	        int result = productService.create(vo);
-	        logger.info(result + "등록 완료");
+	        logger.info(result + "�벑濡� �셿猷�");
 
 	        if (result == 1) {
 	            reAttr.addFlashAttribute("insert_result", "success");
@@ -205,13 +205,17 @@ public class ProductController {
 			}
 			
 		}
-		logger.info("deatil() 호출 : productId = " + productId);
+		logger.info("deatil() �샇異� : productId = " + productId);
 		ProductVO vo = productService.read(productId);
+		
 		String[] imageArray = vo.getProductImagePath().split(",");
 		ProductCommentVO commentVO = new ProductCommentVO();
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria criteria = new PageCriteria();
-		
+		if(page != null) {
+			criteria.setPage(page);
+			model.addAttribute("page", page);
+		}
 		pageMaker.setTotalCount(productCommentService.getTotalCounts(productId));
 		
 		pageMaker.setCriteria(criteria);
@@ -242,7 +246,6 @@ public class ProductController {
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("memberNickname", memberNickname);
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("imageArray", imageArray);
 		
@@ -253,9 +256,9 @@ public class ProductController {
 	
 	@GetMapping("/update")
 	public String updateGET(Model model, Integer productId, Integer page, RedirectAttributes reAttr, HttpSession session) {
-		logger.info("updateGET() 호출 : productId = " + productId);
+		logger.info("updateGET() �샇異� : productId = " + productId);
 		ProductVO vo = productService.read(productId);
-		logger.info("updateGET() 호출 : vo = " + vo.toString());
+		logger.info("updateGET() �샇異� : vo = " + vo.toString());
 		
 		Integer memberLevel = (Integer) session.getAttribute("memberLevel");
 		logger.info("memberLevel" + memberLevel);
@@ -271,15 +274,15 @@ public class ProductController {
 	
 	@PostMapping("/update")
 	public String updatePost(ProductVO vo, @RequestParam("productImages") MultipartFile[] files, Integer page, RedirectAttributes reAttr, HttpSession session) {
-	    logger.info("updatePost() 호출 : vo = " + vo.toString());
+	    logger.info("updatePost() �샇異� : vo = " + vo.toString());
 	    
 	    try {
 	        StringBuilder fileString = new StringBuilder();
 
 	        if (files != null && files.length > 0) {
 	            for (MultipartFile file : files) {
-	                logger.info("파일 이름 : " + file.getOriginalFilename());
-	                logger.info("파일 크기 : " + file.getSize());
+	                logger.info("�뙆�씪 �씠由� : " + file.getOriginalFilename());
+	                logger.info("�뙆�씪 �겕湲� : " + file.getSize());
 
 	                String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
 
@@ -304,7 +307,7 @@ public class ProductController {
 	
 	@PostMapping("/delete")
 	public String delete(Integer productId) {
-		logger.info("delete() 호출 : productId = " + productId);
+		logger.info("delete() �샇異� : productId = " + productId);
 		int result = productService.delete(productId);
 		
 		if(result == 1) {
@@ -316,7 +319,7 @@ public class ProductController {
 	
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName){
-		logger.info("display() 호출");
+		logger.info("display() �샇異�");
 		
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -346,7 +349,7 @@ public class ProductController {
 	
 	@GetMapping("/orderList")
 	public String orderList(Model model, String memberId) {
-		logger.info("orderList() 호출 : memberId = " + memberId);
+		logger.info("orderList() �샇異� : memberId = " + memberId);
 	    
 	    List<ProductVO> productList = productService.selectProductWithAmount(memberId);
 
@@ -367,12 +370,12 @@ public class ProductController {
 	
 	@GetMapping("/order")
 	public String order(Model model, HttpServletRequest request) {
-	    logger.info("order() 호출 : memberId = " );
+	    logger.info("order() �샇異� : memberId = " );
 	    HttpSession session = request.getSession();
 	    int memberLevel = (int) session.getAttribute("memberLevel");
 	    String memberId = (String) session.getAttribute("memberId");
 	    List<ProductOrderVO> productOrderList = null;
-	    if(memberLevel >=2) { // memberLevel 2 이상일때
+	    if(memberLevel >=2) { // memberLevel 2 �씠�긽�씪�븣
 	    	productOrderList = productOrderService.read();
 	    	
 	    } else { 

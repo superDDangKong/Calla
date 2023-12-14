@@ -8,13 +8,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import project.spring.calla.domain.QBoardVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 
 @Repository

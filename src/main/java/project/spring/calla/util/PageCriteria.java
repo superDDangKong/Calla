@@ -1,4 +1,4 @@
-package project.spring.calla.pageutil;
+package project.spring.calla.util;
 
 // ���������� ������ ������ ��ȣ��
 // �� ���������� ������ �Խñ��� ������ �����ϴ� Ŭ����

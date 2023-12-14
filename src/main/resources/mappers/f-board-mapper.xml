@@ -22,9 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <insert id="insert">
 	 	insert into ${f_board}
-	 	(${memberNickname}, ${fBoardTitle}, ${fBoardContent}, ${fBoardViews}, ${fBoardImagePath}) 
+	 	(${memberNickname}, ${fBoardTitle}, ${fBoardContent}, ${fBoardViews}) 
 	 	values 
-	 	(#{memberNickname}, #{fBoardTitle}, #{fBoardContent}, #{fBoardViews}, #{fBoardImagePath})
+	 	(#{memberNickname}, #{fBoardTitle}, #{fBoardContent}, #{fBoardViews})
 	 </insert>
 	 
 	  <select id="select_all" resultType="FBoardVO">
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <update id="update">
 	 	update ${f_board}
-	 	set ${fBoardTitle} = #{fBoardTitle}, ${fBoardContent} = #{fBoardContent}, ${fBoardImagePath} = #{fBoardImagePath}
+	 	set ${fBoardTitle} = #{fBoardTitle}, ${fBoardContent} = #{fBoardContent}
 	 	where ${fBoardId} = #{fBoardId}
 	 </update>
 	 
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </delete>
 	 
 	 <select id="paging" resultType="FBoardVO">
-	 	select ${fBoardId}, ${fBoardTitle}, ${fBoardContent}, ${memberNickname}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}, ${fBoardImagePath}
+	 	select ${fBoardId}, ${fBoardTitle}, ${fBoardContent}, ${memberNickname}, ${fBoardCreatedDate}, ${fBoardViews}, ${fBoardCommentCount}
 	 	from(
 	 		select rownum rn, a.* from(
 	 			select * from ${f_board} order by ${fBoardId} desc

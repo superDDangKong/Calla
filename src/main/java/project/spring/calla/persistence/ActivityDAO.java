@@ -7,8 +7,8 @@ import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 public interface ActivityDAO {
 
 	// controller

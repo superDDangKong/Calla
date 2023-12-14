@@ -121,7 +121,6 @@
 		<%
 		}
 		%>
-		
 	<div id="navigator" class="text-center bg-primary py-3">
 	    <div class="container">
 	        <ul class="nav justify-content-center">

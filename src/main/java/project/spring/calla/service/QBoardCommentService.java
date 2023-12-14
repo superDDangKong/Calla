@@ -3,7 +3,7 @@ package project.spring.calla.service;
 import java.util.List;
 
 import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface QBoardCommentService {
 	int create(QBoardCommentVO vo) throws Exception;

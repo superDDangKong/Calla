@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.persistence.FBoardCommentDAO;
-import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.UProductCommentDAO;
 import project.spring.calla.persistence.UProductDAO;
 

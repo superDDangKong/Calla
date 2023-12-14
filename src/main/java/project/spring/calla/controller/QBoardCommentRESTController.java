@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.QBoardCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.QBoardCommentService;
+import project.spring.calla.util.PageCriteria;
+import project.spring.calla.util.PageMaker;
 
 // * RESTful url과 의미
 // /replies (POST) : 댓글 추가(insert)

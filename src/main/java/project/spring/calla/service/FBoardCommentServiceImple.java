@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.FBoardCommentDAO;
 import project.spring.calla.persistence.FBoardDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service
 public class FBoardCommentServiceImple implements FBoardCommentService {

@@ -31,8 +31,6 @@
 							<label for="fBoardContent">내용</label>
 							<textarea class="form-control" id="fBoardContent" name="fBoardContent" rows="10">${vo.fBoardContent}</textarea>
 						</div>
-						<img src="display?fileName=${vo.fBoardImagePath }">
-						<input type="file" name="file">
 						<br>
 						<input type="submit" class="btn btn-primary float-right" value="수정">
 					</form>

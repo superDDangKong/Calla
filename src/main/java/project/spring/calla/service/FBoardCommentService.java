@@ -3,8 +3,7 @@ package project.spring.calla.service;
 import java.util.List;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 // CRUD(Create, Read, Update, Delete)
 public interface FBoardCommentService {

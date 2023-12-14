@@ -309,7 +309,11 @@
 	<script type="text/javascript">
 	
 		$(document).ready(function(){
+	    	window.addEventListener('hashchange', function() {
+		    	getAllComments();
+	    	});
 			getAllComments();
+			
 			$('.productRated span').click(function() {
 		        var selectedRating = $(this).index() + 1;
 		        $(this).parent().find('.selectedRating').val(selectedRating);
@@ -416,6 +420,7 @@
 								list += '<div class="comment_item">'
 									+ '<pre>'
 									+ '<input type="hidden" class="productCommentId" value="' + this.productCommentId + '">'
+									+ '<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
 									+ '<div class="comment-header">'
 									+ '별점 : ' + generateStars(this.productRated) + '&nbsp;&nbsp;' + '<strong>' + this.memberNickname + '</strong>'
 									+ '&nbsp;&nbsp;' + '<span class="comment-date">' + formatDate(productCommentCreatedDate) + '</span>'
@@ -454,6 +459,32 @@
 						            $('#exampleModal').data('productCommentId', productCommentId);
 						        }); // end btnCommentUpdate1 click
 								
+						        
+						        var fragment = window.location.hash;
+				    	        if (fragment) {
+				    	        	
+				    	        	fragment = fragment.replace('#', '');
+				    	        	var fragmentList = fragment.split(',');
+				    	        	
+				    	        	var targetCommentElement = $('.productCommentId').filter('[value="' + fragmentList[0] + '"]');
+				    	        	console.log("targetElement" + targetCommentElement.length)
+					    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
+						    	           var target = targetCommentElement[0].parentElement;
+						    	           target.style.backgroundColor = 'lightgray'; 
+						    	           target.style.border = '2px solid';   
+						    	           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+							    	        
+						    	           setTimeout(function() {
+							    	           target.style.backgroundColor = '';
+							    	           target.style.border = '';
+						    	           }, 2000);  // 2초 후에 스타일 초기화
+						        		   if (window.location.hash) {
+						        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+						        			}
+					    	   		     } else if (fragmentList[1] > 0) {
+					    	        	   getAllReplies(targetCommentElement);
+					    	    	       }
+						}
 						}
 					); // end JSON()
 			} // end getAllproductComments
@@ -599,7 +630,7 @@
 					list +=  '<div style="text-align: center;">'
 						+ memberNickname
 						+ '&nbsp;&nbsp;'
-						+'<textarea class="productReplyContent" rows="1" cols="100" style="border=1px;" required></textarea>'
+						+'<textarea class="productReplyContentReg" rows="1" cols="100" style="border=1px;" required></textarea>'
 						+ '&nbsp;&nbsp;'
 						+ '<button class="btnReplyAdd">작성</button>' 
 						+ '</div>'
@@ -614,6 +645,30 @@
 					        $('#exampleModal1').data('productCommentId', productCommentId);
 							$('#exampleModal1').data('productReplyId', productReplyId);
 						}); // end btnReplyUpdate1 Click
+						
+			              var fragment = window.location.hash;
+			        	   if (fragment) {
+			        	        	
+			        	       fragment = fragment.replace('#', '');
+			        	       var fragmentList = fragment.split(',');
+			        	       
+				        	   if (fragmentList[1] > 0) {
+				        		   var targetReplyElement = $('.productReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
+				        		   
+				        		   targetReplyElement.style.backgroundColor = 'lightgray';
+				        		   targetReplyElement.style.border = '2px solid';
+			        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+									
+			        		       setTimeout(function() {
+			        		    	   targetReplyElement.style.backgroundColor = '';
+			        		    	   targetReplyElement.style.border = '';
+				    	           }, 2000);  // 2초 후에 스타일 초기화
+			        		       
+			        		       if (window.location.hash) {
+				        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+				        			}
+				        	   }
+			        	   }
 				}
 			); // end getJSON()
 		} // end getAllReplies()
@@ -621,13 +676,15 @@
 		$(document).on('click', '.btnReplyAdd', function(){
 			console.log(this);
 			var commentItem = $(this).closest('.comment_item');
+			console.log("commentItem" + commentItem);
 			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
 			var productCommentIdVal = $(this).closest('.comment_item').find('.productCommentId').val();
 		    var memberNickname = $('#memberNickname').val();
-		    var productReplyContent = $(this).prevAll('.productReplyContent').val();
+		    var productReplyContent = $(this).prevAll('.productReplyContentReg').val();
 
             var commentRegisterNick = commentItem.find('.commentRegisterNickname').val();
-            var commentContent = commentItem.find('.productCommentContent').val();
+            var commentContent = commentItem.find('.commentContent').val(); // 이거 못읽어
+            console.log("commentContent" + commentContent);
             var productId = $('#productId').val();
 		    
 			var obj = {
@@ -650,7 +707,7 @@
 					if(result == 1) {
 						alert('댓글 입력 성공');
 						socket.send(
-                                commentRegisterNick + "," + "새 댓글" + "," + "공용상품" + "," +
+                                commentRegisterNick + "," + "새 답글" + "," + "공용상품" + "," +
                                 productReplyContent + "," +
                                 memberNickname + "," + commentContent + "," + productId
                             );

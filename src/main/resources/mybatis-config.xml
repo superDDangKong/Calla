@@ -21,7 +21,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="fBoardCreatedDate" value="f_board_created_date"/>
 		<property name="fBoardViews" value="f_board_views"/>
 		<property name="fBoardCommentCount" value="f_board_comment_count"/>
-		<property name="fBoardImagePath" value="f_board_image_path"/>
 		
 		<property name ="f_board_comment" value="f_board_comment"/>
 		<property name ="fBoardCommentId" value="f_board_comment_id"/>

@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ProductCommentService;
+import project.spring.calla.util.PageCriteria;
+import project.spring.calla.util.PageMaker;
 
 @RestController
 @RequestMapping(value="/product/comments")

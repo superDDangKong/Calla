@@ -25,9 +25,9 @@ import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.MyPageMaker;
 import project.spring.calla.service.ActivityService;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.MyPageMaker;
 
 @RestController
 @RequestMapping(value="/activity")
@@ -220,10 +220,10 @@ public class ActivityRESTController {
 	@PostMapping("/choosenickname")
 	public ResponseEntity<Integer> createBuySell(@RequestBody UProductSellVO svo) {
 		// @RequestBody
-		// - Å¬¶óÀÌ¾ðÆ®¿¡¼­ Àü¼Û¹ÞÀº json µ¥ÀÌÅÍ¸¦
-		// ÀÚ¹Ù °´Ã¼·Î º¯È¯ÇØÁÖ´Â annotation
-		//logger.info("createComment() È£Ãâ : vo = " + vo.toString());
-		logger.info("createComment() È£Ãâ : vo = " + svo.toString());
+		// - Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¹ï¿½ï¿½ï¿½ json ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½
+		// ï¿½Ú¹ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ö´ï¿½ annotation
+		//logger.info("createComment() È£ï¿½ï¿½ : vo = " + vo.toString());
+		logger.info("createComment() È£ï¿½ï¿½ : vo = " + svo.toString());
 		String uproductname = svo.getuProductName();
 		String buyerNickname= svo.getBuyerNickname();
 		String memberAddress = svo.getMemberAddress();
@@ -236,9 +236,9 @@ public class ActivityRESTController {
 		
 		UProductBuyVO vo = new UProductBuyVO(uproductid, uproductname, uproductprice, null, uproductcategori, memberAddress, uproductcontent, buyerNickname, imagepath, uproductid, sellerNickname); 
 		
-		// ResponseEntity<T> : Rest ¹æ½Ä¿¡¼­ µ¥ÀÌÅÍ¸¦ ¸®ÅÏÇÒ ¶§ ¾²ÀÌ´Â °´Ã¼
-		// - µ¥ÀÌÅÍ HttpStatus¸¦ Àü¼Û
-		// - <T> : º¸³»°íÀÚ ÇÏ´Â µ¥ÀÌÅÍ Å¸ÀÔ
+		// ResponseEntity<T> : Rest ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½Ã¼
+		// - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HttpStatusï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// - <T> : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
 		int result = 0;
 		try {
 			result = ativityService.buysellcreate(vo, svo);

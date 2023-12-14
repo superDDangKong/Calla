@@ -2,15 +2,15 @@ package project.spring.calla.domain;
 
 import java.util.Date;
 
-public class UProductRecentlyView {
+public class UProductRecentlyViewVO {
 	private int uProductRecentlyViewId;
 	private String memberId;
 	private int uProductId;
 	private Date uProductRecentlyViewDate;
 	
-	public UProductRecentlyView() {}
+	public UProductRecentlyViewVO() {}
 
-	public UProductRecentlyView(int uProductRecentlyViewId, String memberId, int uProductId,
+	public UProductRecentlyViewVO(int uProductRecentlyViewId, String memberId, int uProductId,
 			Date uProductRecentlyViewDate) {
 		super();
 		this.uProductRecentlyViewId = uProductRecentlyViewId;

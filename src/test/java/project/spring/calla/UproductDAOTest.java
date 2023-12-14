@@ -1,17 +1,7 @@
 package project.spring.calla;
 
-import java.security.Provider.Service;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.apache.ibatis.annotations.ResultType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -22,9 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import oracle.jdbc.driver.OracleDriver;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.MemberDAO;
 import project.spring.calla.persistence.UProductDAO;
 import project.spring.calla.service.MemberService;

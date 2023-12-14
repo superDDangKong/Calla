@@ -47,9 +47,6 @@ li {
 						<div>
 							<textarea style="width: 100%; height: 500px;" readonly>${vo.fBoardContent }</textarea>
 						</div>
-						<div>
-							<img src="display?fileName=${vo.fBoardImagePath }">
-						</div>
 
 						<input type="hidden" id="fBoardId" name="fBoardId" value="${vo.fBoardId }">
 
@@ -102,7 +99,7 @@ li {
 						<input type="hidden" id="pageMaker_hasNext" value="${pageMaker.hasNext}"> 
 						<input type="hidden" id="pageMaker_startPageNo" value="${pageMaker.startPageNo}">
 						<input type="hidden" id="pageMaker_endPageNo" value="${pageMaker.endPageNo}">
-						<input type="hidden" id="pageMaker_commentPage" value="${pageMaker.criteria.page}"> 
+						<input type="hidden" id="pageMaker_commentPage" value="1"> 
 						<input type="hidden" id="pageMaker_commentNumsPerPage" value="${pageMaker.criteria.numsPerPage}"> 
 						<br>
 					</div>
@@ -163,12 +160,13 @@ li {
         
         
         function getAllComments() {
+        	console.log("getAllComments 호출");
             var fBoardId = $('#fBoardId').val();
             var memberNickname = $('#memberNickname').val();
             var commentPage = $('#pageMaker_commentPage').val();
             var commentNumsPerPage = $('#pageMaker_commentNumsPerPage').val();
             var url = 'comments/all/' + fBoardId + '/' + commentPage + '/' + commentNumsPerPage;
-
+			console.log(fBoardId + ',' + commentPage + ',' + commentNumsPerPage);
             $('#loadingContainer').remove();
 
             var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
@@ -186,6 +184,7 @@ li {
                 var list = '';
 
                 $(data.list).each(function () {
+                	
                     var fBoardCommentCreatedDate = new Date(this.fBoardCommentCreatedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
                     list += '<div class="comment_item">'
@@ -206,8 +205,7 @@ li {
 	                        + '<br>'
 	                        + '<hr>'
 	                        + '</div>';
-                });
-
+                }); // end each;
                 list += '<div style="text-align: center;">'
                     + '<ul class="pagination justify-content-center" id="comment_page">';
 
@@ -225,7 +223,6 @@ li {
                 }
 
                 list += '</ul>' + '</div>';
-
                 $('#comments').html(list);
                 
         		var fragment = window.location.hash;

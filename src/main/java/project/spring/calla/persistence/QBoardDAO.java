@@ -3,8 +3,8 @@ package project.spring.calla.persistence;
 import java.util.List;
 
 import project.spring.calla.domain.QBoardVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface QBoardDAO {
 	int insert(QBoardVO vo);

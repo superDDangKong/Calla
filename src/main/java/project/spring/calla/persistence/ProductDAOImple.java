@@ -1,7 +1,6 @@
 package project.spring.calla.persistence;
 
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.ProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 @Repository
 public class ProductDAOImple implements ProductDAO {

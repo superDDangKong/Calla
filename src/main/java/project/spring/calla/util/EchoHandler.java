@@ -101,34 +101,36 @@ public class EchoHandler extends TextWebSocketHandler{
 						List<AlarmVO> list = alarmService.read(registerNick);
 						int alarmId = list.get(0).getAlarmId();
 						WebSocketSession responseIdSession = userSessions.get(registerNick);
+						TextMessage tmpMsg = new TextMessage("");
 						
-						if (responseIdSession != null) { // 받는사람이 로그인 상태 일때만 알람 전송
-							if(alarmCode.contains("댓글")) { // 댓글 알람
-								int commentId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
-								logger.info("commentId = " + commentId);
-		
-								int updateResult = alarmService.updateCommentId(alarmId, commentId);
-								logger.info("updateResult = " + updateResult +"행 업데이트 완료");
+						if(alarmCode.contains("댓글")) { // 댓글 알람
+							int commentId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
+							logger.info("commentId = " + commentId);
 	
-								TextMessage tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId);
-								responseIdSession.sendMessage(tmpMsg);
-									
-							} else if (alarmCode.contains("답글")) { // 답글알람
-								int replyId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
-								logger.info("replyId = " + replyId);
+							int updateResult = alarmService.updateCommentId(alarmId, commentId);
+							logger.info("updateResult = " + updateResult +"행 업데이트 완료");
+							
+							tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId);
 								
-								int updateReplyResult = alarmService.updateReplyId(alarmId, replyId);
-								logger.info("updateResult = " + updateReplyResult +"행 업데이트 완료");
-								
-								int commentId = alarmService.findCommentIdByReplyId(alarmPrefix, replyId);
-								logger.info("commentId = " + commentId);
-								
-								int updateResult = alarmService.updateCommentId(alarmId, commentId);
-								logger.info("updateResult = " + updateResult +"행 업데이트 완료");
-								
-								TextMessage tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId + "," + replyId);
-								responseIdSession.sendMessage(tmpMsg);
-							}
+						} else if (alarmCode.contains("답글")) { // 답글알람
+							int replyId = alarmService.readCommentId(alarmPrefix, alarmCode, sendNick);
+							logger.info("replyId = " + replyId);
+							
+							int updateReplyResult = alarmService.updateReplyId(alarmId, replyId);
+							logger.info("updateResult = " + updateReplyResult +"행 업데이트 완료");
+							
+							int commentId = alarmService.findCommentIdByReplyId(alarmPrefix, replyId);
+							logger.info("commentId = " + commentId);
+							
+							int updateResult = alarmService.updateCommentId(alarmId, commentId);
+							logger.info("updateResult = " + updateResult +"행 업데이트 완료");
+						
+							tmpMsg = new TextMessage(title + "," + alarmCode + "," + sendNick + "," + content + "," + boardId + "," + alarmPrefix + "," + alarmId + "," + commentId + "," + replyId);
+							
+						}
+						
+						if (responseIdSession != null) { // 받는사람이 로그인 상태 일때만 알람 전송	
+							responseIdSession.sendMessage(tmpMsg);
 						}
 					}
 				}

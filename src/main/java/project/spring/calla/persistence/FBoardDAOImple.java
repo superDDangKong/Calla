@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 @Repository // @Component
 // - 영속 계층(Persistence Layer)의 DB 관련 기능을 담당

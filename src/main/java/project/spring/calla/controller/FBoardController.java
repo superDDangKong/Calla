@@ -1,7 +1,6 @@
 package project.spring.calla.controller;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -22,16 +21,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.FBoardCommentService;
 import project.spring.calla.service.FBoardService;
-import project.spring.calla.util.FileUploadUtil;
 import project.spring.calla.util.MediaUtil;
+import project.spring.calla.util.PageCriteria;
+import project.spring.calla.util.PageMaker;
 
 @Controller // @Component
 @RequestMapping(value="/fBoard")
@@ -96,15 +93,9 @@ public class FBoardController {
 	public void registerGET() {} // end registerGET()
 	
 	@PostMapping("/register")
-	public String registerPOST(FBoardVO vo, RedirectAttributes reAttr, MultipartFile file) {
+	public String registerPOST(FBoardVO vo, RedirectAttributes reAttr) {
 		
 		logger.info("registerPost() 호출 : vo = " + vo.toString());
-		try {
-			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-			vo.setfBoardImagePath(savedFileName);
-		} catch (IOException e) {
-			return "fBoard/register";
-		}
 		
 		int result = fBoardService.create(vo);
 		logger.info(result + "행 삽입");
@@ -119,7 +110,6 @@ public class FBoardController {
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName) {
 		logger.info("display() 호출");
-		
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
 		String filePath = uploadpath + fileName;
@@ -128,7 +118,6 @@ public class FBoardController {
 			// 파일 확장자
 			String extension =
 					filePath.substring(filePath.lastIndexOf(".") + 1);
-			
 			// 응답 헤더(response header)에 Content-Type 설정
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaUtil.getMediaType(extension));
@@ -205,15 +194,9 @@ public class FBoardController {
 	} // end updateGET()
 	
 	@PostMapping("/update")
-	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr, MultipartFile file) {
-		logger.info("updatePOST() 호출 : vo = " + vo.toString() + file.getOriginalFilename());
+	public String updatePOST(FBoardVO vo, RedirectAttributes reAttr) {
+		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		
-		try {
-			String savedFileName = FileUploadUtil.saveUploadedFile(uploadpath, file.getOriginalFilename(), file.getBytes());
-			vo.setfBoardImagePath(savedFileName);
-		} catch (IOException e) {
-			return "redirect:/fBoard/update?fBoardId=" + vo.getfBoardId();
-		}
 		
 		int result = fBoardService.update(vo);
 		

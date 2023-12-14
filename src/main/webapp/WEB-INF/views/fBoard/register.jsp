@@ -19,7 +19,7 @@
 			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-6 ms-sm-auto col-lg-6 px-md-4">
 				<div class="container">
-					<form action="register" method="POST" enctype="multipart/form-data">
+					<form action="register" method="POST">
 						<input type="hidden" name="memberNickname"
 							value="${memberNickname }">
 						<div class="form-group">
@@ -30,7 +30,6 @@
 							<label for="fBoardContent">내용</label>
 							<textarea class="form-control" rows="10" name="fBoardContent" placeholder="내용 입력"></textarea>
 						</div>
-						<input type="file" name="file">
 						<input type="submit" class="btn btn-primary float-right" value="등록">
 					</form>
 				</div>

@@ -16,8 +16,6 @@ import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ActivityDAO;
 import project.spring.calla.persistence.FBoardDAO;
 import project.spring.calla.persistence.ProductDAO;
@@ -25,6 +23,8 @@ import project.spring.calla.persistence.ProductLikeDAO;
 import project.spring.calla.persistence.QBoardDAO;
 import project.spring.calla.persistence.UProductDAO;
 import project.spring.calla.persistence.UProductLikeDAO;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 
 @Service

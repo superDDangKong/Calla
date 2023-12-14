@@ -15,7 +15,7 @@ import project.spring.calla.domain.UProductMannerDownVO;
 import project.spring.calla.domain.UProductMannerVO;
 import project.spring.calla.domain.UProductReviewVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 @Repository
 public class UProductReviewDAOImple implements UProductReviewDAO{

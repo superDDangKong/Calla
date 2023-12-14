@@ -6,15 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.MemberVO;
 import project.spring.calla.domain.UProductMannerDownVO;
 import project.spring.calla.domain.UProductMannerVO;
 import project.spring.calla.domain.UProductReviewVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.UProductReviewDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service
 public class UProductReviewServiceImple implements UProductReviewService {

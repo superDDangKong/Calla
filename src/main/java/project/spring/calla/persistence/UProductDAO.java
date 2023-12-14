@@ -2,14 +2,11 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.domain.ProductVO;
-import project.spring.calla.domain.QBoardVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface UProductDAO {
 	int insert(UProductVO vo); // 占쏙옙품 占쏙옙占�

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductCommentDAO;
 import project.spring.calla.persistence.ProductDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service
 public class ProductCommentServiceImple implements ProductCommentService {

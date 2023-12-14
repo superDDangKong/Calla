@@ -2,10 +2,9 @@ package project.spring.calla.persistence;
 
 import java.util.List;
 
-
 import project.spring.calla.domain.ProductVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.MyPageCriteria;
+import project.spring.calla.util.MyPageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface ProductDAO {
 	int insert(ProductVO vo); 

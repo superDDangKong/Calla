@@ -1,4 +1,4 @@
-package project.spring.calla;
+package project.spring.calla.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +22,6 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.service.MemberService;
 import project.spring.calla.service.ProductService;
 import project.spring.calla.service.UProductService;
-
-/**
- * Handles requests for the application home page.
- */
 
 @Controller
 public class HomeController {
@@ -65,6 +61,10 @@ public class HomeController {
 					String interest = interests[i];
 					
 					List<ProductVO> productListByInterest = productService.readByInterest(interest);
+					for(ProductVO pvo : productListByInterest) {
+						String[] imagePath = pvo.getProductImagePath().split(",");
+						pvo.setProductImagePath(imagePath[0]);
+					}
 					productList.addAll(productListByInterest);
 					
 					List<UProductVO> uProductListByInterest = uProductService.readByInterest(interest);
@@ -76,6 +76,10 @@ public class HomeController {
 				
 			} else {
 				List<ProductVO> productList = productService.read();
+				for(ProductVO pvo : productList) {
+					String[] imagePath = pvo.getProductImagePath().split(",");
+					pvo.setProductImagePath(imagePath[0]);
+				}
 				List<UProductVO> uProductList = uProductService.read();
 				lists.put("productList", productList);
 				lists.put("uProductList", uProductList);

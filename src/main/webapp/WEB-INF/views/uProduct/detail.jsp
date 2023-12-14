@@ -332,6 +332,9 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
+		   	window.addEventListener('hashchange', function() {
+		    	getAllUProductComments();
+		   	});
 			getAllUProductComments();
 			
 			$('#btnAdd').click(function(){
@@ -402,6 +405,7 @@
 								list += '<div class="uproduct_comment_item">'
 									+'<pre>'
 									+'<input type="hidden" class="uProductCommentId" value="' + this.uProductCommentId + '">'
+									+'<input type="hidden" class="commentRegisterNickname" value="' + this.memberNickname + '">'
 									+ this.memberNickname
 									+ '&nbsp;&nbsp;'
 									+'<input type="text" ' + readonly + ' class="uProductCommentContent" value="' + this.uProductCommentContent + '">'
@@ -415,6 +419,33 @@
 									+ '</div>';			
 							});
 							$('#uproductcomments').html(list);
+							
+							var fragment = window.location.hash;
+			    	        if (fragment) {
+			    	        	
+			    	        	fragment = fragment.replace('#', '');
+			    	        	var fragmentList = fragment.split(',');
+			    	        	
+			    	        	var targetCommentElement = $('.uProductCommentId').filter('[value="' + fragmentList[0] + '"]');
+			    	        	console.log("targetElement" + targetCommentElement.length)
+				    	           if (targetCommentElement.length > 0 && fragmentList[1] == 0) {
+					    	           var target = targetCommentElement[0].parentElement;
+					    	           target.style.backgroundColor = 'lightgray'; 
+					    	           target.style.border = '2px solid';   
+					    	           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+						    	        
+					    	           setTimeout(function() {
+						    	           target.style.backgroundColor = '';
+						    	           target.style.border = '';
+					    	           }, 2000);  // 2초 후에 스타일 초기화
+					        		   if (window.location.hash) {
+					        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+					        			}
+				    	   		     } else if (fragmentList[1] > 0) {
+				    	        	   getAllReplies(targetCommentElement);
+				    	    	       }
+			    	       	
+			    	        } // if(fragment)	
 						});
 			} // end getAllproductComments
 			
@@ -550,6 +581,30 @@
 						+ '<button class="btnReplyAdd">작성</button>' 
 						+ '</div>'
 					uproduct_comment_item.append('<div class="replies">' + list + '</div>');	
+						
+			              var fragment = window.location.hash;
+			        	   if (fragment) {
+			        	        	
+			        	       fragment = fragment.replace('#', '');
+			        	       var fragmentList = fragment.split(',');
+			        	       
+				        	   if (fragmentList[1] > 0) {
+				        		   var targetReplyElement = $('.uProductReplyId[value="' + fragmentList[1] + '"]').closest('.reply_item')[0];
+				        		   
+				        		   targetReplyElement.style.backgroundColor = 'lightgray';
+				        		   targetReplyElement.style.border = '2px solid';
+			        		       targetReplyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+									
+			        		       setTimeout(function() {
+			        		    	   targetReplyElement.style.backgroundColor = '';
+			        		    	   targetReplyElement.style.border = '';
+				    	           }, 2000);  // 2초 후에 스타일 초기화
+			        		       
+			        		       if (window.location.hash) {
+				        			    history.replaceState('', document.title, window.location.pathname + window.location.search);
+				        			}
+				        	   }
+			        	   }
 				}
 			); // end getJSON()
 		} // end getAllReplies()
@@ -586,7 +641,7 @@
 					if(result == 1) {
 						alert('답글 입력 성공');
 						socket.send(
-                                commentRegisterNick + "," + "새 답글" + "," + "공용상품" + "," +
+                                commentRegisterNick + "," + "새 답글" + "," + "중고상품" + "," +
                                 uProductReplyContent + "," +
                                 memberNickname + "," + commentContent + "," + uProductId
                             );

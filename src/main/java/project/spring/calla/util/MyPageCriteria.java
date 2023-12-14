@@ -1,4 +1,4 @@
-package project.spring.calla.pageutil;
+package project.spring.calla.util;
 
 // 브라우저에서 보여질 페이지 번호와
 // 한 페이지에서 보여질 게시글의 개수를 저장하는 클래스
@@ -9,7 +9,7 @@ public class MyPageCriteria {
 	
 	public MyPageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 10;
+		this.numsPerPage = 5;
 	}
 	
 	public MyPageCriteria(int page, int numsPerPage) {

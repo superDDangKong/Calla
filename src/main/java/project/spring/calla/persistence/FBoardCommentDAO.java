@@ -3,8 +3,7 @@ package project.spring.calla.persistence;
 import java.util.List;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface FBoardCommentDAO {
 	

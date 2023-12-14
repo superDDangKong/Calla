@@ -2,12 +2,9 @@ package project.spring.calla.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSender;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,14 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.calla.domain.MemberVO;
-import project.spring.calla.domain.ProductOrderVO;
-import project.spring.calla.domain.UProductCommentVO;
-import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.MyPageCriteria;
-import project.spring.calla.pageutil.MyPageMaker;
 import project.spring.calla.service.MailService;
 import project.spring.calla.service.MemberService;
 
@@ -48,19 +37,19 @@ public class MemberRESTController {
 	@Autowired
 	private MailService mailSendService;
 	
-	@PostMapping("/join") // join.jsp ajax url °æ·Î
-	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBody·Î ajax¿¡¼­ JSONÇüÅÂ·Î º¸³½ µ¥ÀÌÅÍ¸¦ memberVO vo (ÀÚ¹Ù°´Ã¼)·Î º¯È¯ÇØÁÖ°í
-																			// @RequestBody´Â JSON.stringify(obj) Á¦ÀÌ½¼ °´Ã¼¸¦ ÀÚ¹Ù °´Ã¼·Î º¯È¯ÇØÁÜ
-																			// @RequestParam Àº memberId : memberId, memberPw : memberPw, ... µîµî ¸ÅÇÎÇÒ¼ö ÀÖÀ½
-		logger.info("createMember() : vo = " + vo.toString()); // jsp¿¡¼­ º¸³»ÁØ µ¥ÀÌÅÍ¸¦ Ãâ·Â
+	@PostMapping("/join") // join.jsp ajax url ï¿½ï¿½ï¿½
+	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBodyï¿½ï¿½ ajaxï¿½ï¿½ï¿½ï¿½ JSONï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ memberVO vo (ï¿½Ú¹Ù°ï¿½Ã¼)ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ö°ï¿½
+																			// @RequestBodyï¿½ï¿½ JSON.stringify(obj) ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ú¹ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½
+																			// @RequestParam ï¿½ï¿½ memberId : memberId, memberPw : memberPw, ... ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+		logger.info("createMember() : vo = " + vo.toString()); // jspï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½
 		int result = 0;
 		try {
-			result = memberService.create(vo); // 2.¼­ºñ½º¿¡ create¸Þ¼Òµå¿¡ Å¬¶óÀÌ¾ðÆ®¿¡¼­ Àü¼ÛÇÑ µ¥ÀÌÅÍ¸¦ ºñÁî´Ï½º ·ÎÁ÷À¸·Î Àü¼Û
+			result = memberService.create(vo); // 2.ï¿½ï¿½ï¿½ñ½º¿ï¿½ createï¿½Þ¼Òµå¿¡ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		} catch (IllegalStateException e) {
 			String resultString = e.getMessage();
 			return new ResponseEntity<Object>(resultString, HttpStatus.BAD_REQUEST); // 
 		}
-		// ResponseEntity´Â HTTP ÀÀ´äÀÇ »óÅÂ ÄÚµå, Çì´õ, º»¹® µîÀ» ¼¼¹ÐÇÏ°Ô Á¦¾îÇÒ ¼ö ÀÖ´Ù.
+		// ResponseEntityï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½, ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	} // end createMember
 	

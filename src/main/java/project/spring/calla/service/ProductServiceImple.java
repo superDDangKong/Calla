@@ -2,7 +2,6 @@ package project.spring.calla.service;
 
 import java.util.List;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.ProductCommentVO;
 import project.spring.calla.domain.ProductVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.ProductCommentDAO;
 import project.spring.calla.persistence.ProductDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service
 public class ProductServiceImple implements ProductService {

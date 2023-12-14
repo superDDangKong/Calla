@@ -2,12 +2,10 @@ package project.spring.calla.service;
 
 import java.util.List;
 
-import project.spring.calla.domain.FBoardVO;
-import project.spring.calla.domain.ProductVO;
 import project.spring.calla.domain.UProductBuyVO;
 import project.spring.calla.domain.UProductSellVO;
 import project.spring.calla.domain.UProductVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface UProductService {
 	int create(UProductVO vo) throws Exception; 

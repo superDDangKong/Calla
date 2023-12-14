@@ -39,7 +39,7 @@
 								<td>${vo.memberNickname }</td>
 								<fmt:formatDate value="${vo.memberJoinDate }"
 									pattern="yyyy-MM-dd HH:mm:ss" var="memberJoinDate" />
-								<td>${momberJoinDate }</td>
+								<td>${memberJoinDate }</td>
 								<td class="memberLevel">${vo.memberLevel }</td>
 								<c:if test="${vo.memberLevel != 3 }">
 									<td><button class="btnUpOrDown">등급 관리</button></td>

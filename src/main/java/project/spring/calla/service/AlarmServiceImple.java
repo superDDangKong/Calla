@@ -120,7 +120,6 @@ public class AlarmServiceImple implements AlarmService {
 			String commentIdName = "";
 			String commentCreatedDate = null;
 			
-//			if (alarmCode.contains("댓글")) {
 				if (alarmPrefix.equals("중고상품")) {
 					selectTable = "u_product_comment";
 					boardIdName = "u_product_id";
@@ -136,26 +135,12 @@ public class AlarmServiceImple implements AlarmService {
 					boardIdName = "q_board_id";
 					commentIdName = "q_board_comment_id";
 					commentCreatedDate = "q_board_comment_created_date";
+				} else if (alarmPrefix.equals("공용상품") ) {
+					selectTable = "product_comment";
+					boardIdName = "product_id";
+					commentIdName = "product_comment_id";
+					commentCreatedDate = "product_comment_created_date";
 				}
-//			} else if (alarmCode.contains("답글")) {
-//				if (alarmPrefix.equals("공용상품")) {
-//					selectTable = "product_reply";
-//					commentIdName = "product_reply_id";
-//					commentCreatedDate = "product_reply_created_date";
-//				} else if (alarmPrefix.equals("중고상품")) {
-//					selectTable = "u_product_reply";
-//					commentIdName = "u_product_reply_id";
-//					commentCreatedDate = "u_product_reply_created_date";
-//				} else if (alarmPrefix.equals("자유게시판")) {
-//					selectTable = "f_board_reply";
-//					commentIdName = "f_board_reply_id";
-//					commentCreatedDate = "f_board_reply_created_date";
-//				} else if (alarmPrefix.equals("문의게시판")) {
-//					selectTable = "q_board_reply";
-//					commentIdName = "q_board_reply_id";
-//					commentCreatedDate = "q_board_reply_created_date";
-//				}
-//			}
 			return alarmDAO.findPage(selectTable, boardIdName, commentIdName, commentCreatedDate, boardId, commentId);
 		}// end findPage
 

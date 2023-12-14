@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.spring.calla.domain.FBoardCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
-import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.FBoardCommentService;
+import project.spring.calla.util.PageCriteria;
+import project.spring.calla.util.PageMaker;
 
 @RestController
 @RequestMapping(value="/fBoard/comments")
@@ -49,6 +49,7 @@ public class FBoardCommentRESTController {
 	public ResponseEntity<Map<String, Object>> readComments(
 			@PathVariable("FBoardId") int fBoardId, @PathVariable("commentPage") Integer commentPage, 
 			@PathVariable("commentNumsPerPage") Integer commentNumsPerPage) {
+		logger.info("readComments »£√‚" + commentPage);
 		List<FBoardCommentVO> list = null;
 		PageCriteria criteria = new PageCriteria();
 		PageMaker pageMaker = new PageMaker();
@@ -68,6 +69,7 @@ public class FBoardCommentRESTController {
 		pageMaker.setPageData();
 		
 		Map<String, Object> responseMap = new HashMap<>();
+		logger.info(list.toString());
 		responseMap.put("list", list);
 		responseMap.put("pageMaker", pageMaker);
 

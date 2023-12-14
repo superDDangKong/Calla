@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.spring.calla.domain.QBoardVO;
-import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.persistence.QBoardDAO;
+import project.spring.calla.util.PageCriteria;
 
 @Service // @Component
 // * ¼­ºñ½º °èÃþ(Service/Business Layer)

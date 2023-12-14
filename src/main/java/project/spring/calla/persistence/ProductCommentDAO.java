@@ -3,7 +3,7 @@ package project.spring.calla.persistence;
 import java.util.List;
 
 import project.spring.calla.domain.ProductCommentVO;
-import project.spring.calla.pageutil.PageCriteria;
+import project.spring.calla.util.PageCriteria;
 
 public interface ProductCommentDAO {
 	int insert(ProductCommentVO vo); 
