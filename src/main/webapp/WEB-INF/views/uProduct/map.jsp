@@ -265,13 +265,13 @@ var coment = [];
 
 console.log(memberAddresses);
 
-var overlays = []; // 오버레이를 저장할 배열
+var overlays = []; // 오버레이를 저장할 배열(위치정보)
 
 for (var i = 0; i < memberAddresses.length; i++) {
-    geocoder.addressSearch(memberAddresses[i], createMarkerCallback(i)); // 각 마커에 배열값 안에 들어가있는 주소를 넣음
-}
+    geocoder.addressSearch(memberAddresses[i], createMarker(i)); // 좌표로 변환된 주소를 createMarker함수를 통해 
+}																 // 지도에 마커를 찍음 
 
-function createMarkerCallback(index) {
+function createMarker(index) { // 마커 생성 함수
     return function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -280,7 +280,7 @@ function createMarkerCallback(index) {
                 position: coords,
             });
 
-            var overlayContent =
+            var overlayContent = // overlay content 내용
                 '<div class="wrap">' +
                 '    <div class="info">' +
                 '        <div class="title">' +
@@ -293,7 +293,8 @@ function createMarkerCallback(index) {
                 '           </div>' +
                 '            <div class="desc">' +
                 '                <div class="ellipsis">' + memberAddresses[index] + '</div>' +
-                '                <div><a href="detail?uProductId=' + uProductId[index] + '&page=' + ${pageMaker.criteria.page} + '" target="_blank" class="link">상품보기</a></div>' +
+                '                <div><a href="detail?uProductId=' + uProductId[index] + '&page=' + ${pageMaker.criteria.page} + 
+                				 '" target="_blank" class="link">상품보기</a></div>' +
                 '                <div style="display: flex; align-items: center; justify-content: flex-end; padding-top: 10px;">' +
                 '                    <span style="color:red; margin-right: 5px;">' +
                 '                        <i class="fa-solid fa-heart fa-sm"></i>' +
@@ -309,7 +310,7 @@ function createMarkerCallback(index) {
                 '    </div>' +
                 '</div>';
 
-            var overlay = new kakao.maps.CustomOverlay({
+            var overlay = new kakao.maps.CustomOverlay({ 
                 content: overlayContent,
                 map: map,
                 position: marker.getPosition(),
@@ -318,7 +319,7 @@ function createMarkerCallback(index) {
 
             overlays.push(overlay); // 생성된 오버레이를 배열에 저장
 
-            kakao.maps.event.addListener(marker, 'click', function () {
+            kakao.maps.event.addListener(marker, 'click', function () { // 클릭이벤트(클릭시 오버레이가 표출됨)
                 closeOverlays(); // 모든 오버레이를 닫음
                 overlay.setMap(map);
             });

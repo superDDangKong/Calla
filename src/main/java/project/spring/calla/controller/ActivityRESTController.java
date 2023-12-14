@@ -224,10 +224,10 @@ public class ActivityRESTController {
 	@PostMapping("/choosenickname")
 	public ResponseEntity<Integer> createBuySell(@RequestBody UProductSellVO svo) {
 		// @RequestBody
-		// - Ŭ���̾�Ʈ���� ���۹��� json �����͸�
-		// �ڹ� ��ü�� ��ȯ���ִ� annotation
-		//logger.info("createComment() ȣ�� : vo = " + vo.toString());
-		logger.info("createComment() ȣ�� : vo = " + svo.toString());
+		// - 클占쏙옙占싱억옙트占쏙옙占쏙옙 占쏙옙占쌜뱄옙占쏙옙 json 占쏙옙占쏙옙占싶몌옙
+		// 占쌘뱄옙 占쏙옙체占쏙옙 占쏙옙환占쏙옙占쌍댐옙 annotation
+		//logger.info("createComment() 호占쏙옙 : vo = " + vo.toString());
+		logger.info("createComment() 호占쏙옙 : vo = " + svo.toString());
 		String uproductname = svo.getuProductName();
 		String buyerNickname= svo.getBuyerNickname();
 		String memberAddress = svo.getMemberAddress();
@@ -240,9 +240,9 @@ public class ActivityRESTController {
 		
 		UProductBuyVO vo = new UProductBuyVO(uproductid, uproductname, uproductprice, null, uproductcategori, memberAddress, uproductcontent, buyerNickname, imagepath, uproductid, sellerNickname); 
 		
-		// ResponseEntity<T> : Rest ��Ŀ��� �����͸� ������ �� ���̴� ��ü
-		// - ������ HttpStatus�� ����
-		// - <T> : �������� �ϴ� ������ Ÿ��
+		// ResponseEntity<T> : Rest 占쏙옙커占쏙옙占� 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占싱댐옙 占쏙옙체
+		// - 占쏙옙占쏙옙占쏙옙 HttpStatus占쏙옙 占쏙옙占쏙옙
+		// - <T> : 占쏙옙占쏙옙占쏙옙占쏙옙 占싹댐옙 占쏙옙占쏙옙占쏙옙 타占쏙옙
 		int result = 0;
 		try {
 			result = ativityService.buysellcreate(vo, svo);
