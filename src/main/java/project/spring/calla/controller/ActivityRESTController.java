@@ -28,6 +28,7 @@ import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
 import project.spring.calla.service.ActivityService;
+import project.spring.calla.service.UProductService;
 
 @RestController
 @RequestMapping(value="/activity")
@@ -37,6 +38,9 @@ public class ActivityRESTController {
 	
 	@Autowired
 	private ActivityService ativityService;
+	
+	@Autowired
+	private UProductService uProductService;
 	
 	
 	@GetMapping("/orders/{page}")
@@ -242,6 +246,10 @@ public class ActivityRESTController {
 		int result = 0;
 		try {
 			result = ativityService.buysellcreate(vo, svo);
+			if(result == 1) {
+				uProductService.delete(uproductid);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

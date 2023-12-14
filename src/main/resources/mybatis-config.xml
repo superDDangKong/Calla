@@ -228,7 +228,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 		<property name="u_product_manner" value="u_product_manner" />
 		<property name="uProductMannerId" value="u_product_manner_id" />
-		<property name="uProductReviewId" value="u_product_review_id" />
+		<property name ="memberNickname" value="member_nickname"/>
+		<property name ="sellerNickname" value="seller_nickname"/>
+		
+		<property name="u_product_manner_down" value="u_product_manner_down" />
+		<property name="uProductMannerDownId" value="u_product_manner_down_id" />
 		<property name ="memberNickname" value="member_nickname"/>
 		<property name ="sellerNickname" value="seller_nickname"/>
 		

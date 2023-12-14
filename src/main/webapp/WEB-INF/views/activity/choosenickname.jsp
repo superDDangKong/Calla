@@ -6,6 +6,23 @@
 <html>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <head>
+<style type="text/css">
+table, th, td {
+	border-style: solid;
+	border-width: 1px;
+	text-align: center;
+}
+
+ul {
+	list-style-type: none;
+	text-align: center;
+}
+
+li {
+	display: inline-block;
+	text-align: center;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -27,20 +44,40 @@
 				<thead>
 					<tr>
 						<th style="width : 200px">닉네임</th>
-						<th style="width : 700px"></th>
+						
 					</tr>
 				</thead>
 				
 				<tbody>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-					<td><input type="checkbox" id = "buyerNickname" name="buyerNickname" value="${vo.memberNickname }">"${vo.memberNickname }"</td>
+					<td><input type="checkbox" id = "buyerNickname" name="buyerNickname" value="${vo.memberNickname }"
+					onclick='checkOnlyOne(this)'>
+					"${vo.memberNickname }"</td>
+					
 				</tr>
 			</c:forEach>
 				</tbody>
 			</table>
 			
+			<br>
+			
 			<button id="btnAdd">등록</button>
+			
+		<script type="text/javascript">
+		function checkOnlyOne(element) {
+			  
+			  const checkboxes 
+			      = document.getElementsByName("buyerNickname");
+			  
+			  checkboxes.forEach((cb) => {
+			    cb.checked = false;
+			  })
+			  
+			  element.checked = true;
+			}	
+		
+		</script>
 			
 		
 		<script type="text/javascript">
@@ -87,6 +124,7 @@
 						console.log(result);
 						if(result == 1){
 							alert('거래 성공!');
+							window.opener.location.reload();
 							window.close();
 						}
 					}

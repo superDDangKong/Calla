@@ -40,11 +40,6 @@ public class UProductCommentServiceImple implements UProductCommentService {
 		return 1;
 	}
 	
-	@Override
-	public UProductCommentVO selectvo(int uProductId) {
-		logger.info("read() 호占쏙옙 : boardId = " + uProductId);
-		return uProductCommentDAO.selectvo(uProductId);
-	}
 
 	@Transactional(value = "transactionManager")
 	@Override
@@ -64,8 +59,8 @@ public class UProductCommentServiceImple implements UProductCommentService {
 			if(memberNickname == null) { // 로그인 안된 상태
 				vo.setuProductCommentContent("비밀 댓글입니다");
 			} else { 
-				String commenter = vo.getMemberNickname();
-				String writer = product.getMemberNickname();
+				String commenter = vo.getMemberNickname(); // 글 작성자
+				String writer = product.getMemberNickname(); // 상품 판매자
 				if(!memberNickname.equals(commenter) && !memberNickname.equals(writer)) { // 글 작성자가 아니거나 물건 판매자가 아닐 경우
 					if(vo.getuProductSecretComment().equals("y")) // 비밀댓글 표시를 했을 경우
 					vo.setuProductCommentContent("비밀 댓글입니다");

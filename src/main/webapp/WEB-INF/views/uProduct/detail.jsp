@@ -193,10 +193,7 @@
 		</div>
 		
 		  <br>
-        
-        
-        
-        
+            
         <c:if test="${not empty sessionScope.memberId }">
         
         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.memberId }">
@@ -255,6 +252,19 @@
 			</div>
 		</div>
 	</nav>
+	
+	
+	 <c:if test="${empty sessionScope.memberId }">
+	<div>
+		<h3>로그인이 필요한 서비스입니다.</h3>
+	
+	</div>
+	
+	</c:if>
+	
+	
+	 <c:if test="${not empty sessionScope.memberId }">
+	
 	<div>
 		<input type="text" id="memberNickname" value="${sessionScope.memberNickname }" readonly="readonly">
         <input type="text" id="uProductCommentContent">
@@ -262,6 +272,8 @@
         <input type="checkbox" id ="uProductSecretComment" > 비밀 댓글
         
 	</div>
+	
+	</c:if>
 	
 	<hr>
 	
@@ -278,8 +290,7 @@
 	
 	<section class="py-5">
 		<div class="container px-4 px-lg-5 mt-5">
-			<div
-				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 				<c:forEach var="vo" items="${list }">
 
@@ -298,18 +309,35 @@
 											href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
 
 									</h5>
-									<!-- Product reviews-->
-									<div
-										class="d-flex justify-content-center small text-warning mb-2">
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-									</div>
-									<!-- Product price-->
+									
+									<hr>
+									
+									<span style="color:red;">
+									<i class="fa-solid fa-heart fa-sm"></i>
+									</span>
+									
+									<span>
+									${vo.uProductLikes } &nbsp;
+									</span>
+									
+									
+									
+									<span >
+									<i class="fa-regular fa-comment"></i>
+									</span>
+									
+									<span>
+									${vo.uProductCommentCount }
+									</span>
+									
+									<br>
+									<br>
+									
+									<div>
 									${vo.uProductPrice }원
-
+									</div>						
+								
+									
 								</div>
 							</div>
 							<!-- Product actions-->
@@ -326,7 +354,6 @@
 
 			</div>
 		</div>
-
 
 	</section>
 	
@@ -569,7 +596,9 @@
 			var obj = {
 					'uProductCommentId' : uProductCommentIdVal, 
 					'memberNickname' : memberNickname,
-					'uProductReplyContent' : uProductReplyContent
+					'uProductReplyContent' : uProductReplyContent,
+					'uProductId' : uProductId
+					
 			};
 			console.log(obj);
 			
@@ -595,6 +624,59 @@
 				}
 			}); // end ajax()
 		}); // end btnReplyAdd.click()
+		
+		
+		  $(document ).on('click', '.btnReplyUpdate', function(){
+	        	 console.log(this);
+	        	 var commentItem = $(this).closest('.uproduct_comment_item');
+	        	 var uProductCommentId = $(this).closest('.uproduct_comment_item').find('.uProductCommentId');
+	        	 console.log("아좀 제발" + uProductCommentId.val());
+	        	 var uProductReplyId = $(this).prevAll('.uProductReplyId').val();
+	        	 var uProductReplyContent = $(this).prevAll('.uProductReplyContent').val();
+	        	 console.log("선택된 답글 번호 : " + uProductReplyId + ", 답글 내용 : " + uProductReplyContent);
+	        	 
+	        	 // ajax
+	        	 $.ajax({
+	        		 type : 'PUT',
+	        		 url : 'replies/' + uProductReplyId,
+	        		 headers : {
+	        			 'Content-Type' : 'application/json'
+	        		 },
+	        		 data : uProductReplyContent,
+	        		 success : function(result){
+	        			 console.log(result);
+	        			 if(result == 1){
+	        				 alert('답글 수정 성공!');
+	        				 getAllReplies(uProudctCommentId);
+	        			 }
+	        		 } // end success
+	        	 }) // end ajax
+	         }) // end 대댓글 수정
+	         
+	         // 대댓글 삭제
+	         $(document).on('click', '.btnReplyDelete', function(){
+	        	 console.log(this);
+	        	 var commentItem = $(this).closest('.uproduct_comment_item');
+				 var uProudctCommentId = $(this).closest('.uproduct_comment_item').find('.uProudctCommentId');
+				 var uProductReplyId = $(this).prevAll('.uProductReplyId').val();
+				 console.log("선택된 댓글 번호 : " + uProductReplyId);
+				 
+				 // ajax
+				 $.ajax({
+					 type : 'DELETE',
+					 url : 'replies/' + uProductReplyId,
+					 headers : {
+						 'Content-Type' : 'application/json'
+					 },
+					 success : function(result) {
+						 console.log(result);
+						 if(result == 1){
+							 alert('답글 삭제 성공!');
+							 getAllReplies(uProudctCommentId);
+						 }
+					 } // end success
+				 }) // end ajax
+	         }); // end 대댓글 삭제
 		
 	
 		$(document).ready(function() {

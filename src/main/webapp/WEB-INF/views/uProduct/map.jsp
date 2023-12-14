@@ -268,7 +268,7 @@ console.log(memberAddresses);
 var overlays = []; // 오버레이를 저장할 배열
 
 for (var i = 0; i < memberAddresses.length; i++) {
-    geocoder.addressSearch(memberAddresses[i], createMarkerCallback(i));
+    geocoder.addressSearch(memberAddresses[i], createMarkerCallback(i)); // 각 마커에 배열값 안에 들어가있는 주소를 넣음
 }
 
 function createMarkerCallback(index) {

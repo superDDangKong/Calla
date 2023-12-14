@@ -21,7 +21,17 @@ li {
 	display: inline-block;
 	text-align: center;
 }
+
+img {
+ image-rendering: -webkit-optimize-contrast;
+ transform: translateZ(0);
+ backface-visibility: hidden;
+}
+
+
+
 </style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,13 +41,22 @@ li {
 <meta name="description" content="" />
 <meta name="author" content="" />
 <script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../resources/assets/css/LineIcons.3.0.css" />
+    <link rel="stylesheet" href="../resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="../resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="../resources/assets/css/main.css" />
 <title>메인페이지</title>
 <!-- Bootstrap icons-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
+ <link rel="shortcut icon" type="image/x-icon" href="../resources/assets/images/favicon.svg" />
 <link href="../resources/css/styles.css" rel="stylesheet" />
+
+
+
 <%@ include file="../header.jspf" %> 
 </head>
 <body>
@@ -55,9 +74,13 @@ li {
 			 <input type="text" name="keyword" value="${keyword }"> <input
 			type="submit" value="검색">
 			
+			<c:if test="${not empty sessionScope.memberNickname}">
 			<a href="register"><input type="button" value="상품등록"></a>
+			</c:if>
 			
 	</form>
+	
+		
 	
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -73,11 +96,11 @@ li {
 						<li class="nav-item"><a class="nav-link" 
 							href="/calla/uProduct/list?name=searchDate&keyword=">신상품</a></li>
 						<li class="nav-item"><a class="nav-link" 
-							href="/calla/uProduct/list?name=searchName&keyword=장난감">장난감</a></li>
+							href="/calla/uProduct/list?name=searchName&keyword=지브리">지브리</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="/calla/uProduct/list?name=searchName&keyword=야채">야채 </a></li>
+							href="/calla/uProduct/list?name=searchName&keyword=디즈니">디즈니 </a></li>
 						<li class="nav-item"><a class="nav-link" 
-							href="/calla/uProduct/list?name=searchName&keyword=의류">의류</a></li>
+							href="/calla/uProduct/list?name=searchName&keyword=마블">마블</a></li>
 						<li class="nav-item"><a class="nav-link" 
 							href="/calla/uProduct/map">매물지도</a></li>
 
@@ -89,31 +112,52 @@ li {
 		</div>
 	</nav>
 	<!-- Section-->
-	<section class="py-5">
-		<div class="container px-4 px-lg-5 mt-5">
-			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-				<c:forEach var="vo" items="${list }">
-
-					<div class="col mb-5">
-						<div class="card h-100">
-							<!-- Product image-->
-							<img class="card-img-top"
-								src="display?fileName=${vo.uProductImagePath}" alt="..." />
-							<!-- Product details-->
-							<div class="card-body p-4">
-								<div class="text-center">
-									<!-- Product name-->
-									<h5 class="fw-bolder">
-
-										<a
-											href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
-
-									</h5>
-									
-									<hr>
-									
-									<span style="color:red;">
+	 <section class="trending-product section" style="margin-top: 12px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>중고 상품</h2>
+                        <h3 style ="font-family: Century Gothic">Welcome Gootmall!</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" >
+              
+              
+              <c:forEach var="vo" items="${list }">
+                <div class="col-lg-3 col-md-6 col-12" >
+                    <!-- Start Single Product -->
+                    <div class="single-product" >
+                        <div class="product-image">
+                            <img src="display?fileName=${vo.uProductImagePath}" width="250px" height="250px" alt="#">
+                            <div class="button">
+                                <a href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}" class="btn"><i class="lni lni-cart"></i> 상품보기</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">${vo.uProductCategori}</span>
+                            
+                            
+                            <c:if test="${(vo.uProductStatement) eq '거래가능'}">
+   		 					<span class="category" style="float:right; color:lightgreen;" >${vo.uProductStatement }</span>
+   		 					
+							</c:if>
+							
+							<c:if test="${(vo.uProductStatement) eq '예약중'}">
+   		 					<span class="category" style="float:right;" >${vo.uProductStatement }</span>
+   		 					
+							</c:if>
+                            
+                            <h4 class="title">
+                                <a href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
+                            </h4>
+                            
+                            <br>
+                            
+                               <span style="color:red;">
 									<i class="fa-solid fa-heart fa-sm"></i>
 									</span>
 									
@@ -121,8 +165,7 @@ li {
 									${vo.uProductLikes } &nbsp;
 									</span>
 									
-									
-									
+						
 									<span >
 									<i class="fa-regular fa-comment"></i>
 									</span>
@@ -130,33 +173,26 @@ li {
 									<span>
 									${vo.uProductCommentCount }
 									</span>
-									
-									<br>
-									<br>
-									
-									<div>
-									${vo.uProductPrice }원
-									</div>						
-								
-									
-								</div>
-							</div>
-							<!-- Product actions-->
-							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">${vo.uProductStatement }</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-				</c:forEach>
-
-			</div>
-		</div>
-
-		<ul>
+                            
+                            <div class="price">
+                                <span>$${vo.uProductPrice }</span>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+               </c:forEach>
+               
+            </div>
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        
+        <ul>
 			<c:if test="${pageMaker.hasPrev }">
 				<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 			</c:if>
@@ -183,8 +219,8 @@ li {
 				<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 			</c:if>
 		</ul>
-
-	</section>
+        
+    </section>
 	<!-- Footer-->
 	<%@ include file="footer.jsp"%>
 	<!-- Bootstrap core JS-->

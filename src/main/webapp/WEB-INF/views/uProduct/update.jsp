@@ -40,12 +40,20 @@
 		</div>
 		<div>
 			<p>가격</p>
-			<input type="text" name="uProductPrice" placeholder="가격" required>
+			<input type="number" name="uProductPrice" placeholder="가격" required>
 		</div>
+		
+		<br>
+		
 		<div>
-			<p>카테고리</p>
-			<input type="text" name="uProductCategori" placeholder="카테고리" required>
+			<label for="uProductCategori">카테고리 :</label>
+			<select id="uProductCategori" name="uProductCategori">
+				<option value="지브리">지브리</option>
+				<option value="디즈니">디즈니</option>
+				<option value="마블">마블</option>
+			</select>
 		</div>
+		
 		<div>
 			<p>내용</p>
 			<input type="text" name="uProductContent" placeholder="내용" required>

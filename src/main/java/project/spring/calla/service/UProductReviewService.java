@@ -13,6 +13,8 @@ public interface UProductReviewService {
 	
 	int create(UProductReviewVO vo) throws Exception; // 占쏙옙품 占쏙옙占쏙옙
 	
+	UProductReviewVO read(int uProductReviewId);
+	
 	List<UProductReviewVO> read(PageCriteria criteria); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
 	int getTotalCounts(); // 占쏙옙품 占쏙옙체 占쏙옙占쏙옙
 	

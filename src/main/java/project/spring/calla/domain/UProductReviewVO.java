@@ -10,11 +10,12 @@ public class UProductReviewVO {
 	private Date uProductReviewCreatedDate;
 	private String uProductReviewContent;
 	private String sellerNickname;
+	private int uProductId;
 	
 	public UProductReviewVO() {}
 
 	public UProductReviewVO(String uProductReviewId, String memberNickname, String uProductReviewTitle,
-			Date uProductReviewCreatedDate, String uProductReviewContent, String sellerNickname) {
+			Date uProductReviewCreatedDate, String uProductReviewContent, String sellerNickname, int uProductId) {
 		super();
 		this.uProductReviewId = uProductReviewId;
 		this.memberNickname = memberNickname;
@@ -22,6 +23,7 @@ public class UProductReviewVO {
 		this.uProductReviewCreatedDate = uProductReviewCreatedDate;
 		this.uProductReviewContent = uProductReviewContent;
 		this.sellerNickname = sellerNickname;
+		this.uProductId = uProductId;
 	}
 
 	public String getuProductReviewId() {
@@ -72,15 +74,24 @@ public class UProductReviewVO {
 		this.sellerNickname = sellerNickname;
 	}
 
+	public int getuProductId() {
+		return uProductId;
+	}
+
+	public void setuProductId(int uProductId) {
+		this.uProductId = uProductId;
+	}
+
 	@Override
 	public String toString() {
 		return "UProductReviewVO [uProductReviewId=" + uProductReviewId + ", memberNickname=" + memberNickname
 				+ ", uProductReviewTitle=" + uProductReviewTitle + ", uProductReviewCreatedDate="
 				+ uProductReviewCreatedDate + ", uProductReviewContent=" + uProductReviewContent + ", sellerNickname="
-				+ sellerNickname + "]";
+				+ sellerNickname + ", uProductId=" + uProductId + "]";
 	}
 
 	
+
 
 
 }

@@ -178,9 +178,9 @@ td {
 		<div class="cart__information">
 			<ul>
 				<li>예약 버튼을 누르면 상품목록이 거래가능에서 예약중으로 바뀝니다.</li>
+				<li>예약을 취소하고 싶으시면 예약 취소 버튼을 눌러주세요.</li>
 				<li>거래가 완료 되었으면 거래완료 버튼을 눌러서 거래자의 닉네임을 골라주세요.</li>
-				<li>실수로 예약 버튼을 눌렀거나 거래자의 닉네임을 잘못 선태했을시 1대1 문의를 해주시거나 수정버튼을 이용해
-					고쳐주시기 바랍니다.</li>
+				
 			</ul>
 		</div>
 		<table class="cart__list">
@@ -215,7 +215,7 @@ td {
 							pattern="yyyy-MM-dd HH:mm:ss" var="uProductCreatedDate" />
 						<td>${uProductCreatedDate }</td>
 						
-						<td><span class="price">${vo.uProductPrice }</span><br>
+						<td><span class="price">${vo.uProductPrice }원</span><br>
 						
 						<td>
 						
@@ -335,14 +335,16 @@ td {
 		</ul>
 
 		<script type="text/javascript">
-			function openPop(uProductId) {
-				var pageMaker = '${pageMaker.criteria.page}';
-				var popup = window.open(
-						'http://localhost:8080/calla/activity/choosenickname?uProductId='
-								+ uProductId + '&page=' + pageMaker, '팝업',
-						'width=500px,height=600px,scrollbars=yes');
-			}
-		</script>
+    function openPop(uProductId) {
+        var pageMaker = '${pageMaker.criteria.page}';
+        var popup = window.open(
+            'http://localhost:8080/calla/activity/choosenickname?uProductId=' + uProductId + '&page=' + pageMaker,
+            '팝업',
+            'width=500px,height=600px,scrollbars=yes'
+        );
+      
+    }
+</script>
 
 
 		<div class="cart__mainbtns">

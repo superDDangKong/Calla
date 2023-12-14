@@ -32,6 +32,7 @@ import project.spring.calla.pageutil.PageCriteria;
 import project.spring.calla.pageutil.PageMaker;
 import project.spring.calla.service.ActivityService;
 import project.spring.calla.service.UProductCommentService;
+import project.spring.calla.service.UProductService;
 import project.spring.calla.util.MediaUtil;
 
 @Controller
@@ -50,6 +51,7 @@ public class ActivityController {
 	
 	@Autowired
 	private UProductCommentService uProductCommentService;
+	
 
 	@GetMapping("/likes")
 	public void likesGET() {} // end likesGET()

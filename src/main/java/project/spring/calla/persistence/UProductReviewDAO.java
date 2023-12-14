@@ -12,6 +12,8 @@ import project.spring.calla.pageutil.PageCriteria;
 public interface UProductReviewDAO {
 	
 	int insert(UProductReviewVO vo);
+	
+	UProductReviewVO select(int uProductReviewId); // ��ǰ �˻�
 
 	List<UProductReviewVO> select(PageCriteria criteria);
 	int getTotalCount();
