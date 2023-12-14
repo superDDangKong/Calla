@@ -48,7 +48,7 @@ public class UProductBuyRESTController {
 	
 	
 	@DeleteMapping("/{uProductBuyId}")
-	public ResponseEntity<Integer> deleteuProductsell(@PathVariable("uProductBuyId") int uProductBuyId) {
+	public ResponseEntity<Integer> deleteuProductbuy(@PathVariable("uProductBuyId") int uProductBuyId) {
 		logger.info("uProductBuyId = " + uProductBuyId);
 		
 		int result = 0;

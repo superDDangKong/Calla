@@ -10,7 +10,7 @@ import project.spring.calla.domain.UProductVO;
 public interface UProductCommentDAO {
 	
 	int insert(UProductCommentVO vo);
-	UProductCommentVO selectvo(int uProductId);
+	UProductCommentVO selectcomment(int uProductCommentId);
 	List<UProductCommentVO> select(int uProductId);
 	int update(int uProductCommentId, String uProductCommentContent);
 	int delete(int uProductCommentId);

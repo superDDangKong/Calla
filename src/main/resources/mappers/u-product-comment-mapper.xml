@@ -17,7 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${uProductCommentId}
 	</select>
 	
-	<select id="select_by_uproduct_id" resultType="UproductVO">
+	<select id="select_by_uproduct_id" resultType="UproductCommentVO">
+		select * from
+		${u_product_comment} where ${uProductCommentId} = #{uProductCommentId}
+	</select>
+	
+	<select id="select_by_uproduct_comment_id" resultType="UproductCommentVO">
 		select * from
 		${u_product_comment} where ${uProductId} = #{uProductId}
 	</select>

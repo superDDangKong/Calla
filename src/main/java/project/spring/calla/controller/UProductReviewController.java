@@ -40,14 +40,10 @@ public class UProductReviewController {
 	private String uploadpath;
 	
 	@GetMapping("/reviewboard")
-	public void reviewboard(Model model, String sellerNickname, Integer page, Integer numsPerPage, HttpSession session) throws Exception {
+	public void reviewboard(Model model, String sellerNickname, Integer page, Integer numsPerPage, Integer uProductId, HttpSession session) throws Exception {
 		logger.info("reviewboard() È£Ãâ");
 		logger.info("page = " + page + "numsPerPage = " + numsPerPage);
-		
-		
-		// ½´ÆÛ°ü¸®ÀÚ
-		
-		
+			
 		// Paging Ã³ï¿½ï¿½
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
@@ -109,6 +105,14 @@ public class UProductReviewController {
 				}
 
 	} // end registerPOST()
+	
+	@GetMapping("/reviewdetail")
+	public void reviewdetail(Model model, Integer uProductReviewId, Integer page) {
+		logger.info("detail() È£Ãâ : uProductReviewId = " + uProductReviewId);
+		UProductReviewVO vo = uproductreviewservice.read(uProductReviewId);
+		model.addAttribute("vo", vo);
+		model.addAttribute("page", page);
+	}
 
 	
 	

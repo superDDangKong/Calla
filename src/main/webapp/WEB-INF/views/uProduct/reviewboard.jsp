@@ -43,12 +43,14 @@ li {
 						구매후기 </a>
 					</h4>
 					<input type="hidden" id="selectedOption" value=${option }>
+					
 					<hr>
 					
 					<table class="table table-hover text-center"
 						style="border: 1px solid;">
 						<thead>
 							<tr>
+								<th style="width: 80px" class="bg-primary text-white">리뷰번호</th>
 								<th style="width: 700px" class="bg-primary text-white">제목</th>
 								<th style="width: 150px" class="bg-primary text-white">작성자</th>
 								<th style="width: 120px" class="bg-primary text-white">작성일</th>
@@ -57,7 +59,8 @@ li {
 						<tbody>
 							<c:forEach var="vo" items="${list }">
 								<tr>
-									<td>${vo.uProductReviewTitle }</td>
+									<td>${vo.uProductReviewId }</td>
+									<td><a href="reviewdetail?uProductReviewId=${vo.uProductReviewId}&page=${pageMaker.criteria.page}">${vo.uProductReviewTitle }</a></td>
 									<td>${vo.memberNickname }</td>
 									<fmt:formatDate value="${vo.uProductReviewCreatedDate }"
 										pattern="yyyy.MM.dd." var="uProductReviewCreatedDate" />
@@ -86,6 +89,8 @@ li {
 						</c:if>
 					</ul>
 					<hr>
+					
+			
 			
 					<br>
 				</div>

@@ -35,6 +35,12 @@ public class UProductReplyDAOImple implements UProductReplyDAO {
 		logger.info("select() È£Ãâ : uProductCommentId = " + uProductCommentId);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_product_comment_id", uProductCommentId);
 	}
+	
+	@Override
+	public UProductReplyVO selectvo(int uProductCommentId) {
+		logger.info("select() È£ï¿½ï¿½ : uProductId = " + uProductCommentId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_comment_id", uProductCommentId);
+	}
 
 	@Override
 	public int update(int uProductReplyId, String uProductReplyContent) {
@@ -51,5 +57,7 @@ public class UProductReplyDAOImple implements UProductReplyDAO {
 		logger.info("delete() È£Ãâ : replyId = " + uProductReplyId);
 		return sqlSession.delete(NAMESPACE + ".delete", uProductReplyId);
 	}
+
+	
 
 }

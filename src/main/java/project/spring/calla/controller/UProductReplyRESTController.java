@@ -2,6 +2,8 @@ package project.spring.calla.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +46,10 @@ public class UProductReplyRESTController {
 	}
 	
 	@GetMapping("/all/{uProductCommentId}") // 댓글 선택(all)
-	public ResponseEntity<List<UProductReplyVO>> readReplies(@PathVariable("uProductCommentId") int uProductCommentId){
+	public ResponseEntity<List<UProductReplyVO>> readReplies(@PathVariable("uProductCommentId") int uProductCommentId,HttpSession session){
 		logger.info("readProductReplies() 호출 : uProductCommentId = " + uProductCommentId);
 		
-		List<UProductReplyVO> list = uproductReplyService.read(uProductCommentId);
+		List<UProductReplyVO> list = uproductReplyService.read(uProductCommentId, session);
 		return new ResponseEntity<List<UProductReplyVO>>(list, HttpStatus.OK);
 	}
 	

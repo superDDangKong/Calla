@@ -27,6 +27,12 @@ public class UProductReviewServiceImple implements UProductReviewService {
 		logger.info("create() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return dao.insert(vo);
 	}
+	
+	@Override
+	public UProductReviewVO read(int uProductReviewId) {
+		logger.info("read() È£ï¿½ï¿½ : boardId = " + uProductReviewId);
+		return dao.select(uProductReviewId);
+	}
 
 	@Override
 	public List<UProductReviewVO> read(PageCriteria criteria) {
@@ -111,6 +117,8 @@ public class UProductReviewServiceImple implements UProductReviewService {
 		logger.info("count() È£Ãâ : uProductId = " + uProductId);
 		return dao.countmannerdown(uProductId);
 	}
+
+	
 
 	
 

@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${u_product_review}
-		(${memberNickname}, ${uProductReviewTitle}, ${uProductReviewContent}, ${sellerNickname})
-		values (#{memberNickname}, #{uProductReviewTitle}, #{uProductReviewContent}, #{sellerNickname})
+		(${memberNickname}, ${uProductReviewTitle}, ${uProductReviewContent}, ${sellerNickname}, ${uProductId})
+		values (#{memberNickname}, #{uProductReviewTitle}, #{uProductReviewContent}, #{sellerNickname}, #{uProductId})
 	</insert>
 	
 	<select id="select_all" resultType="UProductReviewVO">
@@ -23,6 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between #{start}
 		and #{end}
 	</select>
+	
+	<select id="select_by_review_id" resultType="UProductReviewVO">
+		select * from
+		${u_product_review} where ${uProductReviewId} = #{uProductReviewId}
+	</select>
+	
 	
 	<select id="total_count" resultType="Integer">
 		select count(*) total_cnt

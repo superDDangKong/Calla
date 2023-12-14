@@ -34,6 +34,13 @@ public class UProductReviewDAOImple implements UProductReviewDAO{
 		logger.info("insert() È£Ãâ");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+	
+	@Override
+	public UProductReviewVO select(int uProductReviewId) {
+		logger.info("select() È£ï¿½ï¿½ : uProductId = " + uProductReviewId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_review_id", uProductReviewId);
+	}
+		
 
 	@Override
 	public List<UProductReviewVO> select(PageCriteria criteria) {
@@ -119,7 +126,8 @@ public class UProductReviewDAOImple implements UProductReviewDAO{
 		logger.info("countmannerdown() È£Ãâ");
 		return sqlSession.selectOne(NAMESPACE + ".select_count_memberManner_down", uProductId);
 	}
-		
+
+
 	
 
 

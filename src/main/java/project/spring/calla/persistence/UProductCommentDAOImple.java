@@ -32,9 +32,9 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 	}
 	
 	@Override
-	public UProductCommentVO selectvo(int uProductId) {
-		logger.info("select() È£ï¿½ï¿½ : uProductId = " + uProductId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_uproduct_id", uProductId);
+	public UProductCommentVO selectcomment(int uProductCommentId) {
+		logger.info("select() È£ï¿½ï¿½ : uProductId = " + uProductCommentId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_uproduct_id", uProductCommentId);
 	}
 
 	@Override
@@ -70,6 +70,8 @@ public class UProductCommentDAOImple implements UProductCommentDAO{
 		logger.info("select() È£Ãâ : uProductId = " + uProductId);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberNickname_distinct", uProductId);
 	}
+
+
 
 	
 

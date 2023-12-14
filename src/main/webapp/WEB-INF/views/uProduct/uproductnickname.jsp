@@ -32,6 +32,21 @@ li {
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../resources/assets/css/LineIcons.3.0.css" />
+    <link rel="stylesheet" href="../resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="../resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="../resources/assets/css/main.css" />
+
+<script src="https://kit.fontawesome.com/ef717dbcd3.js" crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+ <link rel="shortcut icon" type="image/x-icon" href="../resources/assets/images/favicon.svg" />
+
+
+
 <%@ include file="../header.jspf"%>
 </head>
 <body>
@@ -49,63 +64,80 @@ li {
 					<input type="hidden" id="selectedOption" value=${option }>
 					<hr>
 					
-					<section class="py-5">
-		<div class="container px-4 px-lg-5 mt-5">
-			<div
-				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-				<c:forEach var="vo" items="${list }">
-
-					<div class="col mb-5">
-						<div class="card h-100">
-							<!-- Product image-->
-							<img class="card-img-top"
-								src="display?fileName=${vo.uProductImagePath}" alt="..." />
-							<!-- Product details-->
-							<div class="card-body p-4">
-								<div class="text-center">
-									<!-- Product name-->
-									<h5 class="fw-bolder">
-
-										<a
-											href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
-
-									</h5>
-									<!-- Product reviews-->
-									<div
-										class="d-flex justify-content-center small text-warning mb-2">
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-										<div class="bi-star-fill"></div>
-									</div>
-									<!-- Product price-->
-									${vo.uProductPrice }
-
-								</div>
-							</div>
-							<!-- Product actions-->
-							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">Add to
-										cart</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-				</c:forEach>
-
-			</div>
-		</div>
-
-
-	</section>
-
-					
-					
+					 <section class="trending-product section" style="margin-top: 12px;">
+        <div class="container">
+            
+            <div class="row" >
+              
+              
+              <c:forEach var="vo" items="${list }">
+                <div class="col-lg-3 col-md-6 col-12" >
+                    <!-- Start Single Product -->
+                    <div class="single-product" >
+                        <div class="product-image">
+                            <img src="display?fileName=${vo.uProductImagePath}" width="250px" height="250px" alt="#">
+                            <div class="button">
+                                <a href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}" class="btn"><i class="lni lni-cart"></i> 상품보기</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">${vo.uProductCategori}</span>
+                            
+                            
+                            <c:if test="${(vo.uProductStatement) eq '거래가능'}">
+   		 					<span class="category" style="float:right; color:lightgreen;" >${vo.uProductStatement }</span>
+   		 					
+							</c:if>
+							
+							<c:if test="${(vo.uProductStatement) eq '예약중'}">
+   		 					<span class="category" style="float:right;" >${vo.uProductStatement }</span>
+   		 					
+							</c:if>
+                            
+                            <h4 class="title">
+                                <a href="detail?uProductId=${vo.uProductId }&page=${pageMaker.criteria.page}">${vo.uProductName }</a>
+                            </h4>
+                            
+                            <br>
+                            
+                               <span style="color:red;">
+									<i class="fa-solid fa-heart fa-sm"></i>
+									</span>
+									
+									<span>
+									${vo.uProductLikes } &nbsp;
+									</span>
+									
+						
+									<span >
+									<i class="fa-regular fa-comment"></i>
+									</span>
+									
+									<span>
+									${vo.uProductCommentCount }
+									</span>
+                            
+                            <div class="price">
+                                <span>$${vo.uProductPrice }</span>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+               </c:forEach>
+               
+            </div>
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        
+       
+        
+    </section>
 					
 					
 					<hr>

@@ -13,8 +13,10 @@ public interface UProductReviewService {
 	
 	int create(UProductReviewVO vo) throws Exception; // �뜝�룞�삕�뭹 �뜝�룞�삕�뜝�룞�삕
 	
-	List<UProductReviewVO> read(PageCriteria criteria); // �뜝�룞�삕�뭹�뜝�룞�삕�뜝占� �뜝�떩�뼲�삕�뜝�룞�삕�뜝占�
-	int getTotalCounts(); // �뜝�룞�삕�뭹 �뜝�룞�삕泥� �뜝�룞�삕�뜝�룞�삕
+	UProductReviewVO read(int uProductReviewId);
+	
+	List<UProductReviewVO> read(PageCriteria criteria); // 占쏙옙품占쏙옙占� 占싻억옙占쏙옙占�
+	int getTotalCounts(); // 占쏙옙품 占쏙옙체 占쏙옙占쏙옙
 	
 	List<UProductReviewVO> readysellNickname(PageCriteria criteria, String sellerNickname);
 	int getTotalCountssellNickname(String sellerNickname);
