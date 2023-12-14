@@ -99,6 +99,42 @@ hr {
     margin-left: 5px; 
 }
 
+/* 공통 스타일 */
+    input[type="submit"],
+    input[type="button"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    /* 삭제 버튼 스타일 */
+    #boardDelete {
+      background-color: #dc3545; /* 삭제 버튼 배경색 */
+      color: #fff; /* 삭제 버튼 텍스트 색상 */
+    }
+
+    /* 목록 버튼 스타일 */
+    input[type="button"][href="list"] {
+      background-color: #007bff; /* 목록 버튼 배경색 */
+      color: #fff; /* 목록 버튼 텍스트 색상 */
+      text-decoration: none;
+    }
+
+    /* 수정 버튼 스타일 */
+    #boardUpdate {
+      background-color: #28a745; /* 수정 버튼 배경색 */
+      color: #fff; /* 수정 버튼 텍스트 색상 */
+      text-decoration: none;
+    }
+
+    /* 호버 효과 */
+    input[type="submit"]:hover,
+    input[type="button"]:hover {
+      filter: brightness(90%); /* 호버 시 색상을 조금 어둡게 */
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -135,9 +171,9 @@ hr {
 					</div>
 					<div>
 						<p id="Writer" >${vo.memberNickname }</p>
-						<fmt:formatDate value="${vo.qBoardCreatedDate }"
-							pattern="yyyy.MM.dd. hh:mm" var="qBoardCreatedDate"/>
-						<p id="date">${vo.qBoardCreatedDate }</p>
+						<c:set var="qBoardCreatedDate" value="${vo.qBoardCreatedDate}" />
+						<fmt:formatDate value="${qBoardCreatedDate}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate" />
+						<p>작성일 : ${formattedDate}</p>
 					</div>
 					<div class="content">
 						<c:if test="${not empty vo.qBoardImagePath && vo.qBoardImagePath.indexOf('.') != -1}">

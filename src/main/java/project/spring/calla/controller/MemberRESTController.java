@@ -33,7 +33,7 @@ import project.spring.calla.domain.UProductCommentVO;
 import project.spring.calla.domain.UProductVO;
 import project.spring.calla.pageutil.MyPageCriteria;
 import project.spring.calla.pageutil.MyPageMaker;
-import project.spring.calla.service.MailService;
+import project.spring.calla.service.MailServiceImple;
 import project.spring.calla.service.MemberService;
 
 @RestController
@@ -46,7 +46,7 @@ public class MemberRESTController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MailService mailSendService;
+	private MailServiceImple mailSendService;
 	
 	@PostMapping("/join") // join.jsp ajax url °æ·Î
 	public ResponseEntity<Object> createMember(@RequestBody MemberVO vo) {  // 1. @RequestBody·Î ajax¿¡¼­ JSONÇüÅÂ·Î º¸³½ µ¥ÀÌÅÍ¸¦ memberVO vo (ÀÚ¹Ù°´Ã¼)·Î º¯È¯ÇØÁÖ°í
@@ -57,8 +57,7 @@ public class MemberRESTController {
 		try {
 			result = memberService.create(vo); // 2.¼­ºñ½º¿¡ create¸Þ¼Òµå¿¡ Å¬¶óÀÌ¾ðÆ®¿¡¼­ Àü¼ÛÇÑ µ¥ÀÌÅÍ¸¦ ºñÁî´Ï½º ·ÎÁ÷À¸·Î Àü¼Û
 		} catch (IllegalStateException e) {
-			String resultString = e.getMessage();
-			return new ResponseEntity<Object>(resultString, HttpStatus.BAD_REQUEST); // 
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST); // 
 		}
 		// ResponseEntity´Â HTTP ÀÀ´äÀÇ »óÅÂ ÄÚµå, Çì´õ, º»¹® µîÀ» ¼¼¹ÐÇÏ°Ô Á¦¾îÇÒ ¼ö ÀÖ´Ù.
 		return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -66,8 +65,8 @@ public class MemberRESTController {
 	
 	@GetMapping("/checkemail")
 	public String mailAuthentication(String memberEmail, HttpServletRequest request) throws Exception {
-		logger.info("mailAuth() È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ : " + memberEmail);
-		String authKey = mailSendService.sendMail(memberEmail); //ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		logger.info("mailAuth()È£Ãâ ÀÎÁõ¹øÈ£¸¦ º¸³¾ ÀÌ¸ÞÀÏ ÁÖ¼Ò : " + memberEmail);
+		String authKey = mailSendService.sendMail(memberEmail); 
 		// memberService.registMailAuthentication(memberEmail, authKey);
 		HttpSession mailAuthSession = request.getSession();
 		mailAuthSession.setAttribute("memberEmail", memberEmail);
@@ -79,18 +78,19 @@ public class MemberRESTController {
 	
 	@PostMapping("/authenticationConfirm")
 	public String mailAuthKeyConfirm(String AuthenticationKey, HttpServletRequest request) {
-		logger.info("mailAuthKeyConfirm() È£ï¿½ï¿½ AuthenticationKey: " + AuthenticationKey);
+		logger.info("mailAuthKeyConfirm() È£Ãâ");
+		logger.info("AuthenticationKey: " + AuthenticationKey);
 		HttpSession mailAuthSession = request.getSession();
 	    String savedAuthenticationKey = (String) mailAuthSession.getAttribute("authKey");
 	    logger.info(savedAuthenticationKey);
 	    String result = "fail";
 	    
 	    if (AuthenticationKey.equals(savedAuthenticationKey)) {
-	    	logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
+	    	logger.info("ÀÌ¸ÞÀÏ ÀÎÁõ¼º°ø!");
 	    	result = "success";
 	    } else {
-	    	logger.info("ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° : " + AuthenticationKey);
-	    	logger.info("ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° : " + savedAuthenticationKey);
+	    	logger.info("»ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ÀÎÁõ¹øÈ£ : " + AuthenticationKey);
+	    	logger.info("¼¼¼Ç¿¡ ÀúÀåµÈ ÀÎÁõ¹øÈ£ : " + savedAuthenticationKey);
 		    return result;
 	    }
 	    return result;

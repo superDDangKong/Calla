@@ -56,8 +56,8 @@ public class MemberController {
 	public String loginPOST(String memberId, String memberPw, String targetURL, RedirectAttributes reAttr, HttpServletRequest request) {
 		
 //		logger.info("loginPOST() " + loginSessions.toString());
-		
 		String result = memberService.login(memberId, memberPw);
+		logger.info("로그인결과 아이디를 리턴"+result);
 		if (result != null) {
 			MemberVO vo = memberService.read(memberId);
 			String memberNickname = vo.getMemberNickname();
@@ -95,6 +95,7 @@ public class MemberController {
 				}
 				return "redirect:/member/login?targetURL=" + targetURL;
 			} else {
+				reAttr.addFlashAttribute("loginResult", "fail");
 				return "redirect:/member/login";
 			}
 		}

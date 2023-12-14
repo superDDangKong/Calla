@@ -4,12 +4,12 @@ package project.spring.calla.pageutil;
 // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 // -> paging Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ startï¿½ï¿½ end ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 public class PageCriteria {
-	private int page; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
-	private int numsPerPage; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private int page; // ÇöÀç ÆäÀÌÁö ¹øÈ£
+	private int numsPerPage; // ÇÑ ÆäÀÌÁö¿¡ °Ô½Ã±Û °³¼ö
 	
 	public PageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 3;
+		this.numsPerPage = 8;
 	}
 	
 	public PageCriteria(int page, int numsPerPage) {

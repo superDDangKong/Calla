@@ -82,7 +82,7 @@
             </div>
             <div class="mb-3">
                 <input type="text" id="inputAuthentication" class="form-control" placeholder="이메일 인증번호"><div id="timer"></div>
-                <div id="error_member_autentication" class="text-danger"></div>
+                <div id="error_member_authentication" ></div>
                 <button type="button" id="authenticationImport" class="customButton">인증번호 받기</button>
                 <button type="button" id="authenticationConfirm" class="customButton">인증하기</button>
             </div>
@@ -338,16 +338,18 @@
 			url : '/calla/member/checkemail',
 			data : {"memberEmail": $('#memberEmail').val() },
 			success : function(result){
-				alert(result); // 인증번호
+				// alert(result); // 인증번호
+				alert("인증번호를 전송했습니다.")
 			}, // end success
 		}) // end ajax
 	}) // end click
 	
 	function authenticationConfirmCk() { // 인증하기 버튼 클릭
 		console.log("인증번호 검사 함수");
-		if ($('#inputAuthentication').trim() === ''){
-			$('#error_member_autentication').text('이메일 인증을 해주세요.')
-			$('#error_member_autentication').css('color', 'red');
+		var authenticationKey = $('#inputAuthentication').val();
+		if (authenticationKey.trim() === ''){
+			$('#error_member_authentication').text('이메일 인증을 해주세요.');
+			$('#error_member_authentication').css('color', 'red');
 		}
 		$.ajax({
 			type : 'POST',
@@ -357,13 +359,15 @@
 					if (result === "fail") {
 						console.log("false 리턴");
 						$('#inputAuthentication').css('border', '1px solid red');
+						$('#error_member_authentication').text('인증번호가 틀렸습니다.');
 						authenticationStatus;
-						console.log(authenticationStatus);
 					} else {
 						console.log("true 리턴");
 						$('#inputAuthentication').css('border', '1px solid limegreen');
+						$('#error_member_authentication').text('인증되었습니다.');
+						$('#error_member_authentication').css('color', 'green');
+
 						authenticationStatus = true;
-						console.log(authenticationStatus);
 					}
 			}
 		})
@@ -447,6 +451,7 @@
    	        } else {
    	            emailDomainInput.val(selectedValue);
    	        }
+   	    	mailConfirmCheck();
    	    });
    	});
 
@@ -528,10 +533,13 @@
 			
 			// 이메일 인증
 			if (!authenticationStatus) {
-				console.log("이메일 인증 실패");
+				console.log("이메일 인증 하세요");
+				$('#error_member_authentication').text('이메일 인증을 해주세요.');
+				$('#error_member_authentication').css('color', 'red');
 				return;
 			}  
-			 
+			$('#error_member_authentication').text(''); 
+			
 			// 연락처 확인
 			if (!phoneConfirmCheck()) {
 				console.log("연락처");
