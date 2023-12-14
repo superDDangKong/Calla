@@ -57,7 +57,7 @@ public class MemberController {
 		
 //		logger.info("loginPOST() " + loginSessions.toString());
 		String result = memberService.login(memberId, memberPw);
-		logger.info("·Î±×ÀÎ°á°ú ¾ÆÀÌµð¸¦ ¸®ÅÏ"+result);
+		logger.info("ï¿½Î±ï¿½ï¿½Î°ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½"+result);
 		if (result != null) {
 			MemberVO vo = memberService.read(memberId);
 			String memberNickname = vo.getMemberNickname();
@@ -78,7 +78,7 @@ public class MemberController {
 			session.setAttribute("memberNickname", memberNickname);
 			session.setAttribute("memberLevel", memberLevel);
 			session.setAttribute("memberManner", memberManner);
-			session.setMaxInactiveInterval(60*60);
+			session.setMaxInactiveInterval(3);
 			
 //			loginSessions.put(memberId, session);
 			if (targetURL != null) {

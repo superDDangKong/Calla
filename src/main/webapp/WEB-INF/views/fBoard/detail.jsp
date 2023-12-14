@@ -198,8 +198,7 @@ li {
                         + fBoardCommentCreatedDate
                         + '<br>'
                         if (memberNickname == this.memberNickname) {
-	                       list += '<button class="btnCommentUpdate">수정</button>'
-	                        + '<button class="btnCommentDelete">삭제</button>'
+	                       list += '<button class="btnCommentDelete">삭제</button>'
                         }
                         list += '<button class="btnReply">답글</button>'
 	                        + '<br>'
@@ -272,36 +271,6 @@ li {
             getAllComments();
         });
 
-        $(document).on('click', '.comment_item .btnCommentUpdate', function () {
-            var fBoardCommentId = $(this).prevAll('.fBoardCommentId').val();
-            var fBoardCommentContent = $(this).prevAll('.fBoardCommentContent').val();
-            /* fBoardCommentContent. */
-
-            $.ajax({
-                type: 'PUT',
-                url: 'comments/' + fBoardCommentId,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: fBoardCommentContent,
-				beforeSend: function() {
-					$('#loadingContainer').remove();
-					
-					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
-					$('body').append(loadingContainer);
-					$('#loadingContainer').css('display','block');
-				},
-				complete: function() {
-					$('#loadingContainer').css('display','none');	
-				},
-                success: function (result) {
-                    if (result == 1) {
-                        alert('댓글 수정 성공!');
-                        getAllComments();
-                    }
-                }
-            });
-        });
 
         $(document).on('click', '.comment_item .btnCommentDelete', function () {
             var fBoardId = $('#fBoardId').val();
@@ -381,9 +350,7 @@ li {
                         + '<br>'
                         + '&nbsp&nbsp&nbsp&nbsp'
                         if (memberNickname == this.memberNickname) {
-	                        list += '<button class="btnReplyUpdate">수정</button>'
-		                        + '&nbsp'
-		                        + '<button class="btnReplyDelete">삭제</button>'
+	                        list += '<button class="btnReplyDelete">삭제</button>'
                         }
                         list += '<br>'
                         + '</pre>'
@@ -481,38 +448,6 @@ li {
                                 fBoardReplyContent + "," +
                                 memberNickname + "," + commentContent + "," + fBoardId
                             );
-                        getAllReplies(fBoardCommentId);
-                    }
-                }
-            });
-        });
-
-        $(document).on('click', '.btnReplyUpdate', function () {
-            var commentItem = $(this).parent().closest('.comment_item');
-            var fBoardCommentId = commentItem.find('.fBoardCommentId');
-            var fBoardReplyId = $(this).prevAll('.fBoardReplyId').val();
-            var fBoardReplyContent = $(this).prevAll('.fBoardReplyContent').val();
-
-            $.ajax({
-                type: 'PUT',
-                url: 'replies/' + fBoardReplyId,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: fBoardReplyContent,
-				beforeSend: function() {
-					$('#loadingContainer').remove();
-					
-					var loadingContainer = $('<div id="loadingContainer"><div class="loading"></div></div>');
-					$('body').append(loadingContainer);
-					$('#loadingContainer').css('display','block');
-				},
-				complete: function() {
-					$('#loadingContainer').css('display','none');	
-				},
-                success: function (result) {
-                    if (result == 1) {
-                        alert('답글 수정 성공!');
                         getAllReplies(fBoardCommentId);
                     }
                 }

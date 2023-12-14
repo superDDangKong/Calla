@@ -130,6 +130,7 @@ public class EchoHandler extends TextWebSocketHandler{
 						}
 						
 						if (responseIdSession != null) { // 받는사람이 로그인 상태 일때만 알람 전송	
+							logger.info("if responseId" + responseIdSession);
 							responseIdSession.sendMessage(tmpMsg);
 						}
 					}

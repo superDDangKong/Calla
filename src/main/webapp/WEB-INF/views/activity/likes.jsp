@@ -40,7 +40,7 @@
 							<th style="width: 200px">작성일</th>
 							<th style="width: 200px">분류</th>
 							<th style="width: 200px">조회수</th>
-							<th style="width: 200px">좋아요수</th>
+							<th style="width: 200px">좋아요</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -101,7 +101,7 @@
 								list += '<tr>'
 									+ '<td><input type="checkbox" class="check_box"></td>'
 									+ '<td>&lt;공용상품&gt;</td>'
-									+ '<td><a href="/calla/product/detail?productId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
+									+ '<td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><a href="/calla/product/detail?productId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
 									+ '<td>' + this.uProductPrice + '</td>'
 									+ '<td>' + uProductCreatedDate + '</td>'
 									+ '<td>' + this.uProductCategori + '</td>'
@@ -113,7 +113,7 @@
 							} else if (this.category =='au') {
 								list += '<tr>'
 									+ '<td><input type="checkbox" class="check_box"></td>'
-									+ '<td>&lt;중고상품&gt;</td>'
+									+ '<td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">&lt;중고상품&gt;</td>'
 									+ '<td><a href="/calla/uProduct/detail?uProductId=' + this.uProductId + '&memberId=' + memberId + '">' + this.uProductName + '</a></td>'
 									+ '<td>' + this.uProductPrice + '</td>'
 									+ '<td>' + uProductCreatedDate + '</td>'
