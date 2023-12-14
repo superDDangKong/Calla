@@ -85,6 +85,25 @@
 	    background-position: center;
 	    background-size: cover;
      }
+     
+     .prevBtn,
+	 .nextBtn {
+	    position: absolute; /* 절대 위치 지정 */
+	    bottom: 10px; /* 부모 요소의 50% 위치에서부터 아래으로 정렬 */
+	    transform: translateY(-50%); /* 요소의 높이의 절반만큼 위쪽으로 이동하여 세로 중앙 정렬 */
+	    background-color: white; /* 버튼 배경색 설정 */
+	    border: none; /* 버튼 테두리 제거 */
+	    padding: 5px 10px; /* 버튼 여백 설정 */
+	 }
+	
+	 .prevBtn {
+	    left: calc(50% - 50px - 5px); /* 왼쪽 버튼 위치 계산하여 조정 */
+	 }
+	
+	 .nextBtn {
+	    right: calc(50% - 50px - 5px); /* 오른쪽 버튼 위치 계산하여 조정 */
+	 }
+     
      .productTextarea {
      	width: 100%; /* Full width */
    		height: auto; /* Automatically set height */
@@ -152,8 +171,8 @@
 		            <img src="display?fileName=${image}" class="productImage" style="display:none;" />
 		        </c:forEach>
 		    </div>
-		    <button class="prevBtn">이전</button>
-		    <button class="nextBtn">다음</button>
+		    <button class="prevBtn">◀</button>
+		    <button class="nextBtn">▶</button>
 		</div>
 		<br>
 	 	<div class="product-desc">
@@ -246,7 +265,7 @@
 	</c:if>
 	<c:if test="${memberNickname == null}">
 		<div style="text-align: center;">
-	        <br> 후기 / 댓글을 작성하려면 로그인해 주세요.
+	        <br> 후기 / 답글을 작성하려면 로그인해 주세요.
 	    </div>
 	</c:if>
 	
@@ -286,12 +305,12 @@
 	  </div>
 	</div>
 	
-	<!-- 댓글 수정 Modal -->
+	<!-- 답글 수정 Modal -->
 	<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel1">댓글 수정</h5>
+	        <h5 class="modal-title" id="exampleModalLabel1">답글 수정</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
@@ -432,7 +451,7 @@
 									+ '</div>'
 									+ '<button class="btnCommentUpdate1" data-bs-toggle="modal" data-bs-target="#exampleModal" ' + disabled + '>수정</button>'
 									+ '<button class="btnCommentDelete" ' + disabled + '>삭제</button>'
-									+ '<button class="btnReply">댓글</button>'
+									+ '<button class="btnReply">답글</button>'
 									+ '<br>'
 									+ '</pre>'
 									+ '</div>';
@@ -558,7 +577,7 @@
 		$('#comments').on('click', '.comment_item .btnReply', function(event){			
 			selectedReplyBtn = event.currentTarget // 클릭된 요소 저장
 			if($('#memberNickname').val() == null) {
-				alert('댓글을 작성하려면 로그인 해 주세요')
+				alert('후기를 작성하려면 로그인 해 주세요')
 				return;
 			}
 			console.log(this);
@@ -640,7 +659,7 @@
 							var productReplyId = $(this).closest('.reply_item').find('.productReplyId').val();
 							var productCommentId = $(this).closest('.comment_item').find('.productCommentId').val();
 					        console.log('선택된 후기 번호:' + productCommentId);
-							console.log('선택된 댓글 번호 :' + productReplyId);
+							console.log('선택된 답글 번호 :' + productReplyId);
 							
 					        $('#exampleModal1').data('productCommentId', productCommentId);
 							$('#exampleModal1').data('productReplyId', productReplyId);
@@ -705,7 +724,7 @@
 				success : function(result) {
 					console.log(result);
 					if(result == 1) {
-						alert('댓글 입력 성공');
+						alert('답글 입력 성공');
 						socket.send(
                                 commentRegisterNick + "," + "새 답글" + "," + "공용상품" + "," +
                                 productReplyContent + "," +
@@ -725,7 +744,7 @@
 			var productReplyContent = $(this).closest('.modal').find('.updateReplyContent').val();
 			
 			console.log("commentItem :" + commentItem + ", commentId : " + productCommentId);
-			console.log("선택된 댓글 번호 : " + productReplyId);
+			console.log("선택된 답글 번호 : " + productReplyId);
 			
 			$.ajax({
 				type : 'PUT',
@@ -737,7 +756,7 @@
 				success : function(result){
 					console.log(result)
 						if(result == '1'){
-							alert('댓글 수정 성공');
+							alert('답글 수정 성공');
 							$('#exampleModal1').modal('hide');
 							selectedReplyBtn.click();
 							
@@ -752,7 +771,7 @@
 			var productCommentId = $(this).closest('.comment_item').find('.productCommentId');
 			var productReplyId = $(this).prevAll('.productReplyId').val();
 			
-			console.log("선택된 후기 번호 : " + productReplyId);
+			console.log("선택된 답글 번호 : " + productReplyId);
 			
 			$.ajax({
 				type : 'DELETE',
@@ -763,7 +782,7 @@
 				success : function(result){
 					console.log(result);
 					if(result == 1){
-						alert('댓글 삭제 성공');
+						alert('답글 삭제 성공');
 						getAllReplies(productCommentId);
 					}
 				}

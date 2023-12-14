@@ -31,7 +31,7 @@
 		</div>
 		<div>
 			<p>내용 :</p>
-			<textarea name="productContent" placeholder="내용" rows="4" cols="50" required></textarea>
+			<textarea name="productContent" placeholder="내용" rows="5" cols="80" required></textarea>
 		</div>
 		 <div>
             <p>이미지 :</p>

@@ -50,6 +50,10 @@ li {
 	<c:set var="memberId" value="${memberId}" />
 	<input type="hidden" id="memberId" value="${memberId}" />	
 	
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="productSidebar.jspf"%>
+			<main class="container col-md-9 ms-sm-auto col-lg-9 px-md-1" >
 	<div id="productOrderList">
 	<div class="all_check_input_div">
 		<input type="checkbox" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span>
@@ -193,6 +197,11 @@ li {
 	    </div>
 	  </div>
 	</div>
+
+			</main>
+		</div>
+	</div>
+	
 	
 	
 	<script type="text/javascript">

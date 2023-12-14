@@ -22,7 +22,7 @@
 	
 	<div class="container-fluid">
 		<div class="row">
-			<%@ include file="productSidebar.jspf"%>
+			<%@ include file="../sidebar2.jspf"%>
 			<main class="container col-md-9 ms-sm-auto col-lg-9 px-md-1" >
 			
 	<div id="productOrder">
@@ -40,7 +40,7 @@
                 <th style="width: 300px">배송지</th>
                 <th style="width: 100px">수령인</th>
                 <th style="width: 100px">배송상황</th>
-                               
+                <th style="width: 100px"></th>
             </tr>
         </thead>
         <c:choose>
@@ -104,6 +104,11 @@
                             			${vo.deliveryStatus }
 											<c:if test="${vo.deliveryStatus == '출고준비중' }">
 								            	<button class="cancelOrderBtn">주문 취소</button>
+								            </c:if>
+                            		</td>
+                            		<td>
+											<c:if test="${vo.deliveryStatus == '배송완료' }">
+									            <button class="deleteOrderBtn">주문정보 삭제</button>
 								            </c:if>
                             		</td>
                             	</c:otherwise>
@@ -215,6 +220,28 @@
 		                
 		            }); // end ajax
 		        }); // end cancleOrderBtn
+		        
+		        $('.deleteOrderBtn').click(function(){
+					var productOrderId = $(this).closest('tr').find('.productOrderId').val();
+					console.log('주문취소클릭');
+					var currentRow = $(this).closest('tr'); // 현재 행
+		            $.ajax({
+		                type: 'DELETE', 
+		                url: 'orders/' + productOrderId,
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                success: function(result){
+		                	console.log(productOrderId);
+		                    if(result == 1){
+		                        alert('주문정보 삭제 완료.');
+		                        currentRow.remove(); // 행 삭제
+		                        window.location.reload();
+		                    } 
+		                }
+		                
+		            }); // end ajax
+		        }); // end deleteOrderBtn
 			}); // end document
 			
 		        
