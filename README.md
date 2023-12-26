@@ -88,19 +88,107 @@ BUILD SUCCESS가 뜨면 설치 성공
 
 ## 웹 실행 모습
 <details> 
-  <summary> 질문 게시판 상세페이지 </summary> 
+  <summary> 자유 게시판 메인 </summary> 
+  <p>
+    1. 게시글 데이터의 제목, 작성자, 조회수, 좋아요 등의 정보를 확인할 수 있습니다.<br/>
+    2. 검색기능(작성자 or 제목+내용) 및 페이지네이션이 적용되어 있습니다.<br/>
+    3. 로그인한 사용자는 글 작성이 가능합니다.
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/b42001f8-dfca-44ef-8a96-b685849086a8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/0c1dfdef-3274-4f9f-9db1-08558ef99bbe">
+  <br>
+</details>
+
+<details> 
+  <summary> 자유 게시판 상세 </summary> 
   <p>
     1. 상세페이지 접근 시 쿠키를 생성해 조회수를 증가시킵니다.<br/>
-    2. 댓글, 대댓글을 입력할 수 있습니다.<br/>
-    3. 모달창을 사용하여 댓글, 대댓글을 수정할 수 있습니다.<br/>
-    4. 글 혹은 댓글 삭제 시 하위항목 여부에 따라 삭제 혹은 업데이트시킵니다.<br/>
-    5. 타인이 작성한 글에 대한 좋아요 기능이 있습니다.<br/>
+    2. 작성자는 게시글을 수정 및 삭제할 수 있습니다.<br/>
+    3. 로그인한 사용자는 댓글, 대댓글을 입력 가능하고, 작성자는 삭제할 수 있습니다.<br/>
+    4. 댓글에 페이지네이션이 적용되어 있습니다.<br/>
   </p>
   <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
   <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
   <br>
 </details>
 
+<details> 
+  <summary> 개인정보 확인/수정 </summary> 
+  <p>
+    1. 현재 개인정보를 조회할 수 있습니다.<br/>
+    2. 원하는 정보만 선택해서 수정할 수 있습니다.<br/>
+    3. 회원 탈퇴를 할 수 있습니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
+
+<details> 
+  <summary> 회원 등업 </summary> 
+  <p>
+    1. 회원 등업용 관리자 계정(슈퍼 관리자 1명)만 접근 가능한 페이지입니다.<br/>
+    2. 모든 유저의 정보 및 등급을 확인할 수 있습니다.<br/>
+    3. 일반 회원을 관리자 등급으로, 관리자 회원을 일반회원으로 등급을 변경 가능합니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
+
+<details> 
+  <summary> 내가 쓴 글/댓글/좋아요 리스트 </summary> 
+  <p>
+    1. 더보기 형식의 페이지네이션이 적용되어 있습니다.<br/>
+    2. 전체 조회 시, 전체 게시판 통합 조회가 가능하고, 각 카테고리 클릭 시, 해당 게시판의 내용만 조회 가능합니다.<br/>
+    3. 좋아요 리스트의 경우, 좋아요 일괄 삭제가 가능합니다.<br/>
+    4. 댓글에 페이지네이션이 적용되어 있습니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
+
+<details> 
+  <summary> 최근 본 상품 </summary> 
+  <p>
+    1. 이전/다음 버튼 형식의 페이지네이션이 적용되어 있습니다.<br/>
+    2. 최근 본 상품을 공용 상품/중고 상품 나눠서 조회할 수 있습니다.<br/>
+    3. 상품 클릭 시 해당 상품 상세 페이지로 이동합니다.<br/>
+    4. 내역에서 삭제할 수 있습니다.<br/>
+    5. 조회한 후 30일이 지난 상품은 내역에서 사라집니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
+
+<details> 
+  <summary> 헤더 </summary> 
+  <p>
+    1. 로그인 시, 알림/마이페이지/로그아웃 버튼을, 로그아웃 시, 로그인/회원가입 버튼을 생성합니다.<br/>
+    2. 공용 상품/중고 상품을 카테고리별로 검색할 수 있습니다.<br/>
+    3. 원하는 게시판으로 이동 가능한 버튼이 있습니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
+
+<details> 
+  <summary> 알림 </summary> 
+  <p>
+    1. 내가 쓴 게시글/댓글에 댓글/답글이 입력될 시 작동합니다.<br/>
+    2. 로그인 시, 보고있는 페이지 상단에 실시간으로 알람이 생성 되며 알림판에 저장 됩니다.<br/>
+    3. 비로그인 시, 알림판에 알림이 저장되며 다음 로그인 시 확인이 가능합니다.<br/>
+    4. 알림판은 읽지 않은 알림 -> 읽은 알림 순, 알림 온 시간 내림차순 정렬됩니다.<br/>
+    5. 실시간 알람/알림판 클릭 시, 해당 댓글/답글로 페이지 이동 및 스크롤합니다.<br/>
+    6. 알림판 내역 삭제가 가능합니다.<br/>
+  </p>
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
+  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <br>
+</details>
 
 ## 사용 기술
 
