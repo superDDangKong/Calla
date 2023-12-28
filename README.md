@@ -94,8 +94,7 @@ BUILD SUCCESS가 뜨면 설치 성공
     2. 검색기능(작성자 or 제목+내용) 및 페이지네이션이 적용되어 있습니다.<br/>
     3. 로그인한 사용자는 글 작성이 가능합니다.
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/b42001f8-dfca-44ef-8a96-b685849086a8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/0c1dfdef-3274-4f9f-9db1-08558ef99bbe">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/0a3c93f6-bcd1-4648-be4c-04a3462b4724" width="500px">
   <br>
 </details>
 
@@ -107,8 +106,8 @@ BUILD SUCCESS가 뜨면 설치 성공
     3. 로그인한 사용자는 댓글, 대댓글을 입력 가능하고, 작성자는 삭제할 수 있습니다.<br/>
     4. 댓글에 페이지네이션이 적용되어 있습니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/9c785eea-cd1a-4b69-a8e6-bc5f13457d4f" width="500px">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/4b2f01c0-30d8-44ba-9b1f-68d6a42f8cd4" width="500px">
   <br>
 </details>
 
@@ -119,20 +118,7 @@ BUILD SUCCESS가 뜨면 설치 성공
     2. 원하는 정보만 선택해서 수정할 수 있습니다.<br/>
     3. 회원 탈퇴를 할 수 있습니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
-  <br>
-</details>
-
-<details> 
-  <summary> 회원 등업 </summary> 
-  <p>
-    1. 회원 등업용 관리자 계정(슈퍼 관리자 1명)만 접근 가능한 페이지입니다.<br/>
-    2. 모든 유저의 정보 및 등급을 확인할 수 있습니다.<br/>
-    3. 일반 회원을 관리자 등급으로, 관리자 회원을 일반회원으로 등급을 변경 가능합니다.<br/>
-  </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/65d35492-0cb6-4d58-abf2-09cf986fbe22" width="500px">
   <br>
 </details>
 
@@ -144,8 +130,8 @@ BUILD SUCCESS가 뜨면 설치 성공
     3. 좋아요 리스트의 경우, 좋아요 일괄 삭제가 가능합니다.<br/>
     4. 댓글에 페이지네이션이 적용되어 있습니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/84349232-4242-4fd8-b3f6-f355a4cb0269" width="500px">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/fb83dd64-ad70-4af3-858c-60cf70f64a5d" width="500px">
   <br>
 </details>
 
@@ -158,8 +144,7 @@ BUILD SUCCESS가 뜨면 설치 성공
     4. 내역에서 삭제할 수 있습니다.<br/>
     5. 조회한 후 30일이 지난 상품은 내역에서 사라집니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/83899c82-d322-44ea-815a-7fb6fdab6c68" width="500px">
   <br>
 </details>
 
@@ -170,8 +155,7 @@ BUILD SUCCESS가 뜨면 설치 성공
     2. 공용 상품/중고 상품을 카테고리별로 검색할 수 있습니다.<br/>
     3. 원하는 게시판으로 이동 가능한 버튼이 있습니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/5850a53e-93c1-4d68-8966-a0a638521339" width="500px">
   <br>
 </details>
 
@@ -185,8 +169,8 @@ BUILD SUCCESS가 뜨면 설치 성공
     5. 실시간 알람/알림판 클릭 시, 해당 댓글/답글로 페이지 이동 및 스크롤합니다.<br/>
     6. 알림판 내역 삭제가 가능합니다.<br/>
   </p>
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/3da984d7-f230-42b7-aa99-47e62300d6f8">
-  <img loading="lazy" src="https://github.com/rladygks329/Bloom/assets/146702294/ba6512b7-28c9-4520-9b6f-a89c9d59057c">
+  <img loading="lazy" src="https://github.com/superDDangKong/Calla/assets/140034486/e7aa5be5-2ed6-4fbe-93cd-c6294421ef56" width="500px">
+
   <br>
 </details>
 
